@@ -7,7 +7,7 @@ class AppNavigator {
     Navigator.push(context, MaterialPageRoute(builder: (_) => nextScreen));
   }
 
-  static void pushAndRemoveUntil(BuildContext context, Widget nextScreen) {
+  static void removeAllUntil(BuildContext context, Widget nextScreen) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => nextScreen),
       (Route<dynamic> route) => false,

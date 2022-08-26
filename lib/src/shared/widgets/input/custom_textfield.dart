@@ -77,6 +77,7 @@ class CustomTextField extends StatelessWidget {
 
     TextFormField field = TextFormField(
       //autofocus: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       style: AppText.bold500(context).copyWith(
         fontSize: 13.sp,
       ),
@@ -235,28 +236,7 @@ class TextFieldSvgIcon extends StatelessWidget {
   }
 }
 
-class PasswordIcon extends StatelessWidget {
-  const PasswordIcon(
-    this._showPassword, {
-    Key? key,
-    required this.onTap,
-  }) : super(key: key);
 
-  final bool _showPassword;
-  final Function() onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onTap,
-      icon: Icon(
-        _showPassword ? Icons.visibility_off : Icons.remove_red_eye,
-        size: 15.sp,
-        color: Colors.black54,
-      ),
-    );
-  }
-}
 
 class TextFieldTitle extends StatelessWidget {
   const TextFieldTitle(this.title, {Key? key}) : super(key: key);

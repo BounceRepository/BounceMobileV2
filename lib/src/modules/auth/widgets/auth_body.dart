@@ -12,21 +12,24 @@ class AuthBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset(
-              AuthIcons.circles,
-              height: 156.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 23.w),
-              child: Column(
-                children: children,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: CustomChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SvgPicture.asset(
+                AuthIcons.circles,
+                height: 156.h,
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 23.w),
+                child: Column(
+                  children: children,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

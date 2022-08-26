@@ -41,7 +41,7 @@ class GettingStartedScreen extends StatelessWidget {
               AppButton(
                 label: 'Get Started',
                 onTap: () {
-                  AppNavigator.to(context, const SignInScreen());
+                  AppNavigator.removeAllUntil(context, const SignInScreen());
                 },
               ),
             ],

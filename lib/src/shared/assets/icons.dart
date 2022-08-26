@@ -9,11 +9,16 @@ class AppIcons {
 class AuthIcons {
   AuthIcons._();
 
-  static const welcome = 'assets/icons/auth/welcome.svg';
-  static const createAccount = 'assets/icons/auth/create_account.svg';
-  static const forgotPassword = 'assets/icons/auth/forgot_password.svg';
-  static const otp = 'assets/icons/auth/otp.svg';
-  static const circles = 'assets/icons/auth/overlapping_circles.svg';
+  static const base = 'assets/icons/auth';
+
+  static const welcome = '$base/welcome.svg';
+  static const createAccount = '$base/create_account.svg';
+  static const forgotPassword = '$base/forgot_password.svg';
+  static const otp = '$base/otp.svg';
+  static const circles = '$base/overlapping_circles.svg';
+  static const emailSent = '$base/emailSent.svg';
+  static const verified = '$base/verified.svg';
+  static const expired = '$base/expired.svg';
 }
 
 class SocialIcons {

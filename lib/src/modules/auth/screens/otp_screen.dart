@@ -1,17 +1,59 @@
+import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/reset_password_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
+import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_pin_code_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class OTPScreen extends StatelessWidget {
-  const OTPScreen({Key? key}) : super(key: key);
+class OTPScreen extends StatefulWidget {
+  const OTPScreen({Key? key, required this.email}) : super(key: key);
+
+  final String email;
+
+  @override
+  State<OTPScreen> createState() => _OTPScreenState();
+}
+
+class _OTPScreenState extends State<OTPScreen> {
+  late String token;
+
+  void _validateOTP() async {
+    if (token.length == 4) {
+      final controller = context.read<AuthController>();
+      try {
+        await controller.validateOTP(token: token);
+        NotificationMessage.showSucess(
+          context,
+          message: '${widget.email} verifiedcsuccessful',
+        );
+        AppNavigator.to(context, ResetPasswordScreen(email: widget.email));
+      } on Failure catch (e) {
+        NotificationMessage.showError(context, message: e.message);
+      }
+    }
+  }
+
+  void _sendOTP() async {
+    final controller = context.read<AuthController>();
+    try {
+      await controller.sendOTP(email: widget.email);
+      NotificationMessage.showSucess(
+        context,
+        message: 'Verification code has been sent to ${widget.email}',
+      );
+    } on Failure catch (e) {
+      NotificationMessage.showError(context, message: e.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +88,7 @@ class OTPScreen extends StatelessWidget {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'bouncemail@yahoo.com',
+                        text: widget.email,
                         style: AppText.bold600(context).copyWith(
                           fontSize: 14.sp,
                         ),
@@ -67,16 +109,27 @@ class OTPScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 26.h),
-                LinkText(
-                  text1: 'Didn’t receive code?',
-                  text2: 'Re-send',
-                  onClick: () {},
+                Consumer<AuthController>(
+                  builder: (context, controller, _) {
+                    if (controller.isSendingOTP) {
+                      return const CircularProgressIndicator();
+                    }
+
+                    return LinkText(
+                      text1: 'Didn’t receive code?',
+                      text2: 'Re-send',
+                      onClick: _sendOTP,
+                    );
+                  },
                 ),
                 SizedBox(height: 38.h),
-                AuthButton(
-                  label: 'Submit',
-                  onTap: () {
-                    AppNavigator.to(context, const ResetPasswordScreen());
+                Consumer<AuthController>(
+                  builder: (context, controller, _) {
+                    return AuthButton(
+                      label: 'Submit',
+                      isLoading: controller.isLoading,
+                      onTap: _validateOTP,
+                    );
                   },
                 ),
               ],

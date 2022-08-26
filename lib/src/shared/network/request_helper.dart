@@ -66,15 +66,11 @@ class RequestHelper {
     try {
       final response = await http.post(
         Uri.parse(url),
-        headers: header,
+        //headers: header,
         body: postValue,
       );
 
       log("payload response --" + json.encode(response.body));
-
-      if (response.statusCode == 400) {
-        throw Failure('Input is not valid, validate & try again');
-      }
 
       if (response.statusCode < 200 || response.statusCode > 299) {
         // get error response message

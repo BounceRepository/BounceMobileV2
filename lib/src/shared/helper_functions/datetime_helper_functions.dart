@@ -18,4 +18,8 @@ class DateTimeHelperFunctions {
     final formattedDate = DateFormat('yyyy-MM-dd').format(date);
     return formattedDate;
   }
+
+  static DateTime getDate(String str) {
+    return DateFormat('yyyy-MM-dd').parse(str);
+  }
 }

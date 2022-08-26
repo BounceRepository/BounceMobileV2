@@ -1,104 +1,170 @@
+import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/otp_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/validator.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
-import 'package:bounce_patient_app/src/shared/widgets/buttons/custom_text_button.dart';
+import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
+import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
+class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+
+  void _sendOTP() async {
+    if (_formKey.currentState!.validate()) {
+      final controller = context.read<AuthController>();
+      try {
+        await controller.sendOTP(email: _emailController.text);
+        NotificationMessage.showSucess(
+          context,
+          message: 'Verification code has been sent to ${_emailController.text}',
+        );
+        AppNavigator.to(context, OTPScreen(email: _emailController.text));
+      } on Failure catch (e) {
+        NotificationMessage.showError(context, message: e.message);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: AppPadding.symetricHorizontalOnly,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ArrowBackButton(
-                    onTap: () {},
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                Text(
-                  'Forgot password?',
-                  style: AppText.bold800(context).copyWith(
-                    fontSize: 36.sp,
-                    color: AppColors.primary,
-                  ),
-                ),
-                SizedBox(height: 30.h),
-                RichText(
-                  text: TextSpan(
-                    text: '*',
-                    style: AppText.bold400(context).copyWith(
-                      fontSize: 12.sp,
-                      color: AppColors.primary,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: AppPadding.symetricHorizontalOnly,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: ArrowBackButton(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text:
-                            ' We will send you an email to set or reset your new password',
+                    SizedBox(height: 20.h),
+                    Text(
+                      'Forgot password?',
+                      style: AppText.bold800(context).copyWith(
+                        fontSize: 36.sp,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+                    RichText(
+                      text: TextSpan(
+                        text: '*',
                         style: AppText.bold400(context).copyWith(
                           fontSize: 12.sp,
+                          color: AppColors.primary,
                         ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text:
+                                ' We will send you an email to set or reset your new password',
+                            style: AppText.bold400(context).copyWith(
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16.h),
-                SvgPicture.asset(
-                  AuthIcons.forgotPassword,
-                  width: 190.w,
-                  height: 201.h,
-                ),
-                SizedBox(height: 28.h),
-                CustomTextField(
-                  controller: TextEditingController(),
-                  hintText: 'Enter your email address',
-                  prefixIcon: const TextFieldSvgIcon(icon: AppIcons.mail),
-                ),
-                SizedBox(height: 30.h),
-                SizedBox(
-                  width: 243.w,
-                  child: Text(
-                    'Didn’t get any email? Check your spam folder or try again with a valid email.',
-                    textAlign: TextAlign.center,
-                    style: AppText.bold400(context).copyWith(
-                      fontSize: 12.sp,
                     ),
-                  ),
+                    SizedBox(height: 16.h),
+                    SvgPicture.asset(
+                      AuthIcons.forgotPassword,
+                      width: 190.w,
+                      height: 201.h,
+                    ),
+                    SizedBox(height: 28.h),
+                    CustomTextField(
+                      controller: _emailController,
+                      hintText: 'Enter your email address',
+                      textInputAction: TextInputAction.done,
+                      prefixIcon: const TextFieldSvgIcon(icon: AppIcons.mail),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (Validator.isNotValidEmail(value)) {
+                          return 'Enter a valid email';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 30.h),
+                    Consumer<AuthController>(
+                      builder: (context, controller, _) {
+                        return AuthButton(
+                          label: 'send',
+                          isLoading: controller.isSendingOTP,
+                          onTap: _sendOTP,
+                        );
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 27.h),
-                AuthButton(
-                  label: 'Open Email App',
-                  onTap: () {},
-                ),
-                SizedBox(height: 10.h),
-                CustomTextButton(
-                  label: 'Skip',
-                  onTap: () {
-                    AppNavigator.to(context, const OTPScreen());
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+}
+
+Future<dynamic> _showBottomsheet(
+  BuildContext context, {
+  required String title,
+  required String desc,
+  required Function() onTap,
+}) {
+  return showCustomBottomSheet(
+    context,
+    body: const _Body(),
+  );
+}
+
+class _Body extends StatefulWidget {
+  const _Body({Key? key}) : super(key: key);
+
+  @override
+  State<_Body> createState() => __BodyState();
+}
+
+class __BodyState extends State<_Body> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
 
@@ -109,18 +175,21 @@ class ArrowBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 51.h,
-      width: 51.h,
-      decoration: const BoxDecoration(
-        color: AppColors.primary,
-        shape: BoxShape.circle,
-      ),
-      alignment: Alignment.center,
-      child: SvgPicture.asset(
-        AppIcons.backBrokenArrow,
-        height: 14.h,
-        width: 14.h,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 51.h,
+        width: 51.h,
+        decoration: const BoxDecoration(
+          color: AppColors.primary,
+          shape: BoxShape.circle,
+        ),
+        alignment: Alignment.center,
+        child: SvgPicture.asset(
+          AppIcons.backBrokenArrow,
+          height: 14.h,
+          width: 14.h,
+        ),
       ),
     );
   }

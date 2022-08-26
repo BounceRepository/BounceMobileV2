@@ -7,10 +7,12 @@ class AuthButton extends StatelessWidget {
     Key? key,
     required this.label,
     required this.onTap,
+    this.isLoading = false,
   }) : super(key: key);
 
   final String label;
   final Function() onTap;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class AuthButton extends StatelessWidget {
       child: AppButton(
         label: label,
         labelColor: Colors.white,
+        isLoading: isLoading,
         labelSize: 13.06.sp,
         onTap: onTap,
       ),

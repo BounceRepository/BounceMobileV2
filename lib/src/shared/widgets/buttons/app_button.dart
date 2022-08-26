@@ -37,51 +37,51 @@ class AppButton extends StatelessWidget {
 
     return SizedBox(
       width: size.width,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onTap,
-        style: ElevatedButton.styleFrom(
-          primary: backgroundColor ?? AppColors.primary,
-          elevation: elevation,
+      child: InkWell(
+        onTap: isLoading ? null : onTap,
+        child: Container(
+          height: 57.h,
           padding: padding ?? EdgeInsets.symmetric(vertical: 13.h),
-          shape: RoundedRectangleBorder(
+          decoration: BoxDecoration(
+            color: backgroundColor ?? AppColors.primary,
             borderRadius: BorderRadius.circular(14.55.r),
-            side: border ?? BorderSide.none,
           ),
-        ),
-        child: isLoading
-            ? SizedBox(
-                height: 50.w,
-                width: 50.w,
-                child: const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
-              )
-            : icon != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        label,
-                        style: AppText.bold700(context).copyWith(
-                          color: labelColor ?? Colors.white,
-                          fontSize: labelSize ?? 18.sp,
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: labelColor,
-                        size: 15.sp,
-                      ),
-                    ],
-                  )
-                : Text(
-                    label,
-                    style: AppText.bold700(context).copyWith(
-                      color: labelColor ?? Colors.white,
-                      fontSize: labelSize ?? 18.sp,
-                    ),
+          alignment: Alignment.center,
+          child: isLoading
+              ? SizedBox(
+                  height: 20.w,
+                  width: 20.w,
+                  child: const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
+                )
+              : icon != null
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          label,
+                          style: AppText.bold700(context).copyWith(
+                            color: labelColor ?? Colors.white,
+                            fontSize: labelSize ?? 18.sp,
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: labelColor,
+                          size: 15.sp,
+                        ),
+                      ],
+                    )
+                  : Text(
+                      label,
+                      style: AppText.bold700(context).copyWith(
+                        color: labelColor ?? Colors.white,
+                        fontSize: labelSize ?? 18.sp,
+                      ),
+                    ),
+        ),
       ),
     );
   }
