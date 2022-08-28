@@ -5,7 +5,30 @@ import 'package:http/http.dart' as http;
 import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 
-class RequestHelper {
+// abstract class RequestHelper {
+//   Future<dynamic> get(
+//     String url, {
+//     Map<String, String>? header,
+//   });
+//   Future<dynamic> post(
+//     String url, {
+//     required dynamic body,
+//     Map<String, String>? header,
+//   });
+//   Future<dynamic> put(
+//     String url, {
+//     required dynamic body,
+//     Map<String, String>? header,
+//   });
+//   Future<dynamic> patch(
+//     String url, {
+//     required dynamic body,
+//     Map<String, String>? header,
+//   });
+//   Future<dynamic> delete({required String url});
+// }
+
+class HttpRequestHelper {
   static Future<dynamic> getRequest(String url, {Map<String, String>? header}) async {
     header ??= <String, String>{};
 
@@ -66,7 +89,7 @@ class RequestHelper {
     try {
       final response = await http.post(
         Uri.parse(url),
-        //headers: header,
+        headers: header,
         body: postValue,
       );
 

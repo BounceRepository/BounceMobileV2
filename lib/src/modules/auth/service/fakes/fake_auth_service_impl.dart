@@ -72,8 +72,10 @@ class FakeAuthServiceImpl implements AuthService {
     required String phoneNumber,
     required File image,
     required String dateOfBirth,
-  }) {
-    // TODO: implement createProfile
-    throw UnimplementedError();
+  }) async {
+    await Future.delayed(delay);
+
+    // // TODO: implement createProfile
+    // throw UnimplementedError();
   }
 }

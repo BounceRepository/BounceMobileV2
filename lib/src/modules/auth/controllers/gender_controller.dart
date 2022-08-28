@@ -2,7 +2,7 @@ import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:flutter/cupertino.dart';
 
 class GenderController extends ChangeNotifier {
-  Gender? selectedGender;
+  Gender selectedGender = Gender(type: GenderType.male, isSelected: true);
   final List<Gender> _genders = [
     Gender(type: GenderType.male, isSelected: true),
     Gender(type: GenderType.female),

@@ -19,6 +19,7 @@ class AuthIcons {
   static const emailSent = '$base/emailSent.svg';
   static const verified = '$base/verified.svg';
   static const expired = '$base/expired.svg';
+  static const symptoms = '$base/symptoms.svg';
 }
 
 class SocialIcons {

@@ -63,7 +63,7 @@ class AppButton extends StatelessWidget {
                           label,
                           style: AppText.bold700(context).copyWith(
                             color: labelColor ?? Colors.white,
-                            fontSize: labelSize ?? 18.sp,
+                            fontSize: labelSize ?? 16.sp,
                           ),
                         ),
                         SizedBox(width: 8.w),
@@ -78,7 +78,7 @@ class AppButton extends StatelessWidget {
                       label,
                       style: AppText.bold700(context).copyWith(
                         color: labelColor ?? Colors.white,
-                        fontSize: labelSize ?? 18.sp,
+                        fontSize: labelSize ?? 16.sp,
                       ),
                     ),
         ),

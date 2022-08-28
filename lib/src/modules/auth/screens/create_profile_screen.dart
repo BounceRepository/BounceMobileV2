@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/symptoms_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
@@ -10,6 +11,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/phone_number_textfield.dart';
@@ -63,19 +65,24 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       final userId = controller.userId;
       final image = this.image;
       final gender = context.read<GenderController>().selectedGender;
-      if (userId != null && image != null && gender != null) {
-        try {
-          await controller.createProfile(
-            userId: userId,
-            gender: gender,
-            firstName: _firstNameController.text,
-            lastName: _lastNameController.text,
-            phoneNumber: _phoneNumberController.text,
-            image: image,
-            dateOfBirth: _dateOfBirthController.text,
-          );
-        } on Failure catch (e) {
-          NotificationMessage.showError(context, message: e.message);
+      if (userId != null) {
+        if (image != null) {
+          try {
+            await controller.createProfile(
+              userId: userId,
+              gender: gender,
+              firstName: _firstNameController.text,
+              lastName: _lastNameController.text,
+              phoneNumber: _phoneNumberController.text,
+              image: image,
+              dateOfBirth: _dateOfBirthController.text,
+            );
+            AppNavigator.to(context, const SymptomsScreen());
+          } on Failure catch (e) {
+            NotificationMessage.showError(context, message: e.message);
+          }
+        } else {
+          NotificationMessage.showError(context, message: 'Upload your image');
         }
       }
     }
@@ -94,6 +101,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
     final controller = context.read<ImageController>();
     try {
       image = await controller.pickImageFromGallery();
+      setState(() {});
     } on Failure catch (e) {
       NotificationMessage.showError(context, message: e.message);
     }
@@ -113,6 +121,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   const _AppBar(),
                   SizedBox(height: 10.h),
                   _ImageUploadSection(
+                    image: image,
                     onTap: _pickImage,
                   ),
                   SizedBox(height: 41.h),
@@ -175,10 +184,16 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                   ),
                   SizedBox(height: 37.h),
-                  AuthButton(
-                    label: 'Save',
-                    onTap: _updateProfile,
+                  Consumer<AuthController>(
+                    builder: (context, controller, _) {
+                      return AuthButton(
+                        label: 'Save',
+                        isLoading: controller.isLoading,
+                        onTap: _updateProfile,
+                      );
+                    },
                   ),
+                  SizedBox(height: 37.h),
                 ],
               ),
             ),
@@ -190,8 +205,13 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
 }
 
 class _ImageUploadSection extends StatelessWidget {
-  const _ImageUploadSection({Key? key, required this.onTap}) : super(key: key);
+  const _ImageUploadSection({
+    Key? key,
+    required this.image,
+    required this.onTap,
+  }) : super(key: key);
 
+  final File? image;
   final Function() onTap;
 
   @override
@@ -202,19 +222,30 @@ class _ImageUploadSection extends StatelessWidget {
         clipBehavior: Clip.none,
         alignment: Alignment.center,
         children: [
-          Container(
-            height: 130.h,
-            width: 130.h,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(.1),
-              borderRadius: BorderRadius.circular(40.r),
-            ),
-            child: Icon(
-              Icons.person,
-              size: 66.sp,
-              color: const Color(0xffC5B8B8),
-            ),
-          ),
+          image != null
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(40.r),
+                  child: Image.file(
+                    image!,
+                    height: 130.h,
+                    width: 130.h,
+                    fit: BoxFit.cover,
+                    filterQuality: FilterQuality.high,
+                  ),
+                )
+              : Container(
+                  height: 130.h,
+                  width: 130.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(.1),
+                    borderRadius: BorderRadius.circular(40.r),
+                  ),
+                  child: Icon(
+                    Icons.person,
+                    size: 66.sp,
+                    color: const Color(0xffC5B8B8),
+                  ),
+                ),
           Positioned(
             bottom: -25.h,
             child: Container(
@@ -224,7 +255,6 @@ class _ImageUploadSection extends StatelessWidget {
                 border: Border.all(width: 4, color: Colors.white),
                 borderRadius: BorderRadius.circular(20.r),
                 color: AppColors.primary,
-                //boxShadow: [],
               ),
               child: Icon(
                 Icons.camera_alt_outlined,

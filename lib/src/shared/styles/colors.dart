@@ -9,6 +9,7 @@ class AppColors {
   static const background = Color(0xffFEF3E7);
   static const error = Color(0xffEF1313);
   static const border = Color(0xffD9D8D8);
+  static const grey = Color(0xffF9F6F4);
 
   static final boxshadow = [
     BoxShadow(

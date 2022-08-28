@@ -9,7 +9,7 @@ class CustomChildScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  SingleChildScrollView(
+    return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: padding,
       child: child,

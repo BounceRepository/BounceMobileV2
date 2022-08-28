@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
@@ -47,7 +45,6 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _signIn() async {
-    log('message');
     if (_formKey.currentState!.validate()) {
       final controller = context.read<AuthController>();
       try {

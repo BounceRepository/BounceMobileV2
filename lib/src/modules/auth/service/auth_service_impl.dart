@@ -18,7 +18,7 @@ class AuthServiceImpl implements AuthService {
     var body = {'email': email, 'password': newPassword};
 
     try {
-      await RequestHelper.postRequest(url, body);
+      await HttpRequestHelper.postRequest(url, body);
     } on Failure {
       rethrow;
     }
@@ -33,7 +33,7 @@ class AuthServiceImpl implements AuthService {
     var body = {'username': userName, 'password': password};
 
     try {
-      await RequestHelper.postRequest(url, body);
+      await HttpRequestHelper.postRequest(url, body);
     } on Failure {
       rethrow;
     }
@@ -53,7 +53,7 @@ class AuthServiceImpl implements AuthService {
     };
 
     try {
-      final response = await RequestHelper.postRequest(url, body);
+      final response = await HttpRequestHelper.postRequest(url, body);
       return response['data']['userId'];
     } on Failure {
       rethrow;
@@ -68,7 +68,7 @@ class AuthServiceImpl implements AuthService {
     };
 
     try {
-      await RequestHelper.postRequest(url, body);
+      await HttpRequestHelper.postRequest(url, body);
     } on Failure {
       rethrow;
     }
@@ -82,7 +82,7 @@ class AuthServiceImpl implements AuthService {
     };
 
     try {
-      await RequestHelper.postRequest(url, body);
+      await HttpRequestHelper.postRequest(url, body);
     } on Failure {
       rethrow;
     }
@@ -92,7 +92,7 @@ class AuthServiceImpl implements AuthService {
   Future<bool> getVerificationStatus({required String email}) async {
     var url = AuthURLs.getVerificationStatus + email;
     try {
-      final response = await RequestHelper.getRequest(url);
+      final response = await HttpRequestHelper.getRequest(url);
       return response['data'];
     } on Failure {
       rethrow;
@@ -104,7 +104,7 @@ class AuthServiceImpl implements AuthService {
     var url = AuthURLs.verifyEmail;
     var body = {'email': email};
     try {
-      await RequestHelper.postRequest(url, body);
+      await HttpRequestHelper.postRequest(url, body);
     } on Failure {
       rethrow;
     }
@@ -131,7 +131,7 @@ class AuthServiceImpl implements AuthService {
       'File': HelperFunctions.convertToBytes(image),
     };
     try {
-      await RequestHelper.postRequest(url, body);
+      await HttpRequestHelper.postRequest(url, body);
     } on Failure {
       rethrow;
     }
