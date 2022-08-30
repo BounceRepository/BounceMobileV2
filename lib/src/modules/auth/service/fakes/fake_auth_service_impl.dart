@@ -28,8 +28,6 @@ class FakeAuthServiceImpl implements AuthService {
     required String password,
   }) async {
     await Future.delayed(delay);
-    // TODO: implement createProfile
-    throw UnimplementedError();
   }
 
   @override

@@ -29,3 +29,12 @@ class SocialIcons {
   static const facebook = 'assets/icons/socials/facebook.svg';
   static const apple = 'assets/icons/socials/apple.svg';
 }
+
+class DashboardIcons {
+  DashboardIcons._();
+
+  static const home = 'assets/icons/dashboard/home.svg';
+  static const appointment = 'assets/icons/dashboard/appointment.svg';
+  static const measure = 'assets/icons/dashboard/measure.svg';
+  static const people = 'assets/icons/dashboard/people.svg';
+}

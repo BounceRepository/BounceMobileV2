@@ -1,5 +1,6 @@
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/controllers/navbar_controller.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:bounce_patient_app/src/config/service_locator.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
@@ -19,6 +20,7 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => OnboardingController()),
         ChangeNotifierProvider(create: (_) => serviceLocator<ImageController>()),
         ChangeNotifierProvider(create: (_) => GenderController()),
+        ChangeNotifierProvider(create: (_) => NavbarController()),
       ],
       child: child,
     );

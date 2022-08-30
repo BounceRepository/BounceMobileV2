@@ -6,6 +6,7 @@ import 'package:bounce_patient_app/src/modules/auth/widgets/auth_body.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/password_textfield.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/validator.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -53,7 +54,7 @@ class _SignInScreenState extends State<SignInScreen> {
           password: _passwordController.text,
         );
         NotificationMessage.showSucess(context, message: 'Login successful');
-        //TODO: Navigate to dashboard
+        AppNavigator.removeAllUntil(context, const DashboardView());
       } on Failure catch (e) {
         NotificationMessage.showError(context, message: e.message);
       }
