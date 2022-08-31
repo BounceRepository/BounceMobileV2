@@ -78,6 +78,7 @@ flutter:
     - assets/images/
     - assets/images/auth/
     - assets/images/onboarding/
+    - assets/images/moods/
     - assets/icons/
     - assets/icons/auth/
     - assets/icons/socials/

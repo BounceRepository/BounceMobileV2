@@ -4,6 +4,7 @@ class AppIcons {
   static const backBrokenArrow = 'assets/icons/back_broken_arrow.svg';
   static const mail = 'assets/icons/mail.svg';
   static const like = 'assets/icons/like.svg';
+  static const quote = 'assets/icons/quote.svg';
 }
 
 class AuthIcons {
@@ -38,3 +39,5 @@ class DashboardIcons {
   static const measure = 'assets/icons/dashboard/measure.svg';
   static const people = 'assets/icons/dashboard/people.svg';
 }
+
+

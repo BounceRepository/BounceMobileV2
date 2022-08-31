@@ -14,7 +14,6 @@ class DashboardView extends StatelessWidget {
     return Consumer<NavbarController>(
       builder: (context, controller, _) {
         return Scaffold(
-          backgroundColor: AppColors.background,
           body: controller.selectedItem.screen,
           bottomNavigationBar: CustomBottomNavBar(items: controller.items),
         );

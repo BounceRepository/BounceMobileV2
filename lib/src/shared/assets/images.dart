@@ -2,6 +2,9 @@ class AppImages {
   AppImages._();
 
   static const logo = 'assets/images/logo.png';
+  static const meetup = 'assets/images/meetup.png';
+  static const discover = 'assets/images/discover.png';
+  static const rantRoom = 'assets/images/rant_room.png';
 }
 
 class OnboardingImages {
@@ -19,4 +22,13 @@ class AuthImages {
   static const emailSent = '$base/emailSent.png';
   static const verified = '$base/verified.png';
   static const expired = '$base/expired.png';
+}
+
+class MoodIcons {
+  MoodIcons._();
+
+  static const angry = 'assets/images/moods/angry.png';
+  static const calm = 'assets/images/moods/calm.png';
+  static const happy = 'assets/images/moods/happy.png';
+  static const manic = 'assets/images/moods/manic.png';
 }

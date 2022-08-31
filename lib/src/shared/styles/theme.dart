@@ -10,12 +10,12 @@ class AppTheme {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
       textTheme: GoogleFonts.poppinsTextTheme(),
+      scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: IconThemeData(
-          color: AppColors.primary,
           size: 20.sp,
         ),
       ),
