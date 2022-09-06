@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
+import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 
 class FakeAuthServiceImpl implements AuthService {
@@ -28,6 +29,15 @@ class FakeAuthServiceImpl implements AuthService {
     required String password,
   }) async {
     await Future.delayed(delay);
+    DataStore.user = User(
+      id: 10,
+      firstName: 'Test',
+      lastName: 'TestLast',
+      userName: 'TestName',
+      email: 'test@gmail.com',
+      phone: '07030000121',
+      dateOfBirth: '1990-02-08',
+    );
   }
 
   @override

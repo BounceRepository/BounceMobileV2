@@ -40,4 +40,10 @@ class DashboardIcons {
   static const people = 'assets/icons/dashboard/people.svg';
 }
 
+class ChatRoomIcons {
+  ChatRoomIcons._();
 
+  static const like = 'assets/icons/chat_room/like.svg';
+  static const comment = 'assets/icons/chat_room/comment.svg';
+  static const share = 'assets/icons/chat_room/share.svg';
+}

@@ -11,7 +11,8 @@ final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
   // controllers
-  serviceLocator.registerFactory(() => AuthController(authService: AuthServiceImpl(requestHelper: serviceLocator())));
+  //serviceLocator.registerFactory(() => AuthController(authService: AuthServiceImpl(requestHelper: serviceLocator())));
+  serviceLocator.registerFactory(() => AuthController(authService: FakeAuthServiceImpl()));
   serviceLocator
       .registerLazySingleton(() => ImageController(imageService: serviceLocator()));
 

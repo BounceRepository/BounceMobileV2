@@ -5,6 +5,7 @@ import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +26,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const _AppBar(),
+            const CustomAppBar(),
             Expanded(
               child: ListView(
                 physics: const BouncingScrollPhysics(),
@@ -116,29 +117,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _AppBar extends StatelessWidget {
-  const _AppBar({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 25.h, bottom: 8.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(
-            Icons.menu,
-            size: 32.sp,
-          ),
-          Icon(
-            Icons.notifications_outlined,
-            size: 32.sp,
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class _MoodIconsSection extends StatelessWidget {
   const _MoodIconsSection({Key? key}) : super(key: key);
