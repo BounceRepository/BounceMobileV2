@@ -22,11 +22,11 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["userId"],
         userName: json['userName'],
-        firstName: json['firstName'],
-        lastName: json['lastName'],
+        firstName: json['firstName'] ?? '',
+        lastName: json['lastName'] ?? '',
         email: json["email"],
-        phone: json["phone"],
-        dateOfBirth: json["dateOfBirth"],
+        phone: json["phone"] ?? '',
+        dateOfBirth: json["dateOfBirth"] ?? '',
         gender: _getGender(json["gender"]),
       );
 }

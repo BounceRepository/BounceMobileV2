@@ -4,6 +4,7 @@ import 'package:bounce_patient_app/src/modules/auth/constants/auth_urls.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/network/request_helper.dart';
@@ -38,7 +39,10 @@ class AuthServiceImpl implements AuthService {
     var body = {'username': userName, 'password': password};
 
     try {
-      await _requestHelper.post(url, body: body);
+      final response = await _requestHelper.post(url, body: body);
+      final data = response['data'];
+      DataStore.authToken = data['token'];
+      DataStore.user = User.fromJson(data);
     } on Failure {
       rethrow;
     }

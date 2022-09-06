@@ -1,5 +1,7 @@
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
+import 'package:bounce_patient_app/src/shared/extensions/string.dart';
+import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -12,6 +14,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = DataStore.user;
+
+    if (user == null) {
+      return const SizedBox.shrink();
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -21,9 +29,7 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(
-                  vertical: AppPadding.vertical,
-                ),
+                padding: EdgeInsets.symmetric(vertical: AppPadding.vertical),
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -33,11 +39,11 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'Good Afternoon,',
                           style: AppText.bold500(context).copyWith(
-                            fontSize: 20.sp,
+                            fontSize: 16.sp,
                           ),
                         ),
                         Text(
-                          'Kemi!',
+                          user.userName.toTitleCase,
                           style: AppText.bold700(context).copyWith(
                             fontSize: 26.sp,
                           ),

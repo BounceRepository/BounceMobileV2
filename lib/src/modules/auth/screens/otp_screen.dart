@@ -30,10 +30,8 @@ class _OTPScreenState extends State<OTPScreen> {
       final controller = context.read<AuthController>();
       try {
         await controller.validateOTP(token: token);
-        NotificationMessage.showSucess(
-          context,
-          message: '${widget.email} verifiedcsuccessful',
-        );
+        NotificationMessage.showSucess(context,
+            message: '${widget.email} verification successful');
         AppNavigator.to(context, ResetPasswordScreen(email: widget.email));
       } on Failure catch (e) {
         NotificationMessage.showError(context, message: e.message);

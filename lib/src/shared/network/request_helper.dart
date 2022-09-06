@@ -51,6 +51,7 @@ class DioRequestHelper implements IRequestHelper {
       final response = await dio.get(url);
 
       if (response.statusCode == 200) {
+        log('PAYLOAD--${response.data}');
         return response.data;
       }
     } on DioError {
@@ -77,6 +78,7 @@ class DioRequestHelper implements IRequestHelper {
     try {
       final response = await dio.patch(url, data: data);
       if (response.statusCode == 200) {
+        log('PAYLOAD--${response.data}');
         return response.data;
       }
     } on DioError {
@@ -140,6 +142,7 @@ class DioRequestHelper implements IRequestHelper {
     try {
       final response = await dio.put(url, data: data);
       if (response.statusCode == 200) {
+        log('PAYLOAD--${response.data}');
         return response.data;
       }
     } on DioError {

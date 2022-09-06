@@ -61,6 +61,7 @@ class _Body extends StatelessWidget {
           SizedBox(height: 16.h),
           Text(
             title,
+            textAlign: TextAlign.center,
             style: AppText.bold600(context).copyWith(
               fontSize: 20.sp,
             ),
@@ -70,7 +71,7 @@ class _Body extends StatelessWidget {
             desc,
             textAlign: TextAlign.center,
             style: AppText.bold400(context).copyWith(
-              fontSize: 16.sp,
+              fontSize: 14.sp,
             ),
           ),
           SizedBox(height: 37.h),

@@ -31,7 +31,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (_formKey.currentState!.validate()) {
       final controller = context.read<AuthController>();
       try {
-        await controller.forgotPassword(email: _emailController.text);
+        await controller.forgotPassword(email: _emailController.text.trim());
         NotificationMessage.showSucess(
           context,
           message: 'Verification code has been sent to ${_emailController.text}',
