@@ -4,7 +4,6 @@ import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
-import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
@@ -45,7 +44,7 @@ class _OTPScreenState extends State<OTPScreen> {
   void _sendOTP() async {
     final controller = context.read<AuthController>();
     try {
-      await controller.sendOTP(email: widget.email);
+      await controller.forgotPassword(email: widget.email);
       NotificationMessage.showSucess(
         context,
         message: 'Verification code has been sent to ${widget.email}',
@@ -98,17 +97,19 @@ class _OTPScreenState extends State<OTPScreen> {
                 ),
                 SizedBox(height: 21.h),
                 CustomPinCodeTextField(
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    token = value;
+                  },
                 ),
                 SizedBox(height: 26.h),
-                Text(
-                  '00:60 ',
-                  style: AppText.bold500(context).copyWith(
-                    fontSize: 14.sp,
-                    color: AppColors.primary,
-                  ),
-                ),
-                SizedBox(height: 26.h),
+                // Text(
+                //   '00:60',
+                //   style: AppText.bold500(context).copyWith(
+                //     fontSize: 14.sp,
+                //     color: AppColors.primary,
+                //   ),
+                // ),
+                // SizedBox(height: 26.h),
                 Consumer<AuthController>(
                   builder: (context, controller, _) {
                     if (controller.isSendingOTP) {

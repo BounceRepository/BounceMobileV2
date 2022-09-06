@@ -9,6 +9,11 @@ import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/network/request_helper.dart';
 
 class AuthServiceImpl implements AuthService {
+  final IRequestHelper _requestHelper;
+
+  AuthServiceImpl({required IRequestHelper requestHelper})
+      : _requestHelper = requestHelper;
+
   @override
   Future<void> changePassword({
     required String email,
@@ -18,7 +23,7 @@ class AuthServiceImpl implements AuthService {
     var body = {'email': email, 'password': newPassword};
 
     try {
-      await HttpRequestHelper.postRequest(url, body);
+      await _requestHelper.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -33,7 +38,7 @@ class AuthServiceImpl implements AuthService {
     var body = {'username': userName, 'password': password};
 
     try {
-      await HttpRequestHelper.postRequest(url, body);
+      await _requestHelper.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -53,7 +58,7 @@ class AuthServiceImpl implements AuthService {
     };
 
     try {
-      final response = await HttpRequestHelper.postRequest(url, body);
+      final response = await _requestHelper.post(url, body: body);
       return response['data']['userId'];
     } on Failure {
       rethrow;
@@ -62,13 +67,11 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<void> resetPassword({required String email}) async {
-    var url = AuthURLs.resetPassword;
-    var body = {
-      "email": email,
-    };
+    var url = AuthURLs.resetPassword + '?email=$email';
+    var body = {};
 
     try {
-      await HttpRequestHelper.postRequest(url, body);
+      await _requestHelper.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -76,13 +79,11 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<void> validateOTP({required String token}) async {
-    var url = AuthURLs.validateToken;
-    var body = {
-      "token": token,
-    };
+    var url = AuthURLs.validateToken + '?token=$token';
+    var body = {};
 
     try {
-      await HttpRequestHelper.postRequest(url, body);
+      await _requestHelper.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -92,7 +93,7 @@ class AuthServiceImpl implements AuthService {
   Future<bool> getVerificationStatus({required String email}) async {
     var url = AuthURLs.getVerificationStatus + email;
     try {
-      final response = await HttpRequestHelper.getRequest(url);
+      final response = await _requestHelper.get(url);
       return response['data'];
     } on Failure {
       rethrow;
@@ -101,10 +102,10 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<void> sendVerificationLink({required String email}) async {
-    var url = AuthURLs.verifyEmail;
-    var body = {'email': email};
+    var url = AuthURLs.verifyEmail + '?email=$email';
+    var body = {};
     try {
-      await HttpRequestHelper.postRequest(url, body);
+      await _requestHelper.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -128,10 +129,10 @@ class AuthServiceImpl implements AuthService {
       'Phone': phoneNumber,
       'UserId': userId,
       'Gender': gender.type.name.toString(),
-      'File': HelperFunctions.convertToBytes(image),
+      'File': HelperFunctions.convertFileToBytes(image),
     };
     try {
-      await HttpRequestHelper.postRequest(url, body);
+      await _requestHelper.post(url, body: body);
     } on Failure {
       rethrow;
     }

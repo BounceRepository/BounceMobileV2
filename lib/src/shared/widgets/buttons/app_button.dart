@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,7 +61,7 @@ class AppButton extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          label,
+                          label.toTitleCase,
                           style: AppText.bold700(context).copyWith(
                             color: labelColor ?? Colors.white,
                             fontSize: labelSize ?? 16.sp,
@@ -75,7 +76,7 @@ class AppButton extends StatelessWidget {
                       ],
                     )
                   : Text(
-                      label,
+                      label.toTitleCase,
                       style: AppText.bold700(context).copyWith(
                         color: labelColor ?? Colors.white,
                         fontSize: labelSize ?? 16.sp,

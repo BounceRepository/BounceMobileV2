@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/symptoms_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
@@ -77,7 +78,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               image: image,
               dateOfBirth: _dateOfBirthController.text,
             );
-            AppNavigator.to(context, const SymptomsScreen());
+            // AppNavigator.to(context, const SymptomsScreen());
+            AppNavigator.removeAllUntil(context, const DashboardView());
+            NotificationMessage.showSucess(context,
+                message: 'Account created successfully');
           } on Failure catch (e) {
             NotificationMessage.showError(context, message: e.message);
           }
@@ -109,92 +113,98 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: SafeArea(
-          child: CustomChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  const _AppBar(),
-                  SizedBox(height: 10.h),
-                  _ImageUploadSection(
-                    image: image,
-                    onTap: _pickImage,
-                  ),
-                  SizedBox(height: 41.h),
-                  Text(
-                    widget.email,
-                    style: AppText.bold500(context).copyWith(
-                      fontSize: 14.sp,
+    return WillPopScope(
+      onWillPop: () {
+        AppNavigator.removeAllUntil(context, const SignUpScreen());
+        return Future.value(true);
+      },
+      child: Scaffold(
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SafeArea(
+            child: CustomChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const _AppBar(),
+                    SizedBox(height: 10.h),
+                    _ImageUploadSection(
+                      image: image,
+                      onTap: _pickImage,
                     ),
-                  ),
-                  SizedBox(height: 20.h),
-                  const _GenderSection(),
-                  SizedBox(height: 20.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40.w),
-                    child: Column(
-                      children: [
-                        CustomTextField(
-                          controller: _firstNameController,
-                          lableText: 'First Name',
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your first name';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: 20.h),
-                        CustomTextField(
-                          controller: _lastNameController,
-                          lableText: 'Last Name',
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your last name';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: 20.h),
-                        CustomPhoneNumberTextfield(
-                          controller: _phoneNumberController,
-                          lableText: 'Phone Number',
-                        ),
-                        SizedBox(height: 20.h),
-                        CustomTextField(
-                          readOnly: true,
-                          controller: _dateOfBirthController,
-                          lableText: 'Date of Birth',
-                          suffixIcon: const TextFieldIcon(
-                            icon: Icons.calendar_month,
+                    SizedBox(height: 41.h),
+                    Text(
+                      widget.email,
+                      style: AppText.bold500(context).copyWith(
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    const _GenderSection(),
+                    SizedBox(height: 20.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 40.w),
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            controller: _firstNameController,
+                            lableText: 'First Name',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your first name';
+                              }
+                              return null;
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter tap to select your date of birth';
-                            }
-                            return null;
-                          },
-                          onTap: _pickDate,
-                        ),
-                      ],
+                          SizedBox(height: 20.h),
+                          CustomTextField(
+                            controller: _lastNameController,
+                            lableText: 'Last Name',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your last name';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 20.h),
+                          CustomPhoneNumberTextfield(
+                            controller: _phoneNumberController,
+                            lableText: 'Phone Number',
+                          ),
+                          SizedBox(height: 20.h),
+                          CustomTextField(
+                            readOnly: true,
+                            controller: _dateOfBirthController,
+                            lableText: 'Date of Birth',
+                            suffixIcon: const TextFieldIcon(
+                              icon: Icons.calendar_month,
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter tap to select your date of birth';
+                              }
+                              return null;
+                            },
+                            onTap: _pickDate,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 37.h),
-                  Consumer<AuthController>(
-                    builder: (context, controller, _) {
-                      return AuthButton(
-                        label: 'Save',
-                        isLoading: controller.isLoading,
-                        onTap: _updateProfile,
-                      );
-                    },
-                  ),
-                  SizedBox(height: 37.h),
-                ],
+                    SizedBox(height: 37.h),
+                    Consumer<AuthController>(
+                      builder: (context, controller, _) {
+                        return AuthButton(
+                          label: 'Save',
+                          isLoading: controller.isLoading,
+                          onTap: _updateProfile,
+                        );
+                      },
+                    ),
+                    SizedBox(height: 37.h),
+                  ],
+                ),
               ),
             ),
           ),

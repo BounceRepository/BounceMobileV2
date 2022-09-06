@@ -81,95 +81,101 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: AuthBody(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              'Create Account',
-              style: AppText.bold600(context).copyWith(
-                fontSize: 32.sp,
-              ),
-            ),
-          ),
-          SizedBox(height: 16.h),
-          SvgPicture.asset(
-            AuthIcons.createAccount,
-            width: 159.53.w,
-            height: 182.h,
-          ),
-          SizedBox(height: 16.h),
-          CustomTextField(
-            controller: _userNameController,
-            lableText: 'User Name',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your username';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 16.h),
-          CustomTextField(
-            controller: _emailController,
-            lableText: 'Email',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your email';
-              }
-              if (Validator.isNotValidEmail(value)) {
-                return 'Enter a valid email';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 16.h),
-          PasswordTextField(controller: _passwordController),
-          SizedBox(height: 20.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 16.h,
-                width: 16.h,
-                child: Checkbox(
-                  value: _hasAcceptedTerms,
-                  activeColor: AppColors.primary,
-                  onChanged: (value) => _acceptTerms(),
+    return WillPopScope(
+      onWillPop: () {
+        AppNavigator.removeAllUntil(context, const SignInScreen());
+        return Future.value(true);
+      },
+      child: Form(
+        key: _formKey,
+        child: AuthBody(
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Create Account',
+                style: AppText.bold600(context).copyWith(
+                  fontSize: 32.sp,
                 ),
               ),
-              SizedBox(width: 5.w),
-              LinkText(
-                text1: 'I agree to the BOUNCE',
-                text2: 'Terms and Conditions',
-                onClick: _acceptTerms,
-              ),
-            ],
-          ),
-          SizedBox(height: 28.h),
-          Consumer<AuthController>(
-            builder: (context, controller, _) {
-              return AuthButton(
-                label: 'Sign Up',
-                isLoading: controller.isLoading,
-                onTap: _createAccount,
-              );
-            },
-          ),
-          SizedBox(height: 23.h),
-          const SocialAuthView(),
-          SizedBox(height: 23.h),
-          LinkText(
-            text1: 'Already have an account?',
-            text2: 'Sign In',
-            onClick: () {
-              AppNavigator.to(context, const SignInScreen());
-            },
-          ),
-          SizedBox(height: 51.h),
-        ],
+            ),
+            SizedBox(height: 16.h),
+            SvgPicture.asset(
+              AuthIcons.createAccount,
+              width: 159.53.w,
+              height: 182.h,
+            ),
+            SizedBox(height: 16.h),
+            CustomTextField(
+              controller: _userNameController,
+              lableText: 'User Name',
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your username';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16.h),
+            CustomTextField(
+              controller: _emailController,
+              lableText: 'Email',
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                if (Validator.isNotValidEmail(value)) {
+                  return 'Enter a valid email';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16.h),
+            PasswordTextField(controller: _passwordController),
+            SizedBox(height: 20.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 16.h,
+                  width: 16.h,
+                  child: Checkbox(
+                    value: _hasAcceptedTerms,
+                    activeColor: AppColors.primary,
+                    onChanged: (value) => _acceptTerms(),
+                  ),
+                ),
+                SizedBox(width: 5.w),
+                LinkText(
+                  text1: 'I agree to the BOUNCE',
+                  text2: 'Terms and Conditions',
+                  onClick: _acceptTerms,
+                ),
+              ],
+            ),
+            SizedBox(height: 28.h),
+            Consumer<AuthController>(
+              builder: (context, controller, _) {
+                return AuthButton(
+                  label: 'Sign Up',
+                  isLoading: controller.isLoading,
+                  onTap: _createAccount,
+                );
+              },
+            ),
+            SizedBox(height: 23.h),
+            const SocialAuthView(),
+            SizedBox(height: 23.h),
+            LinkText(
+              text1: 'Already have an account?',
+              text2: 'Sign In',
+              onClick: () {
+                AppNavigator.to(context, const SignInScreen());
+              },
+            ),
+            SizedBox(height: 51.h),
+          ],
+        ),
       ),
     );
   }

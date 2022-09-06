@@ -11,7 +11,7 @@ class HelperFunctions {
     return uuid.v4();
   }
 
-  static String convertToBytes(File image) {
+  static String convertFileToBytes(File image) {
     final bytes = File(image.path).readAsBytesSync();
     return base64Encode(bytes);
   }

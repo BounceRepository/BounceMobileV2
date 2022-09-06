@@ -65,7 +65,6 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: AuthBody(
         children: [
           Text(

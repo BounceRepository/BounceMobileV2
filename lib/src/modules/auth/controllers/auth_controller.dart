@@ -38,7 +38,7 @@ class AuthController extends BaseController {
     notifyListeners();
   }
 
-  Future<void> sendOTP({required String email}) async {
+  Future<void> forgotPassword({required String email}) async {
     try {
       setIsSendingOTP(true);
       await _authService.resetPassword(email: email);

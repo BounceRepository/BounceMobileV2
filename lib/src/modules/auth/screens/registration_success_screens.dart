@@ -30,7 +30,7 @@ class IncomingEmailScreen extends StatelessWidget {
       if (status) {
         AppNavigator.removeAllUntil(context, _VerifiedSuccessScreen(email: email));
       } else {
-        AppNavigator.to(context, const _ExpiredLinkScreen());
+        AppNavigator.to(context, const _VerificationErrorScreen());
       }
     } on Failure catch (e) {
       NotificationMessage.showError(context, message: e.message);
@@ -90,8 +90,8 @@ class _VerifiedSuccessScreen extends StatelessWidget {
   }
 }
 
-class _ExpiredLinkScreen extends StatelessWidget {
-  const _ExpiredLinkScreen({Key? key}) : super(key: key);
+class _VerificationErrorScreen extends StatelessWidget {
+  const _VerificationErrorScreen({Key? key}) : super(key: key);
 
   void _sendLink(BuildContext context) async {
     final controller = context.read<AuthController>();
