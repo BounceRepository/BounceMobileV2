@@ -8,6 +8,7 @@ import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
+import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -23,9 +24,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class CreateProfileScreen extends StatefulWidget {
-  const CreateProfileScreen({Key? key, required this.email}) : super(key: key);
+  const CreateProfileScreen({Key? key, required this.email, required this.userName})
+      : super(key: key);
 
   final String email;
+  final String userName;
 
   @override
   State<CreateProfileScreen> createState() => _CreateProfileScreenState();
@@ -76,6 +79,16 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               lastName: _lastNameController.text,
               phoneNumber: _phoneNumberController.text,
               image: image,
+              dateOfBirth: _dateOfBirthController.text,
+            );
+            DataStore.user = User(
+              userName: widget.userName,
+              gender: gender,
+              firstName: _firstNameController.text,
+              lastName: _lastNameController.text,
+              id: userId,
+              email: widget.email,
+              phone: '0${_phoneNumberController.text}',
               dateOfBirth: _dateOfBirthController.text,
             );
             // AppNavigator.to(context, const SymptomsScreen());

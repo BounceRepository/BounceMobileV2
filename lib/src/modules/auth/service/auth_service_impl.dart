@@ -135,7 +135,9 @@ class AuthServiceImpl implements AuthService {
       'Phone': '0$phoneNumber',
       'UserId': userId,
       'Gender': gender.type.name.toString().toUpperCase(),
-      'File': await MultipartFile.fromFile(image.path, filename: fileName)
+      'ImageFile': await MultipartFile.fromFile(image.path, filename: fileName),
+      'MeansOfIdentification':
+          await MultipartFile.fromFile(image.path, filename: fileName)
     };
     var formData = FormData.fromMap(body);
 

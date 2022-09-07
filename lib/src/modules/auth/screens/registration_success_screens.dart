@@ -28,7 +28,12 @@ class IncomingEmailScreen extends StatelessWidget {
     try {
       final status = await controller.getVerificationStatus(email: email);
       if (status) {
-        AppNavigator.removeAllUntil(context, _VerifiedSuccessScreen(email: email));
+        AppNavigator.removeAllUntil(
+            context,
+            _VerifiedSuccessScreen(
+              email: email,
+              userName: userName,
+            ));
       } else {
         AppNavigator.to(context, const _VerificationErrorScreen());
       }
@@ -74,9 +79,11 @@ class IncomingEmailScreen extends StatelessWidget {
 }
 
 class _VerifiedSuccessScreen extends StatelessWidget {
-  const _VerifiedSuccessScreen({Key? key, required this.email}) : super(key: key);
+  const _VerifiedSuccessScreen({Key? key, required this.email, required this.userName})
+      : super(key: key);
 
   final String email;
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +92,12 @@ class _VerifiedSuccessScreen extends StatelessWidget {
       description: 'Your email is successfully verified.',
       buttonLabel: 'Continue',
       onTap: () {
-        AppNavigator.removeAllUntil(context, CreateProfileScreen(email: email));
+        AppNavigator.removeAllUntil(
+            context,
+            CreateProfileScreen(
+              email: email,
+              userName: userName,
+            ));
       },
     );
   }
