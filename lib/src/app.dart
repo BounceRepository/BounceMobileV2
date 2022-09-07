@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return ProvidersWrapper(
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
-        minTextAdapt: true,
+        // minTextAdapt: true,
         builder: (BuildContext context, Widget? child) {
           return MaterialApp(
             title: 'Bounce - Patient',
