@@ -5,6 +5,7 @@ class AppIcons {
   static const mail = 'assets/icons/mail.svg';
   static const like = 'assets/icons/like.svg';
   static const quote = 'assets/icons/quote.svg';
+  static const sort = 'assets/icons/sort.svg';
 }
 
 class AuthIcons {

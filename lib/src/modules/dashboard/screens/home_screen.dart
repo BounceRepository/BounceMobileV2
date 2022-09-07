@@ -117,8 +117,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
-
 class _MoodIconsSection extends StatelessWidget {
   const _MoodIconsSection({Key? key}) : super(key: key);
 
@@ -278,7 +276,9 @@ class _ChatRoomSection extends StatelessWidget {
             context,
             icon: AppImages.rantRoom,
             label: 'Rant Room',
-            onTap: () {},
+            onTap: () {
+              // AppNavigator.to(context, DashboardView());
+            },
           ),
         ],
       ),
@@ -416,7 +416,7 @@ class _ArticlesSection extends StatelessWidget {
           Container(
             height: 120.h,
             decoration: BoxDecoration(
-              color: Colors.red,
+              color: Colors.black,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(16.r),
                 topRight: Radius.circular(16.r),

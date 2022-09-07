@@ -86,7 +86,7 @@ class _RoomScreenState extends State<RoomScreen> with SingleTickerProviderStateM
                 (context, index) => const RoomItemTile(),
                 childCount: 30,
               ),
-            )
+            ),
           ],
         ),
       ),
