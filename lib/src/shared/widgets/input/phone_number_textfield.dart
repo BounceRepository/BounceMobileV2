@@ -53,6 +53,7 @@ class _CustomPhoneNumberTextfieldState extends State<CustomPhoneNumberTextfield>
   @override
   Widget build(BuildContext context) {
     return IntlPhoneField(
+      controller: widget.controller,
       initialCountryCode: initialCountry,
       keyboardType: const TextInputType.numberWithOptions(
         signed: true,

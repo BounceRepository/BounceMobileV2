@@ -105,7 +105,7 @@ class BorderAppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppButton(
-      label: label,
+      label: label.toTitleCase,
       labelColor: labelColor,
       backgroundColor: Colors.transparent,
       elevation: 0,

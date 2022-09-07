@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +20,7 @@ class AuthButton extends StatelessWidget {
     return SizedBox(
       width: 212.15.w,
       child: AppButton(
-        label: label,
+        label: label.toTitleCase,
         labelColor: Colors.white,
         isLoading: isLoading,
         labelSize: 13.06.sp,

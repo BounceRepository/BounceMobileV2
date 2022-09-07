@@ -7,6 +7,7 @@ import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -21,53 +22,59 @@ class HomeScreen extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomAppBar(),
-            Expanded(
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(vertical: AppPadding.vertical),
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Good Afternoon,',
-                          style: AppText.bold500(context).copyWith(
-                            fontSize: 16.sp,
+    return WillPopScope(
+      onWillPop: () {
+        SystemNavigator.pop();
+        return Future.value(true);
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const CustomAppBar(),
+              Expanded(
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(vertical: AppPadding.vertical),
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Good Afternoon,',
+                            style: AppText.bold500(context).copyWith(
+                              fontSize: 16.sp,
+                            ),
                           ),
-                        ),
-                        Text(
-                          user.userName.toTitleCase,
-                          style: AppText.bold700(context).copyWith(
-                            fontSize: 26.sp,
+                          Text(
+                            user.userName.toTitleCase,
+                            style: AppText.bold700(context).copyWith(
+                              fontSize: 26.sp,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 26.h),
-                  const _MoodIconsSection(),
-                  SizedBox(height: 26.h),
-                  const _SessionsCard(),
-                  SizedBox(height: 26.h),
-                  const _ChatRoomSection(),
-                  SizedBox(height: 16.h),
-                  const _QuoteCard(),
-                  SizedBox(height: 26.h),
-                  therapistCard(context),
-                  SizedBox(height: 26.h),
-                  const _ArticlesSection(),
-                ],
+                    SizedBox(height: 26.h),
+                    const _MoodIconsSection(),
+                    SizedBox(height: 26.h),
+                    const _SessionsCard(),
+                    SizedBox(height: 26.h),
+                    const _ChatRoomSection(),
+                    SizedBox(height: 16.h),
+                    const _QuoteCard(),
+                    SizedBox(height: 26.h),
+                    therapistCard(context),
+                    SizedBox(height: 26.h),
+                    const _ArticlesSection(),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

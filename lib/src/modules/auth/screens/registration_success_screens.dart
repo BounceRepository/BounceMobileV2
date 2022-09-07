@@ -59,7 +59,8 @@ class IncomingEmailScreen extends StatelessWidget {
               ),
             ),
             TextSpan(
-              text: 'Please verify your email address by clicking on the button below.',
+              text:
+                  'Please verify your email address by clicking on the link sent to your email, then click the button below to check status.',
               style: textStyle,
             ),
           ],
@@ -99,6 +100,9 @@ class _VerificationErrorScreen extends StatelessWidget {
     if (email != null) {
       try {
         await controller.verifyEmail(email: email);
+        NotificationMessage.showSucess(context,
+            message: 'A confirmation link has been sent to your email');
+        Navigator.pop(context);
       } on Failure catch (e) {
         NotificationMessage.showError(context, message: e.message);
       }

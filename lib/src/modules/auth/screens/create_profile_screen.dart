@@ -196,7 +196,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     Consumer<AuthController>(
                       builder: (context, controller, _) {
                         return AuthButton(
-                          label: 'Save',
+                          label: 'Submit',
                           isLoading: controller.isLoading,
                           onTap: _updateProfile,
                         );

@@ -56,25 +56,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _createAccount() async {
-    if (_formKey.currentState!.validate() && _hasAcceptedTerms) {
-      final controller = context.read<AuthController>();
-      try {
-        final userId = await controller.createAccount(
-          userName: _userNameController.text.trim(),
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
-        controller.userId = userId;
-        controller.email = _emailController.text.trim();
-        NotificationMessage.showSucess(context,
-            message: 'A confirmation link has been sent to your email');
-        AppNavigator.to(
-            context,
-            IncomingEmailScreen(
-                email: _emailController.text.trim(),
-                userName: _userNameController.text.trim()));
-      } on Failure catch (e) {
-        NotificationMessage.showError(context, message: e.message);
+    if (_formKey.currentState!.validate()) {
+      if (_hasAcceptedTerms) {
+        final controller = context.read<AuthController>();
+        try {
+          final userId = await controller.createAccount(
+            userName: _userNameController.text.trim(),
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
+          controller.userId = userId;
+          controller.email = _emailController.text.trim();
+          NotificationMessage.showSucess(context,
+              message: 'A confirmation link has been sent to your email');
+          AppNavigator.to(
+              context,
+              IncomingEmailScreen(
+                  email: _emailController.text.trim(),
+                  userName: _userNameController.text.trim()));
+        } on Failure catch (e) {
+          NotificationMessage.showError(context, message: e.message);
+        }
+      } else {
+        NotificationMessage.showError(context,
+            message: 'Agree to Bounce terms and conditions ');
       }
     }
   }

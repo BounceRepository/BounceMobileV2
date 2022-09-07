@@ -15,6 +15,7 @@ abstract class IRequestHelper {
     String url, {
     required dynamic body,
     Map<String, String>? headers,
+    bool isFormData = false,
   });
   Future<dynamic> put(
     String url, {
@@ -91,16 +92,25 @@ class DioRequestHelper implements IRequestHelper {
   }
 
   @override
-  Future post(String url, {required body, Map<String, String>? headers}) async {
+  Future post(String url,
+      {required body, Map<String, String>? headers, bool isFormData = false}) async {
     if (headers != null) {
       dio.options.headers.addAll(headers);
     }
-
-    var data = json.encode(body);
+    dynamic data;
+    if (isFormData) {
+      data = body;
+    } else {
+      data = json.encode(body);
+    }
 
     log('URL--$url');
     log('HEADERS--${dio.options.headers}');
-    log('BODY--$data');
+    if (isFormData) {
+      log('BODY--${data.fields.toString()}');
+    } else {
+      log('BODY--$data');
+    }
 
     try {
       final response = await dio.post(url, data: body);
@@ -198,7 +208,12 @@ class HttpRequestHelper implements IRequestHelper {
   }
 
   @override
-  Future<dynamic> post(String url, {required body, Map<String, String>? headers}) async {
+  Future<dynamic> post(
+    String url, {
+    required body,
+    Map<String, String>? headers,
+    bool isFormData = false,
+  }) async {
     headers ??= <String, String>{};
 
     final token = DataStore.authToken;

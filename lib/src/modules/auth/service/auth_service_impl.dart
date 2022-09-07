@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:bounce_patient_app/src/modules/auth/constants/auth_urls.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/network/request_helper.dart';
+import 'package:dio/dio.dart';
 
 class AuthServiceImpl implements AuthService {
   final IRequestHelper _requestHelper;
@@ -126,17 +126,21 @@ class AuthServiceImpl implements AuthService {
     required String dateOfBirth,
   }) async {
     var url = AuthURLs.createProfile;
+    String fileName = image.path.split('/').last;
+
     var body = {
       'DateOfBirth': DateTimeHelperFunctions.getDate(dateOfBirth).toIso8601String(),
       'FirstName': firstName,
       'LastName': lastName,
-      'Phone': phoneNumber,
+      'Phone': '0$phoneNumber',
       'UserId': userId,
-      'Gender': gender.type.name.toString(),
-      'File': HelperFunctions.convertFileToBytes(image),
+      'Gender': gender.type.name.toString().toUpperCase(),
+      'File': await MultipartFile.fromFile(image.path, filename: fileName)
     };
+    var formData = FormData.fromMap(body);
+
     try {
-      await _requestHelper.post(url, body: body);
+      await _requestHelper.post(url, body: formData, isFormData: true);
     } on Failure {
       rethrow;
     }
