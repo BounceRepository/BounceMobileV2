@@ -6,14 +6,13 @@ import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_f
 import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
-import 'package:bounce_patient_app/src/shared/network/request_helper.dart';
+import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:dio/dio.dart';
 
 class AuthServiceImpl implements AuthService {
-  final IRequestHelper _requestHelper;
+  final IApi _requestHelper;
 
-  AuthServiceImpl({required IRequestHelper requestHelper})
-      : _requestHelper = requestHelper;
+  AuthServiceImpl({required IApi requestHelper}) : _requestHelper = requestHelper;
 
   @override
   Future<void> changePassword({

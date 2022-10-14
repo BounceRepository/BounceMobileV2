@@ -9,7 +9,10 @@ class AppTheme {
   static ThemeData get theme {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-      textTheme: GoogleFonts.poppinsTextTheme(),
+      textTheme: GoogleFonts.poppinsTextTheme().apply(
+        displayColor: AppColors.textBrown,
+        bodyColor: AppColors.textBrown,
+      ),
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         centerTitle: true,

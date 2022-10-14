@@ -1,12 +1,15 @@
-import 'package:bounce_patient_app/src/app.dart';
+// ignore_for_file: library_prefixes
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bounce_patient_app/src/config/service_locator.dart' as service_locator;
+
+import 'package:bounce_patient_app/src/app.dart';
+import 'package:bounce_patient_app/src/config/di_container.dart' as diContainer;
 
 void main() async {
-  await service_locator.init();
+  await diContainer.init();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
-    runApp(const MyApp());
+    runApp(const BouncePatientApp());
   });
 }

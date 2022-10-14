@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/appointment/screens/doctors_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
@@ -5,6 +6,7 @@ import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,11 +30,16 @@ class HomeScreen extends StatelessWidget {
         return Future.value(true);
       },
       child: Scaffold(
+        appBar: CustomAppBar(
+          leading: Icon(
+            Icons.menu,
+            size: 20.sp,
+          ),
+        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CustomAppBar(),
               Expanded(
                 child: ListView(
                   physics: const BouncingScrollPhysics(),
@@ -81,44 +88,49 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget therapistCard(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 25.w),
-      padding: EdgeInsets.only(top: 21.h, bottom: 18.h, right: 50.w, left: 17.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
-        color: const Color(0xffFEF3E7),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SvgPicture.asset(
-            DashboardIcons.appointment,
-            color: AppColors.textBrown,
-            height: 28.h,
-            width: 28.h,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(width: 12.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Therapists',
-                  style: AppText.bold600(context).copyWith(
-                    fontSize: 14.sp,
-                  ),
-                ),
-                Text(
-                  'An Overview to search for doctors and have mini therapy.',
-                  style: AppText.bold400(context).copyWith(
-                    fontSize: 12.sp,
-                  ),
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        AppNavigator.to(context, const DoctorsScreen());
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 25.w),
+        padding: EdgeInsets.only(top: 21.h, bottom: 18.h, right: 50.w, left: 17.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.r),
+          color: const Color(0xffFEF3E7),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SvgPicture.asset(
+              DashboardIcons.appointment,
+              color: AppColors.textBrown,
+              height: 28.h,
+              width: 28.h,
+              fit: BoxFit.cover,
             ),
-          ),
-        ],
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Therapists',
+                    style: AppText.bold600(context).copyWith(
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                  Text(
+                    'An Overview to search for doctors and have mini therapy.',
+                    style: AppText.bold400(context).copyWith(
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

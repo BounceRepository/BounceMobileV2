@@ -96,7 +96,7 @@ class CustomTextField extends StatelessWidget {
         isDense: true,
         counterText: "",
         filled: filled,
-        fillColor: fillColor ?? AppColors.primary.withOpacity(.34),
+        fillColor: fillColor ?? const Color(0xffFCE7D8).withOpacity(.24),
         errorText: errorText,
         errorStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
               color: AppColors.error,
@@ -235,8 +235,6 @@ class TextFieldSvgIcon extends StatelessWidget {
     );
   }
 }
-
-
 
 class TextFieldTitle extends StatelessWidget {
   const TextFieldTitle(this.title, {Key? key}) : super(key: key);

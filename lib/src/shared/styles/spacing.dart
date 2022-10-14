@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppPadding {
   AppPadding._();
 
-  static double horizontal = 25.w;
+  static double horizontal = 16.w;
   static double vertical = 22.h;
 
   static EdgeInsetsGeometry get defaultPadding {

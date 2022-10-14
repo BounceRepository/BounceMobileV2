@@ -5,7 +5,7 @@ import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 
 class FakeAuthServiceImpl implements AuthService {
-  final delay = const Duration(seconds: 3);
+  final delay = const Duration(seconds: 2);
 
   @override
   Future<void> changePassword({

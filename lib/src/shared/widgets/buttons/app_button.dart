@@ -64,7 +64,7 @@ class AppButton extends StatelessWidget {
                           label.toTitleCase,
                           style: AppText.bold700(context).copyWith(
                             color: labelColor ?? Colors.white,
-                            fontSize: labelSize ?? 16.sp,
+                            fontSize: labelSize ?? 14.sp,
                           ),
                         ),
                         SizedBox(width: 8.w),
@@ -79,7 +79,7 @@ class AppButton extends StatelessWidget {
                       label.toTitleCase,
                       style: AppText.bold700(context).copyWith(
                         color: labelColor ?? Colors.white,
-                        fontSize: labelSize ?? 16.sp,
+                        fontSize: labelSize ?? 14.sp,
                       ),
                     ),
         ),

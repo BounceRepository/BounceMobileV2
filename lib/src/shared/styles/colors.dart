@@ -4,6 +4,7 @@ class AppColors {
   AppColors._();
 
   static const primary = Color(0xffEF873D);
+  static const lightText = Color(0xff06152B);
   static const textBrown = Color(0xff573926);
   static const textGrey = Color(0xff707070);
   static const background = Color(0xffFBFBFB);
@@ -26,6 +27,22 @@ class AppColors {
       offset: const Offset(0, 1),
     ),
   ];
+
+  static final boxshadow4 = [
+    BoxShadow(
+      color: Colors.black.withOpacity(0.04),
+      spreadRadius: 0,
+      blurRadius: 24,
+      offset: const Offset(0, 4),
+    ),
+    BoxShadow(
+      color: Colors.black.withOpacity(0.04),
+      spreadRadius: 0,
+      blurRadius: 20,
+      offset: const Offset(4, 0),
+    ),
+  ];
+
   static const gradient = LinearGradient(
     colors: [
       Color(0xff1C71B7),

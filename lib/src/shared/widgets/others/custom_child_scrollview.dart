@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:flutter/material.dart';
 
 class CustomChildScrollView extends StatelessWidget {
@@ -11,7 +12,7 @@ class CustomChildScrollView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: padding,
+      padding: padding ?? AppPadding.defaultPadding,
       child: child,
     );
   }
