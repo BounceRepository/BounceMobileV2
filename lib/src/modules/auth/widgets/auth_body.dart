@@ -1,4 +1,5 @@
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_child_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +25,7 @@ class AuthBody extends StatelessWidget {
                 height: 156.h,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 23.w),
+                padding: AppPadding.symetricHorizontalOnly,
                 child: Column(
                   children: children,
                 ),

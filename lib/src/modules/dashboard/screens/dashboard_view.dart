@@ -22,7 +22,7 @@ class _DashboardViewState extends State<DashboardView> {
 
   static const screens = <Widget>[
     HomeScreen(),
-    AppointmentsScreen(),
+    TherapistsScreen(),
     PlayListScreen(),
     RoomScreen(),
     ProfileScreen(),

@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/appointment/screens/appointment_screen.dart';
+import 'package:bounce_patient_app/src/modules/appointment/screens/sessions_screen.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/room_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/models/navbar_item.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/home_screen.dart';
@@ -16,7 +16,7 @@ class NavbarController extends ChangeNotifier {
     NavbarItem(
       label: 'Appointment',
       icon: DashboardIcons.appointment,
-      screen: const AppointmentsScreen(),
+      screen: const SessionsScreen(),
     ),
     NavbarItem(
       label: 'Measure',

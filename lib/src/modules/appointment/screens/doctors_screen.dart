@@ -8,8 +8,8 @@ import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DoctorsScreen extends StatelessWidget {
-  const DoctorsScreen({Key? key}) : super(key: key);
+class TherapistsScreen extends StatelessWidget {
+  const TherapistsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
   Widget therapistCard(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.to(context, const DoctorsScreen());
+        AppNavigator.to(context, const TherapistsScreen());
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 25.w),
