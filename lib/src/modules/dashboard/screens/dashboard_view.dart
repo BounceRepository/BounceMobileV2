@@ -1,97 +1,127 @@
-import 'package:bounce_patient_app/src/modules/dashboard/controllers/navbar_controller.dart';
-import 'package:bounce_patient_app/src/modules/dashboard/models/navbar_item.dart';
+import 'package:bounce_patient_app/src/modules/account/screens/profile_screen.dart';
+import 'package:bounce_patient_app/src/modules/appointment/screens/screens.dart';
+import 'package:bounce_patient_app/src/modules/chat/screens/room_screen.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/home_screen.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/play_list_screen.dart';
+import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
+import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
-class DashboardView extends StatelessWidget {
+class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<NavbarController>(
-      builder: (context, controller, _) {
-        return Scaffold(
-          body: controller.selectedItem.screen,
-          bottomNavigationBar: CustomBottomNavBar(items: controller.items),
-        );
-      },
-    );
-  }
+  State<DashboardView> createState() => _DashboardViewState();
 }
 
-class CustomBottomNavBar extends StatelessWidget {
-  const CustomBottomNavBar({Key? key, required this.items}) : super(key: key);
+class _DashboardViewState extends State<DashboardView> {
+  int _selectedIndex = 0;
 
-  final List<NavbarItem> items;
+  static const screens = <Widget>[
+    HomeScreen(),
+    AppointmentsScreen(),
+    PlayListScreen(),
+    RoomScreen(),
+    ProfileScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 32.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40.r),
-          topRight: Radius.circular(40.r),
+    final labelStyle = AppText.bold600(context).copyWith(fontSize: 8.sp);
+
+    return Scaffold(
+      body: screens.elementAt(_selectedIndex),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.only(top: 20.h, bottom: 9.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.r),
+            topRight: Radius.circular(30.r),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(.11),
+              offset: const Offset(0, 4),
+              blurRadius: 12,
+              spreadRadius: 0,
+            ),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.white.withOpacity(.11),
-            offset: const Offset(0, 4),
-            blurRadius: 12,
-            spreadRadius: 0,
+        child: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            _navigationBarItem(
+              icon: DashboardIcons.home,
+              label: 'Home',
+            ),
+            _navigationBarItem(
+              icon: DashboardIcons.appointment,
+              label: 'Therapists',
+            ),
+            _navigationBarItem(
+              icon: DashboardIcons.music,
+              label: 'Music',
+            ),
+            _navigationBarItem(
+              icon: DashboardIcons.room,
+              label: 'Rant Room',
+            ),
+            _navigationBarItem(
+              icon: DashboardIcons.account,
+              label: 'Account',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          selectedLabelStyle: labelStyle.copyWith(
+            color: AppColors.primary,
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(items.length, (index) {
-          final item = items[index];
-          return _NavBarItem(
-            index: index,
-            item: item,
-          );
-        }),
+          unselectedLabelStyle: labelStyle.copyWith(
+            color: AppColors.border,
+          ),
+          onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed,
+        ),
       ),
     );
   }
-}
 
-class _NavBarItem extends StatelessWidget {
-  const _NavBarItem({
-    Key? key,
-    required this.index,
-    required this.item,
-  }) : super(key: key);
+  BottomNavigationBarItem _navigationBarItem({
+    required String icon,
+    required String label,
+  }) {
+    final iconSize = 24.h;
 
-  final int index;
-  final NavbarItem item;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.read<NavbarController>().onItemTapped(index);
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //TODO: Add semi-cirle dashboard indicator
-          SizedBox(height: 20.h),
-          SvgPicture.asset(
-            item.icon,
-            height: 28.h,
-            width: 28.h,
-            color: item.selected ? AppColors.primary : const Color(0xffD9D8D8),
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 28.h),
-        ],
+    return BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: SvgPicture.asset(
+          icon,
+          color: AppColors.border,
+          height: iconSize,
+          width: iconSize,
+        ),
       ),
+      activeIcon: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: SvgPicture.asset(
+          icon,
+          color: AppColors.primary,
+          height: iconSize,
+          width: iconSize,
+        ),
+      ),
+      label: label,
     );
   }
 }

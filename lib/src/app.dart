@@ -13,7 +13,7 @@ class BouncePatientApp extends StatelessWidget {
     return ProvidersWrapper(
       child: ScreenUtilInit(
         designSize: const Size(376, 812),
-        minTextAdapt: true,
+        //minTextAdapt: true,
         builder: (BuildContext context, Widget? child) {
           return MaterialApp(
             title: 'Bounce - Patient',

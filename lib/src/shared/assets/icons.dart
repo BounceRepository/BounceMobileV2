@@ -42,8 +42,9 @@ class DashboardIcons {
 
   static const home = 'assets/icons/dashboard/home.svg';
   static const appointment = 'assets/icons/dashboard/appointment.svg';
-  static const measure = 'assets/icons/dashboard/measure.svg';
-  static const people = 'assets/icons/dashboard/people.svg';
+  static const music = 'assets/icons/dashboard/music.svg';
+  static const room = 'assets/icons/dashboard/people.svg';
+  static const account = 'assets/icons/dashboard/account.svg';
 }
 
 class ChatRoomIcons {

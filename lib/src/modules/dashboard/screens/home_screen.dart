@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: AppPadding.vertical),
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      padding: AppPadding.symetricHorizontalOnly,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -153,7 +153,7 @@ class _MoodIconsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: AppPadding.symetricHorizontalOnly,
           child: Text(
             'How are you feeling today ?',
             style: AppText.bold500(context).copyWith(
@@ -168,7 +168,7 @@ class _MoodIconsSection extends StatelessWidget {
             itemCount: moods.length,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
+            padding: AppPadding.symetricHorizontalOnly,
             itemBuilder: (context, index) {
               final mood = moods[index];
               return button(mood);
@@ -209,7 +209,7 @@ class _SessionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 25.w),
+      margin: AppPadding.symetricHorizontalOnly,
       padding: EdgeInsets.symmetric(vertical: 23.12.h, horizontal: 20.w),
       decoration: BoxDecoration(
         color: const Color(0xffFEF3E7),
@@ -349,7 +349,7 @@ class _QuoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 25.w),
+      margin: AppPadding.symetricHorizontalOnly,
       padding: EdgeInsets.only(
         top: 21.h,
         bottom: 18.h,
@@ -393,7 +393,7 @@ class _ArticlesSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: AppPadding.symetricHorizontalOnly,
           child: Text(
             'Articles',
             style: AppText.bold700(context).copyWith(
@@ -407,7 +407,7 @@ class _ArticlesSection extends StatelessWidget {
           child: ListView.separated(
             itemCount: 3,
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
+            padding: AppPadding.symetricHorizontalOnly,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               return articleItem(context);

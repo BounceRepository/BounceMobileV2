@@ -20,12 +20,12 @@ class NavbarController extends ChangeNotifier {
     ),
     NavbarItem(
       label: 'Measure',
-      icon: DashboardIcons.measure,
+      icon: DashboardIcons.music,
       screen: const HomeScreen(),
     ),
     NavbarItem(
       label: 'Room',
-      icon: DashboardIcons.people,
+      icon: DashboardIcons.room,
       screen: const RoomScreen(),
     ),
   ];

@@ -14,36 +14,37 @@ class GettingStartedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: CustomChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                AppImages.logo,
-                width: 183.w,
-                height: 178.h,
-              ),
-              columnText(
-                context,
-                title: 'Disclaimer:',
-                description:
-                    'This is an early demo to only show how the app would look like while showing the basic functions. This prototype is NOT demonstrating the final version.',
-              ),
-              SizedBox(height: 20.h),
-              columnText(
-                context,
-                title: 'Instructions:',
-                description:
-                    'Click on the buttons and actions as you would on a regular app. Clicking anywhere on the phone will highlight the possible actions in a blue box. For the purpose of this demonstration, you will be using the application as “Bounce”',
-              ),
-              SizedBox(height: 40.h),
-              AppButton(
-                label: 'Get Started',
-                onTap: () {
-                  AppNavigator.removeAllUntil(context, const SignInScreen());
-                },
-              ),
-            ],
+        child: Center(
+          child: CustomChildScrollView(
+            child: Column(
+              children: [
+                Image.asset(
+                  AppImages.logo,
+                  width: 183.w,
+                  height: 178.h,
+                ),
+                columnText(
+                  context,
+                  title: 'Disclaimer:',
+                  description:
+                      'This is an early demo to only show how the app would look like while showing the basic functions. This prototype is NOT demonstrating the final version.',
+                ),
+                SizedBox(height: 20.h),
+                columnText(
+                  context,
+                  title: 'Instructions:',
+                  description:
+                      'Click on the buttons and actions as you would on a regular app. Clicking anywhere on the phone will highlight the possible actions in a blue box. For the purpose of this demonstration, you will be using the application as “Bounce”',
+                ),
+                SizedBox(height: 40.h),
+                AppButton(
+                  label: 'Get Started',
+                  onTap: () {
+                    AppNavigator.removeAllUntil(context, const SignInScreen());
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
