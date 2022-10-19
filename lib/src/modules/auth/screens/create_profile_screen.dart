@@ -93,13 +93,12 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             );
             // AppNavigator.to(context, const SymptomsScreen());
             AppNavigator.removeAllUntil(context, const DashboardView());
-            NotificationMessage.showSucess(context,
-                message: 'Account created successfully');
+            Messenger.showSucess(context, message: 'Account created successfully');
           } on Failure catch (e) {
-            NotificationMessage.showError(context, message: e.message);
+            Messenger.showError(context, message: e.message);
           }
         } else {
-          NotificationMessage.showError(context, message: 'Upload your image');
+          Messenger.showError(context, message: 'Upload your image');
         }
       }
     }
@@ -120,7 +119,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       image = await controller.pickImageFromGallery();
       setState(() {});
     } on Failure catch (e) {
-      NotificationMessage.showError(context, message: e.message);
+      Messenger.showError(context, message: e.message);
     }
   }
 

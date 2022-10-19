@@ -32,11 +32,11 @@ class DioApiServiceImpl implements IApi {
         return response.data;
       }
     } on DioError {
-      throw Failure('An error occuried');
+      throw InternalFailure();
     } on SocketException {
       throw Failure('No Internet connection 😑');
     } on FormatException {
-      throw Failure('Input error');
+      throw InternalFailure();
     }
   }
 
@@ -59,11 +59,11 @@ class DioApiServiceImpl implements IApi {
         return response.data;
       }
     } on DioError {
-      throw Failure('An error occuried');
+      throw InternalFailure();
     } on SocketException {
       throw Failure('No Internet connection 😑');
     } on FormatException {
-      throw Failure('Input error');
+      throw InternalFailure();
     }
   }
 
@@ -109,7 +109,9 @@ class DioApiServiceImpl implements IApi {
     } on SocketException {
       throw Failure('No Internet connection 😑');
     } on FormatException {
-      throw Failure('Input error');
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 
@@ -132,11 +134,11 @@ class DioApiServiceImpl implements IApi {
         return response.data;
       }
     } on DioError {
-      throw Failure('An error occuried');
+      throw InternalFailure();
     } on SocketException {
       throw Failure('No Internet connection 😑');
     } on FormatException {
-      throw Failure('Input error');
+      throw InternalFailure();
     }
   }
 }

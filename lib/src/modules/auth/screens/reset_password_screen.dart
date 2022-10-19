@@ -52,7 +52,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           },
         );
       } on Failure catch (e) {
-        NotificationMessage.showError(context, message: e.message);
+        Messenger.showError(context, message: e.message);
       }
     }
   }

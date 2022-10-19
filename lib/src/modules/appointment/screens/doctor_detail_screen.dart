@@ -18,103 +18,106 @@ class DoctorDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
-        backgroundColor: Colors.transparent,
-      ),
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      body: CustomChildScrollView(
-        padding: EdgeInsets.zero,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                top: 124.h,
-                bottom: 24.h,
-                right: AppPadding.horizontal,
-                left: AppPadding.horizontal,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40.r),
-                  bottomRight: Radius.circular(40.r),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: const CustomAppBar(
+          backgroundColor: Colors.transparent,
+        ),
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        body: CustomChildScrollView(
+          padding: EdgeInsets.zero,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  top: 124.h,
+                  bottom: 24.h,
+                  right: AppPadding.horizontal,
+                  left: AppPadding.horizontal,
                 ),
-                gradient: const LinearGradient(
-                  colors: [
-                    Color(0xffFEF3E7),
-                    Color(0xffFCFAFA),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  DefaultAppImage(size: 100.h),
-                  SizedBox(height: 24.h),
-                  Text(
-                    'Dr. Bellamy Nicholas',
-                    textAlign: TextAlign.center,
-                    style: AppText.bold700(context).copyWith(
-                      fontSize: 20.sp,
-                    ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(40.r),
+                    bottomRight: Radius.circular(40.r),
                   ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    'Psycologist',
-                    textAlign: TextAlign.center,
-                    style: AppText.bold400(context).copyWith(
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  SizedBox(height: 36.h),
-                  Row(
-                    children: [
-                      infoCard(context, title: '1000+', subTitle: 'Patients'),
-                      SizedBox(width: 16.w),
-                      infoCard(context, title: '10 Years', subTitle: 'Experience'),
-                      SizedBox(width: 16.w),
-                      infoCard(context, title: '4.5', subTitle: 'Ratings'),
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xffFEF3E7),
+                      Color(0xffFCFAFA),
                     ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                   ),
-                ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    DefaultAppImage(size: 100.h),
+                    SizedBox(height: 24.h),
+                    Text(
+                      'Dr. Bellamy Nicholas',
+                      textAlign: TextAlign.center,
+                      style: AppText.bold700(context).copyWith(
+                        fontSize: 20.sp,
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Psycologist',
+                      textAlign: TextAlign.center,
+                      style: AppText.bold400(context).copyWith(
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    SizedBox(height: 36.h),
+                    Row(
+                      children: [
+                        infoCard(context, title: '1000+', subTitle: 'Patients'),
+                        SizedBox(width: 16.w),
+                        infoCard(context, title: '10 Years', subTitle: 'Experience'),
+                        SizedBox(width: 16.w),
+                        infoCard(context, title: '4.5', subTitle: 'Ratings'),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 24.h,
-                horizontal: AppPadding.horizontal,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 24.h,
+                  horizontal: AppPadding.horizontal,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    columnText(
+                      context,
+                      title: 'About',
+                      description: lorem(paragraphs: 1, words: 25),
+                    ),
+                    SizedBox(height: 24.h),
+                    columnText(
+                      context,
+                      title: 'Working Hours',
+                      description: 'Monday - Saturday (08:30 AM - 09:00 PM)',
+                    ),
+                    SizedBox(height: 24.h),
+                    const _CommunicationSection(),
+                    SizedBox(height: 46.h),
+                    AppButton(
+                      label: 'Book Session',
+                      onTap: () {
+                        AppNavigator.to(context, const BookSessionScreen());
+                      },
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  columnText(
-                    context,
-                    title: 'About',
-                    description: lorem(paragraphs: 1, words: 25),
-                  ),
-                  SizedBox(height: 24.h),
-                  columnText(
-                    context,
-                    title: 'Working Hours',
-                    description: 'Monday - Saturday (08:30 AM - 09:00 PM)',
-                  ),
-                  SizedBox(height: 24.h),
-                  const _CommunicationSection(),
-                  SizedBox(height: 46.h),
-                  AppButton(
-                    label: 'Book Session',
-                    onTap: () {
-                      AppNavigator.to(context, const BookSessionScreen());
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

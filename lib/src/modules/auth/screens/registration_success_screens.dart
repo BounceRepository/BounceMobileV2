@@ -38,7 +38,7 @@ class IncomingEmailScreen extends StatelessWidget {
         AppNavigator.to(context, const _VerificationErrorScreen());
       }
     } on Failure catch (e) {
-      NotificationMessage.showError(context, message: e.message);
+      Messenger.showError(context, message: e.message);
     }
   }
 
@@ -112,11 +112,11 @@ class _VerificationErrorScreen extends StatelessWidget {
     if (email != null) {
       try {
         await controller.verifyEmail(email: email);
-        NotificationMessage.showSucess(context,
+        Messenger.showSucess(context,
             message: 'A confirmation link has been sent to your email');
         Navigator.pop(context);
       } on Failure catch (e) {
-        NotificationMessage.showError(context, message: e.message);
+        Messenger.showError(context, message: e.message);
       }
     }
   }

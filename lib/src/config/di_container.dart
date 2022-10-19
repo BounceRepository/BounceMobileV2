@@ -10,7 +10,7 @@ final diContainer = GetIt.instance;
 
 Future<void> init() async {
   // controllers
-  authServiceInit(initFakeService: true);
+  authServiceInit(initFakeService: false);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
 
   //service

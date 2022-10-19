@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late final TextEditingController _userNameController;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-  bool _hasAcceptedTerms = false;
+  bool hasAcceptedTerms = false;
 
   @override
   void initState() {
@@ -51,35 +51,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _acceptTerms() {
     setState(() {
-      _hasAcceptedTerms = !_hasAcceptedTerms;
+      hasAcceptedTerms = !hasAcceptedTerms;
     });
   }
 
   void _createAccount() async {
     if (_formKey.currentState!.validate()) {
-      if (_hasAcceptedTerms) {
-        final controller = context.read<AuthController>();
-        try {
-          final userId = await controller.createAccount(
-            userName: _userNameController.text.trim(),
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          );
-          controller.userId = userId;
-          controller.email = _emailController.text.trim();
-          NotificationMessage.showSucess(context,
-              message: 'A confirmation link has been sent to your email');
-          AppNavigator.to(
-              context,
-              IncomingEmailScreen(
-                  email: _emailController.text.trim(),
-                  userName: _userNameController.text.trim()));
-        } on Failure catch (e) {
-          NotificationMessage.showError(context, message: e.message);
-        }
-      } else {
-        NotificationMessage.showError(context,
-            message: 'Agree to Bounce terms and conditions ');
+      if (!hasAcceptedTerms) {
+        Messenger.showError(context, message: 'Agree to Bounce terms and conditions');
+        return;
+      }
+
+      final controller = context.read<AuthController>();
+      try {
+        final userId = await controller.createAccount(
+          userName: _userNameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        controller.userId = userId;
+        controller.email = _emailController.text.trim();
+        Messenger.showSucess(context,
+            message: 'A confirmation link has been sent to your email');
+        AppNavigator.to(
+            context,
+            IncomingEmailScreen(
+                email: _emailController.text.trim(),
+                userName: _userNameController.text.trim()));
+      } on Failure catch (e) {
+        Messenger.showError(context, message: e.message);
       }
     }
   }
@@ -145,7 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 16.h,
                   width: 16.h,
                   child: Checkbox(
-                    value: _hasAcceptedTerms,
+                    value: hasAcceptedTerms,
                     activeColor: AppColors.primary,
                     onChanged: (value) => _acceptTerms(),
                   ),

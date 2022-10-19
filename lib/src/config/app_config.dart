@@ -7,7 +7,7 @@ class AppConfig {
 class APIURLs {
   APIURLs._();
 
-  static const baseURL = 'http://bounceserviceapi-001-site1.atempurl.com/api';
+  static const baseURL = 'http://bouneproj-001-site1.btempurl.com/api';
 }
 
 class AppConstants {
