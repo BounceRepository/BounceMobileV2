@@ -81,7 +81,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               image: image,
               dateOfBirth: _dateOfBirthController.text,
             );
-            DataStore.user = User(
+            AppSession.user = User(
               userName: widget.userName,
               gender: gender,
               firstName: _firstNameController.text,

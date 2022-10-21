@@ -10,23 +10,23 @@ class FakeTherapistListServiceImpl implements ITherapistListService {
   @override
   Future<List<Therapist>> getAllTherapist() async {
     await Future.delayed(fakeNetworkDelay);
-    return List.generate(27, (index) => _therapist);
+    return List.generate(27, (index) => therapist);
   }
 
   @override
   Future<List<Therapist>> getAllTherapistNearYou() async {
     await Future.delayed(fakeNetworkDelay);
-    return List.generate(27, (index) => _therapist);
+    return List.generate(27, (index) => therapist);
   }
 
   @override
   Future<List<Therapist>> getAllTopTherapist() async {
     await Future.delayed(fakeNetworkDelay);
-    return List.generate(27, (index) => _therapist);
+    return List.generate(27, (index) => therapist);
   }
 }
 
-final _therapist = Therapist(
+final therapist = Therapist(
   id: Random().nextInt(100),
   title: 'Dr',
   firstName: lorem(paragraphs: 1, words: 1),

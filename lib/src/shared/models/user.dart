@@ -1,3 +1,18 @@
+enum GenderType {
+  male,
+  female,
+}
+
+class Gender {
+  final GenderType type;
+  bool isSelected;
+
+  Gender({
+    required this.type,
+    this.isSelected = false,
+  });
+}
+
 class User {
   final int id;
   final String userName;
@@ -19,6 +34,10 @@ class User {
     this.gender,
   });
 
+  String get fullName {
+    return '$firstName $lastName';
+  }
+
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["userId"],
         userName: json['userName'],
@@ -36,19 +55,4 @@ Gender _getGender(dynamic json) {
     return Gender(type: GenderType.male);
   }
   return Gender(type: GenderType.female);
-}
-
-enum GenderType {
-  male,
-  female,
-}
-
-class Gender {
-  final GenderType type;
-  bool isSelected;
-
-  Gender({
-    required this.type,
-    this.isSelected = false,
-  });
 }

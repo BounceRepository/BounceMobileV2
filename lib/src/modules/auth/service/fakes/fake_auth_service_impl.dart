@@ -28,13 +28,13 @@ class FakeAuthServiceImpl implements IAuthService {
     required String password,
   }) async {
     await Future.delayed(fakeNetworkDelay);
-    DataStore.user = User(
+    AppSession.user = User(
       id: 10,
-      firstName: 'Test',
-      lastName: 'TestLast',
-      userName: 'TestName',
-      email: 'test@gmail.com',
-      phone: '07030000121',
+      firstName: 'John',
+      lastName: 'Doe',
+      userName: 'JohnDoe',
+      email: 'appleyard@gmail.com',
+      phone: '07017247035',
       dateOfBirth: '1990-02-08',
     );
   }

@@ -33,15 +33,18 @@ class CustomBottomSheetBody extends StatelessWidget {
     Key? key,
     required this.content,
     this.padding,
+    this.height,
   }) : super(key: key);
 
   final List<Widget> content;
   final EdgeInsetsGeometry? padding;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
+        height: height,
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(
           top: 80.h,
@@ -59,7 +62,7 @@ class CustomBottomSheetBody extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(16.r),
         ),
-        child: SingleChildScrollView(
+        child: Padding(
           padding: MediaQuery.of(context).viewInsets,
           child: Column(
             mainAxisSize: MainAxisSize.min,

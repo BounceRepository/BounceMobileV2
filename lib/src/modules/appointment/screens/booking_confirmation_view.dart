@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/appointment/controllers/session_booking_controller.dart';
+import 'package:bounce_patient_app/src/modules/appointment/controllers/book_appointment_controller.dart';
 import 'package:bounce_patient_app/src/modules/appointment/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/appointment/widgets/amount_per_hour_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
@@ -30,7 +30,7 @@ class BookingConfirmationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final doctorName = '${therapist.title} ${therapist.firstName}';
-    final controller = context.read<SessionBookingController>();
+    final controller = context.read<BookAppointmentController>();
     final selectedDate = controller.selectedDate;
     final selectedTime = controller.selectedTime;
 

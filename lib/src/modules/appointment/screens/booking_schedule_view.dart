@@ -61,7 +61,7 @@ class _DateSelectionSectionState extends State<_DateSelectionSection> {
   @override
   void initState() {
     super.initState();
-    context.read<SessionBookingController>().selectedDate = DateTime.now();
+    context.read<BookAppointmentController>().selectedDate = DateTime.now();
   }
 
   @override
@@ -78,7 +78,7 @@ class _DateSelectionSectionState extends State<_DateSelectionSection> {
         ),
         CustomHorizontalCalendarPicker(
           onSelectDate: (date) {
-            context.read<SessionBookingController>().selectedDate = date;
+            context.read<BookAppointmentController>().selectedDate = date;
           },
         ),
       ],
@@ -103,11 +103,12 @@ class _AvailableTimeSectionState extends State<_AvailableTimeSection> {
   void initState() {
     super.initState();
     availableTimes = widget.therapist.workingHours.availableTime;
-    context.read<SessionBookingController>().selectedTime = availableTimes[selectedIndex];
+    context.read<BookAppointmentController>().selectedTime =
+        availableTimes[selectedIndex];
   }
 
   void onSelect(int index) {
-    context.read<SessionBookingController>().selectedTime = availableTimes[index];
+    context.read<BookAppointmentController>().selectedTime = availableTimes[index];
 
     setState(() {
       selectedIndex = index;
@@ -165,11 +166,11 @@ class _ReasonForTherapySectionState extends State<_ReasonForTherapySection> {
   @override
   void initState() {
     super.initState();
-    context.read<SessionBookingController>().reason = reasons[selectedIndex];
+    context.read<BookAppointmentController>().reason = reasons[selectedIndex];
   }
 
   void onSelect(int index) {
-    context.read<SessionBookingController>().reason = reasons[index];
+    context.read<BookAppointmentController>().reason = reasons[index];
 
     setState(() {
       selectedIndex = index;

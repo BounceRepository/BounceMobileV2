@@ -40,8 +40,8 @@ class AuthServiceImpl implements IAuthService {
     try {
       final response = await _api.post(url, body: body);
       final data = response['data'];
-      DataStore.authToken = data['token'];
-      DataStore.user = User.fromJson(data);
+      AppSession.authToken = data['token'];
+      AppSession.user = User.fromJson(data);
     } on Failure {
       rethrow;
     }

@@ -9,7 +9,7 @@ class Messenger {
     BuildContext context, {
     required String message,
   }) {
-    snackBar(
+    _snackBar(
       context,
       child: CustomSnackBar.info(message: message),
     );
@@ -19,7 +19,7 @@ class Messenger {
     BuildContext context, {
     required String message,
   }) {
-    snackBar(
+    _snackBar(
       context,
       child: CustomSnackBar.error(message: message),
     );
@@ -29,13 +29,13 @@ class Messenger {
     BuildContext context, {
     required String message,
   }) {
-    snackBar(
+    _snackBar(
       context,
       child: CustomSnackBar.success(message: message),
     );
   }
 
-  static snackBar(BuildContext context, {required Widget child}) {
+  static _snackBar(BuildContext context, {required Widget child}) {
     showTopSnackBar(context, child);
   }
 }

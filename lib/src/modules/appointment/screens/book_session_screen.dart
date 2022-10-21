@@ -28,7 +28,7 @@ class BookSessionScreen extends StatelessWidget {
                   children: [
                     BookingScheduleView(therapist: therapist),
                     BookingConfirmationView(therapist: therapist),
-                    const BookingPaymentView(),
+                    BookingPaymentView(therapist: therapist),
                   ],
                 ),
               ),

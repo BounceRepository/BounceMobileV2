@@ -12,7 +12,7 @@ class HttpApiServiceImpl implements IApi {
   Future<dynamic> get(String url, {Map<String, String>? headers}) async {
     headers ??= <String, String>{};
 
-    final token = DataStore.authToken;
+    final token = AppSession.authToken;
     if (token != null) {
       var authHeader = <String, String>{'Authorization': 'Bearer ' + token};
       headers.addAll(authHeader);
@@ -58,7 +58,7 @@ class HttpApiServiceImpl implements IApi {
   }) async {
     headers ??= <String, String>{};
 
-    final token = DataStore.authToken;
+    final token = AppSession.authToken;
     if (token != null) {
       var authHeader = <String, String>{'Authorization': 'Bearer ' + token};
       headers.addAll(authHeader);

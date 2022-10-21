@@ -11,6 +11,8 @@ class AppIcons {
   static const video = 'assets/icons/video.svg';
   static const calendar = 'assets/icons/calendar.svg';
   static const clock = 'assets/icons/clock.svg';
+  static const success = 'assets/icons/success.svg';
+  static const failed = 'assets/icons/failed.svg';
   static const emptyView = 'assets/icons/empty_view.svg';
 }
 

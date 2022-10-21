@@ -1,7 +1,9 @@
 import 'package:bounce_patient_app/src/config/di_container.dart';
-import 'package:bounce_patient_app/src/modules/appointment/controllers/session_booking_controller.dart';
+import 'package:bounce_patient_app/src/modules/appointment/controllers/appointment_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/appointment/controllers/book_appointment_controller.dart';
 import 'package:bounce_patient_app/src/modules/appointment/controllers/therapist_list_controller.dart';
-import 'package:bounce_patient_app/src/modules/appointment/services/fakes/fake_session_booking_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/appointment/services/fakes/fake_appointment_list_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/appointment/services/fakes/fake_book_appointment_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/appointment/services/services.dart';
 
 void appointmentControllersInit({
@@ -10,12 +12,16 @@ void appointmentControllersInit({
   if (initFakeService) {
     diContainer.registerFactory(() =>
         TherapistListController(therapistListService: FakeTherapistListServiceImpl()));
-    diContainer.registerFactory(() =>
-        SessionBookingController(sessionBookingService: FakeSessionBookingServiceImpl()));
+    diContainer.registerFactory(() => BookAppointmentController(
+        sessionBookingService: FakeBookAppointmentServiceImpl()));
+    diContainer.registerFactory(() => AppointmentListController(
+        appointmentListService: FakeAppointmentListServiceImpl()));
   } else {
     diContainer.registerFactory(
         () => TherapistListController(therapistListService: diContainer()));
     diContainer.registerFactory(
-        () => SessionBookingController(sessionBookingService: diContainer()));
+        () => BookAppointmentController(sessionBookingService: diContainer()));
+    diContainer.registerFactory(
+        () => AppointmentListController(appointmentListService: diContainer()));
   }
 }

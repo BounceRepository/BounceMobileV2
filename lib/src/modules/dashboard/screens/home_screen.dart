@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = DataStore.user;
+    final user = AppSession.user;
 
     if (user == null) {
       return const SizedBox.shrink();

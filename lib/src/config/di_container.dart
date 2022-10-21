@@ -1,5 +1,7 @@
 import 'package:bounce_patient_app/src/modules/appointment/di.dart';
+import 'package:bounce_patient_app/src/modules/appointment/services/impls/appointment_list_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/appointment/services/impls/impls.dart';
+import 'package:bounce_patient_app/src/modules/appointment/services/interfaces/appointment_list_service.dart';
 import 'package:bounce_patient_app/src/modules/appointment/services/interfaces/interfaces.dart';
 import 'package:bounce_patient_app/src/modules/auth/di.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/auth_service_impl.dart';
@@ -25,8 +27,10 @@ Future<void> init() async {
   diContainer.registerLazySingleton<ImageService>(() => ImageServiceImpl());
   diContainer.registerLazySingleton<ITherapistListService>(
       () => TherapistListServiceImpl(api: diContainer()));
-  diContainer.registerLazySingleton<ISessionBookingService>(
-      () => SessionBookingServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IBookAppointmentService>(
+      () => BookAppointmentServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IAppointmentListService>(
+      () => AppointmentListServiceImpl(api: diContainer()));
 
   //external
   diContainer.registerLazySingleton<IApi>(() => DioApiServiceImpl());

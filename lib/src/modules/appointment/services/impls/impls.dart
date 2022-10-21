@@ -1,2 +1,2 @@
-export 'session_booking_service_impl.dart';
+export 'book_appointment_service_iml.dart';
 export 'therapist_list_service_impl.dart';
