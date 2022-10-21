@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 
-abstract class AuthService {
+abstract class IAuthService {
   Future<int> register({
     required String userName,
     required String email,

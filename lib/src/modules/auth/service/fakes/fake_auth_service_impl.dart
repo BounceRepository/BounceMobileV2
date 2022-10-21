@@ -3,23 +3,22 @@ import 'dart:io';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
+import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
-class FakeAuthServiceImpl implements AuthService {
-  final delay = const Duration(seconds: 2);
-
+class FakeAuthServiceImpl implements IAuthService {
   @override
   Future<void> changePassword({
     required String email,
     required String newPassword,
   }) async {
-    await Future.delayed(delay);
+    await Future.delayed(fakeNetworkDelay);
     // TODO: implement createProfile
     throw UnimplementedError();
   }
 
   @override
   Future<bool> getVerificationStatus({required String email}) async {
-    await Future.delayed(delay);
+    await Future.delayed(fakeNetworkDelay);
     return true;
   }
 
@@ -28,7 +27,7 @@ class FakeAuthServiceImpl implements AuthService {
     required String userName,
     required String password,
   }) async {
-    await Future.delayed(delay);
+    await Future.delayed(fakeNetworkDelay);
     DataStore.user = User(
       id: 10,
       firstName: 'Test',
@@ -46,27 +45,27 @@ class FakeAuthServiceImpl implements AuthService {
     required String email,
     required String password,
   }) async {
-    await Future.delayed(delay);
+    await Future.delayed(fakeNetworkDelay);
     return 10;
   }
 
   @override
   Future<void> resetPassword({required String email}) async {
-    await Future.delayed(delay);
+    await Future.delayed(fakeNetworkDelay);
     // TODO: implement createProfile
     throw UnimplementedError();
   }
 
   @override
   Future<void> validateOTP({required String token}) async {
-    await Future.delayed(delay);
+    await Future.delayed(fakeNetworkDelay);
     // TODO: implement createProfile
     throw UnimplementedError();
   }
 
   @override
   Future<void> sendVerificationLink({required String email}) async {
-    await Future.delayed(delay);
+    await Future.delayed(fakeNetworkDelay);
     // TODO: implement createProfile
     throw UnimplementedError();
   }
@@ -81,7 +80,7 @@ class FakeAuthServiceImpl implements AuthService {
     required File image,
     required String dateOfBirth,
   }) async {
-    await Future.delayed(delay);
+    await Future.delayed(fakeNetworkDelay);
 
     // // TODO: implement createProfile
     // throw UnimplementedError();

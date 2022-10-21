@@ -1,3 +1,5 @@
+import 'package:bounce_patient_app/src/modules/appointment/controllers/session_booking_controller.dart';
+import 'package:bounce_patient_app/src/modules/appointment/controllers/therapist_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/controllers/navbar_controller.dart';
@@ -17,8 +19,10 @@ class ProvidersWrapper extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => diContainer<AuthController>()),
-        ChangeNotifierProvider(create: (_) => OnboardingController()),
         ChangeNotifierProvider(create: (_) => diContainer<ImageController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<TherapistListController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<SessionBookingController>()),
+        ChangeNotifierProvider(create: (_) => OnboardingController()),
         ChangeNotifierProvider(create: (_) => GenderController()),
         ChangeNotifierProvider(create: (_) => NavbarController()),
       ],

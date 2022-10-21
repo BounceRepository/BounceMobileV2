@@ -11,6 +11,7 @@ class AppIcons {
   static const video = 'assets/icons/video.svg';
   static const calendar = 'assets/icons/calendar.svg';
   static const clock = 'assets/icons/clock.svg';
+  static const emptyView = 'assets/icons/empty_view.svg';
 }
 
 class AuthIcons {

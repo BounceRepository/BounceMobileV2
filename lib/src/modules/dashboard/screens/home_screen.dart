@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/appointment/screens/doctors_screen.dart';
+import 'package:bounce_patient_app/src/modules/appointment/screens/therapist_list_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
   Widget therapistCard(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.to(context, const TherapistsScreen());
+        AppNavigator.to(context, const TherapistListScreen());
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 25.w),

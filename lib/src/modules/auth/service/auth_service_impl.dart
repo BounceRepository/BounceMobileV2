@@ -9,10 +9,10 @@ import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:dio/dio.dart';
 
-class AuthServiceImpl implements AuthService {
-  final IApi _requestHelper;
+class AuthServiceImpl implements IAuthService {
+  final IApi _api;
 
-  AuthServiceImpl({required IApi requestHelper}) : _requestHelper = requestHelper;
+  AuthServiceImpl({required IApi api}) : _api = api;
 
   @override
   Future<void> changePassword({
@@ -23,7 +23,7 @@ class AuthServiceImpl implements AuthService {
     var body = {'email': email, 'password': newPassword};
 
     try {
-      await _requestHelper.post(url, body: body);
+      await _api.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -38,7 +38,7 @@ class AuthServiceImpl implements AuthService {
     var body = {'username': userName, 'password': password};
 
     try {
-      final response = await _requestHelper.post(url, body: body);
+      final response = await _api.post(url, body: body);
       final data = response['data'];
       DataStore.authToken = data['token'];
       DataStore.user = User.fromJson(data);
@@ -61,7 +61,7 @@ class AuthServiceImpl implements AuthService {
     };
 
     try {
-      final response = await _requestHelper.post(url, body: body);
+      final response = await _api.post(url, body: body);
       return response['data']['userId'];
     } on Failure {
       rethrow;
@@ -74,7 +74,7 @@ class AuthServiceImpl implements AuthService {
     var body = {};
 
     try {
-      await _requestHelper.post(url, body: body);
+      await _api.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -86,7 +86,7 @@ class AuthServiceImpl implements AuthService {
     var body = {};
 
     try {
-      await _requestHelper.post(url, body: body);
+      await _api.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -96,7 +96,7 @@ class AuthServiceImpl implements AuthService {
   Future<bool> getVerificationStatus({required String email}) async {
     var url = AuthURLs.getVerificationStatus + email;
     try {
-      final response = await _requestHelper.get(url);
+      final response = await _api.get(url);
       return response['data'];
     } on Failure {
       rethrow;
@@ -108,7 +108,7 @@ class AuthServiceImpl implements AuthService {
     var url = AuthURLs.verifyEmail + '?email=$email';
     var body = {};
     try {
-      await _requestHelper.post(url, body: body);
+      await _api.post(url, body: body);
     } on Failure {
       rethrow;
     }
@@ -141,7 +141,7 @@ class AuthServiceImpl implements AuthService {
     var formData = FormData.fromMap(body);
 
     try {
-      await _requestHelper.post(url, body: formData, isFormData: true);
+      await _api.post(url, body: formData, isFormData: true);
     } on Failure {
       rethrow;
     }

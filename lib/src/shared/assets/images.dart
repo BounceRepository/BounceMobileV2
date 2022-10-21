@@ -5,6 +5,9 @@ class AppImages {
   static const meetup = 'assets/images/meetup.png';
   static const discover = 'assets/images/discover.png';
   static const rantRoom = 'assets/images/rant_room.png';
+  static const loadingIndicator = 'assets/images/loading_indicator.gif';
+  static const image = 'assets/images/image.png';
+  static const bookingConfirmation = 'assets/images/booking_confirmation.png';
 }
 
 class OnboardingImages {

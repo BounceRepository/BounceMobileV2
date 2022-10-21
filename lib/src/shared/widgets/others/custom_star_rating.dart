@@ -3,8 +3,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomStarRating extends StatelessWidget {
-  const CustomStarRating({Key? key, this.size}) : super(key: key);
+  const CustomStarRating({Key? key, this.size, required this.rating}) : super(key: key);
 
+  final double rating;
   final double? size;
 
   @override
@@ -12,7 +13,7 @@ class CustomStarRating extends StatelessWidget {
     const color = Color(0xffFDD835);
 
     return RatingBar(
-      initialRating: 4.5,
+      initialRating: rating,
       direction: Axis.horizontal,
       allowHalfRating: true,
       itemSize: size ?? 20.sp,

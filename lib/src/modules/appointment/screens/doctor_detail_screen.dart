@@ -1,4 +1,5 @@
-import 'package:bounce_patient_app/src/modules/appointment/screens/screens.dart';
+import 'package:bounce_patient_app/src/modules/appointment/models/therapist.dart';
+import 'package:bounce_patient_app/src/modules/appointment/screens/therapist_booking_summary.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
@@ -13,23 +14,23 @@ import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class DoctorDetailScreen extends StatelessWidget {
-  const DoctorDetailScreen({Key? key}) : super(key: key);
+class TherapistDetailScreen extends StatelessWidget {
+  const TherapistDetailScreen(this.therapist, {Key? key}) : super(key: key);
+
+  final Therapist therapist;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: const CustomAppBar(
-          backgroundColor: Colors.transparent,
-        ),
+        appBar: const CustomAppBar(backgroundColor: Colors.transparent),
         extendBody: true,
         extendBodyBehindAppBar: true,
         body: CustomChildScrollView(
           padding: EdgeInsets.zero,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
                 padding: EdgeInsets.only(
@@ -53,12 +54,11 @@ class DoctorDetailScreen extends StatelessWidget {
                   ),
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    DefaultAppImage(size: 100.h),
+                    AppImageView(therapist.profilePicture, size: 100.h),
                     SizedBox(height: 24.h),
                     Text(
-                      'Dr. Bellamy Nicholas',
+                      therapist.fullNameWithTitle,
                       textAlign: TextAlign.center,
                       style: AppText.bold700(context).copyWith(
                         fontSize: 20.sp,
@@ -66,7 +66,7 @@ class DoctorDetailScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 8.h),
                     Text(
-                      'Psycologist',
+                      therapist.specializationList,
                       textAlign: TextAlign.center,
                       style: AppText.bold400(context).copyWith(
                         fontSize: 14.sp,
@@ -75,11 +75,23 @@ class DoctorDetailScreen extends StatelessWidget {
                     SizedBox(height: 36.h),
                     Row(
                       children: [
-                        infoCard(context, title: '1000+', subTitle: 'Patients'),
+                        infoCard(
+                          context,
+                          title: '${therapist.patients}+',
+                          subTitle: 'Patients',
+                        ),
                         SizedBox(width: 16.w),
-                        infoCard(context, title: '10 Years', subTitle: 'Experience'),
+                        infoCard(
+                          context,
+                          title: '${therapist.experience} Years',
+                          subTitle: 'Experience',
+                        ),
                         SizedBox(width: 16.w),
-                        infoCard(context, title: '4.5', subTitle: 'Ratings'),
+                        infoCard(
+                          context,
+                          title: '${therapist.rating}',
+                          subTitle: 'Ratings',
+                        ),
                       ],
                     ),
                   ],
@@ -102,7 +114,7 @@ class DoctorDetailScreen extends StatelessWidget {
                     columnText(
                       context,
                       title: 'Working Hours',
-                      description: 'Monday - Saturday (08:30 AM - 09:00 PM)',
+                      description: therapist.workingHours.toString(),
                     ),
                     SizedBox(height: 24.h),
                     const _CommunicationSection(),
@@ -110,7 +122,8 @@ class DoctorDetailScreen extends StatelessWidget {
                     AppButton(
                       label: 'Book Session',
                       onTap: () {
-                        AppNavigator.to(context, const BookSessionScreen());
+                        AppNavigator.to(
+                            context, TherapistBookingSummary(therapist: therapist));
                       },
                     ),
                   ],

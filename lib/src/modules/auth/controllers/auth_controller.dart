@@ -6,9 +6,9 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 
 class AuthController extends BaseController {
-  final AuthService _authService;
+  final IAuthService _authService;
 
-  AuthController({required AuthService authService}) : _authService = authService;
+  AuthController({required IAuthService authService}) : _authService = authService;
 
   String? email;
   int? userId;
