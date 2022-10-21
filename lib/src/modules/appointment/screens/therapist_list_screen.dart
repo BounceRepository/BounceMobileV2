@@ -28,10 +28,12 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
   void getAllTherapist() async {
     final controller = context.read<TherapistListController>();
 
-    try {
-      await controller.getAllTherapist();
-    } on Failure catch (e) {
-      Messenger.showError(context, message: e.message);
+    if (controller.therapists.isEmpty) {
+      try {
+        await controller.getAllTherapist();
+      } on Failure catch (e) {
+        Messenger.showError(context, message: e.message);
+      }
     }
   }
 

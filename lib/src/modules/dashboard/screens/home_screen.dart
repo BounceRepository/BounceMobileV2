@@ -1,4 +1,7 @@
 import 'package:bounce_patient_app/src/modules/appointment/screens/therapist_list_screen.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/mood_icons_view.dart';
+import 'package:bounce_patient_app/src/modules/notifications/screens/notification_list_screen.dart';
+import 'package:bounce_patient_app/src/modules/notifications/widgets/notification_bell.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
@@ -7,7 +10,7 @@ import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
-import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,12 +33,6 @@ class HomeScreen extends StatelessWidget {
         return Future.value(true);
       },
       child: Scaffold(
-        appBar: CustomAppBar(
-          leading: Icon(
-            Icons.menu,
-            size: 20.sp,
-          ),
-        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,26 +44,46 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: AppPadding.symetricHorizontalOnly,
-                      child: Column(
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Good Afternoon,',
-                            style: AppText.bold500(context).copyWith(
-                              fontSize: 16.sp,
-                            ),
+                          AppImageView(
+                            AppImages.image,
+                            size: 68.h,
                           ),
-                          Text(
-                            user.userName.toTitleCase,
-                            style: AppText.bold700(context).copyWith(
-                              fontSize: 26.sp,
-                            ),
+                          SizedBox(width: 8.w),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Good Afternoon,',
+                                style: AppText.bold400(context).copyWith(
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                              Text(
+                                user.userName.toTitleCase,
+                                style: AppText.bold700(context).copyWith(
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              AppNavigator.to(
+                                context,
+                                const NotificationListScreen(),
+                              );
+                            },
+                            child: const NotificationBell(),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(height: 26.h),
-                    const _MoodIconsSection(),
+                    const MoodIconsView(),
                     SizedBox(height: 26.h),
                     const _SessionsCard(),
                     SizedBox(height: 26.h),
@@ -93,7 +110,7 @@ class HomeScreen extends StatelessWidget {
         AppNavigator.to(context, const TherapistListScreen());
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 25.w),
+        margin: AppPadding.symetricHorizontalOnly,
         padding: EdgeInsets.only(top: 21.h, bottom: 18.h, right: 50.w, left: 17.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
@@ -136,73 +153,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _MoodIconsSection extends StatelessWidget {
-  const _MoodIconsSection({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final moods = [
-      MoodIcons.happy,
-      MoodIcons.manic,
-      MoodIcons.calm,
-      MoodIcons.angry,
-      MoodIcons.angry,
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: AppPadding.symetricHorizontalOnly,
-          child: Text(
-            'How are you feeling today ?',
-            style: AppText.bold500(context).copyWith(
-              fontSize: 16.sp,
-            ),
-          ),
-        ),
-        SizedBox(height: 20.h),
-        SizedBox(
-          height: 62.06.h,
-          child: ListView.separated(
-            itemCount: moods.length,
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            padding: AppPadding.symetricHorizontalOnly,
-            itemBuilder: (context, index) {
-              final mood = moods[index];
-              return button(mood);
-            },
-            separatorBuilder: (context, index) {
-              return SizedBox(width: 24.w);
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget button(String icon) {
-    return Container(
-      height: 62.06.h,
-      padding: EdgeInsets.symmetric(
-        vertical: 14.h,
-        horizontal: 12.w,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: BorderRadius.circular(16.r),
-      ),
-      child: Image.asset(
-        icon,
-        height: 33.18.h,
-        width: 33.18.h,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-}
-
 class _SessionsCard extends StatelessWidget {
   const _SessionsCard({Key? key}) : super(key: key);
 
@@ -212,7 +162,7 @@ class _SessionsCard extends StatelessWidget {
       margin: AppPadding.symetricHorizontalOnly,
       padding: EdgeInsets.symmetric(vertical: 23.12.h, horizontal: 20.w),
       decoration: BoxDecoration(
-        color: const Color(0xffFEF3E7),
+        color: AppColors.secondary,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Row(
@@ -316,7 +266,7 @@ class _ChatRoomSection extends StatelessWidget {
         child: Container(
           height: 62.h,
           decoration: BoxDecoration(
-            color: const Color(0xff89B031).withOpacity(.27),
+            color: AppColors.secondary,
             borderRadius: BorderRadius.circular(16.r),
           ),
           padding: EdgeInsets.only(left: 18.44.w),
@@ -327,6 +277,7 @@ class _ChatRoomSection extends StatelessWidget {
                 height: 22.h,
                 width: 22.h,
                 fit: BoxFit.cover,
+                color: AppColors.primary,
               ),
               SizedBox(width: 12.w),
               Text(
