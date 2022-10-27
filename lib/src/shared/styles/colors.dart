@@ -12,6 +12,7 @@ class AppColors {
   static const error = Color(0xffEF1313);
   static const border = Color(0xffD9D8D8);
   static const grey = Color(0xffF9F6F4);
+  static const grey3 = Color(0xff828282);
   static const chatRoom = Color(0xff89B031);
 
   static final boxshadow = [

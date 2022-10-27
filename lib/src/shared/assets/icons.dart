@@ -17,6 +17,14 @@ class AppIcons {
   static const emptyView = 'assets/icons/empty_view.svg';
 }
 
+class MusicIcons {
+  MusicIcons._();
+
+  static const play = 'assets/icons/music/play.svg';
+  static const previous = 'assets/icons/music/previous.svg';
+  static const next = 'assets/icons/music/next.svg';
+}
+
 class AuthIcons {
   AuthIcons._();
 

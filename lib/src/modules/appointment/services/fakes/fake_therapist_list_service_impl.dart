@@ -22,21 +22,21 @@ class FakeTherapistListServiceImpl implements ITherapistListService {
   @override
   Future<List<Therapist>> getAllTopTherapist() async {
     await Future.delayed(fakeNetworkDelay);
-    return List.generate(27, (index) => therapist);
+    return List.generate(8, (index) => therapist);
   }
 }
 
 final therapist = Therapist(
   id: Random().nextInt(100),
   title: 'Dr',
-  firstName: lorem(paragraphs: 1, words: 1),
-  lastName: lorem(paragraphs: 1, words: 1),
+  firstName: 'Jane',
+  lastName: 'Appleyard',
   certifications: [
     'PHD',
   ],
   specializations: [
-    lorem(paragraphs: 1, words: 1),
-    lorem(paragraphs: 1, words: 1),
+    'Psycology',
+    'Psychiatry',
   ],
   desc: lorem(paragraphs: 1, words: 20),
   profilePicture: AppImages.image,

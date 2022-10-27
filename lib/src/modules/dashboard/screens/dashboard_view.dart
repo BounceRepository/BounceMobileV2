@@ -2,7 +2,7 @@ import 'package:bounce_patient_app/src/modules/account/screens/profile_screen.da
 import 'package:bounce_patient_app/src/modules/appointment/screens/screens.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/room_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/home_screen.dart';
-import 'package:bounce_patient_app/src/modules/playlist/screens/play_list_screen.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/playlist_list_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';

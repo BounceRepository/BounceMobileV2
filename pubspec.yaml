@@ -87,6 +87,7 @@ flutter:
     - assets/images/moods/
     - assets/icons/
     - assets/icons/auth/
+    - assets/icons/music/
     - assets/icons/socials/
     - assets/icons/dashboard/
     - assets/icons/chat_room/

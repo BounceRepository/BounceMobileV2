@@ -1,8 +1,56 @@
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/widgets/appbars/sliver_appbar_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class AppBarWithTabs extends StatelessWidget {
+  const AppBarWithTabs({
+    super.key,
+    required this.title,
+    required this.tabs,
+  });
+
+  final String title;
+  final List<String> tabs;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: SliverAppBarDelegate(
+        maxHeight: 119.h,
+        minHeight: 119.h,
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 20.h, left: AppPadding.horizontal),
+                child: Text(
+                  title,
+                  style: AppText.bold700(context).copyWith(
+                    fontSize: 20.sp,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.h),
+              CustomTabBar(
+                isScrollable: false,
+                tabs: List.generate(tabs.length, (index) {
+                  final tab = tabs[index];
+                  return Tab(text: tab);
+                }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class CustomTabBar extends StatelessWidget {
   const CustomTabBar({
@@ -22,54 +70,35 @@ class CustomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 38.h,
+    return Container(
+      height: 40.h,
+      margin: EdgeInsets.only(left: AppPadding.horizontal),
+      padding: EdgeInsets.only(left: 5.w, top: 10.h),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(8.r)),
+      ),
       child: TabBar(
         isScrollable: isScrollable,
         controller: controller,
         onTap: onTap,
         physics: const BouncingScrollPhysics(),
         labelColor: AppColors.grey,
-        unselectedLabelColor: AppColors.textBrown,
+        labelPadding: EdgeInsets.zero,
+        unselectedLabelColor: AppColors.grey,
         labelStyle: AppText.bold600(context).copyWith(
           fontSize: 12.sp,
         ),
         unselectedLabelStyle: AppText.bold600(context).copyWith(
           fontSize: 12.sp,
         ),
-        indicatorColor: Colors.transparent,
+        indicatorSize: TabBarIndicatorSize.label,
+        indicatorColor: Colors.white,
         indicatorPadding: EdgeInsets.zero,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: AppPadding.horizontal),
-        labelPadding: EdgeInsets.only(right: 12.w),
+        indicatorWeight: 4.h,
+        padding: EdgeInsets.zero,
         tabs: tabs,
       ),
-    );
-  }
-}
-
-class CustomTab extends StatelessWidget {
-  const CustomTab({
-    Key? key,
-    required this.text,
-    required this.controller,
-    required this.index,
-  }) : super(key: key);
-
-  final String text;
-  final int index;
-  final TabController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 42.h,
-      padding: EdgeInsets.symmetric(horizontal: 15.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(9.r),
-        color: controller.index == index ? AppColors.chatRoom : const Color(0xffF4F2F1),
-      ),
-      alignment: Alignment.center,
-      child: Text(text),
     );
   }
 }
