@@ -7,6 +7,7 @@ class AppImages {
   static const rantRoom = 'assets/images/rant_room.png';
   static const loadingIndicator = 'assets/images/loading_indicator.gif';
   static const image = 'assets/images/image.png';
+  static const doctors = 'assets/images/doctors.png';
   static const playlistAlbum = 'assets/images/playlist.jpg';
   static const bookingConfirmation = 'assets/images/booking_confirmation.png';
 }

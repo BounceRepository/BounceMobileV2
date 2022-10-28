@@ -66,3 +66,15 @@ class ChatRoomIcons {
   static const comment = 'assets/icons/chat_room/comment.svg';
   static const share = 'assets/icons/chat_room/share.svg';
 }
+
+class AccountIcons {
+  AccountIcons._();
+
+  static const plan = 'assets/icons/account/plan.svg';
+  static const wallet = 'assets/icons/account/wallet.svg';
+  static const journal = 'assets/icons/account/journal.svg';
+  static const discover = 'assets/icons/account/discover.svg';
+  static const session = 'assets/icons/account/session.svg';
+  static const help = 'assets/icons/account/help.svg';
+  static const logout = 'assets/icons/account/logout.svg';
+}

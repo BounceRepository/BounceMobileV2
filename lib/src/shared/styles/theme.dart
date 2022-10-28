@@ -12,7 +12,7 @@ class AppTheme {
       colorScheme: ColorScheme.fromSwatch(
         brightness: Brightness.light,
         primarySwatch: const MaterialColor(
-          0xff7bed8d, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+          0xff573926, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
           <int, Color>{
             50: AppColors.primary, //10%
             100: AppColors.primary, //20%

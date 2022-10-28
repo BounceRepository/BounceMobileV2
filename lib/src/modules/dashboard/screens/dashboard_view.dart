@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/account/screens/profile_screen.dart';
+import 'package:bounce_patient_app/src/modules/account/screens/account_screen.dart';
 import 'package:bounce_patient_app/src/modules/appointment/screens/screens.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/rant_room_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/home_screen.dart';
@@ -11,21 +11,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DashboardView extends StatefulWidget {
-  const DashboardView({Key? key}) : super(key: key);
+  const DashboardView({Key? key, this.selectedIndex = 0}) : super(key: key);
+
+  final int selectedIndex;
 
   @override
   State<DashboardView> createState() => _DashboardViewState();
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  int _selectedIndex = 0;
-
+  late int _selectedIndex = widget.selectedIndex;
   static const screens = <Widget>[
     HomeScreen(),
     TherapistListScreen(),
     PlayListScreen(),
     RoomScreen(),
-    ProfileScreen(),
+    AccountScreen(),
   ];
 
   void _onItemTapped(int index) {
