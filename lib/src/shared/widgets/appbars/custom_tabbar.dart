@@ -8,11 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppBarWithTabs extends StatelessWidget {
   const AppBarWithTabs({
     super.key,
-    required this.title,
+    this.title,
     required this.tabs,
   });
 
-  final String title;
+  final String? title;
   final List<String> tabs;
 
   @override
@@ -20,22 +20,28 @@ class AppBarWithTabs extends StatelessWidget {
     return SliverPersistentHeader(
       pinned: true,
       delegate: SliverAppBarDelegate(
-        maxHeight: 119.h,
-        minHeight: 119.h,
+        maxHeight: title != null ? 119.h : 60.h,
+        minHeight: title != null ? 119.h : 60.h,
         child: Container(
           color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(top: 20.h, left: AppPadding.horizontal),
-                child: Text(
-                  title,
-                  style: AppText.bold700(context).copyWith(
-                    fontSize: 20.sp,
-                  ),
-                ),
-              ),
+              title != null
+                  ? Padding(
+                      padding: EdgeInsets.only(top: 20.h, left: AppPadding.horizontal),
+                      child: Column(
+                        children: [
+                          Text(
+                            title!,
+                            style: AppText.bold700(context).copyWith(
+                              fontSize: 20.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : const SizedBox.shrink(),
               SizedBox(height: 20.h),
               CustomTabBar(
                 isScrollable: true,

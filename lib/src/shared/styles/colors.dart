@@ -16,6 +16,9 @@ class AppColors {
   static const grey3 = Color(0xff828282);
   static const grey6 = Color(0xffF2F2F2);
   static const chatRoom = Color(0xff89B031);
+  static const bronze = Color(0xffCD7F32);
+  static const sliver = Color(0xffBEC2CB);
+  static const gold = Color(0xffFFD700);
 
   static final boxshadow = [
     BoxShadow(

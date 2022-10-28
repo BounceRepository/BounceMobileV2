@@ -44,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           : label != null
               ? Text(
                   label!,
-                  style: AppText.bold700(context).copyWith(
+                  style: AppText.bold800(context).copyWith(
                     fontSize: 17.sp,
                   ),
                 )

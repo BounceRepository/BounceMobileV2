@@ -1,5 +1,7 @@
 import 'package:bounce_patient_app/src/modules/appointment/screens/session_history_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/discover_screen.dart';
+import 'package:bounce_patient_app/src/modules/subscription/screens/care_plans_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
@@ -140,7 +142,9 @@ class _MenuListSection extends StatelessWidget {
           context: context,
           icon: AccountIcons.plan,
           title: 'My Care Plans',
-          onTap: () {},
+          onTap: () {
+            AppNavigator.to(context, const CarePlansScreen());
+          },
         ),
         title(
           context: context,
@@ -158,7 +162,9 @@ class _MenuListSection extends StatelessWidget {
           context: context,
           icon: AccountIcons.discover,
           title: 'Discover',
-          onTap: () {},
+          onTap: () {
+            AppNavigator.to(context, const DiscoverScreen());
+          },
         ),
         title(
           context: context,

@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/playlist/widgets/music_tile.dart';
+import 'package:bounce_patient_app/src/modules/playlist/widgets/music_list_tile.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_tabbar.dart';
