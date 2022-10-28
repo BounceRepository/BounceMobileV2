@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/appointment/screens/session_history_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
@@ -163,7 +164,9 @@ class _MenuListSection extends StatelessWidget {
           context: context,
           icon: AccountIcons.session,
           title: 'Session History',
-          onTap: () {},
+          onTap: () {
+            AppNavigator.to(context, const SessionHistoryListScreen());
+          },
         ),
         title(
           context: context,

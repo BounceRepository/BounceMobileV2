@@ -14,6 +14,7 @@ class AppColors {
   static const border = Color(0xffD9D8D8);
   static const grey = Color(0xffF9F6F4);
   static const grey3 = Color(0xff828282);
+  static const grey6 = Color(0xffF2F2F2);
   static const chatRoom = Color(0xff89B031);
 
   static final boxshadow = [

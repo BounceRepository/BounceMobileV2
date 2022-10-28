@@ -15,6 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.removeActionsPadding = false,
     this.title,
     this.label,
+    this.iconTheme,
   }) : super(key: key);
 
   final Widget? leading;
@@ -25,6 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final bool automaticallyImplyLeading;
   final bool removeActionsPadding;
+  final IconThemeData? iconTheme;
 
   @override
   Size get preferredSize => Size.fromHeight(50.h);
@@ -32,11 +34,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor ?? Colors.transparent,
       automaticallyImplyLeading: automaticallyImplyLeading,
-      leadingWidth: automaticallyImplyLeading ? 68.w : 0,
-      leading: automaticallyImplyLeading ? leading ?? const _BackButton() : null,
+      leading: leading,
       centerTitle: centerTitle,
+      iconTheme: iconTheme,
       title: title != null
           ? title!
           : label != null

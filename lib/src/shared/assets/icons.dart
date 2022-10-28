@@ -15,6 +15,7 @@ class AppIcons {
   static const failed = 'assets/icons/failed.svg';
   static const notification = 'assets/icons/notification.svg';
   static const emptyView = 'assets/icons/empty_view.svg';
+  static const stetoscope = 'assets/icons/stetoscope.svg';
 }
 
 class MusicIcons {

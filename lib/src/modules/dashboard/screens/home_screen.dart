@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/appointment/screens/sessions_screen.dart';
+import 'package:bounce_patient_app/src/modules/appointment/screens/session_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/appointment/screens/therapist_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/mood_icons_view.dart';
 import 'package:bounce_patient_app/src/modules/notifications/screens/notification_list_screen.dart';
@@ -205,7 +205,7 @@ class _SessionsCard extends StatelessWidget {
   Widget bookNowButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.to(context, const SessionsScreen());
+        AppNavigator.to(context, const SessionListScreen());
       },
       child: Row(
         children: [

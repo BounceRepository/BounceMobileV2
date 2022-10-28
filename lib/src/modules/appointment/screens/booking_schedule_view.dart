@@ -1,7 +1,8 @@
 import 'package:bounce_patient_app/src/modules/appointment/controllers/controllers.dart';
 import 'package:bounce_patient_app/src/modules/appointment/models/therapist.dart';
-import 'package:bounce_patient_app/src/modules/appointment/widgets/custom_horizontal_calendar_picker.dart';
-import 'package:bounce_patient_app/src/shared/styles/colors.dart';
+import 'package:bounce_patient_app/src/modules/appointment/widgets/custom_chip_button.dart';
+import 'package:bounce_patient_app/src/modules/appointment/widgets/select_availability_view.dart';
+import 'package:bounce_patient_app/src/modules/appointment/widgets/select_date_view.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -26,9 +27,9 @@ class BookingScheduleView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: gap),
-          const _DateSelectionSection(),
+          const SelectDateView(),
           SizedBox(height: gap),
-          _AvailableTimeSection(therapist: therapist),
+          SelectAvailableTimeView(therapist: therapist),
           SizedBox(height: gap),
           const _ReasonForTherapySection(),
           SizedBox(height: gap),
@@ -44,102 +45,6 @@ class BookingScheduleView extends StatelessWidget {
             ),
           ),
           SizedBox(height: gap),
-        ],
-      ),
-    );
-  }
-}
-
-class _DateSelectionSection extends StatefulWidget {
-  const _DateSelectionSection({Key? key}) : super(key: key);
-
-  @override
-  State<_DateSelectionSection> createState() => _DateSelectionSectionState();
-}
-
-class _DateSelectionSectionState extends State<_DateSelectionSection> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<BookAppointmentController>().selectedDate = DateTime.now();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: AppPadding.horizontal),
-          child: Text(
-            'Preferred Date',
-            style: AppText.titleStyle(context),
-          ),
-        ),
-        CustomHorizontalCalendarPicker(
-          onSelectDate: (date) {
-            context.read<BookAppointmentController>().selectedDate = date;
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class _AvailableTimeSection extends StatefulWidget {
-  const _AvailableTimeSection({Key? key, required this.therapist}) : super(key: key);
-
-  final Therapist therapist;
-
-  @override
-  State<_AvailableTimeSection> createState() => _AvailableTimeSectionState();
-}
-
-class _AvailableTimeSectionState extends State<_AvailableTimeSection> {
-  int selectedIndex = 0;
-  late List<String> availableTimes;
-
-  @override
-  void initState() {
-    super.initState();
-    availableTimes = widget.therapist.workingHours.availableTime;
-    context.read<BookAppointmentController>().selectedTime =
-        availableTimes[selectedIndex];
-  }
-
-  void onSelect(int index) {
-    context.read<BookAppointmentController>().selectedTime = availableTimes[index];
-
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: AppPadding.symetricHorizontalOnly,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Available Time',
-            style: AppText.titleStyle(context),
-          ),
-          Wrap(
-            spacing: 22.w,
-            children: List.generate(
-              availableTimes.length,
-              (index) {
-                final time = availableTimes[index];
-                return _CustomButton(
-                  title: time,
-                  isSelected: index == selectedIndex,
-                  onTap: () => onSelect(index),
-                );
-              },
-            ),
-          ),
         ],
       ),
     );
@@ -198,7 +103,7 @@ class _ReasonForTherapySectionState extends State<_ReasonForTherapySection> {
             itemCount: reasons.length,
             itemBuilder: (context, index) {
               final reason = reasons[index];
-              return _CustomButton(
+              return CustomChipButton(
                 height: 40.h,
                 title: reason,
                 isSelected: index == selectedIndex,
@@ -249,45 +154,6 @@ class _AddNoteSectionState extends State<_AddNoteSection> {
             hintText: 'Enter your complaint or any additional information here.',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _CustomButton extends StatelessWidget {
-  const _CustomButton({
-    Key? key,
-    required this.title,
-    required this.isSelected,
-    this.height,
-    required this.onTap,
-  }) : super(key: key);
-
-  final String title;
-  final bool isSelected;
-  final double? height;
-  final Function() onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: height,
-        margin: EdgeInsets.symmetric(vertical: 6.h),
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 22.5.w),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : const Color(0xffFEFEFE),
-          borderRadius: BorderRadius.circular(12.r),
-          boxShadow: AppColors.boxshadow4,
-        ),
-        child: Text(
-          title,
-          style: AppText.bold400(context).copyWith(
-            fontSize: 12.sp,
-            color: isSelected ? Colors.white : null,
-          ),
-        ),
       ),
     );
   }
