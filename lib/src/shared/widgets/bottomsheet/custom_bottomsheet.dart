@@ -31,14 +31,16 @@ Future<dynamic> showCustomBottomSheet(
 class CustomBottomSheetBody extends StatelessWidget {
   const CustomBottomSheetBody({
     Key? key,
-    required this.content,
+    required this.body,
     this.padding,
     this.height,
+    this.borderRadius,
   }) : super(key: key);
 
-  final List<Widget> content;
+  final List<Widget> body;
   final EdgeInsetsGeometry? padding;
   final double? height;
+  final BorderRadiusGeometry? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +48,6 @@ class CustomBottomSheetBody extends StatelessWidget {
       child: Container(
         height: height,
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.only(
-          top: 80.h,
-          // left: 10.w,
-          // right: 10.w,
-        ),
         padding: padding ??
             EdgeInsets.only(
               top: 20.73.h,
@@ -60,13 +57,13 @@ class CustomBottomSheetBody extends StatelessWidget {
             ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: borderRadius ?? BorderRadius.circular(16.r),
         ),
         child: Padding(
           padding: MediaQuery.of(context).viewInsets,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: content,
+            children: body,
           ),
         ),
       ),

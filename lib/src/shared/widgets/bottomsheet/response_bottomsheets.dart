@@ -43,7 +43,7 @@ class _Body extends StatelessWidget {
       onWillPop: () => Future.value(false),
       child: CustomBottomSheetBody(
         height: 408.h,
-        content: [
+        body: [
           Container(
             height: 150.h,
             width: 150.h,
@@ -143,7 +143,7 @@ class _ResponseBottomsheetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
       height: 408.h,
-      content: [
+      body: [
         SvgPicture.asset(
           icon,
           height: 88.h,

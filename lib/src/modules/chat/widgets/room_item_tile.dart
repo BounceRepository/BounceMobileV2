@@ -1,14 +1,17 @@
+import 'package:bounce_patient_app/src/modules/chat/widgets/comment_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/custom_divider.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class RoomItemTile extends StatelessWidget {
-  const RoomItemTile({Key? key}) : super(key: key);
+class RoomChatItem extends StatelessWidget {
+  const RoomChatItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +26,14 @@ class RoomItemTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 35.h,
-                width: 35.h,
-                decoration: const BoxDecoration(
-                  color: AppColors.textBrown,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              SizedBox(width: 17.w),
+              DefaultAppImage(size: 35.h),
+              SizedBox(width: 20.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Coal Dingo',
@@ -45,10 +42,10 @@ class RoomItemTile extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          ' • 1 hr ago',
+                          'Just now',
                           style: AppText.bold400(context).copyWith(
                             fontSize: 12.sp,
-                            color: const Color(0xff707070),
+                            color: AppColors.grey3,
                           ),
                         ),
                       ],
@@ -71,13 +68,7 @@ class RoomItemTile extends StatelessWidget {
                         SizedBox(width: 29.7.w),
                         _ActionButton(
                           icon: ChatRoomIcons.comment,
-                          value: 2,
-                          onTap: () {},
-                        ),
-                        const Spacer(),
-                        _ActionButton(
-                          icon: ChatRoomIcons.share,
-                          onTap: () {},
+                          onTap: () => showCommentListBottomsheet(context),
                         ),
                       ],
                     ),
@@ -87,10 +78,7 @@ class RoomItemTile extends StatelessWidget {
             ],
           ),
           SizedBox(height: 17.95.h),
-          Container(
-            height: 1.h,
-            color: const Color(0xffD9D8D8).withOpacity(.3),
-          ),
+          const CustomDivider(),
         ],
       ),
     );

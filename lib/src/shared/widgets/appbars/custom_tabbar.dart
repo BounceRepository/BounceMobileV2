@@ -38,7 +38,7 @@ class AppBarWithTabs extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
               CustomTabBar(
-                isScrollable: false,
+                isScrollable: true,
                 tabs: List.generate(tabs.length, (index) {
                   final tab = tabs[index];
                   return Tab(text: tab);
@@ -72,6 +72,7 @@ class CustomTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40.h,
+      width: double.infinity,
       margin: EdgeInsets.only(left: AppPadding.horizontal),
       padding: EdgeInsets.only(left: 5.w, top: 10.h),
       decoration: BoxDecoration(
@@ -84,7 +85,6 @@ class CustomTabBar extends StatelessWidget {
         onTap: onTap,
         physics: const BouncingScrollPhysics(),
         labelColor: AppColors.grey,
-        labelPadding: EdgeInsets.zero,
         unselectedLabelColor: AppColors.grey,
         labelStyle: AppText.bold600(context).copyWith(
           fontSize: 12.sp,

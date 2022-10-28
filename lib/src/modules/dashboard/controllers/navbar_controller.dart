@@ -1,5 +1,5 @@
 import 'package:bounce_patient_app/src/modules/appointment/screens/sessions_screen.dart';
-import 'package:bounce_patient_app/src/modules/chat/screens/room_screen.dart';
+import 'package:bounce_patient_app/src/modules/chat/screens/rant_room_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/models/navbar_item.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/home_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';

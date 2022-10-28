@@ -33,8 +33,7 @@ class PlayListScreen extends StatelessWidget {
                 ),
               ];
             },
-            // TODO: Add tabbarview with other screens
-            body: const _PlayListView(),
+            body: const _Body(),
           ),
         ),
       ),
@@ -42,8 +41,8 @@ class PlayListScreen extends StatelessWidget {
   }
 }
 
-class _PlayListView extends StatelessWidget {
-  const _PlayListView({
+class _Body extends StatelessWidget {
+  const _Body({
     Key? key,
   }) : super(key: key);
 

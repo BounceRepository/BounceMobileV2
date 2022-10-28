@@ -94,7 +94,7 @@ class MoodBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
       height: 400.h,
-      content: [
+      body: [
         SizedBox(height: 88.h),
         _Button(mood, isTappable: false),
         SizedBox(height: 20.h),

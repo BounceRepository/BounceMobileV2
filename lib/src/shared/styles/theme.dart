@@ -8,7 +8,26 @@ class AppTheme {
 
   static ThemeData get theme {
     return ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+      primaryColor: AppColors.primary,
+      colorScheme: ColorScheme.fromSwatch(
+        brightness: Brightness.light,
+        primarySwatch: const MaterialColor(
+          0xff7bed8d, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+          <int, Color>{
+            50: AppColors.primary, //10%
+            100: AppColors.primary, //20%
+            200: AppColors.primary, //30%
+            300: AppColors.primary, //40%
+            400: AppColors.primary, //50%
+            500: AppColors.primary, //60%
+            600: AppColors.primary, //70%
+            700: AppColors.primary, //80%
+            800: AppColors.primary, //90%
+            900: AppColors.primary, //100%
+          },
+        ),
+      ).copyWith(secondary: AppColors.primary),
+      //colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
       textTheme: GoogleFonts.poppinsTextTheme().apply(
         displayColor: AppColors.textBrown,
         bodyColor: AppColors.textBrown,
