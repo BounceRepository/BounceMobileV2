@@ -8,9 +8,11 @@ class SelectPaymentTypeView extends StatefulWidget {
   const SelectPaymentTypeView({
     super.key,
     required this.onSelect,
+    required this.options,
   });
 
   final Function(PaymentType type) onSelect;
+  final List<PaymentType> options;
 
   @override
   State<SelectPaymentTypeView> createState() => _SelectPaymentTypeViewState();
@@ -21,27 +23,43 @@ class _SelectPaymentTypeViewState extends State<SelectPaymentTypeView> {
 
   @override
   Widget build(BuildContext context) {
+    final options = widget.options;
+
     return Column(
       children: [
-        _Tile(
-          title: 'Pay with Wallet',
-          isSelected: selectedPaymentType == PaymentType.wallet,
-          onTap: () {
-            selectedPaymentType = PaymentType.wallet;
-            widget.onSelect(PaymentType.wallet);
-            setState(() {});
-          },
-        ),
-        SizedBox(height: 12.h),
-        _Tile(
-          title: 'Pay with Card',
-          isSelected: selectedPaymentType == PaymentType.card,
-          onTap: () {
-            selectedPaymentType = PaymentType.card;
-            widget.onSelect(PaymentType.card);
-            setState(() {});
-          },
-        ),
+        options.contains(PaymentType.wallet)
+            ? _Tile(
+                title: 'Pay with Wallet',
+                isSelected: selectedPaymentType == PaymentType.wallet,
+                onTap: () {
+                  selectedPaymentType = PaymentType.wallet;
+                  widget.onSelect(PaymentType.wallet);
+                  setState(() {});
+                },
+              )
+            : const SizedBox.shrink(),
+        options.contains(PaymentType.card)
+            ? _Tile(
+                title: 'Pay with Card',
+                isSelected: selectedPaymentType == PaymentType.card,
+                onTap: () {
+                  selectedPaymentType = PaymentType.card;
+                  widget.onSelect(PaymentType.card);
+                  setState(() {});
+                },
+              )
+            : const SizedBox.shrink(),
+        options.contains(PaymentType.ussd)
+            ? _Tile(
+                title: 'Pay with USSD',
+                isSelected: selectedPaymentType == PaymentType.ussd,
+                onTap: () {
+                  selectedPaymentType = PaymentType.ussd;
+                  widget.onSelect(PaymentType.ussd);
+                  setState(() {});
+                },
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }
@@ -64,6 +82,7 @@ class _Tile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        margin: EdgeInsets.only(bottom: 12.h),
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 18.4.w),
         decoration: BoxDecoration(
           color: const Color(0xffFEFEFE),

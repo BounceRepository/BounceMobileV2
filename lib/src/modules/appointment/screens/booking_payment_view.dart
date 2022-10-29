@@ -120,6 +120,7 @@ class _BookingPaymentViewState extends State<BookingPaymentView> {
           ),
           SizedBox(height: 20.h),
           SelectPaymentTypeView(
+            options: const [PaymentType.wallet, PaymentType.card],
             onSelect: (type) {
               selectedPaymentType = type;
             },

@@ -57,7 +57,11 @@ class CustomBottomSheetBody extends StatelessWidget {
             ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: borderRadius ?? BorderRadius.circular(16.r),
+          borderRadius: borderRadius ??
+              BorderRadius.only(
+                topLeft: Radius.circular(16.r),
+                topRight: Radius.circular(16.r),
+              ),
         ),
         child: Padding(
           padding: MediaQuery.of(context).viewInsets,

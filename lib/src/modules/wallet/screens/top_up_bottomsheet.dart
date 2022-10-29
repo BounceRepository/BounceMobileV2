@@ -40,6 +40,7 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
+      height: 488.h,
       body: [
         Text(
           'My Wallet Top Up',
@@ -59,14 +60,14 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
             fontSize: 14.sp,
           ),
         ),
-        SizedBox(height: 190.h),
+        const Spacer(),
         AppButton(
           label: 'Continue',
           onTap: () {
             showSelectPaymentOptionBottomsheet(context: context);
           },
         ),
-        SizedBox(height: 40.h),
+        SizedBox(height: 22.h),
       ],
     );
   }
