@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
+import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -67,9 +68,29 @@ class CustomBottomSheetBody extends StatelessWidget {
           padding: MediaQuery.of(context).viewInsets,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: body,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class BottomSheetTitle extends StatelessWidget {
+  const BottomSheetTitle(
+    this.title, {
+    Key? key,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: AppText.bold700(context).copyWith(
+        fontSize: 20.sp,
       ),
     );
   }

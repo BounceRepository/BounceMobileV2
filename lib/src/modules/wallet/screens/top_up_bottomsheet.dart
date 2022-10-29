@@ -42,12 +42,7 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
     return CustomBottomSheetBody(
       height: 488.h,
       body: [
-        Text(
-          'My Wallet Top Up',
-          style: AppText.bold700(context).copyWith(
-            fontSize: 20.sp,
-          ),
-        ),
+        BottomSheetTitle('My Wallet Top Up'),
         SizedBox(height: 64.h),
         CustomTextField(
           controller: amountController,
@@ -72,3 +67,5 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
     );
   }
 }
+
+
