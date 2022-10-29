@@ -7,12 +7,12 @@ import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/flutterwave_payment_service.dart';
 import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
-import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/response_bottomsheets.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/select_payment_type_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -28,24 +28,24 @@ class BookingPaymentView extends StatefulWidget {
 
 class _BookingPaymentViewState extends State<BookingPaymentView> {
   bool isLoading = false;
-  int selectedIndex = 0;
-
-  void onSelect(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
+  PaymentType? selectedPaymentType;
 
   void bookSession() async {
-    if (selectedIndex == 0) {
-      Messenger.show(context, message: 'Wallet coming soon');
-      return;
-    }
+    final selectedPaymentType = this.selectedPaymentType;
 
-    _payWithCard();
+    if (selectedPaymentType != null) {
+      if (selectedPaymentType == PaymentType.wallet) {
+        Messenger.show(context, message: 'Wallet coming soon');
+        return;
+      }
+
+      if (selectedPaymentType == PaymentType.card) {
+        payWithCard();
+      }
+    }
   }
 
-  void _payWithCard() async {
+  void payWithCard() async {
     final paymentService = FlutterwavePaymentService(
       context: context,
       nextScreen: const DashboardView(),
@@ -119,16 +119,10 @@ class _BookingPaymentViewState extends State<BookingPaymentView> {
             style: AppText.titleStyle(context),
           ),
           SizedBox(height: 20.h),
-          _Tile(
-            title: 'Pay with Wallet',
-            isSelected: selectedIndex == 0,
-            onTap: () => onSelect(0),
-          ),
-          SizedBox(height: 12.h),
-          _Tile(
-            title: 'Pay with Card',
-            isSelected: selectedIndex == 1,
-            onTap: () => onSelect(1),
+          SelectPaymentTypeView(
+            onSelect: (type) {
+              selectedPaymentType = type;
+            },
           ),
           SizedBox(height: 360.h),
           AppButton(
@@ -137,52 +131,6 @@ class _BookingPaymentViewState extends State<BookingPaymentView> {
             onTap: bookSession,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _Tile extends StatelessWidget {
-  const _Tile({
-    Key? key,
-    required this.title,
-    required this.onTap,
-    required this.isSelected,
-  }) : super(key: key);
-
-  final String title;
-  final Function() onTap;
-  final bool isSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 18.4.w),
-        decoration: BoxDecoration(
-          color: const Color(0xffFEFEFE),
-          borderRadius: BorderRadius.circular(12.r),
-          boxShadow: AppColors.boxshadow4,
-        ),
-        child: Row(
-          children: [
-            Icon(
-              isSelected
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_unchecked_outlined,
-              size: 20.sp,
-              color: AppColors.primary,
-            ),
-            SizedBox(width: 58.4.w),
-            Text(
-              title,
-              style: AppText.bold400(context).copyWith(
-                fontSize: 14.sp,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

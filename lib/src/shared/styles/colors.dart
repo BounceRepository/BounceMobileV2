@@ -10,6 +10,7 @@ class AppColors {
   static const textBrown = Color(0xff573926);
   static const textGrey = Color(0xff707070);
   static const background = Color(0xffFBFBFB);
+  static const success = Color(0xff00B96B);
   static const error = Color(0xffEF1313);
   static const border = Color(0xffD9D8D8);
   static const grey = Color(0xffF9F6F4);
