@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,7 +11,7 @@ class CustomDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 1.h,
-      color: const Color(0xffD9D8D8).withOpacity(.3),
+      color: AppColors.grey5,
     );
   }
 }

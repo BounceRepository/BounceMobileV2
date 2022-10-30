@@ -63,20 +63,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class _BackButton extends StatelessWidget {
-  const _BackButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBarIcon(
-      Icons.arrow_back,
-      onTap: () {
-        Navigator.maybePop(context);
-      },
-    );
-  }
-}
-
 class SearchButton extends StatelessWidget {
   const SearchButton({Key? key, required this.onTap}) : super(key: key);
 
@@ -161,19 +147,7 @@ class _AppBarIconContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        height: size ?? 32.h,
-        width: size ?? 32.h,
-        margin: EdgeInsets.symmetric(
-          vertical: 7.h,
-          horizontal: AppPadding.horizontal,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7.r),
-          color: const Color(0xffF9F6F4),
-        ),
-        child: child,
-      ),
+      child: child,
     );
   }
 }

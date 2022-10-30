@@ -8,6 +8,7 @@ class AppIcons {
   static const sort = 'assets/icons/sort.svg';
   static const message = 'assets/icons/message.svg';
   static const call = 'assets/icons/call.svg';
+  static const delete = 'assets/icons/delete.svg';
   static const video = 'assets/icons/video.svg';
   static const calendar = 'assets/icons/calendar.svg';
   static const clock = 'assets/icons/clock.svg';

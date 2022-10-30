@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final String? title;
   final String? lableText;
   final String? hintText;
+  final double? fontSize;
   final TextStyle? hintTextStyle;
   final TextInputType? textInputType;
   final bool obscure;
@@ -63,6 +64,7 @@ class CustomTextField extends StatelessWidget {
     this.isMultipleLine = false,
     this.border,
     this.contentPadding,
+    this.fontSize,
   }) : super(key: key);
 
   @override
@@ -79,7 +81,7 @@ class CustomTextField extends StatelessWidget {
       //autofocus: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: AppText.bold500(context).copyWith(
-        fontSize: 13.sp,
+        fontSize: fontSize ?? 14.sp,
       ),
       keyboardType: textInputType,
       obscureText: obscure,
@@ -125,10 +127,10 @@ class CustomTextField extends StatelessWidget {
         suffixStyle: Theme.of(context).textTheme.titleSmall,
         hintStyle: hintTextStyle ??
             AppText.bold300(context).copyWith(
-              fontSize: 13.sp,
+              fontSize: fontSize ?? 14.sp,
             ),
         labelStyle: AppText.bold300(context).copyWith(
-          fontSize: 13.sp,
+          fontSize: fontSize ?? 14.sp,
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.r),
