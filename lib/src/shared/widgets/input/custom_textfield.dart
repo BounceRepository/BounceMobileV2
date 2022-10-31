@@ -231,7 +231,7 @@ class TextFieldSvgIcon extends StatelessWidget {
           icon,
           height: 24.h,
           width: 24.h,
-          color: color ?? Colors.white,
+          //color: color ?? const Color(0xff292D32),
         ),
       ),
     );

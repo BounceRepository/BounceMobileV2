@@ -2,7 +2,6 @@ import 'package:bounce_patient_app/src/modules/appointment/models/appointment.da
 import 'package:bounce_patient_app/src/modules/appointment/services/services.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
-import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
 class FakeBookAppointmentServiceImpl implements IBookAppointmentService {
@@ -17,13 +16,13 @@ class FakeBookAppointmentServiceImpl implements IBookAppointmentService {
     required String time,
     required DateTime date,
   }) async {
-    await Future.delayed(fakeNetworkDelay);
-    return HelperFunctions.generateUniqueId();
+    await fakeNetworkDelay();
+    return Utils.generateUniqueId();
   }
 
   @override
   Future<void> confirmAppointment(String trxRef) async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
     //throw InternalFailure();
   }
 }

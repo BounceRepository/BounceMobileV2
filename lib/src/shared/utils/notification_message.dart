@@ -84,7 +84,7 @@ class CustomSnackBar extends StatelessWidget {
           Text(
             'Message',
             style: textStyle.copyWith(
-              fontSize: 11.sp,
+              fontSize: 10.sp,
               fontWeight: FontWeight.w400,
             ),
           ),

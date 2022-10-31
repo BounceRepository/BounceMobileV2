@@ -9,19 +9,19 @@ import 'package:flutter_lorem/flutter_lorem.dart';
 class FakeTherapistListServiceImpl implements ITherapistListService {
   @override
   Future<List<Therapist>> getAllTherapist() async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
     return List.generate(27, (index) => therapist);
   }
 
   @override
   Future<List<Therapist>> getAllTherapistNearYou() async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
     return List.generate(27, (index) => therapist);
   }
 
   @override
   Future<List<Therapist>> getAllTopTherapist() async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
     return List.generate(8, (index) => therapist);
   }
 }

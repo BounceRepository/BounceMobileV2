@@ -12,6 +12,8 @@ class AuthBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -22,7 +24,7 @@ class AuthBody extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 AuthIcons.circles,
-                height: 156.h,
+                height: 100.h,
               ),
               Padding(
                 padding: AppPadding.symetricHorizontalOnly,

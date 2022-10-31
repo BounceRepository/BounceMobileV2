@@ -2,6 +2,8 @@ import 'package:bounce_patient_app/src/modules/appointment/controllers/book_appo
 import 'package:bounce_patient_app/src/modules/appointment/controllers/therapist_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/controllers/health_level_controller.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/controllers/mood_controller.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/controllers/navbar_controller.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:bounce_patient_app/src/config/di_container.dart';
@@ -22,9 +24,15 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<ImageController>()),
         ChangeNotifierProvider(create: (_) => diContainer<TherapistListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<BookAppointmentController>()),
+        ChangeNotifierProvider(create: (_) => HealthLevelController()),
+        ChangeNotifierProvider(create: (_) => PhysicalHealthLevelController()),
+        ChangeNotifierProvider(create: (_) => MentalHealthLevelController()),
+        ChangeNotifierProvider(create: (_) => EmotionalHealthLevelController()),
+        ChangeNotifierProvider(create: (_) => EatingHabitLevelController()),
         ChangeNotifierProvider(create: (_) => OnboardingController()),
         ChangeNotifierProvider(create: (_) => GenderController()),
         ChangeNotifierProvider(create: (_) => NavbarController()),
+        ChangeNotifierProvider(create: (_) => MoodController()),
       ],
       child: child,
     );

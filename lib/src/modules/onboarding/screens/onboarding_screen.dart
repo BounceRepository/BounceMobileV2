@@ -32,25 +32,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         final pageController = controller.pageController;
 
         return Scaffold(
-          body: PageView.builder(
-            physics: const BouncingScrollPhysics(),
-            controller: pageController,
-            itemCount: controller.onboardingList.length,
-            itemBuilder: (context, index) {
-              final onboarding = controller.onboardingList[index];
-              return Image.asset(
-                onboarding.image,
-                fit: BoxFit.cover,
+          body: Stack(
+            children: [
+              SizedBox(
                 height: size.height,
                 width: size.width,
-                alignment: Alignment.topCenter,
-              );
-            },
-            onPageChanged: (value) {
-              controller.nextPage(value);
-            },
+                child: PageView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  controller: pageController,
+                  itemCount: controller.onboardingList.length,
+                  itemBuilder: (context, index) {
+                    final onboarding = controller.onboardingList[index];
+                    return Image.asset(
+                      onboarding.image,
+                      fit: BoxFit.cover,
+                      height: size.height,
+                      width: size.width,
+                      alignment: Alignment.topCenter,
+                    );
+                  },
+                  onPageChanged: (value) {
+                    controller.nextPage(value);
+                  },
+                ),
+              ),
+              const Positioned(
+                bottom: 0,
+                child: _ContentView(),
+              ),
+            ],
           ),
-          bottomNavigationBar: const _ContentView(),
         );
       },
     );
@@ -63,56 +74,49 @@ class _ContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<OnboardingController>(builder: (context, controller, _) {
-      final pageController = controller.pageController;
       final currentOnboarding = controller.currentOnboarding;
 
-      return ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28.r),
-          topRight: Radius.circular(28.r),
+      return Container(
+        height: 320.h,
+        width: 375.w,
+        padding: EdgeInsets.symmetric(
+          vertical: 36.h,
+          horizontal: AppPadding.horizontal,
         ),
-        child: Container(
-          height: 320.h,
-          padding: EdgeInsets.symmetric(
-            vertical: 36.h,
-            horizontal: AppPadding.horizontal,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(28.r),
+            topRight: Radius.circular(28.r),
           ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(28.r),
-              topRight: Radius.circular(28.r),
+        ),
+        child: Column(
+          children: [
+            const _Indicator(),
+            const Spacer(),
+            Text(
+              currentOnboarding.title,
+              textAlign: TextAlign.center,
+              style: AppText.bold700(context).copyWith(
+                fontSize: 18.sp,
+              ),
             ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const _Indicator(),
-              const Spacer(),
-              Text(
-                currentOnboarding.title,
-                textAlign: TextAlign.center,
-                style: AppText.bold500(context).copyWith(
-                  fontSize: 18.sp,
-                ),
+            SizedBox(height: 12.h),
+            Text(
+              currentOnboarding.description,
+              textAlign: TextAlign.center,
+              style: AppText.bold300(context).copyWith(
+                fontSize: 14.sp,
               ),
-              SizedBox(height: 12.h),
-              Text(
-                currentOnboarding.description,
-                textAlign: TextAlign.center,
-                style: AppText.bold300(context).copyWith(
-                  fontSize: 14.sp,
-                ),
-              ),
-              const Spacer(),
-              AppButton(
-                label: 'Get Started',
-                onTap: () {
-                  AppNavigator.to(context, const GettingStartedScreen());
-                },
-              ),
-            ],
-          ),
+            ),
+            const Spacer(),
+            AppButton(
+              label: 'Get Started',
+              onTap: () {
+                AppNavigator.to(context, const GettingStartedScreen());
+              },
+            ),
+          ],
         ),
       );
     });

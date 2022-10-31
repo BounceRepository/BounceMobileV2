@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:uuid/uuid.dart';
 
-class HelperFunctions {
-  HelperFunctions._();
+class Utils {
+  Utils._();
 
   static String generateUniqueId() {
     const uuid = Uuid();

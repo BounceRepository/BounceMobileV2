@@ -11,14 +11,14 @@ class FakeAuthServiceImpl implements IAuthService {
     required String email,
     required String newPassword,
   }) async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
     // TODO: implement createProfile
-    throw UnimplementedError();
+    //throw InternalFailure();
   }
 
   @override
   Future<bool> getVerificationStatus({required String email}) async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
     return true;
   }
 
@@ -27,7 +27,7 @@ class FakeAuthServiceImpl implements IAuthService {
     required String userName,
     required String password,
   }) async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
     AppSession.user = User(
       id: 10,
       firstName: 'John',
@@ -36,6 +36,7 @@ class FakeAuthServiceImpl implements IAuthService {
       email: 'appleyard@gmail.com',
       phone: '07017247035',
       dateOfBirth: '1990-02-08',
+      //throw InternalFailure();
     );
   }
 
@@ -45,29 +46,27 @@ class FakeAuthServiceImpl implements IAuthService {
     required String email,
     required String password,
   }) async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
+    //throw InternalFailure();
     return 10;
   }
 
   @override
   Future<void> resetPassword({required String email}) async {
-    await Future.delayed(fakeNetworkDelay);
-    // TODO: implement createProfile
-    throw UnimplementedError();
+    await fakeNetworkDelay();
+    //throw InternalFailure();
   }
 
   @override
   Future<void> validateOTP({required String token}) async {
-    await Future.delayed(fakeNetworkDelay);
-    // TODO: implement createProfile
-    throw UnimplementedError();
+    await fakeNetworkDelay();
+    //throw InternalFailure();
   }
 
   @override
   Future<void> sendVerificationLink({required String email}) async {
-    await Future.delayed(fakeNetworkDelay);
-    // TODO: implement createProfile
-    throw UnimplementedError();
+    await fakeNetworkDelay();
+    //throw InternalFailure();
   }
 
   @override
@@ -80,9 +79,7 @@ class FakeAuthServiceImpl implements IAuthService {
     required File image,
     required String dateOfBirth,
   }) async {
-    await Future.delayed(fakeNetworkDelay);
-
-    // // TODO: implement createProfile
-    // throw UnimplementedError();
+    await fakeNetworkDelay();
+    //throw InternalFailure();
   }
 }

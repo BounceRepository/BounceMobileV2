@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,8 +37,13 @@ class DefaultAppImage extends StatelessWidget {
       height: size ?? 68.h,
       width: size ?? 68.h,
       decoration: const BoxDecoration(
-        color: Colors.black,
+        color: AppColors.grey3,
         shape: BoxShape.circle,
+      ),
+      child: Icon(
+        Icons.person,
+        size: 40.sp,
+        color: const Color(0xffC5B8B8),
       ),
     );
   }

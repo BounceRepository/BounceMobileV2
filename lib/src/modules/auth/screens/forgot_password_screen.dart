@@ -9,6 +9,7 @@ import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
+import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
@@ -56,48 +58,31 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: Form(
                 key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ArrowBackButton(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
                     Text(
                       'Forgot password?',
                       style: AppText.bold800(context).copyWith(
-                        fontSize: 36.sp,
+                        fontSize: 24.sp,
                         color: AppColors.primary,
                       ),
                     ),
-                    SizedBox(height: 30.h),
-                    RichText(
-                      text: TextSpan(
-                        text: '*',
-                        style: AppText.bold400(context).copyWith(
-                          fontSize: 12.sp,
-                          color: AppColors.primary,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text:
-                                ' We will send you an email to set or reset your new password',
-                            style: AppText.bold400(context).copyWith(
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                        ],
+                    SizedBox(height: 8.h),
+                    Text(
+                      'We will send you an email to set or reset your new password',
+                      style: AppText.bold300(context).copyWith(
+                        fontSize: 14.sp,
                       ),
                     ),
                     SizedBox(height: 16.h),
-                    SvgPicture.asset(
-                      AuthIcons.forgotPassword,
-                      width: 190.w,
-                      height: 201.h,
+                    Align(
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(
+                        AuthIcons.forgotPassword,
+                        width: 190.w,
+                        height: 201.h,
+                      ),
                     ),
                     SizedBox(height: 28.h),
                     CustomTextField(

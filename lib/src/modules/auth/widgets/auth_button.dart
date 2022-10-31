@@ -18,7 +18,7 @@ class AuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 212.15.w,
+      width: double.infinity,
       child: AppButton(
         label: label.toTitleCase,
         labelColor: Colors.white,

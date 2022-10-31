@@ -14,6 +14,7 @@ import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/custom_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -100,7 +101,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Text(
                 'Create Account',
                 style: AppText.bold600(context).copyWith(
-                  fontSize: 32.sp,
+                  fontSize: 24.sp,
+                  color: AppColors.primary,
                 ),
               ),
             ),
@@ -141,14 +143,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 16.h,
-                  width: 16.h,
-                  child: Checkbox(
-                    value: hasAcceptedTerms,
-                    activeColor: AppColors.primary,
-                    onChanged: (value) => _acceptTerms(),
-                  ),
+                CustomCheckBox(
+                  value: hasAcceptedTerms,
+                  onChanged: (value) => _acceptTerms(),
                 ),
                 SizedBox(width: 5.w),
                 LinkText(

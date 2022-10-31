@@ -7,13 +7,13 @@ import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 class FakeAppointmentListServiceImpl implements IAppointmentListService {
   @override
   Future<List<Appointment>> getAllAppointment() async {
-    await Future.delayed(fakeNetworkDelay);
+    await fakeNetworkDelay();
     return List.generate(5, (index) => _appointment);
   }
 }
 
 final _appointment = Appointment(
-  id: HelperFunctions.generateUniqueId(),
+  id: Utils.generateUniqueId(),
   therapist: therapist,
   date: DateTime.now(),
   time: '10:00 AM',

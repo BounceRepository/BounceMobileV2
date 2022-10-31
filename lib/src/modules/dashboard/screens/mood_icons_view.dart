@@ -15,27 +15,27 @@ class MoodIconsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final moods = [
       Mood(
-        id: HelperFunctions.generateUniqueId(),
+        id: Utils.generateUniqueId(),
         icon: MoodIcons.happy,
         name: 'Happy',
       ),
       Mood(
-        id: HelperFunctions.generateUniqueId(),
+        id: Utils.generateUniqueId(),
         icon: MoodIcons.manic,
         name: 'Manic',
       ),
       Mood(
-        id: HelperFunctions.generateUniqueId(),
+        id: Utils.generateUniqueId(),
         icon: MoodIcons.calm,
         name: 'Calm',
       ),
       Mood(
-        id: HelperFunctions.generateUniqueId(),
+        id: Utils.generateUniqueId(),
         icon: MoodIcons.angry,
         name: 'Angry',
       ),
       Mood(
-        id: HelperFunctions.generateUniqueId(),
+        id: Utils.generateUniqueId(),
         icon: MoodIcons.angry,
         name: 'Sad',
       ),
