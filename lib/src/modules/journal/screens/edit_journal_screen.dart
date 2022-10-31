@@ -41,7 +41,9 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
         actions: [
           AppBarIcon(
             Icons.check,
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
         ],
       ),

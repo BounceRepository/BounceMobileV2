@@ -1,13 +1,14 @@
 import 'package:bounce_patient_app/src/modules/onboarding/models/onboarding.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/cupertino.dart';
 
 class OnboardingController extends ChangeNotifier {
   int pageNo = 0;
-  CarouselController carouselController = CarouselController();
+  PageController pageController = PageController();
+  late Onboarding _currentOnboarding;
+  Onboarding get currentOnboarding => _currentOnboarding;
 
-  final onboardings = [
+  final onboardingList = [
     Onboarding(
       title: 'Get Instant Consult From Your Preferred Therapist',
       description:
@@ -21,15 +22,20 @@ class OnboardingController extends ChangeNotifier {
     ),
   ];
 
+  void init() {
+    _currentOnboarding = onboardingList[0];
+  }
+
   void precacheImages(BuildContext context) async {
     await Future.wait([
-      precacheImage(AssetImage(onboardings[0].image), context),
-      precacheImage(AssetImage(onboardings[1].image), context),
+      precacheImage(AssetImage(onboardingList[0].image), context),
+      precacheImage(AssetImage(onboardingList[1].image), context),
     ]);
   }
 
   void nextPage(int index) {
     pageNo = index;
+    _currentOnboarding = onboardingList[index];
     notifyListeners();
   }
 

@@ -1,5 +1,6 @@
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
+import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -20,9 +21,11 @@ class GettingStartedScreen extends StatelessWidget {
               children: [
                 Image.asset(
                   AppImages.logo,
-                  width: 183.w,
-                  height: 178.h,
+                  width: 142.h,
+                  height: 142.h,
+                  fit: BoxFit.cover,
                 ),
+                SizedBox(height: 40.h),
                 columnText(
                   context,
                   title: 'Disclaimer:',
@@ -62,7 +65,8 @@ class GettingStartedScreen extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           style: AppText.bold700(context).copyWith(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
+            color: AppColors.textBrown,
           ),
         ),
         SizedBox(height: 4.h),
@@ -70,7 +74,8 @@ class GettingStartedScreen extends StatelessWidget {
           description,
           textAlign: TextAlign.center,
           style: AppText.bold500(context).copyWith(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
+            color: AppColors.textBrown,
           ),
         ),
       ],

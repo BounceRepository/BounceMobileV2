@@ -1,173 +1,156 @@
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
-import 'package:bounce_patient_app/src/modules/onboarding/models/onboarding.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/screens/getting_started_screen.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/text_helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
+import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
-import 'package:bounce_patient_app/src/shared/widgets/buttons/custom_text_button.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<OnboardingController>().init();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  right: 25.w,
-                  top: 20.h,
-                ),
-                child: CustomTextButton(
-                  label: 'Skip',
-                  padding: EdgeInsets.zero,
-                  onTap: () {
-                    AppNavigator.to(context, const GettingStartedScreen());
-                  },
-                ),
-              ),
-            ),
-            Consumer<OnboardingController>(
-              builder: (BuildContext context, controller, Widget? child) {
-                return Expanded(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Transform.rotate(
-                          angle: 3.0,
-                          child: Transform.scale(
-                            scale: 1.7,
-                            child: Container(
-                              height: 100.h,
-                              color: AppColors.primary.withOpacity(.2),
-                            ),
-                          ),
-                        ),
-                        CarouselSlider.builder(
-                          carouselController: controller.carouselController,
-                          itemCount: controller.onboardings.length,
-                          options: CarouselOptions(
-                            height: 700.h,
-                            viewportFraction: 1,
-                            autoPlay: false,
-                            autoPlayInterval: const Duration(seconds: 6),
-                            enableInfiniteScroll: false,
-                            initialPage: 0,
-                            scrollPhysics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            onPageChanged: (value, _) {
-                              controller.nextPage(value);
-                            },
-                          ),
-                          itemBuilder: (context, index, _) {
-                            final onboarding = controller.onboardings[index];
-                            return _PageViewItem(onboarding);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.white.withOpacity(0),
-              AppColors.primary.withOpacity(.3),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.05.h, 1.0.h],
+    final size = MediaQuery.of(context).size;
+
+    return Consumer<OnboardingController>(
+      builder: (context, controller, _) {
+        final pageController = controller.pageController;
+
+        return Scaffold(
+          body: PageView.builder(
+            physics: const BouncingScrollPhysics(),
+            controller: pageController,
+            itemCount: controller.onboardingList.length,
+            itemBuilder: (context, index) {
+              final onboarding = controller.onboardingList[index];
+              return Image.asset(
+                onboarding.image,
+                fit: BoxFit.cover,
+                height: size.height,
+                width: size.width,
+                alignment: Alignment.topCenter,
+              );
+            },
+            onPageChanged: (value) {
+              controller.nextPage(value);
+            },
           ),
-        ),
-        padding: EdgeInsets.only(
-          top: 100.h,
-          left: 30.w,
-          right: 30.w,
-          bottom: 40.h,
-        ),
-        child: AppButton(
-          label: 'Get Started',
-          onTap: () {
-            AppNavigator.to(context, const GettingStartedScreen());
-          },
-        ),
-      ),
+          bottomNavigationBar: const _ContentView(),
+        );
+      },
     );
   }
 }
 
-class _PageViewItem extends StatelessWidget {
-  const _PageViewItem(this.onboarding, {Key? key}) : super(key: key);
-
-  final Onboarding onboarding;
+class _ContentView extends StatelessWidget {
+  const _ContentView();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Column(
-          children: [
-            SizedBox(
-              width: 318.w,
-              child: Text(
-                onboarding.title,
+    return Consumer<OnboardingController>(builder: (context, controller, _) {
+      final pageController = controller.pageController;
+      final currentOnboarding = controller.currentOnboarding;
+
+      return ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
+        ),
+        child: Container(
+          height: 320.h,
+          padding: EdgeInsets.symmetric(
+            vertical: 36.h,
+            horizontal: AppPadding.horizontal,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(28.r),
+              topRight: Radius.circular(28.r),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const _Indicator(),
+              const Spacer(),
+              Text(
+                currentOnboarding.title,
                 textAlign: TextAlign.center,
-                style: AppText.bold700(context).copyWith(
-                  fontSize: 28.sp,
-                  height: TextHelperFunctions.calcTextLineHeight(
-                    fontSize: 28.sp,
-                    designLineHeightValue: 42.h,
-                  ),
+                style: AppText.bold500(context).copyWith(
+                  fontSize: 18.sp,
                 ),
               ),
-            ),
-            SizedBox(height: 12.h),
-            SizedBox(
-              width: 318.w,
-              child: Text(
-                onboarding.description,
+              SizedBox(height: 12.h),
+              Text(
+                currentOnboarding.description,
                 textAlign: TextAlign.center,
-                style: AppText.bold400(context).copyWith(
+                style: AppText.bold300(context).copyWith(
                   fontSize: 14.sp,
                 ),
               ),
-            ),
-          ],
+              const Spacer(),
+              AppButton(
+                label: 'Get Started',
+                onTap: () {
+                  AppNavigator.to(context, const GettingStartedScreen());
+                },
+              ),
+            ],
+          ),
         ),
-        SizedBox(height: 12.h),
-        Expanded(
-          child: FittedBox(
-            clipBehavior: Clip.hardEdge,
-            child: Image.asset(
-              onboarding.image,
-              height: 439.h,
-              width: 328.w,
-              fit: BoxFit.fitHeight,
-              filterQuality: FilterQuality.high,
+      );
+    });
+  }
+}
+
+class _Indicator extends StatelessWidget {
+  const _Indicator({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.watch<OnboardingController>();
+    final pageController = controller.pageController;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        controller.onboardingList.length,
+        (index) => GestureDetector(
+          onTap: () => pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.bounceIn,
+          ),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 100),
+            margin: EdgeInsets.symmetric(horizontal: 5.w),
+            height: 4.h,
+            width: (index == controller.pageNo) ? 44.w : 20.w,
+            decoration: BoxDecoration(
+              color: (index == controller.pageNo) ? AppColors.primary : AppColors.grey5,
+              borderRadius: BorderRadius.circular(20.r),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }
