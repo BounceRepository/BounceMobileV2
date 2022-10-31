@@ -25,7 +25,7 @@ class NavbarController extends ChangeNotifier {
     ),
     NavbarItem(
       label: 'Room',
-      icon: DashboardIcons.room,
+      icon: DashboardIcons.chat,
       screen: const RoomScreen(),
     ),
   ];

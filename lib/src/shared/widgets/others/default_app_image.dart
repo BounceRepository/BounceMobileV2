@@ -42,7 +42,7 @@ class DefaultAppImage extends StatelessWidget {
       ),
       child: Icon(
         Icons.person,
-        size: 40.sp,
+        size: size != null ? size! * 0.7 : 40.sp,
         color: const Color(0xffC5B8B8),
       ),
     );

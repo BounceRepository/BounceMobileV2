@@ -73,8 +73,8 @@ class _DashboardViewState extends State<DashboardView> {
               label: 'Music',
             ),
             _navigationBarItem(
-              icon: DashboardIcons.room,
-              label: 'Rant Room',
+              icon: DashboardIcons.chat,
+              label: 'Chat',
             ),
             _navigationBarItem(
               icon: DashboardIcons.account,

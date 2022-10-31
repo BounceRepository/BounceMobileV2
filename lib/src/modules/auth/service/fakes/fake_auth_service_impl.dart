@@ -30,9 +30,9 @@ class FakeAuthServiceImpl implements IAuthService {
     await fakeNetworkDelay();
     AppSession.user = User(
       id: 10,
-      firstName: 'John',
-      lastName: 'Doe',
-      userName: 'JohnDoe',
+      firstName: 'Vincent',
+      lastName: 'Appleyard',
+      userName: 'applevinc',
       email: 'appleyard@gmail.com',
       phone: '07017247035',
       dateOfBirth: '1990-02-08',

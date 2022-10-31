@@ -1,15 +1,12 @@
-import 'dart:ui';
-
 import 'package:bounce_patient_app/src/modules/playlist/screens/player_screen.dart';
 import 'package:bounce_patient_app/src/modules/playlist/widgets/play_button.dart';
-import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MusicTile extends StatelessWidget {
   const MusicTile({
@@ -40,11 +37,27 @@ class MusicTile extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.r),
-                child: Image.asset(
-                  AppImages.playlistAlbum,
-                  fit: BoxFit.cover,
+                child: CachedNetworkImage(
+                  imageUrl: AppImages.playlistAlbum,
                   height: height ?? 170.h,
                   width: 344.w,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  progressIndicatorBuilder: (context, url, downloadProgress) => Container(
+                    height: height ?? 170.h,
+                    width: 344.w,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Text(
+                      'Loading....',
+                      style: AppText.bold400(context).copyWith(
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Container(
@@ -102,8 +115,6 @@ class MusicTile extends StatelessWidget {
     );
   }
 }
-
-
 
 class _Tag extends StatelessWidget {
   const _Tag();

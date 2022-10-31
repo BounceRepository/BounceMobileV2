@@ -8,7 +8,7 @@ class AppImages {
   static const loadingIndicator = 'assets/images/loading_indicator.gif';
   static const image = 'assets/images/image.png';
   static const doctors = 'assets/images/doctors.png';
-  static const playlistAlbum = 'assets/images/playlist.jpg';
+  static const playlistAlbum = 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
   static const bookingConfirmation = 'assets/images/booking_confirmation.png';
 }
 

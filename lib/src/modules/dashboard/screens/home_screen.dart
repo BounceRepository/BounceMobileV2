@@ -1,8 +1,10 @@
 import 'package:bounce_patient_app/src/modules/appointment/screens/session_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/appointment/screens/therapist_list_screen.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/mood_icons_view.dart';
 import 'package:bounce_patient_app/src/modules/notifications/screens/notification_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/notifications/widgets/notification_bell.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/discover_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
@@ -14,6 +16,7 @@ import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -34,6 +37,7 @@ class HomeScreen extends StatelessWidget {
         return Future.value(true);
       },
       child: Scaffold(
+        backgroundColor: AppColors.lightVersion,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,10 +52,7 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AppImageView(
-                            AppImages.image,
-                            size: 68.h,
-                          ),
+                          const DefaultAppImage(),
                           SizedBox(width: 8.w),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,15 +242,17 @@ class _ChatRoomSection extends StatelessWidget {
             context,
             icon: AppImages.discover,
             label: 'Discover',
-            onTap: () {},
+            onTap: () {
+              AppNavigator.to(context, const DiscoverScreen());
+            },
           ),
           SizedBox(width: 15.w),
           button(
             context,
             icon: AppImages.rantRoom,
-            label: 'Rant Room',
+            label: 'Chat',
             onTap: () {
-              // AppNavigator.to(context, DashboardView());
+              AppNavigator.to(context, const DashboardView(selectedIndex: 3));
             },
           ),
         ],
@@ -357,7 +360,7 @@ class _ArticlesSection extends StatelessWidget {
         ),
         SizedBox(height: 10.h),
         SizedBox(
-          height: 230.h,
+          height: 265.h,
           child: ListView.separated(
             itemCount: 3,
             scrollDirection: Axis.horizontal,
@@ -387,7 +390,7 @@ class _ArticlesSection extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 120.h,
+            height: 140.h,
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.only(
@@ -397,23 +400,26 @@ class _ArticlesSection extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 4.w),
+            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '4 Habits Everyone Needs for Better Mental Health',
+                  lorem(paragraphs: 1, words: 5),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.bold600(context).copyWith(
                     fontSize: 14.sp,
+                    color: AppColors.textBrown,
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  'For thousands of years, humans have recognized that mood changes are bad.',
+                  lorem(paragraphs: 1, words: 15),
+                  maxLines: 3,
                   style: AppText.bold500(context).copyWith(
                     fontSize: 8.sp,
+                    color: AppColors.textBrown,
                   ),
                 ),
               ],

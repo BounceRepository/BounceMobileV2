@@ -44,7 +44,6 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
         automaticallyImplyLeading: false,
         label: 'Therapists',
         centerTitle: false,
-        removeActionsPadding: true,
         actions: [
           SearchButton(
             onTap: () {},
