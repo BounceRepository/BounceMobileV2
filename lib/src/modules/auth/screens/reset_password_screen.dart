@@ -7,7 +7,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
-import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/response_bottomsheets.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_child_scrollview.dart';
 import 'package:flutter/material.dart';

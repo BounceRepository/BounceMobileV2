@@ -7,7 +7,6 @@ import 'package:bounce_patient_app/src/modules/auth/screens/select_health_level_
 import 'package:bounce_patient_app/src/modules/dashboard/screens/select_mood_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
-import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/datastore.dart';
@@ -18,7 +17,7 @@ import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
-import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/select_location_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
@@ -425,48 +424,51 @@ class _GenderSection extends StatelessWidget {
     return Consumer<GenderController>(
       builder: (context, controller, _) {
         final genders = controller.genders;
-        return Wrap(
-          spacing: 16.w,
-          children: List.generate(genders.length, (index) {
-            final gender = genders[index];
-            return button(context, gender);
-          }),
+
+        return Row(
+          children: [
+            button(context, genders[0]),
+            SizedBox(width: 16.w),
+            button(context, genders[1]),
+          ],
         );
       },
     );
   }
 
   Widget button(BuildContext context, Gender gender) {
-    return GestureDetector(
-      onTap: () {
-        context.read<GenderController>().select(gender.type);
-      },
-      child: Container(
-        width: 164.w,
-        padding: EdgeInsets.symmetric(
-          vertical: 14.h,
-          horizontal: 14.w,
-        ),
-        decoration: BoxDecoration(
-          color: const Color(0xffFCE7D8).withOpacity(.24),
-          borderRadius: BorderRadius.circular(8.r),
-        ),
-        child: Row(
-          children: [
-            CustomCheckBox(
-              value: gender.isSelected,
-              onChanged: (value) {
-                context.read<GenderController>().select(gender.type);
-              },
-            ),
-            SizedBox(width: 10.w),
-            Text(
-              gender.type.name,
-              style: AppText.bold500(context).copyWith(
-                fontSize: 14.sp,
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          context.read<GenderController>().select(gender.type);
+        },
+        child: Container(
+          width: 164.w,
+          padding: EdgeInsets.symmetric(
+            vertical: 14.h,
+            horizontal: 14.w,
+          ),
+          decoration: BoxDecoration(
+            color: const Color(0xffFCE7D8).withOpacity(.24),
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Row(
+            children: [
+              CustomCheckBox(
+                value: gender.isSelected,
+                onChanged: (value) {
+                  context.read<GenderController>().select(gender.type);
+                },
               ),
-            ),
-          ],
+              SizedBox(width: 10.w),
+              Text(
+                gender.type.name,
+                style: AppText.bold500(context).copyWith(
+                  fontSize: 14.sp,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

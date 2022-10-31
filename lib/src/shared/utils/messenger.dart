@@ -78,22 +78,25 @@ class CustomSnackBar extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(5.r),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Message',
-            style: textStyle.copyWith(
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w400,
+      child: DefaultTextStyle(
+        style: textStyle,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Message',
+              style: textStyle.copyWith(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            message,
-            style: textStyle,
-          ),
-        ],
+            SizedBox(height: 4.h),
+            Text(
+              message,
+              style: textStyle,
+            ),
+          ],
+        ),
       ),
     );
   }

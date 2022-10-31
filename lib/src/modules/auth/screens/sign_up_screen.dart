@@ -12,7 +12,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
-import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_checkbox.dart';
 import 'package:flutter/material.dart';

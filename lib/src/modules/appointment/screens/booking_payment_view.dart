@@ -9,7 +9,7 @@ import 'package:bounce_patient_app/src/shared/models/datastore.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
-import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/response_bottomsheets.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/select_payment_type_view.dart';

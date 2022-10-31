@@ -95,15 +95,17 @@ class _ReasonForTherapySectionState extends State<_ReasonForTherapySection> {
           ),
         ),
         SizedBox(
-          height: 55.h,
+          height: 60.h,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            padding: AppPadding.symetricHorizontalOnly,
+            padding:
+                EdgeInsets.symmetric(horizontal: AppPadding.horizontal, vertical: 10.h),
             itemCount: reasons.length,
             itemBuilder: (context, index) {
               final reason = reasons[index];
               return CustomChipButton(
+                width: 100.w,
                 height: 40.h,
                 title: reason,
                 isSelected: index == selectedIndex,

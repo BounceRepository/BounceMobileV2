@@ -2,7 +2,7 @@ import 'package:bounce_patient_app/src/modules/appointment/controllers/therapist
 import 'package:bounce_patient_app/src/modules/appointment/widgets/therapist_list_item.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
-import 'package:bounce_patient_app/src/shared/utils/notification_message.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';

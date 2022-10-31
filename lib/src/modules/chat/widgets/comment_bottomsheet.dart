@@ -32,26 +32,29 @@ class CommentListBottomsheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomSheetBody(
-      height: 608.h,
-      padding: EdgeInsets.zero,
-      borderRadius: _borderRadius,
-      body: [
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(top: 20.h, bottom: 12.h),
-          decoration: _decoration,
-          child: Text(
-            'Comments',
-            textAlign: TextAlign.center,
-            style: AppText.bold700(context).copyWith(
-              fontSize: 20.sp,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: CustomBottomSheetBody(
+        height: 608.h,
+        padding: EdgeInsets.zero,
+        borderRadius: _borderRadius,
+        body: [
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.only(top: 20.h, bottom: 12.h),
+            decoration: _decoration,
+            child: Text(
+              'Comments',
+              textAlign: TextAlign.center,
+              style: AppText.bold700(context).copyWith(
+                fontSize: 20.sp,
+              ),
             ),
           ),
-        ),
-        const _CommentsListView(),
-        const _MessageInputSection(),
-      ],
+          const _CommentsListView(),
+          const _MessageInputSection(),
+        ],
+      ),
     );
   }
 }
@@ -199,7 +202,10 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
               suffixIcon: TextFieldIcon(
                 icon: Icons.send,
                 color: AppColors.lightText,
-                onTap: () {},
+                onTap: () {
+                  textController.clear();
+                  FocusScope.of(context).unfocus();
+                },
               ),
             ),
           ),

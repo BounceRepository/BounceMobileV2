@@ -38,32 +38,57 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppPadding.symetricHorizontalOnly,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: AppPadding.symetricHorizontalOnly,
+          child: Text(
             'Available Time',
             style: AppText.titleStyle(context),
           ),
-          Wrap(
-            spacing: 22.w,
-            children: List.generate(
-              availableTimes.length,
-              (index) {
-                final time = availableTimes[index];
-                return CustomChipButton(
-                  width: 100.w,
-                  title: time,
-                  isSelected: index == selectedIndex,
-                  onTap: () => onSelect(index),
-                );
-              },
-            ),
+        ),
+        GridView.count(
+          crossAxisCount: 3,
+          shrinkWrap: true,
+          padding: EdgeInsets.only(
+            left: AppPadding.horizontal,
+            right: AppPadding.horizontal,
+            bottom: 10.h,
           ),
-        ],
-      ),
+          physics: const NeverScrollableScrollPhysics(),
+          childAspectRatio: 100.w / 40.h,
+          crossAxisSpacing: 22.w,
+          mainAxisSpacing: 12.h,
+          children: List.generate(
+            availableTimes.length,
+            (index) {
+              final time = availableTimes[index];
+              return CustomChipButton(
+                width: 100.w,
+                title: time,
+                isSelected: index == selectedIndex,
+                onTap: () => onSelect(index),
+              );
+            },
+          ),
+        ),
+        // Wrap(
+        //   spacing: 22.w,
+        //   children: List.generate(
+        //     availableTimes.length,
+        //     (index) {
+        //       final time = availableTimes[index];
+        //       return CustomChipButton(
+        //         width: 100.w,
+        //         title: time,
+        //         isSelected: index == selectedIndex,
+        //         onTap: () => onSelect(index),
+        //       );
+        //     },
+        //   ),
+        // ),
+      ],
     );
   }
 }

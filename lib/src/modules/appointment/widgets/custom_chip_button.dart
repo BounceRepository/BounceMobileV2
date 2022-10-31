@@ -26,16 +26,15 @@ class CustomChipButton extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
-        margin: EdgeInsets.symmetric(vertical: 6.h),
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 22.5.w),
+//padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 22.5.w),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primary : const Color(0xffFEFEFE),
           borderRadius: BorderRadius.circular(12.r),
           boxShadow: AppColors.boxshadow4,
         ),
+        alignment: Alignment.center,
         child: Text(
           title,
-          textAlign: TextAlign.center,
           style: AppText.bold400(context).copyWith(
             fontSize: 12.sp,
             color: isSelected ? Colors.white : null,
