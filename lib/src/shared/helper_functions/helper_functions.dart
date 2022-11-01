@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 class Utils {
   Utils._();
 
-  static String generateUniqueId() {
+  static String getGuid() {
     const uuid = Uuid();
     return uuid.v4();
   }

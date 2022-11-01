@@ -22,7 +22,7 @@ class _MoodIconsViewState extends State<MoodIconsView> {
   void initState() {
     super.initState();
     final controller = context.read<MoodController>();
-    moods = controller.moods.where((element) => element.isSelected).toList();
+    moods = controller.moodList.where((element) => element.isSelected).toList();
   }
 
   @override

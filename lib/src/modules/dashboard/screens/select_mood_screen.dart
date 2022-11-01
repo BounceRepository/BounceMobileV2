@@ -3,9 +3,11 @@ import 'package:bounce_patient_app/src/modules/dashboard/models/mood.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_child_scrollview.dart';
@@ -30,7 +32,14 @@ class _SelectMoodsScreenState extends State<SelectMoodsScreen> {
   }
 
   void submit() async {
-    AppNavigator.to(context, const DashboardView());
+    final controller = context.read<MoodController>();
+
+    try {
+      await controller.saveSelectedMoodListToDB();
+      AppNavigator.to(context, const DashboardView());
+    } on Failure catch (e) {
+      Messenger.showError(context, message: e.message);
+    }
   }
 
   @override
@@ -71,7 +80,7 @@ class _SelectMoodsScreenState extends State<SelectMoodsScreen> {
               SizedBox(height: 32.h),
               Consumer<MoodController>(
                 builder: (context, controller, _) {
-                  final moods = controller.moods;
+                  final moods = controller.moodList;
                   return Wrap(
                     spacing: 8.w,
                     runSpacing: 16.h,
@@ -99,9 +108,14 @@ class _SelectMoodsScreenState extends State<SelectMoodsScreen> {
                       ],
                     ),
               SizedBox(height: 24.h),
-              AppButton(
-                label: 'Done',
-                onTap: submit,
+              Consumer<MoodController>(
+                builder: (context, controller, _) {
+                  return AppButton(
+                    label: 'Done',
+                    isLoading: controller.isLoading,
+                    onTap: submit,
+                  );
+                },
               ),
               SizedBox(height: 40.h),
             ],

@@ -13,7 +13,7 @@ class FakeAppointmentListServiceImpl implements IAppointmentListService {
 }
 
 final _appointment = Appointment(
-  id: Utils.generateUniqueId(),
+  id: Utils.getGuid(),
   therapist: therapist,
   date: DateTime.now(),
   time: '10:00 AM',

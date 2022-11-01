@@ -17,7 +17,7 @@ class FakeBookAppointmentServiceImpl implements IBookAppointmentService {
     required DateTime date,
   }) async {
     await fakeNetworkDelay();
-    return Utils.generateUniqueId();
+    return Utils.getGuid();
   }
 
   @override

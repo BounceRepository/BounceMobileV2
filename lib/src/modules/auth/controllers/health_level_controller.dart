@@ -13,22 +13,22 @@ class EatingHabitLevelController extends HealthLevelController {}
 class HealthLevelController extends ChangeNotifier {
   final List<HealthLevel> _options = [
     HealthLevel(
-      id: Utils.generateUniqueId(),
+      id: Utils.getGuid(),
       title: 'Not Good',
       isSelected: false,
     ),
     HealthLevel(
-      id: Utils.generateUniqueId(),
+      id: Utils.getGuid(),
       title: 'Good',
       isSelected: false,
     ),
     HealthLevel(
-      id: Utils.generateUniqueId(),
+      id: Utils.getGuid(),
       title: 'Great',
       isSelected: false,
     ),
     HealthLevel(
-      id: Utils.generateUniqueId(),
+      id: Utils.getGuid(),
       title: 'Perfect',
       isSelected: false,
     ),

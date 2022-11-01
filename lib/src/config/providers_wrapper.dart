@@ -24,6 +24,7 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<ImageController>()),
         ChangeNotifierProvider(create: (_) => diContainer<TherapistListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<BookAppointmentController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<MoodController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),
         ChangeNotifierProvider(create: (_) => PhysicalHealthLevelController()),
         ChangeNotifierProvider(create: (_) => MentalHealthLevelController()),
@@ -32,7 +33,6 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => OnboardingController()),
         ChangeNotifierProvider(create: (_) => GenderController()),
         ChangeNotifierProvider(create: (_) => NavbarController()),
-        ChangeNotifierProvider(create: (_) => MoodController()),
       ],
       child: child,
     );
