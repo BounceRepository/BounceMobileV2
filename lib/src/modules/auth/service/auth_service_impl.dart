@@ -123,6 +123,10 @@ class AuthServiceImpl implements IAuthService {
     required String phoneNumber,
     required File image,
     required String dateOfBirth,
+    required String physicalHealtRate,
+    required String mentalHealtRate,
+    required String emotionalHealtRate,
+    required String eatingHabit,
   }) async {
     var url = AuthURLs.createProfile;
     String fileName = image.path.split('/').last;

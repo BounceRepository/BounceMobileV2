@@ -78,6 +78,10 @@ class FakeAuthServiceImpl implements IAuthService {
     required String phoneNumber,
     required File image,
     required String dateOfBirth,
+    required String physicalHealtRate,
+    required String mentalHealtRate,
+    required String emotionalHealtRate,
+    required String eatingHabit,
   }) async {
     await fakeNetworkDelay();
     //throw InternalFailure();

@@ -100,6 +100,10 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               phoneNumber: _phoneNumberController.text,
               image: image,
               dateOfBirth: _dateOfBirthController.text,
+              physicalHealtRate: _physicalHealthRateController.text,
+              mentalHealtRate: _mentalHealthRateController.text,
+              emotionalHealtRate: _emotionalHealthRateController.text,
+              eatingHabit: _eatingHabitController.text,
             );
             AppSession.user = User(
               userName: widget.userName,
