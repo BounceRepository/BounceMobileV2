@@ -5,6 +5,7 @@ import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,19 +15,35 @@ class JoinSessionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: const CustomAppBar(
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              AppImages.bookingConfirmation,
+      body: CachedNetworkImage(
+        imageUrl: AppImages.joinSession,
+        height: size.height,
+        width: size.width,
+        fit: BoxFit.cover,
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+        // progressIndicatorBuilder: (context, url, downloadProgress) =>
+        //     CircularProgressIndicator(value: downloadProgress.progress),
+        progressIndicatorBuilder: (context, url, downloadProgress) => Container(
+          height: size.height,
+          width: size.width,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Text(
+            'Loading....',
+            style: AppText.bold400(context).copyWith(
+              color: Colors.white,
+              fontSize: 16.sp,
             ),
-            fit: BoxFit.cover,
           ),
         ),
       ),

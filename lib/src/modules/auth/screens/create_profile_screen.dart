@@ -4,7 +4,7 @@ import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/health_level_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/select_health_level_bottomsheet.dart';
-import 'package:bounce_patient_app/src/modules/dashboard/screens/select_mood_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
@@ -111,8 +111,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               phone: '0${_phoneNumberController.text}',
               dateOfBirth: _dateOfBirthController.text,
             );
-            // AppNavigator.to(context, const SymptomsScreen());
-            AppNavigator.removeAllUntil(context, const SelectMoodsScreen());
+            AppNavigator.removeAllUntil(context, const SignInScreen());
             Messenger.showSucess(context, message: 'Account created successfully');
           } on Failure catch (e) {
             Messenger.showError(context, message: e.message);

@@ -77,7 +77,7 @@ class SessionItemTile extends StatelessWidget {
                   label: 'Reschedule',
                   labelSize: 14.sp,
                   borderRadius: BorderRadius.circular(8.r),
-                  padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 18.5),
+                  padding: EdgeInsets.zero,
                   onTap: () {
                     AppNavigator.to(context, const RescheduleSessionScreen());
                   },

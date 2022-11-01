@@ -13,6 +13,7 @@ class ReviewListItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.h),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DefaultAppImage(size: 48.h),
           SizedBox(width: 12.w),
@@ -22,7 +23,7 @@ class ReviewListItem extends StatelessWidget {
               children: [
                 Text(
                   'John Kingsley',
-                  style: AppText.bold500(context).copyWith(
+                  style: AppText.bold700(context).copyWith(
                     fontSize: 12.sp,
                   ),
                 ),

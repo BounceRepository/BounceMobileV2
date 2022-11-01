@@ -1,10 +1,10 @@
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/screens/getting_started_screen.dart';
-import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/custom_pageview_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -133,28 +133,10 @@ class _Indicator extends StatelessWidget {
     final controller = context.watch<OnboardingController>();
     final pageController = controller.pageController;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        controller.onboardingList.length,
-        (index) => GestureDetector(
-          onTap: () => pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.bounceIn,
-          ),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            margin: EdgeInsets.symmetric(horizontal: 5.w),
-            height: 4.h,
-            width: (index == controller.pageNo) ? 44.w : 20.w,
-            decoration: BoxDecoration(
-              color: (index == controller.pageNo) ? AppColors.primary : AppColors.grey5,
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-          ),
-        ),
-      ),
+    return CustomPageViewIndicator(
+      currentPage: controller.pageNo,
+      length: controller.onboardingList.length,
+      pageController: pageController,
     );
   }
 }

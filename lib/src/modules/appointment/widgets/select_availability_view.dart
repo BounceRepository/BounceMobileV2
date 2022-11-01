@@ -48,6 +48,7 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
             style: AppText.titleStyle(context),
           ),
         ),
+        SizedBox(height: 20.h),
         GridView.count(
           crossAxisCount: 3,
           shrinkWrap: true,

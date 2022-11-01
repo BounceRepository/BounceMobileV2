@@ -13,7 +13,10 @@ class ReviewListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(label: 'Reviews'),
+      appBar: const CustomAppBar(
+        label: 'Reviews',
+        backgroundColor: Color(0xffFEF3E7),
+      ),
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: CustomScrollView(
@@ -43,10 +46,12 @@ class _RatingInformationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return SliverToBoxAdapter(
       child: Container(
         height: 372.h,
-        width: double.infinity,
+        width: size.width,
         padding: EdgeInsets.only(bottom: 38.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -58,6 +63,8 @@ class _RatingInformationSection extends StatelessWidget {
               Color(0xffFEF3E7),
               Color(0xffFCFAFA),
             ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
         ),
         child: Column(
@@ -66,7 +73,7 @@ class _RatingInformationSection extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: '4.5',
-                style: AppText.bold700(context).copyWith(
+                style: AppText.bold800(context).copyWith(
                   fontSize: 20.sp,
                 ),
                 children: <TextSpan>[

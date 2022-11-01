@@ -87,10 +87,14 @@ class BottomSheetTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: AppText.bold700(context).copyWith(
-        fontSize: 20.sp,
+    return Padding(
+      padding: AppPadding.symetricHorizontalOnly,
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: AppText.bold700(context).copyWith(
+          fontSize: 20.sp,
+        ),
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'package:bounce_patient_app/src/shared/assets/images.dart';
+
 class AppConstants {
   AppConstants._();
 
@@ -20,9 +22,10 @@ class AppConstants {
     'Kaduna',
   ];
   static const moods = [
-    'sad',
-    'happy',
+    'calm',
     'angry',
+    'happy',
+    'sad',
     'mood swings',
     'lonely',
     'stressed',
@@ -32,16 +35,20 @@ class AppConstants {
     'delusional',
     'paranoia',
     'relief',
-    'calm',
     'anxious',
     'love',
     'disgust',
     'contempt',
     'suprise',
     'confused',
-    'disgust',
     'elated',
     'satisfied',
+  ];
+  static const moodIcons = [
+    MoodIcons.calm,
+    MoodIcons.angry,
+    MoodIcons.happy,
+    MoodIcons.manic,
   ];
 }
 

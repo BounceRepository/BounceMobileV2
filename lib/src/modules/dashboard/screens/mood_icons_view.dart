@@ -1,45 +1,35 @@
+import 'package:bounce_patient_app/src/modules/dashboard/controllers/mood_controller.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/models/mood.dart';
-import 'package:bounce_patient_app/src/shared/assets/images.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
-class MoodIconsView extends StatelessWidget {
+class MoodIconsView extends StatefulWidget {
   const MoodIconsView({Key? key}) : super(key: key);
 
   @override
+  State<MoodIconsView> createState() => _MoodIconsViewState();
+}
+
+class _MoodIconsViewState extends State<MoodIconsView> {
+  List<Mood> moods = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final controller = context.read<MoodController>();
+    moods = controller.moods.where((element) => element.isSelected).toList();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final moods = [
-      Mood(
-        id: Utils.generateUniqueId(),
-        icon: MoodIcons.happy,
-        name: 'Happy',
-      ),
-      Mood(
-        id: Utils.generateUniqueId(),
-        icon: MoodIcons.manic,
-        name: 'Manic',
-      ),
-      Mood(
-        id: Utils.generateUniqueId(),
-        icon: MoodIcons.calm,
-        name: 'Calm',
-      ),
-      Mood(
-        id: Utils.generateUniqueId(),
-        icon: MoodIcons.angry,
-        name: 'Angry',
-      ),
-      Mood(
-        id: Utils.generateUniqueId(),
-        icon: MoodIcons.angry,
-        name: 'Sad',
-      ),
-    ];
+    if (moods.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,9 +83,9 @@ class MoodBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
-      height: 400.h,
       body: [
-        SizedBox(height: 88.h),
+        const Dragger(),
+        SizedBox(height: 40.h),
         _Button(mood, isTappable: false),
         SizedBox(height: 20.h),
         Text(
@@ -105,20 +95,7 @@ class MoodBottomSheet extends StatelessWidget {
             fontSize: 14.sp,
           ),
         ),
-        const Spacer(),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text(
-            'Ok',
-            style: AppText.bold500(context).copyWith(
-              fontSize: 14.sp,
-              color: AppColors.primary,
-            ),
-          ),
-        ),
-        SizedBox(height: 20.h),
+        SizedBox(height: 60.h),
       ],
     );
   }

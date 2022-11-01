@@ -11,7 +11,7 @@ class MoodController extends BaseController {
       final mood = AppConstants.moods[index];
       return Mood(
         id: Utils.generateUniqueId(),
-        icon: MoodIcons.calm,
+        icon: index < 4 ? AppConstants.moodIcons[index] : MoodIcons.calm,
         name: mood,
       );
     },

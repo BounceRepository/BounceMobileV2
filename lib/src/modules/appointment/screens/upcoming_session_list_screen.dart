@@ -8,8 +8,8 @@ import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SessionListScreen extends StatelessWidget {
-  const SessionListScreen({Key? key}) : super(key: key);
+class UpComingSessionListScreen extends StatelessWidget {
+  const UpComingSessionListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

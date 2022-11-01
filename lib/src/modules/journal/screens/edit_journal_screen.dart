@@ -103,6 +103,7 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
                           contentPadding: EdgeInsets.zero,
                           fillColor: Colors.transparent,
                           maxLines: 10,
+                          textInputAction: TextInputAction.newline,
                         ),
                       ),
                     ],

@@ -1,4 +1,4 @@
-export 'session_list_screen.dart';
+export 'upcoming_session_list_screen.dart';
 export 'book_session_screen.dart';
 export 'booking_confirmation_view.dart';
 export 'booking_payment_view.dart';

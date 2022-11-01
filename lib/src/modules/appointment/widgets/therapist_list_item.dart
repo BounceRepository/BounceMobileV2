@@ -1,5 +1,6 @@
 import 'package:bounce_patient_app/src/modules/appointment/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/appointment/screens/screens.dart';
+import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_star_rating.dart';
@@ -19,7 +20,7 @@ class TherapistListItem extends StatelessWidget {
         AppNavigator.to(context, TherapistDetailScreen(therapist));
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 10.h),
+        margin: EdgeInsets.only(bottom: 32.h),
         padding: EdgeInsets.symmetric(vertical: 15.4.h, horizontal: 14.75.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
@@ -36,8 +37,9 @@ class TherapistListItem extends StatelessWidget {
                 children: [
                   Text(
                     '${therapist.fullName}, ${therapist.certifications.first.toUpperCase()}',
-                    style: AppText.bold600(context).copyWith(
+                    style: AppText.bold800(context).copyWith(
                       fontSize: 16.sp,
+                      color: AppColors.textBrown,
                     ),
                   ),
                   SizedBox(height: 3.h),
@@ -45,6 +47,7 @@ class TherapistListItem extends StatelessWidget {
                     '${therapist.specializationList} • ${therapist.experience} Years Experience',
                     style: AppText.bold400(context).copyWith(
                       fontSize: 12.sp,
+                      color: AppColors.textBrown,
                     ),
                   ),
                   SizedBox(height: 10.h),

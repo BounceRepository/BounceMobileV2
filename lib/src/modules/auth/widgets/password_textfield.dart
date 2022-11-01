@@ -154,7 +154,7 @@ class PasswordIcon extends StatelessWidget {
     return IconButton(
       onPressed: onTap,
       icon: Icon(
-        _showPassword ? Icons.visibility_off : Icons.remove_red_eye,
+        _showPassword ? Icons.visibility_off_outlined : Icons.remove_red_eye_outlined,
         size: 20.sp,
         color: Colors.black54,
       ),

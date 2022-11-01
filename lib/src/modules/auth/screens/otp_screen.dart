@@ -4,6 +4,7 @@ import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
+import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
@@ -87,6 +88,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         text: widget.email,
                         style: AppText.bold600(context).copyWith(
                           fontSize: 14.sp,
+                          color: AppColors.textBrown,
                         ),
                       ),
                     ],
@@ -99,14 +101,6 @@ class _OTPScreenState extends State<OTPScreen> {
                   },
                 ),
                 SizedBox(height: 26.h),
-                // Text(
-                //   '00:60',
-                //   style: AppText.bold500(context).copyWith(
-                //     fontSize: 14.sp,
-                //     color: AppColors.primary,
-                //   ),
-                // ),
-                // SizedBox(height: 26.h),
                 Consumer<AuthController>(
                   builder: (context, controller, _) {
                     if (controller.isSendingOTP) {
@@ -116,6 +110,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     return LinkText(
                       text1: 'Didn’t receive code?',
                       text2: 'Re-send',
+                      fontSize: 14.sp,
                       onClick: _sendOTP,
                     );
                   },

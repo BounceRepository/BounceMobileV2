@@ -36,7 +36,12 @@ class Messenger {
   }
 
   static _snackBar(BuildContext context, {required Widget child}) {
-    showTopSnackBar(context, child);
+    showTopSnackBar(
+      context,
+      child,
+      padding: EdgeInsets.zero,
+      // persistent: true,
+    );
   }
 }
 
@@ -72,30 +77,18 @@ class CustomSnackBar extends StatelessWidget {
     return Container(
       clipBehavior: Clip.hardEdge,
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: 10.w,
+        vertical: 10.h,
+      ),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(5.r),
       ),
       child: DefaultTextStyle(
         style: textStyle,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Message',
-              style: textStyle.copyWith(
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            SizedBox(height: 4.h),
-            Text(
-              message,
-              style: textStyle,
-            ),
-          ],
+        child: Text(
+          message,
+          style: textStyle,
         ),
       ),
     );

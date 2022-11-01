@@ -1,4 +1,7 @@
+import 'package:bounce_patient_app/src/modules/account/screens/contact_us_bottomsheet.dart';
+import 'package:bounce_patient_app/src/modules/account/screens/log_out_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/appointment/screens/session_history_list_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/journal/screens/journal_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/playlist/screens/discover_screen.dart';
@@ -29,31 +32,33 @@ class AccountScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      body: CustomChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                AppImageView(
-                  AppImages.image,
-                  size: 68.h,
-                ),
-                SizedBox(width: 8.w),
-                Text(
-                  user.userName.toTitleCase,
-                  style: AppText.bold700(context).copyWith(
-                    fontSize: 16.sp,
+      body: SafeArea(
+        child: CustomChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AppImageView(
+                    AppImages.image,
+                    size: 68.h,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 32.h),
-            const _BookSessionCard(),
-            SizedBox(height: 32.h),
-            const _MenuListSection(),
-          ],
+                  SizedBox(width: 8.w),
+                  Text(
+                    user.userName.toTitleCase,
+                    style: AppText.bold700(context).copyWith(
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 32.h),
+              const _BookSessionCard(),
+              SizedBox(height: 32.h),
+              const _MenuListSection(),
+            ],
+          ),
         ),
       ),
     );
@@ -184,14 +189,19 @@ class _MenuListSection extends StatelessWidget {
           context: context,
           icon: AccountIcons.help,
           title: 'Help',
-          onTap: () {},
+          onTap: () {
+            showContactUsBottomsheet(context: context);
+          },
         ),
         title(
           context: context,
           icon: AccountIcons.logout,
           title: 'Log Out',
           color: AppColors.error,
-          onTap: () {},
+          onTap: () {
+            showLogoutBottomsheet(context: context);
+           
+          },
         ),
       ],
     );

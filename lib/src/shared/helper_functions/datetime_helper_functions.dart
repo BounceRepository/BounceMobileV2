@@ -5,7 +5,7 @@ class DateTimeHelperFunctions {
   DateTimeHelperFunctions._();
 
   static Future<String?> pickDate(BuildContext context) async {
-    final initialDate = DateTime(DateTime.now().year - 14);
+    final initialDate = DateTime(DateTime.now().year - 18);
     final date = await showDatePicker(
       context: context,
       initialDate: initialDate,
@@ -39,13 +39,8 @@ class DateTimeHelperFunctions {
   }
 
   static String convertTimeOfDayToAMPM(TimeOfDay time) {
-    DateTime tempDate = DateFormat.Hms().parse(time.hour.toString() +
-        ":" +
-        time.minute.toString() +
-        ":" +
-        '0' +
-        ":" +
-        '0');
+    DateTime tempDate = DateFormat.Hms().parse(
+        time.hour.toString() + ":" + time.minute.toString() + ":" + '0' + ":" + '0');
     var dateFormat = DateFormat("h:mm a");
     return (dateFormat.format(tempDate));
   }

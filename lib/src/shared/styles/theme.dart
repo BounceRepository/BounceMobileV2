@@ -14,7 +14,7 @@ class AppTheme {
       colorScheme: ColorScheme.fromSwatch(
         brightness: Brightness.light,
         primarySwatch: MaterialColor(
-          0xff573926, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+          0xffEF873D, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
           <int, Color>{
             50: AppColors.primary.withOpacity(.1), //10%
             100: AppColors.primary.withOpacity(.2), //20%
@@ -29,10 +29,7 @@ class AppTheme {
           },
         ),
       ).copyWith(secondary: AppColors.primary),
-      textTheme: GoogleFonts.poppinsTextTheme().apply(
-        displayColor: AppColors.textBrown,
-        bodyColor: AppColors.textBrown,
-      ),
+      textTheme: GoogleFonts.poppinsTextTheme(),
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         centerTitle: true,

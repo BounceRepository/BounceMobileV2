@@ -25,13 +25,13 @@ class LinkText extends StatelessWidget {
         text: TextSpan(
           text: '$text1 ',
           style: AppText.bold300(context).copyWith(
-            fontSize: fontSize ?? 11.sp,
+            fontSize: fontSize ?? 14.sp,
           ),
           children: <TextSpan>[
             TextSpan(
               text: text2,
               style: AppText.bold300(context).copyWith(
-                fontSize: fontSize ?? 11.sp,
+                fontSize: fontSize ?? 14.sp,
                 color: AppColors.primary,
               ),
             ),

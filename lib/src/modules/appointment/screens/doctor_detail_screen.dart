@@ -1,5 +1,6 @@
 import 'package:bounce_patient_app/src/modules/appointment/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/appointment/screens/therapist_booking_summary.dart';
+import 'package:bounce_patient_app/src/modules/reviews/screens/review_list_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
@@ -30,7 +31,6 @@ class TherapistDetailScreen extends StatelessWidget {
         body: CustomChildScrollView(
           padding: EdgeInsets.zero,
           child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
                 padding: EdgeInsets.only(
@@ -91,6 +91,9 @@ class TherapistDetailScreen extends StatelessWidget {
                           context,
                           title: '${therapist.rating}',
                           subTitle: 'Ratings',
+                          onTap: () {
+                            AppNavigator.to(context, const ReviewListScreen());
+                          },
                         ),
                       ],
                     ),
@@ -140,32 +143,36 @@ class TherapistDetailScreen extends StatelessWidget {
     BuildContext context, {
     required String title,
     required String subTitle,
+    Function()? onTap,
   }) {
     return Expanded(
-      child: Container(
-        padding: EdgeInsets.only(top: 28.h, bottom: 36.h),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 2),
-          borderRadius: BorderRadius.circular(24.r),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: AppText.bold700(context).copyWith(
-                fontSize: 18.sp,
-                color: AppColors.primary,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.only(top: 28.h, bottom: 36.h),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 2),
+            borderRadius: BorderRadius.circular(24.r),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: AppText.bold700(context).copyWith(
+                  fontSize: 18.sp,
+                  color: AppColors.primary,
+                ),
               ),
-            ),
-            SizedBox(height: 4.h),
-            Text(
-              subTitle,
-              style: AppText.bold400(context).copyWith(
-                fontSize: 12.sp,
+              SizedBox(height: 4.h),
+              Text(
+                subTitle,
+                style: AppText.bold400(context).copyWith(
+                  fontSize: 12.sp,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

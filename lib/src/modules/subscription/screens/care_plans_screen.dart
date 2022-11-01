@@ -1,6 +1,7 @@
 import 'package:bounce_patient_app/src/modules/subscription/models/plan.dart';
 import 'package:bounce_patient_app/src/modules/subscription/screens/care_plan_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/subscription/widgets/package_list_view.dart';
+import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
@@ -8,6 +9,7 @@ import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_child_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CarePlansScreen extends StatelessWidget {
   const CarePlansScreen({super.key});
@@ -69,48 +71,66 @@ class PlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.only(
-        top: 12.h,
-        bottom: 8.h,
-        left: 48.w,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.lightVersion,
-        boxShadow: AppColors.boxshadow4,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            plan.label,
-            style: AppText.bold600(context).copyWith(
-              fontSize: 16.sp,
-            ),
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(top: 12.h, bottom: 8.h),
+          decoration: BoxDecoration(
+            color: AppColors.lightVersion,
+            boxShadow: AppColors.boxshadow4,
           ),
-          SizedBox(height: 12.h),
-          SubscriptionPackageListView(plan.packages),
-          SizedBox(height: 12.h),
-          Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              height: 40.h,
-              width: 120.w,
-              child: AppButton(
-                label: 'View Pricing',
-                labelColor: AppColors.lightVersion,
-                backgroundColor: plan.color,
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 17.w),
-                borderRadius: BorderRadius.circular(20.r),
-                onTap: () {
-                  showCarePlanBottomsheet(context: context, plan: plan);
-                },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 48.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      plan.label,
+                      style: AppText.bold600(context).copyWith(
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    SubscriptionPackageListView(plan.packages),
+                  ],
+                ),
               ),
-            ),
+              SizedBox(height: 12.h),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  height: 40.h,
+                  width: 120.w,
+                  child: AppButton(
+                    label: 'View Pricing',
+                    labelColor: AppColors.lightVersion,
+                    backgroundColor: plan.color,
+                    padding: EdgeInsets.symmetric(horizontal: 17.w),
+                    borderRadius: BorderRadius.circular(20.r),
+                    onTap: () {
+                      showCarePlanBottomsheet(context: context, plan: plan);
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(8.r)),
+          child: SvgPicture.asset(
+            AppIcons.triangle,
+            width: 52.w,
+            height: 48.h,
+            fit: BoxFit.cover,
+            color: plan.color,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/appointment/screens/session_list_screen.dart';
+import 'package:bounce_patient_app/src/modules/appointment/screens/upcoming_session_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/appointment/screens/therapist_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/mood_icons_view.dart';
@@ -88,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                     const MoodIconsView(),
                     SizedBox(height: 26.h),
                     const _SessionsCard(),
-                    SizedBox(height: 26.h),
+                    SizedBox(height: 40.h),
                     const _ChatRoomSection(),
                     SizedBox(height: 16.h),
                     const _QuoteCard(),
@@ -206,7 +206,7 @@ class _SessionsCard extends StatelessWidget {
   Widget bookNowButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.to(context, const SessionListScreen());
+        AppNavigator.to(context, const UpComingSessionListScreen());
       },
       child: Row(
         children: [
@@ -323,7 +323,7 @@ class _QuoteCard extends StatelessWidget {
           Expanded(
             child: Text(
               '“It is better to conquer yourself than to win a thousand battles”',
-              style: AppText.bold700(context).copyWith(
+              style: AppText.bold300(context).copyWith(
                 fontSize: 14.sp,
               ),
             ),
@@ -384,7 +384,7 @@ class _ArticlesSection extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 4.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: AppColors.boxshadow,
+        boxShadow: AppColors.boxshadow4,
         borderRadius: BorderRadius.circular(15.r),
       ),
       child: Column(

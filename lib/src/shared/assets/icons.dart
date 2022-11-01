@@ -14,6 +14,7 @@ class AppIcons {
   static const clock = 'assets/icons/clock.svg';
   static const success = 'assets/icons/success.svg';
   static const failed = 'assets/icons/failed.svg';
+  static const triangle = 'assets/icons/triangle.svg';
   static const notification = 'assets/icons/notification.svg';
   static const emptyView = 'assets/icons/empty_view.svg';
   static const stetoscope = 'assets/icons/stetoscope.svg';
