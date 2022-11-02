@@ -3,9 +3,9 @@ import 'package:bounce_patient_app/src/modules/dashboard/controllers/mood_contro
 import 'package:bounce_patient_app/src/modules/dashboard/services/fakes/fake_mood_service_impl.dart';
 
 void moodControllersInit({
-  required bool initFakeService,
+  required bool useFake,
 }) {
-  if (initFakeService) {
+  if (useFake) {
     diContainer.registerFactory(() => MoodController(moodService: FakeMoodServiceImpl()));
   } else {
     diContainer.registerFactory(() => MoodController(moodService: diContainer()));

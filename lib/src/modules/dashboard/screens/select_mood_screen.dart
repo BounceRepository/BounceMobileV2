@@ -38,7 +38,7 @@ class _SelectMoodsScreenState extends State<SelectMoodsScreen> {
       await controller.saveSelectedMoodListToDB();
       AppNavigator.to(context, const DashboardView());
     } on Failure catch (e) {
-      Messenger.showError(context, message: e.message);
+      Messenger.error( message: e.message);
     }
   }
 

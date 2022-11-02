@@ -35,7 +35,7 @@ class _BookingPaymentViewState extends State<BookingPaymentView> {
 
     if (selectedPaymentType != null) {
       if (selectedPaymentType == PaymentType.wallet) {
-        Messenger.show(context, message: 'Wallet coming soon');
+        Messenger.info( message: 'Wallet coming soon');
         return;
       }
 

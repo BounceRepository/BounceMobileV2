@@ -33,13 +33,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       final controller = context.read<AuthController>();
       try {
         await controller.forgotPassword(email: _emailController.text.trim());
-        Messenger.showSucess(
-          context,
+        Messenger.success(
+          
           message: 'Verification code has been sent to ${_emailController.text}',
         );
         AppNavigator.to(context, OTPScreen(email: _emailController.text));
       } on Failure catch (e) {
-        Messenger.showError(context, message: e.message);
+        Messenger.error( message: e.message);
       }
     }
   }

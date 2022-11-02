@@ -7,9 +7,9 @@ import 'package:bounce_patient_app/src/modules/appointment/services/fakes/fake_b
 import 'package:bounce_patient_app/src/modules/appointment/services/services.dart';
 
 void appointmentControllersInit({
-  required bool initFakeService,
+  required bool useFake,
 }) {
-  if (initFakeService) {
+  if (useFake) {
     diContainer.registerFactory(() =>
         TherapistListController(therapistListService: FakeTherapistListServiceImpl()));
     diContainer.registerFactory(() => BookAppointmentController(

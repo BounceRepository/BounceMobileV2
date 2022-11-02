@@ -59,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _createAccount() async {
     if (_formKey.currentState!.validate()) {
       if (!hasAcceptedTerms) {
-        Messenger.showError(context, message: 'Agree to Bounce terms and conditions');
+        Messenger.error( message: 'Agree to Bounce terms and conditions');
         return;
       }
 
@@ -72,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
         controller.userId = userId;
         controller.email = _emailController.text.trim();
-        Messenger.showSucess(context,
+        Messenger.success(
             message: 'A confirmation link has been sent to your email');
         AppNavigator.to(
             context,
@@ -80,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 email: _emailController.text.trim(),
                 userName: _userNameController.text.trim()));
       } on Failure catch (e) {
-        Messenger.showError(context, message: e.message);
+        Messenger.error( message: e.message);
       }
     }
   }

@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:bounce_patient_app/src/modules/appointment/screens/upcoming_session_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/appointment/screens/therapist_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/mood_icons_view.dart';
+import 'package:bounce_patient_app/src/modules/notifications/controllers/notification_controller.dart';
 import 'package:bounce_patient_app/src/modules/notifications/screens/notification_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/notifications/widgets/notification_bell.dart';
 import 'package:bounce_patient_app/src/modules/playlist/screens/discover_screen.dart';
@@ -9,6 +12,7 @@ import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/models/datastore.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -19,9 +23,29 @@ import 'package:flutter/services.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    updateNotificationToken();
+  }
+
+  void updateNotificationToken() async {
+    try {
+      await context.read<NotificationController>().updateToken();
+    } on Failure catch (e) {
+      log(e.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

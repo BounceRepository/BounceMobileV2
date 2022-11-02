@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bounce_patient_app/src/config/notification_config.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/screens/onboarding_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';

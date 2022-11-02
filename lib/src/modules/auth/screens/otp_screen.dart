@@ -31,10 +31,10 @@ class _OTPScreenState extends State<OTPScreen> {
       final controller = context.read<AuthController>();
       try {
         await controller.validateOTP(token: token);
-        Messenger.showSucess(context, message: '${widget.email} verification successful');
+        Messenger.success( message: '${widget.email} verification successful');
         AppNavigator.to(context, ResetPasswordScreen(email: widget.email));
       } on Failure catch (e) {
-        Messenger.showError(context, message: e.message);
+        Messenger.error( message: e.message);
       }
     }
   }
@@ -43,12 +43,12 @@ class _OTPScreenState extends State<OTPScreen> {
     final controller = context.read<AuthController>();
     try {
       await controller.forgotPassword(email: widget.email);
-      Messenger.showSucess(
-        context,
+      Messenger.success(
+        
         message: 'Verification code has been sent to ${widget.email}',
       );
     } on Failure catch (e) {
-      Messenger.showError(context, message: e.message);
+      Messenger.error( message: e.message);
     }
   }
 

@@ -56,7 +56,7 @@ class _MoodIconsViewState extends State<MoodIconsView> {
               return _Button(mood);
             },
             separatorBuilder: (context, index) {
-              return SizedBox(width: 24.w);
+              return SizedBox(width: 20.w);
             },
           ),
         ),
@@ -86,7 +86,7 @@ class MoodBottomSheet extends StatelessWidget {
       body: [
         const Dragger(),
         SizedBox(height: 40.h),
-        _Button(mood, isTappable: false),
+        _Button(mood, isTappable: true),
         SizedBox(height: 20.h),
         Text(
           '“You are doing very well for yourself so be happy for this moment, cease it and make the most of it because this moment is your life”...',
@@ -115,33 +115,43 @@ class _Button extends StatelessWidget {
               showMoodBottomsheet(context, mood: mood);
             }
           : null,
-      child: Column(
-        children: [
-          Container(
-            height: 62.06.h,
-            padding: EdgeInsets.symmetric(
-              vertical: 14.h,
-              horizontal: 12.w,
+      child: SizedBox(
+        height: 90.h,
+        width: 55.w,
+        child: Column(
+          children: [
+            Container(
+              height: 60.h,
+              width: 60.h,
+              padding: EdgeInsets.symmetric(
+                vertical: 14.h,
+                horizontal: 12.w,
+              ),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+              child: Image.asset(
+                mood.icon,
+                height: 33.18.h,
+                width: 33.18.h,
+                fit: BoxFit.cover,
+              ),
             ),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(16.r),
+            SizedBox(height: 8.h),
+            Expanded(
+              child: Text(
+                mood.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: AppText.bold400(context).copyWith(
+                  fontSize: 12.sp,
+                ),
+              ),
             ),
-            child: Image.asset(
-              mood.icon,
-              height: 33.18.h,
-              width: 33.18.h,
-              fit: BoxFit.cover,
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            mood.name,
-            style: AppText.bold400(context).copyWith(
-              fontSize: 12.sp,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

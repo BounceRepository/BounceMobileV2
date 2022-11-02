@@ -32,7 +32,7 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
       try {
         await controller.getAllTherapist();
       } on Failure catch (e) {
-        Messenger.showError(context, message: e.message);
+        Messenger.error( message: e.message);
       }
     }
   }

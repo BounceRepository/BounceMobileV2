@@ -55,10 +55,10 @@ class _SignInScreenState extends State<SignInScreen> {
           userName: _emailController.text,
           password: _passwordController.text,
         );
-        Messenger.showSucess(context, message: 'Login successful');
+        Messenger.success( message: 'Login successful');
         AppNavigator.removeAllUntil(context, const SelectMoodsScreen());
       } on Failure catch (e) {
-        Messenger.showError(context, message: e.message);
+        Messenger.error( message: e.message);
       }
     }
   }

@@ -9,20 +9,25 @@ import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_serv
 import 'package:bounce_patient_app/src/modules/dashboard/di.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/services/impls/mood_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/services/interfaces/mood_service.dart';
+import 'package:bounce_patient_app/src/modules/notifications/di.dart';
+import 'package:bounce_patient_app/src/modules/notifications/services/impls/notification_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/notifications/services/interfaces/notification_service.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
 import 'package:bounce_patient_app/src/shared/image/service/image_service.dart';
 import 'package:bounce_patient_app/src/shared/image/service/image_service_impl.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:bounce_patient_app/src/shared/network/dio_api_service_impl.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 
 final diContainer = GetIt.instance;
 
 Future<void> init() async {
   // controllers
-  authControllersInit(initFakeService: true);
-  moodControllersInit(initFakeService: true);
-  appointmentControllersInit(initFakeService: true);
+  authControllersInit(useFake: true);
+  moodControllersInit(useFake: true);
+  notificationControllersInit(useFake: true);
+  appointmentControllersInit(useFake: true);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
 
   //service
@@ -35,6 +40,10 @@ Future<void> init() async {
       () => BookAppointmentServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<IAppointmentListService>(
       () => AppointmentListServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<INotificationService>(() => NotificationServiceImpl(
+        api: diContainer(),
+        firebaseMessagingService: FirebaseMessaging.instance,
+      ));
   diContainer
       .registerLazySingleton<IMoodService>(() => MoodServiceImpl(api: diContainer()));
 

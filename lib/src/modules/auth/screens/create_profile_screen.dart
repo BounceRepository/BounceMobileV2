@@ -116,12 +116,12 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               dateOfBirth: _dateOfBirthController.text,
             );
             AppNavigator.removeAllUntil(context, const SignInScreen());
-            Messenger.showSucess(context, message: 'Account created successfully');
+            Messenger.success( message: 'Account created successfully');
           } on Failure catch (e) {
-            Messenger.showError(context, message: e.message);
+            Messenger.error( message: e.message);
           }
         } else {
-          Messenger.showError(context, message: 'Upload your image');
+          Messenger.error( message: 'Upload your image');
         }
       }
     }
@@ -142,7 +142,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       image = await controller.pickImageFromGallery();
       setState(() {});
     } on Failure catch (e) {
-      Messenger.showError(context, message: e.message);
+      Messenger.error( message: e.message);
     }
   }
 

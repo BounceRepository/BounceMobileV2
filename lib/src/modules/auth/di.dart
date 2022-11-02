@@ -3,9 +3,9 @@ import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.
 import 'package:bounce_patient_app/src/modules/auth/service/fakes/fake_auth_service_impl.dart';
 
 void authControllersInit({
-  required bool initFakeService,
+  required bool useFake,
 }) {
-  if (initFakeService) {
+  if (useFake) {
     diContainer.registerFactory(() => AuthController(authService: FakeAuthServiceImpl()));
   } else {
     diContainer.registerFactory(() => AuthController(authService: diContainer()));
