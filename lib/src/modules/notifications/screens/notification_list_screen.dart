@@ -21,6 +21,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getAllNotification();
+      markAsRead();
     });
   }
 
@@ -34,6 +35,10 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
         Messenger.error(message: e.message);
       }
     }
+  }
+
+  void markAsRead() {
+    context.read<NotificationController>().markAsRead();
   }
 
   @override

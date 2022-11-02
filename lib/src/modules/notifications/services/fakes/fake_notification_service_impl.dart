@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bounce_patient_app/src/modules/notifications/models/notification.dart';
+import 'package:bounce_patient_app/src/modules/notifications/models/notification_list_response.dart';
 import 'package:bounce_patient_app/src/modules/notifications/services/interfaces/notification_service.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
@@ -8,9 +9,9 @@ import 'package:flutter_lorem/flutter_lorem.dart';
 
 class FakeNotificationServiceImpl implements INotificationService {
   @override
-  Future<List<NotificationMessage>> getAllNotification() async {
+  Future<NotificationListResponse> getAllNotification() async {
     await fakeNetworkDelay();
-    return List.generate(
+    final notifications = List.generate(
       10,
       (index) => NotificationMessage(
         id: Utils.getGuid(),
@@ -19,6 +20,11 @@ class FakeNotificationServiceImpl implements INotificationService {
         createdAt: DateTime.now(),
         isRead: Random().nextBool(),
       ),
+    );
+
+    return NotificationListResponse(
+      notifications: notifications,
+      unReadNotificationCount: 5,
     );
   }
 

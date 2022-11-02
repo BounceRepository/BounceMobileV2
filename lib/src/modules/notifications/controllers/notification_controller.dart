@@ -9,13 +9,16 @@ class NotificationController extends BaseController {
   NotificationController({required INotificationService notificationService})
       : _notificationService = notificationService;
 
+  int unReadNotificationCount = 0;
   List<NotificationMessage> _notifications = [];
   List<NotificationMessage> get notifications => _notifications;
 
   Future<void> getAllNotification() async {
     try {
       setIsLoading(true);
-      _notifications = await _notificationService.getAllNotification();
+      final response = await _notificationService.getAllNotification();
+      unReadNotificationCount = response.unReadNotificationCount;
+      _notifications = response.notifications;
       setIsLoading(false);
     } on Failure {
       setIsLoading(false);
@@ -29,5 +32,13 @@ class NotificationController extends BaseController {
     } on Failure {
       rethrow;
     }
+  }
+
+  void markAsRead() {
+    for (final element in notifications) {
+      element.isRead = true;
+    }
+    unReadNotificationCount = 0;
+    notifyListeners();
   }
 }

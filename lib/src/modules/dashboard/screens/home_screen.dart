@@ -103,7 +103,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const NotificationListScreen(),
                               );
                             },
-                            child: const NotificationBell(),
+                            child: Consumer<NotificationController>(
+                                builder: (context, controller, _) {
+                              return NotificationBell(
+                                count: controller.unReadNotificationCount,
+                              );
+                            }),
                           ),
                         ],
                       ),

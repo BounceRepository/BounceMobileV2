@@ -3,7 +3,7 @@ class NotificationMessage {
   final String title;
   final String body;
   final DateTime createdAt;
-  final bool isRead;
+  bool isRead;
 
   NotificationMessage({
     required this.id,

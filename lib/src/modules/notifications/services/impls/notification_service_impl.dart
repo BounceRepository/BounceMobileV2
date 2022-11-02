@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:bounce_patient_app/src/modules/notifications/models/notification.dart';
+import 'package:bounce_patient_app/src/modules/notifications/models/notification_list_response.dart';
 import 'package:bounce_patient_app/src/modules/notifications/services/impls/api_urls.dart';
 import 'package:bounce_patient_app/src/modules/notifications/services/interfaces/notification_service.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -18,11 +18,11 @@ class NotificationServiceImpl implements INotificationService {
         _firebaseMessagingService = firebaseMessagingService;
 
   @override
-  Future<List<NotificationMessage>> getAllNotification() async {
+  Future<NotificationListResponse> getAllNotification() async {
     try {
       final response = await _api.get(NotificationApiURLS.getAllNotification);
-      final List collection = response['data'];
-      return collection.map((json) => NotificationMessage.fromJson(json)).toList();
+      final data = response['data'];
+      return NotificationListResponse.fromJson(data);
     } on Failure {
       rethrow;
     } on Error {
