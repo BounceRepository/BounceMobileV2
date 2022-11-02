@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
-import 'package:bounce_patient_app/src/shared/models/datastore.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
@@ -36,8 +37,11 @@ class FakeAuthServiceImpl implements IAuthService {
       email: 'appleyard@gmail.com',
       phone: '07017247035',
       dateOfBirth: '1990-02-08',
-      //throw InternalFailure();
     );
+
+    //throw InCompleteProfileFailure();
+    throw ConfirmEmailFailure();
+    //throw InternalFailure();
   }
 
   @override

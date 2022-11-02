@@ -18,10 +18,12 @@ class IncomingEmailScreen extends StatelessWidget {
     Key? key,
     required this.email,
     required this.userName,
+    this.nextScreen,
   }) : super(key: key);
 
   final String email;
   final String userName;
+  final Widget? nextScreen;
 
   void _checkEmailStatus(BuildContext context) async {
     final controller = context.read<AuthController>();
@@ -33,12 +35,13 @@ class IncomingEmailScreen extends StatelessWidget {
             _VerifiedSuccessScreen(
               email: email,
               userName: userName,
+              nextScreen: nextScreen,
             ));
       } else {
         AppNavigator.to(context, const _VerificationErrorScreen());
       }
     } on Failure catch (e) {
-      Messenger.error( message: e.message);
+      Messenger.error(message: e.message);
     }
   }
 
@@ -79,11 +82,16 @@ class IncomingEmailScreen extends StatelessWidget {
 }
 
 class _VerifiedSuccessScreen extends StatelessWidget {
-  const _VerifiedSuccessScreen({Key? key, required this.email, required this.userName})
-      : super(key: key);
+  const _VerifiedSuccessScreen({
+    Key? key,
+    required this.email,
+    required this.userName,
+    this.nextScreen,
+  }) : super(key: key);
 
   final String email;
   final String userName;
+  final Widget? nextScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +102,11 @@ class _VerifiedSuccessScreen extends StatelessWidget {
       onTap: () {
         AppNavigator.removeAllUntil(
             context,
-            CreateProfileScreen(
-              email: email,
-              userName: userName,
-            ));
+            nextScreen ??
+                CreateProfileScreen(
+                  email: email,
+                  userName: userName,
+                ));
       },
     );
   }
@@ -112,11 +121,10 @@ class _VerificationErrorScreen extends StatelessWidget {
     if (email != null) {
       try {
         await controller.verifyEmail(email: email);
-        Messenger.success(
-            message: 'A confirmation link has been sent to your email');
+        Messenger.success(message: 'A confirmation link has been sent to your email');
         Navigator.pop(context);
       } on Failure catch (e) {
-        Messenger.error( message: e.message);
+        Messenger.error(message: e.message);
       }
     }
   }

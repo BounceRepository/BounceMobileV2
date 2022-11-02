@@ -5,7 +5,7 @@ import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/flutterwave_payment_service.dart';
-import 'package:bounce_patient_app/src/shared/models/datastore.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:bounce_patient_app/src/shared/models/datastore.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:http/http.dart' as http;
@@ -111,7 +111,12 @@ class HttpApiServiceImpl implements IApi {
   }
 
   @override
-  Future patch(String url, {required body, Map<String, String>? headers}) {
+  Future patch(
+    String url, {
+    required dynamic body,
+    Map<String, String>? headers,
+    bool isFormData = false,
+  }) {
     // TODO: implement patch
     throw UnimplementedError();
   }

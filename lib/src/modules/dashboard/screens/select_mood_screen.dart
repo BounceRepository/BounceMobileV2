@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/controllers/mood_controller.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/models/mood.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
@@ -38,87 +39,93 @@ class _SelectMoodsScreenState extends State<SelectMoodsScreen> {
       await controller.saveSelectedMoodListToDB();
       AppNavigator.to(context, const DashboardView());
     } on Failure catch (e) {
-      Messenger.error( message: e.message);
+      Messenger.error(message: e.message);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: CustomChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppPadding.horizontal,
-            vertical: 20.h,
-          ),
-          child: Column(
-            children: [
-              SvgPicture.asset(
-                AuthIcons.symptoms,
-                width: 162.43.w,
-                height: 152.h,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(height: 48.h),
-              Text(
-                'How are you feeling today?',
-                style: AppText.bold700(context).copyWith(
-                  fontSize: 16.sp,
-                  color: AppColors.textBrown,
+    return WillPopScope(
+      onWillPop: () {
+        AppNavigator.to(context, const SignInScreen());
+        return Future.value(true);
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: CustomChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppPadding.horizontal,
+              vertical: 20.h,
+            ),
+            child: Column(
+              children: [
+                SvgPicture.asset(
+                  AuthIcons.symptoms,
+                  width: 162.43.w,
+                  height: 152.h,
+                  fit: BoxFit.cover,
                 ),
-              ),
-              SizedBox(height: 7.h),
-              Text(
-                'You can choose as many as you like, we will  show recommended therapist, meditations and articles according to this.',
-                textAlign: TextAlign.center,
-                style: AppText.bold300(context).copyWith(
-                  fontSize: 14.sp,
-                  height: 1.5.h,
-                  color: AppColors.textBrown,
+                SizedBox(height: 48.h),
+                Text(
+                  'How are you feeling today?',
+                  style: AppText.bold700(context).copyWith(
+                    fontSize: 16.sp,
+                    color: AppColors.textBrown,
+                  ),
                 ),
-              ),
-              SizedBox(height: 32.h),
-              Consumer<MoodController>(
-                builder: (context, controller, _) {
-                  final moods = controller.moodList;
-                  return Wrap(
-                    spacing: 8.w,
-                    runSpacing: 16.h,
-                    children: List.generate(showMore ? moods.length : 12, (index) {
-                      final mood = moods[index];
-                      return _MoodButton(mood);
-                    }),
-                  );
-                },
-              ),
-              showMore
-                  ? const SizedBox.shrink()
-                  : Column(
-                      children: [
-                        SizedBox(height: 15.h),
-                        SizedBox(
-                          width: 100.w,
-                          child: AppButton(
-                            label: 'See More',
-                            labelColor: AppColors.primary,
-                            backgroundColor: Colors.transparent,
-                            onTap: loadMore,
+                SizedBox(height: 7.h),
+                Text(
+                  'You can choose as many as you like, we will  show recommended therapist, meditations and articles according to this.',
+                  textAlign: TextAlign.center,
+                  style: AppText.bold300(context).copyWith(
+                    fontSize: 14.sp,
+                    height: 1.5.h,
+                    color: AppColors.textBrown,
+                  ),
+                ),
+                SizedBox(height: 32.h),
+                Consumer<MoodController>(
+                  builder: (context, controller, _) {
+                    final moods = controller.moodList;
+                    return Wrap(
+                      spacing: 8.w,
+                      runSpacing: 16.h,
+                      children: List.generate(showMore ? moods.length : 12, (index) {
+                        final mood = moods[index];
+                        return _MoodButton(mood);
+                      }),
+                    );
+                  },
+                ),
+                showMore
+                    ? const SizedBox.shrink()
+                    : Column(
+                        children: [
+                          SizedBox(height: 15.h),
+                          SizedBox(
+                            width: 100.w,
+                            child: AppButton(
+                              label: 'See More',
+                              labelColor: AppColors.primary,
+                              backgroundColor: Colors.transparent,
+                              onTap: loadMore,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-              SizedBox(height: 24.h),
-              Consumer<MoodController>(
-                builder: (context, controller, _) {
-                  return AppButton(
-                    label: 'Done',
-                    isLoading: controller.isLoading,
-                    onTap: submit,
-                  );
-                },
-              ),
-              SizedBox(height: 40.h),
-            ],
+                        ],
+                      ),
+                SizedBox(height: 24.h),
+                Consumer<MoodController>(
+                  builder: (context, controller, _) {
+                    return AppButton(
+                      label: 'Done',
+                      isLoading: controller.isLoading,
+                      onTap: submit,
+                    );
+                  },
+                ),
+                SizedBox(height: 40.h),
+              ],
+            ),
           ),
         ),
       ),

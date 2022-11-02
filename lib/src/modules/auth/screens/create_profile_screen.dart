@@ -9,7 +9,7 @@ import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart'
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
-import 'package:bounce_patient_app/src/shared/models/datastore.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -29,11 +29,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class CreateProfileScreen extends StatefulWidget {
-  const CreateProfileScreen({Key? key, required this.email, required this.userName})
-      : super(key: key);
+  const CreateProfileScreen({
+    Key? key,
+    required this.email,
+    required this.userName,
+    this.nextScreen,
+  }) : super(key: key);
 
   final String email;
   final String userName;
+  final Widget? nextScreen;
 
   @override
   State<CreateProfileScreen> createState() => _CreateProfileScreenState();
@@ -86,7 +91,15 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   void _updateProfile() async {
     if (_formKey.currentState!.validate()) {
       final controller = context.read<AuthController>();
-      final userId = controller.userId;
+      final user = AppSession.user;
+      int? userId;
+
+      if (user != null) {
+        userId = user.id;
+      } else {
+        userId = controller.userId;
+      }
+
       final image = this.image;
       final gender = context.read<GenderController>().selectedGender;
       if (userId != null) {
@@ -115,13 +128,14 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               phone: '0${_phoneNumberController.text}',
               dateOfBirth: _dateOfBirthController.text,
             );
-            AppNavigator.removeAllUntil(context, const SignInScreen());
-            Messenger.success( message: 'Account created successfully');
+            AppNavigator.removeAllUntil(
+                context, widget.nextScreen ?? const SignInScreen());
+            Messenger.success(message: 'Profile updated successfully');
           } on Failure catch (e) {
-            Messenger.error( message: e.message);
+            Messenger.error(message: e.message);
           }
         } else {
-          Messenger.error( message: 'Upload your image');
+          Messenger.error(message: 'Upload your image');
         }
       }
     }
@@ -142,7 +156,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       image = await controller.pickImageFromGallery();
       setState(() {});
     } on Failure catch (e) {
-      Messenger.error( message: e.message);
+      Messenger.error(message: e.message);
     }
   }
 

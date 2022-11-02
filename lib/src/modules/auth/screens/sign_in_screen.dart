@@ -1,5 +1,7 @@
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/create_profile_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/registration_success_screens.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/social_auth_view.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_body.dart';
@@ -9,7 +11,9 @@ import 'package:bounce_patient_app/src/modules/auth/widgets/password_textfield.d
 import 'package:bounce_patient_app/src/modules/dashboard/screens/select_mood_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/validator.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
+import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
@@ -55,11 +59,49 @@ class _SignInScreenState extends State<SignInScreen> {
           userName: _emailController.text,
           password: _passwordController.text,
         );
-        Messenger.success( message: 'Login successful');
+        Messenger.success(message: 'Login successful');
         AppNavigator.removeAllUntil(context, const SelectMoodsScreen());
       } on Failure catch (e) {
-        Messenger.error( message: e.message);
+        final user = AppSession.user;
+
+        if (user != null) {
+          if (e is InCompleteProfileFailure) {
+            AppNavigator.to(
+              context,
+              CreateProfileScreen(
+                email: user.email,
+                userName: user.userName,
+                nextScreen: const SelectMoodsScreen(),
+              ),
+            );
+            return;
+          }
+
+          if (e is ConfirmEmailFailure) {
+            verifyEmail(user);
+            return;
+          }
+        }
+        Messenger.error(message: e.message);
       }
+    }
+  }
+
+  void verifyEmail(User user) async {
+    final controller = context.read<AuthController>();
+
+    try {
+      await controller.verifyEmail(email: user.email);
+      AppNavigator.to(
+        context,
+        IncomingEmailScreen(
+          email: user.email,
+          userName: user.userName,
+          nextScreen: const SelectMoodsScreen(),
+        ),
+      );
+    } on Failure catch (e) {
+      Messenger.error(message: e.message);
     }
   }
 

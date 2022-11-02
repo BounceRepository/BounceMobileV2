@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:bounce_patient_app/src/modules/auth/constants/auth_urls.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
-import 'package:bounce_patient_app/src/shared/models/datastore.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
@@ -26,6 +26,10 @@ class AuthServiceImpl implements IAuthService {
       await _api.post(url, body: body);
     } on Failure {
       rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 
@@ -42,8 +46,20 @@ class AuthServiceImpl implements IAuthService {
       final data = response['data'];
       AppSession.authToken = data['token'];
       AppSession.user = User.fromJson(data);
+
+      if (data['hasProfile'] == false) {
+        throw InCompleteProfileFailure();
+      }
+
+      if (data['hasProfile'] == false) {
+        throw ConfirmEmailFailure();
+      }
     } on Failure {
       rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 
@@ -62,9 +78,14 @@ class AuthServiceImpl implements IAuthService {
 
     try {
       final response = await _api.post(url, body: body);
+      AppSession.authToken = response['data']['token'];
       return response['data']['userId'];
     } on Failure {
       rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 
@@ -77,6 +98,10 @@ class AuthServiceImpl implements IAuthService {
       await _api.post(url, body: body);
     } on Failure {
       rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 
@@ -89,6 +114,10 @@ class AuthServiceImpl implements IAuthService {
       await _api.post(url, body: body);
     } on Failure {
       rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 
@@ -100,6 +129,10 @@ class AuthServiceImpl implements IAuthService {
       return response['data'];
     } on Failure {
       rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 
@@ -111,6 +144,10 @@ class AuthServiceImpl implements IAuthService {
       await _api.post(url, body: body);
     } on Failure {
       rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 
@@ -135,9 +172,13 @@ class AuthServiceImpl implements IAuthService {
       'DateOfBirth': DateTimeHelperFunctions.getDate(dateOfBirth).toIso8601String(),
       'FirstName': firstName,
       'LastName': lastName,
-      'Phone': '0$phoneNumber',
+      'Phone': phoneNumber,
       'UserId': userId,
       'Gender': gender.type.name.toString().toUpperCase(),
+      'PhysicalHealthRate': physicalHealtRate,
+      'MentalHealthRate': mentalHealtRate,
+      'EmotionalHealthRate': emotionalHealtRate,
+      'EatingHabit': eatingHabit,
       'ImageFile': await MultipartFile.fromFile(image.path, filename: fileName),
       'MeansOfIdentification':
           await MultipartFile.fromFile(image.path, filename: fileName)
@@ -145,9 +186,13 @@ class AuthServiceImpl implements IAuthService {
     var formData = FormData.fromMap(body);
 
     try {
-      await _api.post(url, body: formData, isFormData: true);
+      await _api.patch(url, body: formData, isFormData: true);
     } on Failure {
       rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
     }
   }
 }

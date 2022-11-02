@@ -4,7 +4,7 @@ import 'package:bounce_patient_app/src/modules/appointment/services/impls/impls.
 import 'package:bounce_patient_app/src/modules/appointment/services/interfaces/appointment_list_service.dart';
 import 'package:bounce_patient_app/src/modules/appointment/services/interfaces/interfaces.dart';
 import 'package:bounce_patient_app/src/modules/auth/di.dart';
-import 'package:bounce_patient_app/src/modules/auth/service/auth_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/auth/service/impls/auth_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/di.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/services/impls/mood_service_impl.dart';
@@ -24,7 +24,7 @@ final diContainer = GetIt.instance;
 
 Future<void> init() async {
   // controllers
-  authControllersInit(useFake: true);
+  authControllersInit(useFake: false);
   moodControllersInit(useFake: true);
   notificationControllersInit(useFake: true);
   appointmentControllersInit(useFake: true);
