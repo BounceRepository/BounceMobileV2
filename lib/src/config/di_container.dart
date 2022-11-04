@@ -1,8 +1,8 @@
-import 'package:bounce_patient_app/src/modules/appointment/di.dart';
-import 'package:bounce_patient_app/src/modules/appointment/services/impls/appointment_list_service_impl.dart';
-import 'package:bounce_patient_app/src/modules/appointment/services/impls/impls.dart';
-import 'package:bounce_patient_app/src/modules/appointment/services/interfaces/appointment_list_service.dart';
-import 'package:bounce_patient_app/src/modules/appointment/services/interfaces/interfaces.dart';
+import 'package:bounce_patient_app/src/modules/book_session/di.dart';
+import 'package:bounce_patient_app/src/modules/book_session/services/impls/session_list_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/book_session/services/impls/impls.dart';
+import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/session_list_service.dart';
+import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/interfaces.dart';
 import 'package:bounce_patient_app/src/modules/auth/di.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/impls/auth_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
@@ -37,9 +37,9 @@ Future<void> init() async {
   diContainer.registerLazySingleton<ITherapistListService>(
       () => TherapistListServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<IBookAppointmentService>(
-      () => BookAppointmentServiceImpl(api: diContainer()));
-  diContainer.registerLazySingleton<IAppointmentListService>(
-      () => AppointmentListServiceImpl(api: diContainer()));
+      () => SessionServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<ISessionListService>(
+      () => SessionListServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<INotificationService>(() => NotificationServiceImpl(
         api: diContainer(),
         firebaseMessagingService: FirebaseMessaging.instance,

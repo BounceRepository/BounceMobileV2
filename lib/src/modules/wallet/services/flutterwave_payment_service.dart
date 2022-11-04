@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/appointment/controllers/book_appointment_controller.dart';
+import 'package:bounce_patient_app/src/modules/book_session/controllers/book_session_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';

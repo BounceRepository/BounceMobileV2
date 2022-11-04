@@ -39,9 +39,9 @@ class DateTimeHelperFunctions {
   }
 
   static String convertTimeOfDayToAMPM(TimeOfDay time) {
-    DateTime tempDate = DateFormat.Hms().parse(
-        time.hour.toString() + ":" + time.minute.toString() + ":" + '0' + ":" + '0');
-    var dateFormat = DateFormat("h:mm a");
+    final tempDate =
+        DateFormat("hh:mm").parse(time.hour.toString() + ":" + time.minute.toString());
+    final dateFormat = DateFormat("h:mm a");
     return (dateFormat.format(tempDate));
   }
 }

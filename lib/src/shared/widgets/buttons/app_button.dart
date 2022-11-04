@@ -43,8 +43,8 @@ class AppButton extends StatelessWidget {
       child: InkWell(
         onTap: isLoading ? null : onTap,
         child: Container(
-          height: 57.h,
-          padding: padding ?? EdgeInsets.symmetric(vertical: 13.h),
+          height: 48.h,
+          padding: padding ?? EdgeInsets.symmetric(vertical: 12.h),
           decoration: BoxDecoration(
             color: backgroundColor ?? AppColors.primary,
             borderRadius: borderRadius ?? BorderRadius.circular(14.55.r),

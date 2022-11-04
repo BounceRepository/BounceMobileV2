@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/appointment/screens/upcoming_session_list_screen.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/upcoming_session_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/rant_room_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/models/navbar_item.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/home_screen.dart';

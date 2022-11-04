@@ -1,6 +1,6 @@
 import 'package:bounce_patient_app/src/modules/account/screens/contact_us_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/account/screens/log_out_bottomsheet.dart';
-import 'package:bounce_patient_app/src/modules/appointment/screens/session_history_list_screen.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/session_history_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/journal/screens/journal_list_screen.dart';

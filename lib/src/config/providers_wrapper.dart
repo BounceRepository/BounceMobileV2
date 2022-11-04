@@ -1,5 +1,5 @@
-import 'package:bounce_patient_app/src/modules/appointment/controllers/book_appointment_controller.dart';
-import 'package:bounce_patient_app/src/modules/appointment/controllers/therapist_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/book_session/controllers/book_session_controller.dart';
+import 'package:bounce_patient_app/src/modules/book_session/controllers/therapist_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/health_level_controller.dart';
