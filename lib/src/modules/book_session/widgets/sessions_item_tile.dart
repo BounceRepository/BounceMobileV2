@@ -1,5 +1,9 @@
+import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/join_session_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/reschedule_session_screen.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
@@ -9,10 +13,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SessionItemTile extends StatelessWidget {
-  const SessionItemTile({Key? key}) : super(key: key);
+  const SessionItemTile(this.session, {Key? key}) : super(key: key);
+
+  final Session session;
 
   @override
   Widget build(BuildContext context) {
+    final therapist = session.therapist;
+    final certification = therapist.certifications.first;
+    final specialization = therapist.specializations.first;
+    final date = DateTimeHelperFunctions.getDateFullStr(session.date);
+
     return Stack(
       children: [
         Container(
@@ -43,14 +54,14 @@ class SessionItemTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sahana V',
+                therapist.fullName,
                 style: AppText.bold800(context).copyWith(
                   fontSize: 14.sp,
                 ),
               ),
               SizedBox(height: 4.h),
               Text(
-                'Msc in Clinical Psychology',
+                '$certification in $specialization',
                 style: AppText.bold400(context).copyWith(
                   fontSize: 12.sp,
                 ),
@@ -58,30 +69,54 @@ class SessionItemTile extends StatelessWidget {
               SizedBox(height: 12.h),
               Row(
                 children: [
-                  const _DateTimeView(
+                  _DateTimeView(
                     icon: Icons.schedule_outlined,
-                    dateTime: '7:30 PM - 8:30 PM',
+                    dateTime: session.period,
                   ),
                   SizedBox(width: 17.25.w),
-                  const _DateTimeView(
+                  _DateTimeView(
                     icon: Icons.calendar_month,
-                    dateTime: '26th April 2023',
+                    dateTime: date,
                   ),
                 ],
               ),
               SizedBox(height: 17.67.h),
-              SizedBox(
-                width: 117.w,
-                height: 40.h,
-                child: AppButton(
-                  label: 'Reschedule',
-                  labelSize: 14.sp,
-                  borderRadius: BorderRadius.circular(8.r),
-                  padding: EdgeInsets.zero,
-                  onTap: () {
-                    AppNavigator.to(context, const RescheduleSessionScreen());
-                  },
-                ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 117.w,
+                    height: 40.h,
+                    child: AppButton(
+                      label: session.isCompleted ? 'Book again' : 'Reschedule',
+                      labelSize: 14.sp,
+                      padding: EdgeInsets.zero,
+                      onTap: session.isCompleted
+                          ? () {
+                              AppNavigator.to(
+                                  context, BookSessionScreen(therapist: therapist));
+                            }
+                          : () {
+                              AppNavigator.to(context, RescheduleSessionScreen(session));
+                            },
+                    ),
+                  ),
+                  session.isCompleted
+                      ? const SizedBox.shrink()
+                      : SizedBox(
+                          width: 117.w,
+                          height: 40.h,
+                          child: AppButton(
+                            label: 'Join Now',
+                            labelSize: 14.sp,
+                            labelColor: AppColors.primary,
+                            backgroundColor: Colors.transparent,
+                            padding: EdgeInsets.zero,
+                            onTap: () {
+                              AppNavigator.to(context,  JoinSessionScreen(therapist: therapist));
+                            },
+                          ),
+                        ),
+                ],
               ),
             ],
           ),

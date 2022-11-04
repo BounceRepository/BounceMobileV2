@@ -79,7 +79,7 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
 
             if (controller.topTherapists.isEmpty &&
                 controller.therapistsNearYou.isEmpty) {
-              return const EmptyView();
+              return const EmptyListView();
             }
 
             return ListView(

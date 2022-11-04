@@ -14,14 +14,14 @@ void appointmentControllersInit({
         TherapistListController(therapistListService: FakeTherapistListServiceImpl()));
     diContainer.registerFactory(() =>
         BookSessionController(sessionBookingService: FakeBookAppointmentServiceImpl()));
-    diContainer.registerFactory(() =>
-        SessionListController(appointmentListService: FakeAppointmentListServiceImpl()));
+    diContainer.registerFactory(
+        () => SessionListController(sessionListService: FakeSessionListServiceImpl()));
   } else {
     diContainer.registerFactory(
         () => TherapistListController(therapistListService: diContainer()));
     diContainer.registerFactory(
         () => BookSessionController(sessionBookingService: diContainer()));
-    diContainer.registerFactory(
-        () => SessionListController(appointmentListService: diContainer()));
+    diContainer
+        .registerFactory(() => SessionListController(sessionListService: diContainer()));
   }
 }

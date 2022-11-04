@@ -1,4 +1,5 @@
 import 'package:bounce_patient_app/src/modules/book_session/controllers/book_session_controller.dart';
+import 'package:bounce_patient_app/src/modules/book_session/controllers/session_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/therapist_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
@@ -25,6 +26,7 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<ImageController>()),
         ChangeNotifierProvider(create: (_) => diContainer<TherapistListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<BookSessionController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<SessionListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<MoodController>()),
         ChangeNotifierProvider(create: (_) => diContainer<NotificationController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),

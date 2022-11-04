@@ -10,12 +10,20 @@ class Session {
   final String id;
   final Therapist therapist;
   final DateTime date;
-  final String time;
+  final String startTime;
+  final String endTime;
+  final bool isCompleted;
 
   Session({
     required this.id,
     required this.therapist,
     required this.date,
-    required this.time,
+    required this.startTime,
+    required this.endTime,
+    required this.isCompleted,
   });
+
+  String get period {
+    return '$startTime - $endTime';
+  }
 }

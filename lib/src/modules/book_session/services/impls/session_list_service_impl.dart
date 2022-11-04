@@ -8,8 +8,14 @@ class SessionListServiceImpl implements ISessionListService {
   SessionListServiceImpl({required IApi api}) : _api = api;
 
   @override
-  Future<List<Session>> getAllSession() async {
+  Future<List<Session>> getAll() async {
     // TODO: implement getAllAppointment
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Session>> getAllUpComing() async {
+    // TODO: implement getAllUpComing
     throw UnimplementedError();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/services.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/select_availability_view.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/select_date_view.dart';
@@ -9,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RescheduleSessionScreen extends StatelessWidget {
-  const RescheduleSessionScreen({super.key});
+  const RescheduleSessionScreen(this.session, {super.key});
+
+  final Session session;
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,17 @@
+import 'package:bounce_patient_app/src/modules/book_session/controllers/session_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/sessions_item_tile.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/sliver_appbar_delegate.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class SessionHistoryListScreen extends StatelessWidget {
   const SessionHistoryListScreen({super.key});
@@ -28,12 +34,125 @@ class SessionHistoryListScreen extends StatelessWidget {
           body: const TabBarView(
             physics: BouncingScrollPhysics(),
             children: [
-              _SessionListView(),
-              _SessionListView(),
+              _UpComingSessionListView(),
+              _CompletedSessionListView(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _UpComingSessionListView extends StatefulWidget {
+  const _UpComingSessionListView();
+
+  @override
+  State<_UpComingSessionListView> createState() => _UpComingSessionListViewState();
+}
+
+class _UpComingSessionListViewState extends State<_UpComingSessionListView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getAllUpcomingSession();
+    });
+  }
+
+  void getAllUpcomingSession() async {
+    final controller = context.read<SessionListController>();
+
+    if (controller.upComingSessions.isEmpty) {
+      try {
+        await controller.getUpComingSessions();
+      } on Failure catch (e) {
+        controller.setFailure(e);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<SessionListController>(
+      builder: (context, controller, _) {
+        if (controller.isLoading) {
+          return const CustomLoadingIndicator();
+        }
+
+        if (controller.upComingSessions.isEmpty) {
+          return const EmptyListView();
+        }
+
+        final sessions = controller.upComingSessions;
+        return _SessionListView(sessions);
+      },
+    );
+  }
+}
+
+class _CompletedSessionListView extends StatefulWidget {
+  const _CompletedSessionListView();
+
+  @override
+  State<_CompletedSessionListView> createState() => _CompletedSessionListViewState();
+}
+
+class _CompletedSessionListViewState extends State<_CompletedSessionListView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getAllSession();
+    });
+  }
+
+  void getAllSession() async {
+    final controller = context.read<SessionListController>();
+
+    if (controller.sessions.isEmpty) {
+      try {
+        await controller.getAllSession();
+      } on Failure catch (e) {
+        controller.setFailure(e);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<SessionListController>(
+      builder: (context, controller, _) {
+        if (controller.isLoading) {
+          return const CustomLoadingIndicator();
+        }
+
+        if (controller.completedSessions.isEmpty) {
+          return const EmptyListView();
+        }
+
+        final sessions = controller.completedSessions;
+        return _SessionListView(sessions);
+      },
+    );
+  }
+}
+
+class _SessionListView extends StatelessWidget {
+  const _SessionListView(this.sessions);
+
+  final List<Session> sessions;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: AppPadding.horizontal),
+      itemCount: sessions.length,
+      itemBuilder: (context, index) {
+        final session = sessions[index];
+        return SessionItemTile(session);
+      },
     );
   }
 }
@@ -76,22 +195,6 @@ class _TabsSection extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SessionListView extends StatelessWidget {
-  const _SessionListView();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: AppPadding.horizontal),
-      itemCount: 30,
-      itemBuilder: (context, index) {
-        return const SessionItemTile();
-      },
     );
   }
 }
