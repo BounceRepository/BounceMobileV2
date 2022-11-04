@@ -25,7 +25,7 @@ class AmountText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###,##0.00');
+    final formatter = NumberFormat('#,###,###');
 
     return RichText(
       text: TextSpan(

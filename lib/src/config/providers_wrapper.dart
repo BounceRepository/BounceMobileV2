@@ -24,7 +24,7 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<AuthController>()),
         ChangeNotifierProvider(create: (_) => diContainer<ImageController>()),
         ChangeNotifierProvider(create: (_) => diContainer<TherapistListController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<BookAppointmentController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<BookSessionController>()),
         ChangeNotifierProvider(create: (_) => diContainer<MoodController>()),
         ChangeNotifierProvider(create: (_) => diContainer<NotificationController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),

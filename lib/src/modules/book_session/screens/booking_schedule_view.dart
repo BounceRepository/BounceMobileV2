@@ -71,7 +71,7 @@ class _ReasonForTherapySectionState extends State<_ReasonForTherapySection> {
   @override
   void initState() {
     super.initState();
-    final selectedReason = context.read<BookAppointmentController>().reason;
+    final selectedReason = context.read<BookSessionController>().reason;
 
     if (selectedReason != null) {
       selectedIndex = reasons
@@ -80,7 +80,7 @@ class _ReasonForTherapySectionState extends State<_ReasonForTherapySection> {
   }
 
   void onSelect(int index) {
-    context.read<BookAppointmentController>().reason = reasons[index];
+    context.read<BookSessionController>().reason = reasons[index];
 
     setState(() {
       selectedIndex = index;

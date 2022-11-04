@@ -111,7 +111,7 @@ class FlutterwavePaymentService implements TransactionCallBack {
   }
 
   Future<void> confirmPayment(String trxRef) async {
-    final controller = context.read<BookAppointmentController>();
+    final controller = context.read<BookSessionController>();
     try {
       await controller.confirmAppointment(trxRef);
     } on Failure {

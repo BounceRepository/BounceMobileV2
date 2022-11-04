@@ -1,136 +1,102 @@
-import 'package:bounce_patient_app/src/modules/book_session/controllers/book_session_controller.dart';
-import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
-import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
-import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
-import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
-import 'package:bounce_patient_app/src/modules/wallet/services/flutterwave_payment_service.dart';
-import 'package:bounce_patient_app/src/shared/models/app_session.dart';
-import 'package:bounce_patient_app/src/shared/models/failure.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/payment_summary_bottomsheet.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
-import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
-import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/response_bottomsheets.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
-import 'package:bounce_patient_app/src/shared/widgets/others/select_payment_type_view.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/amount_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
-class BookingPaymentView extends StatefulWidget {
+class BookingPaymentView extends StatelessWidget {
   const BookingPaymentView({Key? key, required this.therapist}) : super(key: key);
 
   final Therapist therapist;
 
   @override
-  State<BookingPaymentView> createState() => _BookingPaymentViewState();
+  Widget build(BuildContext context) {
+    return _PayNowView(therapist);
+  }
 }
 
-class _BookingPaymentViewState extends State<BookingPaymentView> {
-  bool isLoading = false;
-  PaymentType? selectedPaymentType;
+class _TopUpView extends StatelessWidget {
+  const _TopUpView(this.therapist);
 
-  void bookSession() async {
-    final selectedPaymentType = this.selectedPaymentType;
-
-    if (selectedPaymentType != null) {
-      if (selectedPaymentType == PaymentType.wallet) {
-        Messenger.info( message: 'Wallet coming soon');
-        return;
-      }
-
-      if (selectedPaymentType == PaymentType.card) {
-        payWithCard();
-      }
-    }
-  }
-
-  void payWithCard() async {
-    final paymentService = FlutterwavePaymentService(
-      context: context,
-      nextScreen: const DashboardView(),
-    );
-
-    try {
-      setState(() => isLoading = true);
-      final result = await _bookAppointment();
-
-      if (result != null) {
-        await paymentService.processTransaction(result);
-      }
-      setState(() => isLoading = false);
-    } on Failure {
-      setState(() => isLoading = false);
-      showErrorBottomsheet(
-        context,
-        desc:
-            'Your prefered doctor would be not be available for this session, please choose another doctor from our top therapists.',
-      );
-    }
-  }
-
-  Future<PaymentDto?> _bookAppointment() async {
-    final controller = context.read<BookAppointmentController>();
-    final date = controller.selectedDate;
-    final time = controller.selectedTime;
-    final reason = controller.reason;
-    final user = AppSession.user;
-
-    if (date != null && time != null && reason != null && user != null) {
-      final therapist = widget.therapist;
-
-      try {
-        final trxRef = await controller.bookAppointment(
-          appointmentType: AppointmentType.audio,
-          paymentType: PaymentType.card,
-          reason: reason,
-          patientId: user.id,
-          therapistId: therapist.id,
-          price: therapist.serviceChargePerHour.toDouble(),
-          time: time,
-          date: date,
-        );
-
-        return PaymentDto(
-          trxRef: trxRef,
-          customerName: user.fullName,
-          email: user.email,
-          amount: therapist.serviceChargePerHour,
-          narration: 'Appointment Booking',
-          message: 'Payment for session with ${therapist.fullName} and ${user.fullName}',
-        );
-      } on Failure {
-        rethrow;
-      }
-    }
-    return null;
-  }
+  final Therapist therapist;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: AppPadding.symetricHorizontalOnly,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 40.h),
           Text(
-            'Choose Payment',
+            'Top up your ThriveX wallet and get 5% off your next 2 sessions when you pay with your wallet!',
+            textAlign: TextAlign.center,
             style: AppText.titleStyle(context),
           ),
-          SizedBox(height: 20.h),
-          SelectPaymentTypeView(
-            options: const [PaymentType.wallet, PaymentType.card],
-            onSelect: (type) {
-              selectedPaymentType = type;
-            },
-          ),
-          SizedBox(height: 360.h),
+          const Spacer(),
+          AmountChargedTile(
+              title: 'Service charge', amount: therapist.serviceChargePerHour),
+          SizedBox(height: 22.h),
           AppButton(
-            label: 'Book Session',
-            isLoading: isLoading,
-            onTap: bookSession,
+            label: 'Top Up Now',
+            onTap: () {},
           ),
+          SizedBox(height: 20.h),
+        ],
+      ),
+    );
+  }
+}
+
+class _PayNowView extends StatelessWidget {
+  const _PayNowView(this.therapist);
+
+  final Therapist therapist;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: AppPadding.symetricHorizontalOnly,
+      child: Column(
+        children: [
+          SizedBox(height: 40.h),
+          Text(
+            'You will be charged from your ThriveX wallet!',
+            textAlign: TextAlign.center,
+            style: AppText.titleStyle(context),
+          ),
+          const Spacer(),
+          AmountChargedTile(
+              title: 'Service charge', amount: therapist.serviceChargePerHour),
+          SizedBox(height: 8.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Discount',
+                style: AppText.bold400(context).copyWith(
+                  fontSize: 16.sp,
+                ),
+              ),
+              AmountText(
+                amount: 250,
+                amountFontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+              ),
+            ],
+          ),
+          SizedBox(height: 52.h),
+          const AmountChargedTile(title: 'Total charge', amount: 4750),
+          SizedBox(height: 30.h),
+          AppButton(
+            label: 'Pay Now',
+            onTap: () =>
+                showPaymentSummaryBottomsheet(context: context, therapist: therapist),
+          ),
+          SizedBox(height: 20.h),
         ],
       ),
     );

@@ -30,7 +30,7 @@ class BookingConfirmationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final doctorName = '${therapist.title} ${therapist.firstName}';
-    final controller = context.read<BookAppointmentController>();
+    final controller = context.read<BookSessionController>();
     final selectedDate = controller.selectedDate;
     final selectedTime = controller.selectedTime;
 
@@ -50,62 +50,58 @@ class BookingConfirmationView extends StatelessWidget {
           width: 376.w,
           fit: BoxFit.cover,
         ),
-        Expanded(
-          child: Padding(
-            padding: AppPadding.defaultPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  doctorName,
-                  style: AppText.bold500(context).copyWith(
-                    fontSize: 18.sp,
-                  ),
+        SizedBox(height: 20.h),
+        Padding(
+          padding: AppPadding.symetricHorizontalOnly,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                doctorName,
+                style: AppText.bold500(context).copyWith(
+                  fontSize: 18.sp,
                 ),
-                SizedBox(height: 8.h),
-                Text(
-                  therapist.specializationList,
-                  style: AppText.bold400(context).copyWith(
-                    fontSize: 14.sp,
-                  ),
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                therapist.specializationList,
+                style: AppText.bold400(context).copyWith(
+                  fontSize: 14.sp,
                 ),
-                SizedBox(height: 20.h),
-                tile(
-                  context,
-                  icon: AppIcons.calendar,
-                  label: date,
-                ),
-                SizedBox(height: 8.h),
-                tile(
-                  context,
-                  icon: AppIcons.clock,
-                  label: time,
-                ),
-                SizedBox(height: 118.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Service charge:',
-                      style: AppText.bold400(context).copyWith(
-                        fontSize: 16.sp,
-                      ),
-                    ),
-                    SizedBox(width: 12.w),
-                    AmountPerHourView(amount: therapist.serviceChargePerHour),
-                  ],
-                ),
-                SizedBox(height: 54.h),
-                AppButton(
-                  label: 'Payment',
-                  onTap: () {
-                    DefaultTabController.of(context)!.animateTo(2);
-                  },
-                ),
-              ],
-            ),
+              ),
+              SizedBox(height: 20.h),
+              tile(
+                context,
+                icon: AppIcons.calendar,
+                label: date,
+              ),
+              SizedBox(height: 8.h),
+              tile(
+                context,
+                icon: AppIcons.clock,
+                label: time,
+              ),
+            ],
           ),
         ),
+        const Spacer(),
+        Padding(
+          padding: AppPadding.symetricHorizontalOnly,
+          child: Column(
+            children: [
+              AmountChargedTile(
+                  title: 'Service charge', amount: therapist.serviceChargePerHour),
+              SizedBox(height: 54.h),
+              AppButton(
+                label: 'Payment',
+                onTap: () {
+                  DefaultTabController.of(context)!.animateTo(2);
+                },
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 20.h),
       ],
     );
   }
@@ -130,6 +126,34 @@ class BookingConfirmationView extends StatelessWidget {
             fontSize: 14.sp,
           ),
         ),
+      ],
+    );
+  }
+}
+
+class AmountChargedTile extends StatelessWidget {
+  const AmountChargedTile({
+    Key? key,
+    required this.title,
+    required this.amount,
+  }) : super(key: key);
+
+  final String title;
+  final int amount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: AppText.bold400(context).copyWith(
+            fontSize: 16.sp,
+          ),
+        ),
+        SizedBox(width: 12.w),
+        AmountPerHourView(amount: amount),
       ],
     );
   }

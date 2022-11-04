@@ -1,6 +1,6 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 
-enum AppointmentType {
+enum SessionType {
   audio,
   video,
   chat,

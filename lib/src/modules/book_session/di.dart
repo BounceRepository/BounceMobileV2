@@ -12,15 +12,15 @@ void appointmentControllersInit({
   if (useFake) {
     diContainer.registerFactory(() =>
         TherapistListController(therapistListService: FakeTherapistListServiceImpl()));
-    diContainer.registerFactory(() => BookAppointmentController(
-        sessionBookingService: FakeBookAppointmentServiceImpl()));
+    diContainer.registerFactory(() =>
+        BookSessionController(sessionBookingService: FakeBookAppointmentServiceImpl()));
     diContainer.registerFactory(() =>
         SessionListController(appointmentListService: FakeAppointmentListServiceImpl()));
   } else {
     diContainer.registerFactory(
         () => TherapistListController(therapistListService: diContainer()));
     diContainer.registerFactory(
-        () => BookAppointmentController(sessionBookingService: diContainer()));
+        () => BookSessionController(sessionBookingService: diContainer()));
     diContainer.registerFactory(
         () => SessionListController(appointmentListService: diContainer()));
   }

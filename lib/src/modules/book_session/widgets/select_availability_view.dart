@@ -24,16 +24,19 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
   void initState() {
     super.initState();
     availableTimes = widget.therapist.workingHours.availableTime;
-    final selectedTime = context.read<BookAppointmentController>().selectedTime;
+    final controller = context.read<BookSessionController>();
+    final selectedTime = controller.selectedTime;
 
     if (selectedTime != null) {
       selectedIndex = availableTimes
           .indexWhere((element) => element.toLowerCase() == selectedTime.toLowerCase());
+    } else {
+      controller.selectedTime = availableTimes[selectedIndex];
     }
   }
 
   void onSelect(int index) {
-    context.read<BookAppointmentController>().selectedTime = availableTimes[index];
+    context.read<BookSessionController>().selectedTime = availableTimes[index];
 
     setState(() {
       selectedIndex = index;

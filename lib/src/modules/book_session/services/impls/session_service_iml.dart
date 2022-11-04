@@ -12,7 +12,7 @@ class SessionServiceImpl implements IBookAppointmentService {
 
   @override
   Future<String> book({
-    required AppointmentType appointmentType,
+    required SessionType appointmentType,
     required PaymentType paymentType,
     required int patientId,
     required String reason,

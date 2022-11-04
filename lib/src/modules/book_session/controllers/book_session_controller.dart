@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/shared/controllers/base_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 
-class BookAppointmentController extends BaseController {
+class BookSessionController extends BaseController {
   final IBookAppointmentService _service;
 
-  BookAppointmentController({required IBookAppointmentService sessionBookingService})
+  BookSessionController({required IBookAppointmentService sessionBookingService})
       : _service = sessionBookingService;
 
   DateTime selectedDate = DateTime.now();
@@ -15,8 +15,8 @@ class BookAppointmentController extends BaseController {
   String? selectedTime;
   String? note;
 
-  Future<String> bookAppointment({
-    required AppointmentType appointmentType,
+  Future<String> bookSession({
+    required SessionType appointmentType,
     required PaymentType paymentType,
     required String reason,
     required int patientId,

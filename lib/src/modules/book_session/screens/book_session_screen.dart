@@ -22,9 +22,10 @@ class BookSessionScreen extends StatelessWidget {
             children: [
               SizedBox(height: 24.h),
               const BookingTabBar(),
-              Expanded(
+              SizedBox(
+                height: 678.h,
                 child: TabBarView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     BookingScheduleView(therapist: therapist),
                     BookingConfirmationView(therapist: therapist),

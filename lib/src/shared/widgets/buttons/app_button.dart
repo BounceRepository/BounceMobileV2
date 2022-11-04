@@ -44,6 +44,7 @@ class AppButton extends StatelessWidget {
         onTap: isLoading ? null : onTap,
         child: Container(
           height: 48.h,
+          width: size.width,
           padding: padding ?? EdgeInsets.symmetric(vertical: 12.h),
           decoration: BoxDecoration(
             color: backgroundColor ?? AppColors.primary,

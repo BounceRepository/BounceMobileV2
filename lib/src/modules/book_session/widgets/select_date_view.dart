@@ -20,7 +20,7 @@ class SelectDateView extends StatelessWidget {
             style: AppText.titleStyle(context),
           ),
         ),
-        Consumer<BookAppointmentController>(
+        Consumer<BookSessionController>(
           builder: (context, controller, _) {
             return CustomHorizontalCalendarPicker(
               selectedDate: controller.selectedDate,
