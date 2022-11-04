@@ -40,7 +40,7 @@ class FakeAuthServiceImpl implements IAuthService {
     );
 
     //throw InCompleteProfileFailure();
-    throw ConfirmEmailFailure();
+    //throw ConfirmEmailFailure();
     //throw InternalFailure();
   }
 

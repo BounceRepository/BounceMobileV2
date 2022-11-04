@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:flutter/material.dart';
@@ -70,10 +71,9 @@ class SearchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBarIcon(
-      Icons.search,
+    return AppBarSvgIcon(
+      AppIcons.search,
       onTap: onTap,
-      size: 37.w,
     );
   }
 }

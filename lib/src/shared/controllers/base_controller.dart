@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:flutter/cupertino.dart';
 
 class BaseController extends ChangeNotifier {
@@ -8,10 +9,9 @@ class BaseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _isSearching = false;
-  bool get isSearching => _isSearching;
-  setIsSearching(bool value) {
-    _isSearching = value;
-    notifyListeners();
+  Failure? _failure;
+  Failure? get failure => _failure;
+  setFailure(Failure error) {
+    _failure = error;
   }
 }

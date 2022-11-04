@@ -3,40 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Messenger {
-  static info( {
+  static info({
     String? title,
     required String message,
   }) {
     Get.snackbar(
       title ?? 'Message',
       message,
-      colorText: AppColors.grey6,
-      backgroundColor: Colors.black.withOpacity(0.6),
+      colorText: Colors.white,
+      backgroundColor: Colors.black,
       barBlur: 10,
     );
   }
 
-  static error( {
+  static error({
     required String message,
   }) {
     Get.snackbar(
       'Failed',
       message,
-      backgroundColor: AppColors.error.withOpacity(0.6),
-      colorText: AppColors.grey6,
+      backgroundColor: AppColors.error,
+      colorText: Colors.white,
       barBlur: 10,
     );
   }
 
-  static success( {
+  static success({
     required String message,
   }) {
     Get.snackbar(
       'Success',
       message,
-      backgroundColor: AppColors.success.withOpacity(0.6),
-      colorText: AppColors.grey6,
-      barBlur: 1,
+      backgroundColor: AppColors.success,
+      colorText: Colors.white,
+      barBlur: 10,
     );
   }
 }

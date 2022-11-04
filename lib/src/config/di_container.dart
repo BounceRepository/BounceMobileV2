@@ -24,7 +24,7 @@ final diContainer = GetIt.instance;
 
 Future<void> init() async {
   // controllers
-  authControllersInit(useFake: false);
+  authControllersInit(useFake: true);
   moodControllersInit(useFake: true);
   notificationControllersInit(useFake: true);
   appointmentControllersInit(useFake: true);

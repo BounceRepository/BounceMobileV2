@@ -8,11 +8,13 @@ class EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      AppIcons.emptyView,
-      width: 256.w,
-      height: 212.h,
-      fit: BoxFit.cover,
+    return Center(
+      child: SvgPicture.asset(
+        AppIcons.emptyView,
+        width: 256.w,
+        height: 212.h,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

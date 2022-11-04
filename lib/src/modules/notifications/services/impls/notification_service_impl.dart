@@ -39,8 +39,8 @@ class NotificationServiceImpl implements INotificationService {
 
       if (token != null) {
         log(token);
-        // var url = NotificationApiURLS.updateToken + '?token=$token';
-        // await _api.patch(url, body: {});
+        var url = NotificationApiURLS.updateToken + '?token=$token';
+        await _api.patch(url, body: {});
       }
     } on Failure {
       rethrow;

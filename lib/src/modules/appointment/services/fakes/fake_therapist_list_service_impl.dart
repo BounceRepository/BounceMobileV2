@@ -16,13 +16,13 @@ class FakeTherapistListServiceImpl implements ITherapistListService {
   @override
   Future<List<Therapist>> getAllTherapistNearYou() async {
     await fakeNetworkDelay();
-    return List.generate(5, (index) => therapist);
+    return List.generate(8, (index) => therapist);
   }
 
   @override
   Future<List<Therapist>> getAllTopTherapist() async {
     await fakeNetworkDelay();
-    return List.generate(8, (index) => therapist);
+    return List.generate(3, (index) => therapist);
   }
 }
 
