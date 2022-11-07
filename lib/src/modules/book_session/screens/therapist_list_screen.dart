@@ -32,7 +32,7 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
   void getAllTopTherapist() async {
     final controller = context.read<TherapistListController>();
 
-    if (controller.therapists.isEmpty) {
+    if (controller.topTherapists.isEmpty) {
       try {
         await controller.getAllTopTherapist();
       } on Failure catch (e) {
@@ -44,7 +44,7 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
   void getAllTherapistNearYou() async {
     final controller = context.read<TherapistListController>();
 
-    if (controller.therapists.isEmpty) {
+    if (controller.therapistsNearYou.isEmpty) {
       try {
         await controller.getAllTherapistNearYou();
       } on Failure catch (e) {
@@ -85,10 +85,9 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
             return ListView(
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(vertical: 20.h),
-              children: [
-                const _TopTherapistListSection(),
-                SizedBox(height: 36.h),
-                const _TherapistNearYouListSection(),
+              children: const [
+                _TopTherapistListSection(),
+                _TherapistNearYouListSection(),
               ],
             );
           },
@@ -110,9 +109,12 @@ class _TopTherapistListSection extends StatelessWidget {
         }
 
         final therapists = controller.topTherapists;
-        return _ListViewSectionView(
-          title: 'Top Therapists',
-          therapists: therapists,
+        return Padding(
+          padding: EdgeInsets.only(bottom: 36.h),
+          child: _ListViewSectionView(
+            title: 'Top Therapists',
+            therapists: therapists,
+          ),
         );
       },
     );

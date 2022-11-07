@@ -9,23 +9,13 @@ class TherapistListController extends BaseController {
   TherapistListController({required ITherapistListService therapistListService})
       : _therapistListService = therapistListService;
 
-  List<Therapist> _therapists = [];
-  List<Therapist> get therapists => _therapists;
+  
   List<Therapist> _topTherapists = [];
   List<Therapist> get topTherapists => _topTherapists;
   List<Therapist> _therapistsNearYou = [];
   List<Therapist> get therapistsNearYou => _therapistsNearYou;
 
-  Future<void> getAllTherapist() async {
-    try {
-      setIsLoading(true);
-      _therapists = await _therapistListService.getAllTherapist();
-      setIsLoading(false);
-    } on Failure {
-      setIsLoading(false);
-      rethrow;
-    }
-  }
+  
 
   Future<void> getAllTopTherapist() async {
     try {

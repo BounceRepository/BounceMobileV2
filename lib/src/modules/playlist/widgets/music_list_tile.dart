@@ -1,9 +1,8 @@
-import 'package:bounce_patient_app/src/modules/playlist/screens/player_screen.dart';
+import 'package:bounce_patient_app/src/modules/playlist/models/song.dart';
 import 'package:bounce_patient_app/src/modules/playlist/widgets/play_button.dart';
-import 'package:bounce_patient_app/src/shared/assets/images.dart';
+import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
-import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,23 +10,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MusicTile extends StatelessWidget {
   const MusicTile({
     super.key,
+    required this.song,
     this.smallMargin = false,
     this.bottomPadding = false,
     this.height,
   });
 
+  final Song song;
   final double? height;
   final bool smallMargin;
   final bool bottomPadding;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.r),
-      child: GestureDetector(
-        onTap: () {
-          AppNavigator.to(context, const PlayerScreen());
-        },
+    final artist = song.artist;
+
+    return Hero(
+      tag: song.tag,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8.r),
         child: Padding(
           padding: EdgeInsets.only(
             right: smallMargin ? 8.w : 0,
@@ -38,7 +39,7 @@ class MusicTile extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.r),
                 child: CachedNetworkImage(
-                  imageUrl: AppImages.playlistAlbum,
+                  imageUrl: song.image,
                   height: height ?? 170.h,
                   width: 344.w,
                   fit: BoxFit.cover,
@@ -83,7 +84,7 @@ class MusicTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Happy Day',
+                      song.title.toTitleCase,
                       style: AppText.bold400(context).copyWith(
                         fontSize: 16.sp,
                         color: Colors.white,
@@ -91,14 +92,14 @@ class MusicTile extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      'By Willam Wesley',
+                      'By ${artist.fullName}'.toTitleCase,
                       style: AppText.bold300(context).copyWith(
                         fontSize: 14.sp,
                         color: Colors.white,
                       ),
                     ),
                     SizedBox(height: 12.h),
-                    const _Tag(),
+                    _Tag(song.tag),
                     SizedBox(height: 4.h),
                   ],
                 ),
@@ -106,7 +107,7 @@ class MusicTile extends StatelessWidget {
               Positioned(
                 right: 12.w,
                 bottom: 8.h,
-                child: const PlayButton(),
+                child: PlayButton(song: song),
               ),
             ],
           ),
@@ -117,7 +118,9 @@ class MusicTile extends StatelessWidget {
 }
 
 class _Tag extends StatelessWidget {
-  const _Tag();
+  const _Tag(this.tag);
+
+  final String tag;
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +134,7 @@ class _Tag extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.r),
       ),
       child: Text(
-        'Daily Routine',
+        tag.toTitleCase,
         style: AppText.bold500(context).copyWith(
           fontSize: 12.sp,
           color: Colors.white,

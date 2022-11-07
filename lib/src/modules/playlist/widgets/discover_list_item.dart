@@ -1,9 +1,6 @@
-import 'package:bounce_patient_app/src/modules/playlist/screens/player_screen.dart';
-import 'package:bounce_patient_app/src/modules/playlist/widgets/play_button.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
-import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +12,7 @@ class DiscoverListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.to(context, const PlayerScreen());
+        //AppNavigator.to(context, const PlayerScreen());
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 36.h),
@@ -28,7 +25,7 @@ class DiscoverListItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.r),
                 child: CachedNetworkImage(
-                  imageUrl: AppImages.playlistAlbum,
+                  imageUrl: SongImages.sample2,
                   width: 344.w,
                   height: 176.h,
                   fit: BoxFit.cover,
@@ -76,7 +73,7 @@ class DiscoverListItem extends StatelessWidget {
                   ],
                 ),
               ),
-              const Positioned(child: PlayButton()),
+              //const Positioned(child: PlayButton()),
             ],
           ),
         ),

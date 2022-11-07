@@ -9,6 +9,8 @@ import 'package:bounce_patient_app/src/modules/dashboard/controllers/navbar_cont
 import 'package:bounce_patient_app/src/modules/notifications/controllers/notification_controller.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:bounce_patient_app/src/config/di_container.dart';
+import 'package:bounce_patient_app/src/modules/playlist/controllers/audio_player_controller.dart';
+import 'package:bounce_patient_app/src/modules/playlist/controllers/song_list_controller.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,7 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<SessionListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<MoodController>()),
         ChangeNotifierProvider(create: (_) => diContainer<NotificationController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<SongListController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),
         ChangeNotifierProvider(create: (_) => PhysicalHealthLevelController()),
         ChangeNotifierProvider(create: (_) => MentalHealthLevelController()),
@@ -37,6 +40,7 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => OnboardingController()),
         ChangeNotifierProvider(create: (_) => GenderController()),
         ChangeNotifierProvider(create: (_) => NavbarController()),
+        ChangeNotifierProvider(create: (_) => AudioPlayerController()),
       ],
       child: child,
     );

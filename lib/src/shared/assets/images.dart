@@ -8,9 +8,20 @@ class AppImages {
   static const loadingIndicator = 'assets/images/loading_indicator.gif';
   static const image = 'assets/images/image.png';
   static const doctors = 'assets/images/doctors.png';
-  static const playlistAlbum = 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
   static const bookingConfirmation = 'assets/images/booking_confirmation.png';
-  static const joinSession = 'https://images.unsplash.com/photo-1585928642599-31f15a88c002?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80';
+  static const joinSession =
+      'https://images.unsplash.com/photo-1585928642599-31f15a88c002?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80';
+}
+
+class SongImages {
+  SongImages._();
+
+  static const sample1 =
+      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+  static const sample2 =
+      'https://images.unsplash.com/photo-1474959783111-a0f551bdad25?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+  static const sample3 =
+      'https://images.unsplash.com/photo-1502710655568-ee441b74b0b9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
 }
 
 class OnboardingImages {

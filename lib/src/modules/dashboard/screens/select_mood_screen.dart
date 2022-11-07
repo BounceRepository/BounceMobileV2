@@ -35,6 +35,11 @@ class _SelectMoodsScreenState extends State<SelectMoodsScreen> {
   void submit() async {
     final controller = context.read<MoodController>();
 
+    if (controller.selectedMoodList.isEmpty) {
+      AppNavigator.to(context, const DashboardView());
+      return;
+    }
+
     try {
       await controller.saveSelectedMoodListToDB();
       AppNavigator.to(context, const DashboardView());

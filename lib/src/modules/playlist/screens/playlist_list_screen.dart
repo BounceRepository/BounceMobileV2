@@ -1,6 +1,12 @@
+import 'package:bounce_patient_app/src/modules/playlist/models/song.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/song_tabs/all_song_list_view.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/song_tabs/happy_song_list_view.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/song_tabs/love_song_list_view.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/song_tabs/nature_song_list_view.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/song_tabs/sad_song_list_view.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/song_tabs/work_song_list_view.dart';
 import 'package:bounce_patient_app/src/modules/playlist/widgets/music_list_tile.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
-import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +39,17 @@ class PlayListScreen extends StatelessWidget {
                 ),
               ];
             },
-            body: const _Body(),
+            body: const TabBarView(
+              physics: BouncingScrollPhysics(),
+              children: [
+                AllSongsView(),
+                HaapySongListView(),
+                SadSongListView(),
+                LoveSongListView(),
+                WorkSongListView(),
+                NatureSongListView(),
+              ],
+            ),
           ),
         ),
       ),
@@ -41,99 +57,34 @@ class PlayListScreen extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
-  const _Body({
+class SongListView extends StatelessWidget {
+  const SongListView({
     Key? key,
+    required this.songs,
+    this.verticalPadding = true,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const CustomScrollView(
-      physics: BouncingScrollPhysics(),
-      slivers: [
-        _MyPlayListSection(),
-        _AllSongsSection(),
-      ],
-    );
-  }
-}
-
-class _MyPlayListSection extends StatelessWidget {
-  const _MyPlayListSection();
+  final List<Song> songs;
+  final bool verticalPadding;
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: EdgeInsets.only(top: 36.h),
-      sliver: SliverToBoxAdapter(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: AppPadding.symetricHorizontalOnly,
-              child: Text(
-                'My Playlists',
-                style: AppText.bold500(context).copyWith(
-                  fontSize: 16.sp,
-                ),
-              ),
-            ),
-            SizedBox(height: 16.h),
-            SizedBox(
-              height: 170.h,
-              child: ListView.builder(
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                padding: AppPadding.symetricHorizontalOnly,
-                itemBuilder: (context, index) {
-                  return const MusicTile(smallMargin: true);
-                },
-              ),
-            ),
-          ],
-        ),
+    return ListView.builder(
+      itemCount: songs.length,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(
+        vertical: verticalPadding ? 36.h : 0,
+        horizontal: AppPadding.horizontal,
       ),
-    );
-  }
-}
-
-class _AllSongsSection extends StatelessWidget {
-  const _AllSongsSection();
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: EdgeInsets.only(top: 36.h),
-      sliver: SliverToBoxAdapter(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: AppPadding.symetricHorizontalOnly,
-              child: Text(
-                'All Songs Today',
-                style: AppText.bold500(context).copyWith(
-                  fontSize: 16.sp,
-                ),
-              ),
-            ),
-            SizedBox(height: 16.h),
-            ListView.builder(
-              itemCount: 30,
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              padding: AppPadding.symetricHorizontalOnly,
-              itemBuilder: (context, index) {
-                return MusicTile(
-                  height: 170.h,
-                  bottomPadding: true,
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      itemBuilder: (context, index) {
+        final song = songs[index];
+        return MusicTile(
+          song: song,
+          height: 170.h,
+          bottomPadding: true,
+        );
+      },
     );
   }
 }

@@ -2,6 +2,8 @@ import 'package:bounce_patient_app/src/modules/account/screens/account_screen.da
 import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/rant_room_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/home_screen.dart';
+import 'package:bounce_patient_app/src/modules/playlist/controllers/audio_player_controller.dart';
+import 'package:bounce_patient_app/src/modules/playlist/screens/mini_player_view.dart';
 import 'package:bounce_patient_app/src/modules/playlist/screens/playlist_list_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -9,6 +11,7 @@ import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key, this.selectedIndex = 0}) : super(key: key);
@@ -38,9 +41,17 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     final labelStyle = AppText.bold600(context).copyWith(fontSize: 8.sp);
+    final isPlaying = context.watch<AudioPlayerController>().isPlaying;
 
     return Scaffold(
-      body: screens.elementAt(_selectedIndex),
+      body: isPlaying
+          ? Stack(
+              children: [
+                screens.elementAt(_selectedIndex),
+                const MiniPlayerView(),
+              ],
+            )
+          : screens.elementAt(_selectedIndex),
       bottomNavigationBar: Container(
         padding: EdgeInsets.only(top: 20.h, bottom: 9.h),
         decoration: BoxDecoration(

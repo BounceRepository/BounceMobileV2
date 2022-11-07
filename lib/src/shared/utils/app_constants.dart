@@ -75,8 +75,8 @@ class AppConstants {
   ];
 }
 
-Future<void> fakeNetworkDelay() async {
-  await Future.delayed(const Duration(seconds: 2));
+Future<void> fakeNetworkDelay({int seconds = 2}) async {
+  await Future.delayed(Duration(seconds: seconds));
 }
 
 enum WeekDays {

@@ -59,6 +59,8 @@ dependencies:
   cached_network_image: ^3.2.2
   get: ^4.6.5
   timeago: ^3.3.0
+  audioplayers: ^1.1.1
+  miniplayer: ^1.0.1
   
   # Firebase
   firebase_core: ^2.1.1
@@ -111,6 +113,9 @@ flutter:
     - assets/icons/dashboard/
     - assets/icons/account/
     - assets/icons/chat_room/
+    # audio
+    - assets/audio/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
