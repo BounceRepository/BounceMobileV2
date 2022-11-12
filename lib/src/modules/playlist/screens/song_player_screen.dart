@@ -7,7 +7,7 @@ import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -127,23 +127,9 @@ class _ImageFrame extends StatelessWidget {
             shape: BoxShape.circle,
             color: AppColors.primary,
           ),
-          child: CachedNetworkImage(
-            imageUrl: song.image,
-            imageBuilder: (context, imageProvider) => Container(
-              width: 252.h,
-              height: 252.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            width: 252.h,
-            height: 252.h,
-            fit: BoxFit.cover,
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+          child: CircularNetworkImage(
+            image: song.image,
+            size: 252.h,
           ),
         ),
       ),

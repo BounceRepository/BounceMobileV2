@@ -1,4 +1,5 @@
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,6 +20,39 @@ class AppImageView extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
+    );
+  }
+}
+
+class CircularNetworkImage extends StatelessWidget {
+  const CircularNetworkImage({
+    Key? key,
+    required this.image,
+    this.size,
+  }) : super(key: key);
+
+  final String image;
+  final double? size;
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: image,
+      imageBuilder: (context, imageProvider) => Container(
+        width: size ?? 68.h,
+        height: size ?? 68.h,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: imageProvider,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      width: size ?? 68.h,
+      height: size ?? 68.h,
+      fit: BoxFit.cover,
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 }
