@@ -22,11 +22,10 @@ class BookingScheduleView extends StatelessWidget {
     final gap = 40.h;
 
     return CustomChildScrollView(
-      padding: EdgeInsets.zero,
+      padding: AppPadding.symetricVerticalOnly,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: gap),
           const SelectDateView(),
           SizedBox(height: gap),
           SelectAvailableTimeView(therapist: therapist),

@@ -44,7 +44,7 @@ class _TopUpView extends StatelessWidget {
             label: 'Top Up Now',
             onTap: () {},
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 40.h),
         ],
       ),
     );
@@ -96,7 +96,7 @@ class _PayNowView extends StatelessWidget {
             onTap: () =>
                 showPaymentSummaryBottomsheet(context: context, therapist: therapist),
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 40.h),
         ],
       ),
     );

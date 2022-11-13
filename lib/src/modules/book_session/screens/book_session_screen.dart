@@ -17,7 +17,7 @@ class BookSessionScreen extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: const CustomAppBar(label: 'Book Session'),
-        body: SafeArea(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(height: 24.h),
