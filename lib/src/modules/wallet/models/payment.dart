@@ -1,4 +1,4 @@
-enum PaymentType {
+enum PaymentOption {
   card,
   wallet,
   ussd,

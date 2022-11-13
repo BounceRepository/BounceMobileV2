@@ -11,6 +11,8 @@ import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding
 import 'package:bounce_patient_app/src/config/di_container.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/audio_player_controller.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/song_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +34,8 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<MoodController>()),
         ChangeNotifierProvider(create: (_) => diContainer<NotificationController>()),
         ChangeNotifierProvider(create: (_) => diContainer<SongListController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<TransactionListController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<WalletController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),
         ChangeNotifierProvider(create: (_) => PhysicalHealthLevelController()),
         ChangeNotifierProvider(create: (_) => MentalHealthLevelController()),

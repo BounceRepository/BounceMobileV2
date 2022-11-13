@@ -4,7 +4,7 @@ import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dar
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
-import 'package:bounce_patient_app/src/modules/wallet/services/flutterwave_payment_service.dart';
+import 'package:bounce_patient_app/src/modules/wallet/services/impls/flutterwave_payment_service.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -38,18 +38,18 @@ class _Body extends StatefulWidget {
 
 class _BodyState extends State<_Body> {
   bool isLoading = false;
-  PaymentType? selectedPaymentType;
+  PaymentOption? selectedPaymentType;
 
   void confirm() async {
     final selectedPaymentType = this.selectedPaymentType;
 
     if (selectedPaymentType != null) {
-      if (selectedPaymentType == PaymentType.wallet) {
+      if (selectedPaymentType == PaymentOption.wallet) {
         Messenger.info(message: 'Wallet coming soon');
         return;
       }
 
-      if (selectedPaymentType == PaymentType.card) {
+      if (selectedPaymentType == PaymentOption.card) {
         payWithCard();
       }
     }
@@ -92,7 +92,7 @@ class _BodyState extends State<_Body> {
       try {
         final trxRef = await controller.bookSession(
           appointmentType: SessionType.audio,
-          paymentType: PaymentType.card,
+          paymentType: PaymentOption.card,
           reason: reason,
           patientId: user.id,
           therapistId: therapist.id,

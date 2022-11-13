@@ -17,7 +17,7 @@ class BookSessionController extends BaseController {
 
   Future<String> bookSession({
     required SessionType appointmentType,
-    required PaymentType paymentType,
+    required PaymentOption paymentType,
     required String reason,
     required int patientId,
     required int therapistId,

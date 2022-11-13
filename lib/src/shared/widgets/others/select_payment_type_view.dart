@@ -11,15 +11,15 @@ class SelectPaymentTypeView extends StatefulWidget {
     required this.options,
   });
 
-  final Function(PaymentType type) onSelect;
-  final List<PaymentType> options;
+  final Function(PaymentOption type) onSelect;
+  final List<PaymentOption> options;
 
   @override
   State<SelectPaymentTypeView> createState() => _SelectPaymentTypeViewState();
 }
 
 class _SelectPaymentTypeViewState extends State<SelectPaymentTypeView> {
-  PaymentType? selectedPaymentType;
+  PaymentOption? selectedPaymentType;
 
   @override
   Widget build(BuildContext context) {
@@ -27,35 +27,35 @@ class _SelectPaymentTypeViewState extends State<SelectPaymentTypeView> {
 
     return Column(
       children: [
-        options.contains(PaymentType.wallet)
+        options.contains(PaymentOption.wallet)
             ? _Tile(
                 title: 'Pay with Wallet',
-                isSelected: selectedPaymentType == PaymentType.wallet,
+                isSelected: selectedPaymentType == PaymentOption.wallet,
                 onTap: () {
-                  selectedPaymentType = PaymentType.wallet;
-                  widget.onSelect(PaymentType.wallet);
+                  selectedPaymentType = PaymentOption.wallet;
+                  widget.onSelect(PaymentOption.wallet);
                   setState(() {});
                 },
               )
             : const SizedBox.shrink(),
-        options.contains(PaymentType.card)
+        options.contains(PaymentOption.card)
             ? _Tile(
                 title: 'Pay with Card',
-                isSelected: selectedPaymentType == PaymentType.card,
+                isSelected: selectedPaymentType == PaymentOption.card,
                 onTap: () {
-                  selectedPaymentType = PaymentType.card;
-                  widget.onSelect(PaymentType.card);
+                  selectedPaymentType = PaymentOption.card;
+                  widget.onSelect(PaymentOption.card);
                   setState(() {});
                 },
               )
             : const SizedBox.shrink(),
-        options.contains(PaymentType.ussd)
+        options.contains(PaymentOption.ussd)
             ? _Tile(
                 title: 'Pay with USSD',
-                isSelected: selectedPaymentType == PaymentType.ussd,
+                isSelected: selectedPaymentType == PaymentOption.ussd,
                 onTap: () {
-                  selectedPaymentType = PaymentType.ussd;
-                  widget.onSelect(PaymentType.ussd);
+                  selectedPaymentType = PaymentOption.ussd;
+                  widget.onSelect(PaymentOption.ussd);
                   setState(() {});
                 },
               )

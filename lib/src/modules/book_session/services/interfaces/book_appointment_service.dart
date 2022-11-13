@@ -4,7 +4,7 @@ import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 abstract class IBookAppointmentService {
   Future<String> book({
     required SessionType appointmentType,
-    required PaymentType paymentType,
+    required PaymentOption paymentType,
     required String reason,
     required int patientId,
     required int therapistId,

@@ -15,6 +15,7 @@ import 'package:bounce_patient_app/src/modules/notifications/services/interfaces
 import 'package:bounce_patient_app/src/modules/playlist/di.dart';
 import 'package:bounce_patient_app/src/modules/playlist/services/impls/song_list_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/playlist/services/interfaces/song_list_service.dart';
+import 'package:bounce_patient_app/src/modules/wallet/di.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
 import 'package:bounce_patient_app/src/shared/image/service/image_service.dart';
 import 'package:bounce_patient_app/src/shared/image/service/image_service_impl.dart';
@@ -32,9 +33,11 @@ Future<void> init() async {
   notificationControllersInit(useFake: true);
   appointmentControllersInit(useFake: true);
   playListControllersInit(useFake: true);
+  walletControllersInit(useFake: true);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
 
   //service
+  walletServicesInit();
   diContainer
       .registerLazySingleton<IAuthService>(() => AuthServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<ImageService>(() => ImageServiceImpl());
@@ -46,6 +49,7 @@ Future<void> init() async {
       () => SessionListServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<ISongListService>(
       () => SongListServiceImpl(api: diContainer()));
+
   diContainer.registerLazySingleton<INotificationService>(() => NotificationServiceImpl(
         api: diContainer(),
         firebaseMessagingService: FirebaseMessaging.instance,

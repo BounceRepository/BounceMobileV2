@@ -11,15 +11,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<dynamic> showSelectPaymentOptionBottomsheet({
   required BuildContext context,
+  required double amount,
 }) {
   return showCustomBottomSheet(
     context,
-    body: const _SelectPaymentOptionBody(),
+    body: _SelectPaymentOptionBody(amount),
   );
 }
 
 class _SelectPaymentOptionBody extends StatelessWidget {
-  const _SelectPaymentOptionBody();
+  const _SelectPaymentOptionBody(this.amount);
+
+  final double amount;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,7 @@ class _SelectPaymentOptionBody extends StatelessWidget {
           child: Align(
             alignment: Alignment.centerLeft,
             child: AmountText(
-              amount: 5000,
+              amount: amount,
               amountFontSize: 24.sp,
             ),
           ),
@@ -51,7 +54,7 @@ class _SelectPaymentOptionBody extends StatelessWidget {
         Padding(
           padding: AppPadding.symetricHorizontalOnly,
           child: SelectPaymentTypeView(
-            options: const [PaymentType.card, PaymentType.ussd],
+            options: const [PaymentOption.card, PaymentOption.ussd],
             onSelect: (type) {},
           ),
         ),

@@ -8,7 +8,7 @@ class FakeBookAppointmentServiceImpl implements IBookAppointmentService {
   @override
   Future<String> book({
     required SessionType appointmentType,
-    required PaymentType paymentType,
+    required PaymentOption paymentType,
     required int patientId,
     required String reason,
     required int therapistId,

@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bounce_patient_app/src/shared/styles/theme.dart';
 import 'package:get/get.dart';
 
-class BouncePatientApp extends StatelessWidget {
-  const BouncePatientApp({Key? key}) : super(key: key);
+class ThriveXApp extends StatelessWidget {
+  const ThriveXApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -19,7 +19,7 @@ class BouncePatientApp extends StatelessWidget {
           minTextAdapt: true,
           builder: (BuildContext context, Widget? child) {
             return GetMaterialApp(
-              title: 'Bounce - Patient',
+              title: 'ThriveX - Patient',
               debugShowCheckedModeBanner: false,
               theme: AppTheme.theme,
               home: const SplashScreen(),

@@ -17,8 +17,10 @@ class AppIcons {
   static const triangle = 'assets/icons/triangle.svg';
   static const search = 'assets/icons/search.svg';
   static const notification = 'assets/icons/notification.svg';
+  static const transaction = 'assets/icons/transaction.svg';
   static const emptyView = 'assets/icons/empty_view.svg';
   static const stetoscope = 'assets/icons/stetoscope.svg';
+  static const error = 'assets/icons/error.svg';
 }
 
 class MusicIcons {
