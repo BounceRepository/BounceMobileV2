@@ -16,7 +16,7 @@ class FakeWalletServiceImpl implements IWalletService {
   }
 
   @override
-  Future<TransactionRef> topUp(double amount) async {
+  Future<TransactionRef> initiateTopUp(double amount) async {
     await fakeNetworkDelay();
     return TransactionRef(value: Utils.getGuid());
   }

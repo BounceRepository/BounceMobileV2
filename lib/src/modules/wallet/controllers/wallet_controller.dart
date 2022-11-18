@@ -21,9 +21,9 @@ class WalletController extends BaseController {
     }
   }
 
-  Future<TransactionRef> topUp(double amount) async {
+  Future<TransactionRef> initiateTopUp(double amount) async {
     try {
-      return await _walletService.topUp(amount);
+      return await _walletService.initiateTopUp(amount);
     } on Failure {
       rethrow;
     }

@@ -18,7 +18,7 @@ class TransactionListController extends BaseController {
 
   Future<void> getAll() async {
     try {
-      _transactions = await _transactionListService.getAll();
+      _transactions = await _transactionListService.getAllTopUp();
     } on Failure {
       rethrow;
     }

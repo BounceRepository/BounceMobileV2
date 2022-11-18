@@ -2,6 +2,6 @@ import 'package:bounce_patient_app/src/modules/wallet/models/transaction_ref.dar
 
 abstract class IWalletService {
   Future<double> getBalance();
-  Future<TransactionRef> topUp(double amount);
+  Future<TransactionRef> initiateTopUp(double amount);
   Future<void> confirmTopUp(TransactionRef txRef);
 }

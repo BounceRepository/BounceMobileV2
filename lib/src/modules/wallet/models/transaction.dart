@@ -43,7 +43,7 @@ class Transaction {
 }
 
 TransactionType _getType(String str) {
-  if(str.toLowerCase() == 'TOPUP') {
+  if(str.toLowerCase() == 'topup') {
     return TransactionType.credit;
   } else {
     return TransactionType.debit;

@@ -44,7 +44,7 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
       final amount = double.tryParse(amountController.text);
 
       if (amount != null) {
-        showSelectPaymentOptionBottomsheet(context: context, amount: amount);
+        showWalletTopUpPaymentOptionBottomsheet(context: context, amount: amount);
       }
     }
   }

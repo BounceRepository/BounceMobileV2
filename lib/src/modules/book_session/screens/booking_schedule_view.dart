@@ -70,11 +70,14 @@ class _ReasonForTherapySectionState extends State<_ReasonForTherapySection> {
   @override
   void initState() {
     super.initState();
-    final selectedReason = context.read<BookSessionController>().reason;
+    final controller = context.read<BookSessionController>();
+    final selectedReason = controller.reason;
 
     if (selectedReason != null) {
       selectedIndex = reasons
           .indexWhere((element) => element.toLowerCase() == selectedReason.toLowerCase());
+    } else {
+      controller.reason = reasons[selectedIndex];
     }
   }
 

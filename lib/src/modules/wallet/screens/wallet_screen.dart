@@ -38,6 +38,8 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   void init() async {
+    context.read<WalletController>().reset();
+    context.read<TransactionListController>().reset();
     try {
       setState(() => isLoading = true);
       await Future.wait([
@@ -69,8 +71,8 @@ class _WalletScreenState extends State<WalletScreen> {
         controller.paymentTransactions.isEmpty) {
       try {
         await Future.wait([
-          controller.getAll(),
-          controller.getAllPayment(),
+          // controller.getAll(),
+          // controller.getAllPayment(),
           controller.getAllTopUp(),
         ]);
       } on Failure {

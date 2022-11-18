@@ -9,6 +9,7 @@ import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/response_bottomsheets.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -38,35 +39,38 @@ class _Body extends StatefulWidget {
 
 class _BodyState extends State<_Body> {
   bool isLoading = false;
-  PaymentOption? selectedPaymentType;
+  PaymentOption? selectedPaymentOption;
 
-  void confirm() async {
-    final selectedPaymentType = this.selectedPaymentType;
+  // void confirm() async {
+  //   final selectedPaymentOption = this.selectedPaymentOption;
 
-    if (selectedPaymentType != null) {
-      if (selectedPaymentType == PaymentOption.wallet) {
-        Messenger.info(message: 'Wallet coming soon');
-        return;
-      }
+  //   if (selectedPaymentOption != null) {
+  //     if (selectedPaymentOption == PaymentOption.wallet) {
+  //       Messenger.info(message: 'Wallet coming soon');
+  //       return;
+  //     }
 
-      if (selectedPaymentType == PaymentOption.card) {
-        payWithCard();
-      }
-    }
-  }
+  //     if (selectedPaymentOption == PaymentOption.card) {
+  //       payWithCard();
+  //     }
+  //   }
+  // }
 
   void payWithCard() async {
     final paymentService = FlutterwavePaymentService(
       context: context,
-      nextScreen: const DashboardView(),
+      transactionSuccess: confirmPayment,
     );
 
     try {
       setState(() => isLoading = true);
-      final result = await _bookSession();
+      final paymentDTO = await _bookSession();
 
-      if (result != null) {
-        await paymentService.processTransaction(result);
+      if (paymentDTO != null) {
+        await paymentService.processTransaction(
+          paymentDto: paymentDTO,
+          paymentOption: PaymentOption.card,
+        );
       }
       setState(() => isLoading = false);
     } on Failure {
@@ -116,6 +120,24 @@ class _BodyState extends State<_Body> {
     return null;
   }
 
+  void confirmPayment(String trxRef) async {
+    final controller = context.read<BookSessionController>();
+
+    try {
+      await controller.confirmAppointment(trxRef);
+      AppNavigator.removeAllUntil(context, const DashboardView());
+      Messenger.success(message: 'Booking Successfull');
+    } on Failure {
+      showErrorBottomsheet(
+        context,
+        desc: 'Error occuried',
+        onTap: () {
+          AppNavigator.removeAllUntil(context, const DashboardView());
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
@@ -135,7 +157,8 @@ class _BodyState extends State<_Body> {
         const Spacer(),
         AppButton(
           label: 'Book Session',
-          onTap: () {},
+          isLoading: isLoading,
+          onTap: payWithCard,
         ),
         SizedBox(height: 20.h),
       ],

@@ -3,7 +3,9 @@ import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_li
 import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/fakes/fake_transaction_list_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/fakes/fake_wallet_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/wallet/services/impls/payment_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/impls/wallet_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/payment_service.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet_service.dart';
 
 import 'services/impls/transaction_list_service_impl.dart';
@@ -27,4 +29,6 @@ void walletServicesInit() {
       () => TransactionListServiceImpl(api: diContainer()));
   diContainer
       .registerLazySingleton<IWalletService>(() => WalletServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IPaymentService>(
+      () => PaymentServiceImpl(api: diContainer()));
 }

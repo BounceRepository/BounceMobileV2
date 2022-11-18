@@ -14,4 +14,8 @@ class BaseController extends ChangeNotifier {
   setFailure(Failure error) {
     _failure = error;
   }
+
+  void reset() {
+    _failure = null;
+  }
 }

@@ -33,7 +33,7 @@ class TransactionListItem extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           AmountText(
-            amount: 5000.00,
+            amount: transaction.amount,
             color: transaction.type == TransactionType.credit
                 ? AppColors.success
                 : AppColors.error,
