@@ -5,6 +5,7 @@ import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/impls/flutterwave_payment_service.dart';
+import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -18,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-Future<dynamic> showPaymentSummaryBottomsheet({
+Future<dynamic> showBookSessionPaymentSummaryBottomsheet({
   required BuildContext context,
   required Therapist therapist,
 }) {
@@ -40,21 +41,6 @@ class _Body extends StatefulWidget {
 class _BodyState extends State<_Body> {
   bool isLoading = false;
   PaymentOption? selectedPaymentOption;
-
-  // void confirm() async {
-  //   final selectedPaymentOption = this.selectedPaymentOption;
-
-  //   if (selectedPaymentOption != null) {
-  //     if (selectedPaymentOption == PaymentOption.wallet) {
-  //       Messenger.info(message: 'Wallet coming soon');
-  //       return;
-  //     }
-
-  //     if (selectedPaymentOption == PaymentOption.card) {
-  //       payWithCard();
-  //     }
-  //   }
-  // }
 
   void payWithCard() async {
     final paymentService = FlutterwavePaymentService(
@@ -124,13 +110,16 @@ class _BodyState extends State<_Body> {
     final controller = context.read<BookSessionController>();
 
     try {
+      setState(() => isLoading = true);
       await controller.confirmAppointment(trxRef);
       AppNavigator.removeAllUntil(context, const DashboardView());
       Messenger.success(message: 'Booking Successfull');
-    } on Failure {
+      setState(() => isLoading = false);
+    } on Failure catch (e) {
+      setState(() => isLoading = false);
       showErrorBottomsheet(
         context,
-        desc: 'Error occuried',
+        desc: e.message.toTitleCase,
         onTap: () {
           AppNavigator.removeAllUntil(context, const DashboardView());
         },

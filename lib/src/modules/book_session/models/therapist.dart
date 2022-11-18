@@ -1,7 +1,10 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
-import 'package:flutter/material.dart';
 
 class Therapist {
   final int id;
@@ -50,6 +53,51 @@ class Therapist {
   String get specializationList {
     return specializations.join(' • ');
   }
+
+  factory Therapist.fromJson(Map<String, dynamic> json) {
+    return Therapist(
+      id: json['therapistId'] as int,
+      title: 'Dr',
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      desc: json['about'] as String,
+      specializations: List<String>.from((json['specialization'] as List<String>)),
+      //certifications: List<String>.from((map['certifications'] as List<String>)),
+      certifications: [json['descipline']],
+      profilePicture: json['picturePath'] as String,
+      rating: json['ratings'] as double,
+      experience: int.parse(json['yearsExperience']),
+      phoneNumber: json['phoneNUmber'] as String,
+      workingHours: WorkingHours.fromJson(
+        workDays: json['listofDays'],
+        startTime: json['startTime'],
+        endTime: json['endTime'],
+      ),
+      serviceChargePerHour: Random().nextInt(10000) + 5000,
+      reviews: json['revew'] as int,
+      patients: Random().nextInt(1000) + 45,
+    );
+  }
+
+  // Map<String, dynamic> toJson() {
+  //   return <String, dynamic>{
+  //     'id': id,
+  //     'title': title,
+  //     'firstName': firstName,
+  //     'lastName': lastName,
+  //     'certifications': certifications,
+  //     'specializations': specializations,
+  //     'desc': desc,
+  //     'profilePicture': profilePicture,
+  //     'rating': rating,
+  //     'experience': experience,
+  //     'phoneNumber': phoneNumber,
+  //     'workingHours': workingHours.toMap(),
+  //     'serviceChargePerHour': serviceChargePerHour,
+  //     'reviews': reviews,
+  //     'patients': patients,
+  //   };
+  // }
 }
 
 class WorkingHours {
@@ -62,6 +110,18 @@ class WorkingHours {
     required this.startTime,
     required this.endTime,
   });
+
+  factory WorkingHours.fromJson({
+    required List<String> workDays,
+    required String startTime,
+    required String endTime,
+  }) {
+    return WorkingHours(
+      workDays: _getWorkDays(workDays),
+      startTime: startTime,
+      endTime: endTime,
+    );
+  }
 
   List<String> get availableTime {
     final startTimeOfDay = DateTimeHelperFunctions.parseTimeOfDay(startTime);
@@ -87,4 +147,37 @@ class WorkingHours {
 
     return '$firstDay - $lastDay ($startTime - $endTime)';
   }
+}
+
+List<WeekDays> _getWorkDays(List<String> workDaysStr) {
+  final List<WeekDays> weekdays = [];
+
+  for (int i = 0; i <= workDaysStr.length; i++) {
+    final day = workDaysStr[i].toLowerCase();
+
+    if (day == WeekDays.monday.name.toLowerCase()) {
+      weekdays.add(WeekDays.monday);
+      continue;
+    } else if (day == WeekDays.tuesday.name.toLowerCase()) {
+      weekdays.add(WeekDays.tuesday);
+      continue;
+    } else if (day == WeekDays.wednesday.name.toLowerCase()) {
+      weekdays.add(WeekDays.wednesday);
+      continue;
+    } else if (day == WeekDays.thursday.name.toLowerCase()) {
+      weekdays.add(WeekDays.thursday);
+      continue;
+    } else if (day == WeekDays.friday.name.toLowerCase()) {
+      weekdays.add(WeekDays.friday);
+      continue;
+    } else if (day == WeekDays.saturday.name.toLowerCase()) {
+      weekdays.add(WeekDays.saturday);
+      continue;
+    } else if (day == WeekDays.sunday.name.toLowerCase()) {
+      weekdays.add(WeekDays.sunday);
+      continue;
+    }
+  }
+
+  return weekdays;
 }

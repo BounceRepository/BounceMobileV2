@@ -19,10 +19,6 @@ class SessionItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final therapist = session.therapist;
-    final certification = therapist.certifications.first;
-    final specialization = therapist.specializations.first;
-    final date = DateTimeHelperFunctions.getDateFullStr(session.date);
 
     return Stack(
       children: [
@@ -54,14 +50,14 @@ class SessionItemTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                therapist.fullName,
+                session.therapistName,
                 style: AppText.bold800(context).copyWith(
                   fontSize: 14.sp,
                 ),
               ),
               SizedBox(height: 4.h),
               Text(
-                '$certification in $specialization',
+                session.therapistDiscipline,
                 style: AppText.bold400(context).copyWith(
                   fontSize: 12.sp,
                 ),
@@ -76,7 +72,7 @@ class SessionItemTile extends StatelessWidget {
                   SizedBox(width: 17.25.w),
                   _DateTimeView(
                     icon: Icons.calendar_month,
-                    dateTime: date,
+                    dateTime: session.date,
                   ),
                 ],
               ),
@@ -92,8 +88,8 @@ class SessionItemTile extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       onTap: session.isCompleted
                           ? () {
-                              AppNavigator.to(
-                                  context, BookSessionScreen(therapist: therapist));
+                              // AppNavigator.to(
+                              //     context, BookSessionScreen(therapist: therapist));
                             }
                           : () {
                               AppNavigator.to(context, RescheduleSessionScreen(session));
@@ -112,7 +108,8 @@ class SessionItemTile extends StatelessWidget {
                             backgroundColor: Colors.transparent,
                             padding: EdgeInsets.zero,
                             onTap: () {
-                              AppNavigator.to(context,  JoinSessionScreen(therapist: therapist));
+                              // AppNavigator.to(
+                              //     context, JoinSessionScreen(therapist: therapist));
                             },
                           ),
                         ),

@@ -5,4 +5,6 @@ class BookAppointmentURLS {
 
   static const bookAppointment = APIURLs.baseURL + '/Patient/BookAppointment';
   static const confirmAppointment = APIURLs.baseURL + '/Patient/ComfirmAppointment';
+  static const getAllTherapist = APIURLs.baseURL + '/Patient/GetAllTherapists';
+  static const getAllUpComingSession = APIURLs.baseURL + '/Patient/UpComingSessions';
 }

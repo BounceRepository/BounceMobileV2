@@ -116,7 +116,6 @@ class _UpcomingSessionCard extends StatelessWidget {
           }
 
           final session = controller.upComingSessions.first;
-          final therapist = session.therapist;
           return Padding(
             padding: AppPadding.symetricHorizontalOnly,
             child: Column(
@@ -152,7 +151,7 @@ class _UpcomingSessionCard extends StatelessWidget {
                       ),
                       SizedBox(height: 8.h),
                       Text(
-                        '${therapist.fullName}, ${therapist.certifications.first} in ${therapist.specializations.first}',
+                        '${session.therapistName}, ${session.therapistDiscipline}',
                         style: AppText.bold400(context).copyWith(
                           fontSize: 12.sp,
                         ),
@@ -165,7 +164,7 @@ class _UpcomingSessionCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 11.18.h),
-                      bookNowButton(context, session.therapist),
+                      bookNowButton(context, session.therapistId),
                     ],
                   ),
                 ),
@@ -177,10 +176,10 @@ class _UpcomingSessionCard extends StatelessWidget {
     );
   }
 
-  Widget bookNowButton(BuildContext context, Therapist therapist) {
+  Widget bookNowButton(BuildContext context, int therapistId) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.to(context, JoinSessionScreen(therapist: therapist));
+        AppNavigator.to(context, JoinSessionScreen(therapistId: therapistId));
       },
       child: Text(
         'Join Now',

@@ -28,12 +28,12 @@ final diContainer = GetIt.instance;
 
 Future<void> init() async {
   // controllers
-  authControllersInit(useFake: false);
+  authControllersInit(useFake: true);
   moodControllersInit(useFake: true);
   notificationControllersInit(useFake: true);
   appointmentControllersInit(useFake: true);
   playListControllersInit(useFake: true);
-  walletControllersInit(useFake: false);
+  walletControllersInit(useFake: true);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
 
   //service

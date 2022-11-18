@@ -30,7 +30,7 @@ class AppButton extends StatelessWidget {
   final Widget? child;
   final double elevation;
   final String? icon;
-  final BorderSide? border;
+  final BoxBorder? border;
   final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
 
@@ -49,6 +49,7 @@ class AppButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: backgroundColor ?? AppColors.primary,
             borderRadius: borderRadius ?? BorderRadius.circular(12.r),
+            border: border,
           ),
           alignment: Alignment.center,
           child: isLoading
@@ -59,32 +60,13 @@ class AppButton extends StatelessWidget {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 )
-              : icon != null
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          label.toTitleCase,
-                          style: AppText.bold700(context).copyWith(
-                            color: labelColor ?? Colors.white,
-                            fontSize: labelSize ?? 14.sp,
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: labelColor,
-                          size: 15.sp,
-                        ),
-                      ],
-                    )
-                  : Text(
-                      label.toTitleCase,
-                      style: AppText.bold700(context).copyWith(
-                        color: labelColor ?? Colors.white,
-                        fontSize: labelSize ?? 14.sp,
-                      ),
-                    ),
+              : Text(
+                  label.toTitleCase,
+                  style: AppText.bold700(context).copyWith(
+                    color: labelColor ?? Colors.white,
+                    fontSize: labelSize ?? 14.sp,
+                  ),
+                ),
         ),
       ),
     );
@@ -112,7 +94,7 @@ class BorderAppButton extends StatelessWidget {
       labelColor: labelColor,
       backgroundColor: Colors.transparent,
       elevation: 0,
-      border: BorderSide(color: borderColor ?? AppColors.border),
+      border: Border.all(color: borderColor ?? AppColors.border, width: 2.h),
       onTap: onTap,
     );
   }

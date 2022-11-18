@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -11,11 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class JoinSessionScreen extends StatelessWidget {
-  const JoinSessionScreen({super.key, required this.therapist});
+class JoinSessionScreen extends StatefulWidget {
+  const JoinSessionScreen({super.key, required this.therapistId});
 
-  final Therapist therapist;
+  final int therapistId;
 
+  @override
+  State<JoinSessionScreen> createState() => _JoinSessionScreenState();
+}
+
+class _JoinSessionScreenState extends State<JoinSessionScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

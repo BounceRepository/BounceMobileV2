@@ -1,5 +1,5 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
-import 'package:bounce_patient_app/src/modules/book_session/screens/payment_summary_bottomsheet.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/book_session_payment_summary_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -93,8 +93,8 @@ class _PayNowView extends StatelessWidget {
           SizedBox(height: 30.h),
           AppButton(
             label: 'Pay Now',
-            onTap: () =>
-                showPaymentSummaryBottomsheet(context: context, therapist: therapist),
+            onTap: () => showBookSessionPaymentSummaryBottomsheet(
+                context: context, therapist: therapist),
           ),
           SizedBox(height: 40.h),
         ],

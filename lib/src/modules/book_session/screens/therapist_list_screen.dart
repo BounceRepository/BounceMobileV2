@@ -8,6 +8,7 @@ import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -20,34 +21,29 @@ class TherapistListScreen extends StatefulWidget {
 }
 
 class _TherapistListScreenState extends State<TherapistListScreen> {
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getAllTopTherapist();
-      getAllTherapistNearYou();
+      init();
     });
   }
 
-  void getAllTopTherapist() async {
+  void init() async {
     final controller = context.read<TherapistListController>();
 
-    if (controller.topTherapists.isEmpty) {
+    if (controller.topTherapists.isEmpty && controller.therapistsNearYou.isEmpty) {
       try {
-        await controller.getAllTopTherapist();
+        setState(() => isLoading = true);
+        await Future.wait([
+          //controller.getAllTopTherapist(),
+          controller.getAllTherapistNearYou(),
+        ]);
+        setState(() => isLoading = false);
       } on Failure catch (e) {
-        controller.setFailure(e);
-      }
-    }
-  }
-
-  void getAllTherapistNearYou() async {
-    final controller = context.read<TherapistListController>();
-
-    if (controller.therapistsNearYou.isEmpty) {
-      try {
-        await controller.getAllTherapistNearYou();
-      } on Failure catch (e) {
+        setState(() => isLoading = false);
         controller.setFailure(e);
       }
     }
@@ -61,20 +57,21 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
         label: 'Therapists',
         centerTitle: false,
         actions: [
-          SearchButton(
-            onTap: () {},
-          ),
+          // SearchButton(
+          //   onTap: () {},
+          // ),
         ],
       ),
       body: SafeArea(
         child: Consumer<TherapistListController>(
           builder: (context, controller, _) {
-            if (controller.isLoading) {
+            if (isLoading) {
               return const CustomLoadingIndicator();
             }
 
-            if (controller.failure != null) {
-              // show error view
+            final error = controller.failure;
+            if (error != null) {
+              return ErrorScreen(error: error, retry: init);
             }
 
             if (controller.topTherapists.isEmpty &&
