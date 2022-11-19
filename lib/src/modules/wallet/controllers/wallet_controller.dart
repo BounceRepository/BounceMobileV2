@@ -13,6 +13,7 @@ class WalletController extends BaseController {
   double get balance => _balance;
 
   Future<void> getBalance() async {
+    reset();
     try {
       _balance = await _walletService.getBalance();
       notifyListeners();
@@ -22,6 +23,7 @@ class WalletController extends BaseController {
   }
 
   Future<TransactionRef> initiateTopUp(double amount) async {
+    reset();
     try {
       return await _walletService.initiateTopUp(amount);
     } on Failure {
@@ -30,6 +32,7 @@ class WalletController extends BaseController {
   }
 
   Future<void> confirmTopUp(TransactionRef txRef) async {
+    reset();
     try {
       await _walletService.confirmTopUp(txRef);
     } on Failure {

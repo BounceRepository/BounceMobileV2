@@ -13,6 +13,7 @@ class SubscriptionListController extends BaseController {
   List<Plan> get plans => _plans;
 
   Future<void> getAllPlan() async {
+    reset();
     try {
       setIsLoading(true);
       _plans = await _subscriptionService.getAllPlan();

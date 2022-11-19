@@ -17,6 +17,7 @@ class SessionListController extends BaseController {
   List<Session> get completedSessions => _completedSessions;
 
   Future<void> getUpComingSessions() async {
+    reset();
     try {
       setIsLoading(true);
       _upComingSessions = await _sessionListService.getAllUpComing();
@@ -28,6 +29,7 @@ class SessionListController extends BaseController {
   }
 
   Future<void> getAllSession() async {
+    reset();
     try {
       setIsLoading(true);
       final result = await _sessionListService.getAll();

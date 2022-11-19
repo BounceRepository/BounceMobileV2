@@ -79,7 +79,7 @@ class _BodyState extends State<_Body> {
         SizedBox(height: 40.h),
         CustomPageViewIndicator(
           pageController: pageController,
-          length: 2,
+          length: subPlans.length,
           currentPage: currentPage,
           height: 8.h,
           radius: 4.r,

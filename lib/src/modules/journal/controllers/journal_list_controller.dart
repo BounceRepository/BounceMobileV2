@@ -13,6 +13,7 @@ class JournalController extends BaseController {
   List<Journal> get journals => _journals;
 
   Future<void> getAllJournal() async {
+    reset();
     try {
       setIsLoading(true);
       _journals = await _journalService.getAllJournal();

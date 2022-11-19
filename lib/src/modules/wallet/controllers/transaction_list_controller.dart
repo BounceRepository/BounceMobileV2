@@ -17,6 +17,7 @@ class TransactionListController extends BaseController {
   List<Transaction> get paymentTransactions => _paymenttransactions;
 
   Future<void> getAll() async {
+    reset();
     try {
       _transactions = await _transactionListService.getAllTopUp();
     } on Failure {
@@ -25,6 +26,7 @@ class TransactionListController extends BaseController {
   }
 
   Future<void> getAllPayment() async {
+    reset();
     try {
       _paymenttransactions = await _transactionListService.getAllPayment();
     } on Failure {
@@ -33,6 +35,7 @@ class TransactionListController extends BaseController {
   }
 
   Future<void> getAllTopUp() async {
+    reset();
     try {
       _topUptransactions = await _transactionListService.getAllTopUp();
     } on Failure {

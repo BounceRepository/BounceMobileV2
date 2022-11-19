@@ -15,6 +15,7 @@ class SongListController extends BaseController {
   List<Song> get myPlaylist => _myPlaylist;
 
   Future<void> getAllPlaylist() async {
+    reset();
     try {
       _myPlaylist = await _songListService.getAllMyPlaylist();
     } on Failure {
@@ -23,6 +24,7 @@ class SongListController extends BaseController {
   }
 
   Future<void> getAllSong() async {
+    reset();
     try {
       _songs = await _songListService.getAllSong();
     } on Failure {

@@ -14,6 +14,7 @@ class NotificationController extends BaseController {
   List<NotificationMessage> get notifications => _notifications;
 
   Future<void> getAllNotification() async {
+    reset();
     try {
       setIsLoading(true);
       final response = await _notificationService.getAllNotification();

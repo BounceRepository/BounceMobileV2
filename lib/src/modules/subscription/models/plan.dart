@@ -19,11 +19,7 @@ class Plan {
       id: json['id'] as int,
       title: json['name'] as String,
       color: _getColor(json['name']),
-      subPlans: List<SubPlan>.from(
-        (json['subPlans'] as List<int>).map<SubPlan>(
-          (x) => SubPlan.fromJson(x as Map<String, dynamic>),
-        ),
-      ),
+      subPlans: List<SubPlan>.from(json["subPlans"].map((x) => SubPlan.fromJson(x))),
     );
   }
 

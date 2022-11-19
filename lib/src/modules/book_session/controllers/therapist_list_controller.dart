@@ -15,6 +15,7 @@ class TherapistListController extends BaseController {
   List<Therapist> get therapistsNearYou => _therapistsNearYou;
 
   Future<void> getAllTopTherapist() async {
+    reset();
     try {
       _topTherapists = await _therapistListService.getAllTopTherapist();
       notifyListeners();
@@ -24,6 +25,7 @@ class TherapistListController extends BaseController {
   }
 
   Future<void> getAllTherapistNearYou() async {
+    reset();
     try {
       _therapistsNearYou = await _therapistListService.getAllTherapistNearYou();
       notifyListeners();
