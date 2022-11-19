@@ -43,20 +43,20 @@ class _BodyState extends State<_Body> {
   PaymentOption? selectedPaymentOption;
 
   void payWithCard() async {
-    final paymentService = FlutterwavePaymentService(
-      context: context,
-      transactionSuccess: confirmPayment,
-    );
+    final paymentService = FlutterwavePaymentService(context: context);
 
     try {
       setState(() => isLoading = true);
       final paymentDTO = await _bookSession();
 
       if (paymentDTO != null) {
-        await paymentService.processTransaction(
+        final response = await paymentService.processTransaction(
           paymentDto: paymentDTO,
           paymentOption: PaymentOption.card,
         );
+        if (response != null) {
+          await confirmPayment(response.value);
+        }
       }
       setState(() => isLoading = false);
     } on Failure {
@@ -106,7 +106,7 @@ class _BodyState extends State<_Body> {
     return null;
   }
 
-  void confirmPayment(String trxRef) async {
+  Future<void> confirmPayment(String trxRef) async {
     final controller = context.read<BookSessionController>();
 
     try {

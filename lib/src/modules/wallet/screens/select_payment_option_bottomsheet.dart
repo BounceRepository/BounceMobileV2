@@ -50,14 +50,15 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
         final paymentDto = await initiateTopUp();
 
         if (paymentDto != null) {
-          final paymentService = FlutterwavePaymentService(
-            context: context,
-            transactionSuccess: confirmTopUp,
-          );
-          await paymentService.processTransaction(
+          final paymentService = FlutterwavePaymentService(context: context);
+          final response = await paymentService.processTransaction(
             paymentDto: paymentDto,
             paymentOption: selectedPaymentOption!,
           );
+
+          if (response != null) {
+            await confirmTopUp(response.value);
+          }
         }
         setState(() => isLoading = false);
       } on Failure catch (e) {
@@ -90,7 +91,7 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
     return null;
   }
 
-  void confirmTopUp(String trxRef) async {
+  Future<void> confirmTopUp(String trxRef) async {
     final controller = context.read<WalletController>();
 
     try {
@@ -103,9 +104,9 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
       AppNavigator.removeAllUntil(context, const DashboardView());
       Messenger.success(message: 'Wallet Top Up Successfull');
       setState(() => isLoading = false);
-    } on Failure catch (e) {
+    } on Failure {
       setState(() => isLoading = false);
-      Messenger.error(message: e.message);
+      rethrow;
     }
   }
 

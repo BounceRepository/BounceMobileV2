@@ -137,7 +137,7 @@ class AllTransactionListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<TransactionListController>();
-    final transactions = controller.transactions;
+    final transactions = controller.topUTtransactions;
 
     return TransactionListView(transactions);
   }

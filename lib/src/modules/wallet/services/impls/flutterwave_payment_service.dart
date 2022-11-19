@@ -1,25 +1,24 @@
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
+import 'package:bounce_patient_app/src/modules/wallet/models/transaction_ref.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterwave_standard/core/TransactionCallBack.dart';
 import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:flutterwave_standard/models/TransactionError.dart';
 import 'package:flutterwave_standard/models/requests/standard_request.dart';
+import 'package:flutterwave_standard/view/standard_webview.dart';
 import 'package:flutterwave_standard/view/view_utils.dart';
 import 'package:http/http.dart';
 
 class FlutterwavePaymentService implements TransactionCallBack {
   final BuildContext context;
-  final Function(String trxRef) transactionSuccess;
 
-  FlutterwavePaymentService({
-    required this.context,
-    required this.transactionSuccess,
-  });
+  FlutterwavePaymentService({required this.context});
 
-  Future<void> processTransaction({
+  Future<TransactionRef?> processTransaction({
     required PaymentDto paymentDto,
     required PaymentOption paymentOption,
   }) async {
@@ -29,10 +28,12 @@ class FlutterwavePaymentService implements TransactionCallBack {
     );
 
     try {
-      await _executeTransaction(request);
-    } on Failure {
-      rethrow;
+      return await _executeTransaction(request);
+    } on Failure catch (e) {
+      FlutterwaveViewUtils.showToast(context, e.message);
+      Navigator.pop(context);
     }
+    return null;
   }
 
   StandardRequest _initializeFlutterwaveDependencies({
@@ -63,9 +64,7 @@ class FlutterwavePaymentService implements TransactionCallBack {
     );
   }
 
-  Future<void> _executeTransaction(StandardRequest request) async {
-   // final navigationController = NavigationController(Client(), FlutterwaveStyle(), this);
-
+  Future<TransactionRef?> _executeTransaction(StandardRequest request) async {
     try {
       final response = await request.execute(Client());
 
@@ -73,11 +72,21 @@ class FlutterwavePaymentService implements TransactionCallBack {
         throw TransactionError(response.message!);
       }
 
-      //navigationController.openBrowser(response.data?.link ?? '', request.redirectUrl);
+      final transactionResult =
+          await AppNavigator.to(context, StandardWebView(url: response.data!.link!));
+
+      if (transactionResult == null) {
+        FlutterwaveViewUtils.showToast(context, "Transaction Cancelled");
+        Navigator.pop(context);
+      }
+
+      if (transactionResult.runtimeType == ChargeResponse().runtimeType) {
+        return TransactionRef(value: request.txRef);
+      }
     } catch (e) {
-      FlutterwaveViewUtils.showToast(context, "Transaction Error");
-      throw Failure('Transaction failed');
+      throw Failure("Transaction Error");
     }
+    return null;
   }
 
   @override
@@ -94,7 +103,6 @@ class FlutterwavePaymentService implements TransactionCallBack {
 
   @override
   onTransactionSuccess(String id, String txRef) async {
-    transactionSuccess(txRef);
     // try {
     //   await confirmPayment(txRef);
     //   showSuccessBottomsheet(

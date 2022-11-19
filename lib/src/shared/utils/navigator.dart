@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class AppNavigator {
   AppNavigator._();
 
-  static void to(BuildContext context, Widget nextScreen) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => nextScreen));
+  static Future<dynamic> to(BuildContext context, Widget nextScreen) async {
+   return await Navigator.push(context, MaterialPageRoute(builder: (_) => nextScreen));
   }
 
   static void removeAllUntil(BuildContext context, Widget nextScreen) {
