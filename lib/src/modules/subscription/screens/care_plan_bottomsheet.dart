@@ -47,12 +47,15 @@ class _BodyState extends State<_Body> {
 
   @override
   Widget build(BuildContext context) {
+    final plan = widget.plan;
+    final subPlans = plan.subPlans;
+
     return CustomBottomSheetBody(
       padding: EdgeInsets.zero,
       body: [
         SizedBox(height: 20.h),
         Text(
-          widget.plan.label,
+          plan.title,
           style: AppText.bold700(context).copyWith(
             fontSize: 20.sp,
           ),
@@ -67,16 +70,10 @@ class _BodyState extends State<_Body> {
               currentPage = value;
               setState(() {});
             },
-            children: [
-              _PageViewItem(
-                plan: widget.plan,
-                period: 'quarter',
-              ),
-              _PageViewItem(
-                plan: widget.plan,
-                period: 'annual',
-              ),
-            ],
+            children: List.generate(subPlans.length, (index) {
+              final subPlan = subPlans[index];
+              return _PageViewItem(subPlan: subPlan);
+            }),
           ),
         ),
         SizedBox(height: 40.h),
@@ -98,12 +95,10 @@ class _BodyState extends State<_Body> {
 class _PageViewItem extends StatelessWidget {
   const _PageViewItem({
     Key? key,
-    required this.plan,
-    required this.period,
+    required this.subPlan,
   }) : super(key: key);
 
-  final Plan plan;
-  final String period;
+  final SubPlan subPlan;
 
   @override
   Widget build(BuildContext context) {
@@ -126,12 +121,12 @@ class _PageViewItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AmountText(
-                amount: plan.amount,
+                amount: subPlan.amount,
                 symbolFontSize: 20.sp,
                 amountFontSize: 28.sp,
               ),
               Text(
-                '/$period',
+                '/${subPlan.title}',
                 style: AppText.bold400(context).copyWith(
                   fontSize: 12.sp,
                 ),
@@ -141,7 +136,7 @@ class _PageViewItem extends StatelessWidget {
           SizedBox(height: 36.h),
           Align(
             alignment: Alignment.center,
-            child: SubscriptionPackageListView(plan.packages),
+            child: SubscriptionPackageListView(subPlan),
           ),
           SizedBox(height: 48.h),
           Align(

@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/subscription/models/plan.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:flutter/material.dart';
@@ -5,27 +6,28 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubscriptionPackageListView extends StatelessWidget {
   const SubscriptionPackageListView(
-    this.packages, {
+    this.subplan, {
     Key? key,
   }) : super(key: key);
 
-  final List<String> packages;
+  final SubPlan subplan;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8.h,
       direction: Axis.vertical,
-      children: List.generate(packages.length, (index) {
-        final package = packages[index];
-        return _Tile(package);
-      }),
+      children: [
+        _Tile(label: '${subplan.freeTrialCount} days free trial.'),
+        _Tile(label: '${subplan.meditationCount}+ daily meditations.'),
+        _Tile(label: '${subplan.therapistCount}+ therapists.'),
+      ],
     );
   }
 }
 
 class _Tile extends StatelessWidget {
-  const _Tile(this.label);
+  const _Tile({required this.label});
 
   final String label;
 

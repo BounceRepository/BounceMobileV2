@@ -1,64 +1,80 @@
+import 'package:bounce_patient_app/src/modules/subscription/controllers/subscription_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/subscription/models/plan.dart';
 import 'package:bounce_patient_app/src/modules/subscription/screens/care_plan_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/subscription/widgets/package_list_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_child_scrollview.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class CarePlansScreen extends StatelessWidget {
+class CarePlansScreen extends StatefulWidget {
   const CarePlansScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final plans = [
-      Plan(
-        label: 'Bronze',
-        color: AppColors.bronze,
-        amount: 5000,
-        packages: [
-          '7 days free trial.',
-          '100+ daily meditations.',
-          '100+ therapists.',
-        ],
-      ),
-      Plan(
-        label: 'Silver',
-        color: AppColors.sliver,
-        amount: 15000,
-        packages: [
-          '7 days free trial.',
-          '100+ daily meditations.',
-          '100+ therapists.',
-        ],
-      ),
-      Plan(
-        label: 'Gold',
-        color: AppColors.gold,
-        amount: 25000,
-        packages: [
-          '7 days free trial.',
-          '100+ daily meditations.',
-          '100+ therapists.',
-        ],
-      ),
-    ];
+  State<CarePlansScreen> createState() => _CarePlansScreenState();
+}
 
+class _CarePlansScreenState extends State<CarePlansScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getAllPlan();
+    });
+  }
+
+  void getAllPlan() async {
+    final controller = context.read<SubscriptionListController>();
+
+    if (controller.plans.isEmpty || controller.failure != null) {
+      try {
+        await controller.getAllPlan();
+      } on Failure catch (e) {
+        controller.setFailure(e);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(label: 'My Care Plans'),
-      body: CustomChildScrollView(
-        child: Wrap(
-          runSpacing: 28.h,
-          children: List.generate(plans.length, (index) {
-            final plan = plans[index];
-            return PlanCard(plan);
-          }),
-        ),
+      body: Consumer<SubscriptionListController>(
+        builder: (context, controller, _) {
+          if (controller.isLoading) {
+            return const CustomLoadingIndicator();
+          }
+
+          final error = controller.failure;
+          if (error != null) {
+            return ErrorScreen(error: error, retry: getAllPlan);
+          }
+
+          if (controller.plans.isEmpty) {
+            return const EmptyListView();
+          }
+
+          final plans = controller.plans;
+          return CustomChildScrollView(
+            child: Wrap(
+              runSpacing: 28.h,
+              children: List.generate(plans.length, (index) {
+                final plan = plans[index];
+                return PlanCard(plan);
+              }),
+            ),
+          );
+        },
       ),
     );
   }
@@ -89,13 +105,13 @@ class PlanCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      plan.label,
+                      plan.title,
                       style: AppText.bold600(context).copyWith(
                         fontSize: 16.sp,
                       ),
                     ),
                     SizedBox(height: 12.h),
-                    SubscriptionPackageListView(plan.packages),
+                    SubscriptionPackageListView(plan.subPlans.first),
                   ],
                 ),
               ),
