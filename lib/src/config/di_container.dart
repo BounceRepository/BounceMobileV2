@@ -9,6 +9,7 @@ import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_serv
 import 'package:bounce_patient_app/src/modules/dashboard/di.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/services/impls/mood_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/services/interfaces/mood_service.dart';
+import 'package:bounce_patient_app/src/modules/journal/services/di.dart';
 import 'package:bounce_patient_app/src/modules/notifications/di.dart';
 import 'package:bounce_patient_app/src/modules/notifications/services/impls/notification_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/notifications/services/interfaces/notification_service.dart';
@@ -34,10 +35,12 @@ Future<void> init() async {
   appointmentControllersInit(useFake: true);
   playListControllersInit(useFake: true);
   walletControllersInit(useFake: true);
+  journalControllersInit(useFake: true);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
 
   //service
   walletServicesInit();
+  journalServicesInit();
   diContainer
       .registerLazySingleton<IAuthService>(() => AuthServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<ImageService>(() => ImageServiceImpl());

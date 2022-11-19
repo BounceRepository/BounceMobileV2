@@ -4,7 +4,6 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterwave_standard/core/TransactionCallBack.dart';
-import 'package:flutterwave_standard/core/navigation_controller.dart';
 import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:flutterwave_standard/models/TransactionError.dart';
 import 'package:flutterwave_standard/models/requests/standard_request.dart';
@@ -65,17 +64,18 @@ class FlutterwavePaymentService implements TransactionCallBack {
   }
 
   Future<void> _executeTransaction(StandardRequest request) async {
-    final navigationController = NavigationController(Client(), FlutterwaveStyle(), this);
+   // final navigationController = NavigationController(Client(), FlutterwaveStyle(), this);
 
     try {
-      final response = await request.execute(navigationController.client);
+      final response = await request.execute(Client());
 
       if (response.status == 'error') {
         throw TransactionError(response.message!);
       }
 
-      navigationController.openBrowser(response.data?.link ?? '', request.redirectUrl);
+      //navigationController.openBrowser(response.data?.link ?? '', request.redirectUrl);
     } catch (e) {
+      FlutterwaveViewUtils.showToast(context, "Transaction Error");
       throw Failure('Transaction failed');
     }
   }

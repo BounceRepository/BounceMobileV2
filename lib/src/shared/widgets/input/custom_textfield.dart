@@ -18,7 +18,7 @@ class CustomTextField extends StatelessWidget {
   final int? inputLimit;
   final List<TextInputFormatter>? inputFormatters;
   final bool readOnly;
-  final int maxLines;
+  final int? maxLines;
   final Widget? prefix;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
