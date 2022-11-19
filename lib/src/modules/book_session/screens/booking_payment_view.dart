@@ -89,12 +89,16 @@ class _PayNowView extends StatelessWidget {
             ],
           ),
           SizedBox(height: 52.h),
-          const AmountChargedTile(title: 'Total charge', amount: 4750),
+          AmountChargedTile(
+              title: 'Total charge', amount: therapist.serviceChargePerHour + 250),
           SizedBox(height: 30.h),
           AppButton(
             label: 'Pay Now',
             onTap: () => showBookSessionPaymentSummaryBottomsheet(
-                context: context, therapist: therapist),
+              context: context,
+              therapist: therapist,
+              amount: therapist.serviceChargePerHour + 250,
+            ),
           ),
           SizedBox(height: 40.h),
         ],

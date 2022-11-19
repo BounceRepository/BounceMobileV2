@@ -13,7 +13,6 @@ class Session {
   final String therapistDiscipline;
   final String date;
   final String startTime;
-  final String endTime;
   final bool isCompleted;
 
   Session({
@@ -23,12 +22,11 @@ class Session {
     required this.therapistDiscipline,
     required this.date,
     required this.startTime,
-    required this.endTime,
     required this.isCompleted,
   });
 
   String get period {
-    return '$startTime - $endTime';
+    return '$startTime - $startTime';
   }
 
   factory Session.fromJson(Map<String, dynamic> json) {
@@ -39,8 +37,7 @@ class Session {
       therapistDiscipline: json['discipline'],
       date: json['date'],
       startTime: json['time'] as String,
-      endTime: json['endTime'] as String,
-      isCompleted: json['isCompleted'] as bool,
+      isCompleted: false,
     );
   }
 

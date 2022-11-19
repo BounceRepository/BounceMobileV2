@@ -22,17 +22,19 @@ import 'package:provider/provider.dart';
 Future<dynamic> showBookSessionPaymentSummaryBottomsheet({
   required BuildContext context,
   required Therapist therapist,
+  required int amount,
 }) {
   return showCustomBottomSheet(
     context,
-    body: _Body(therapist),
+    body: _Body(therapist: therapist, amount: amount),
   );
 }
 
 class _Body extends StatefulWidget {
-  const _Body(this.therapist);
+  const _Body({required this.therapist, required this.amount});
 
   final Therapist therapist;
+  final int amount;
 
   @override
   State<_Body> createState() => _BodyState();
@@ -43,13 +45,12 @@ class _BodyState extends State<_Body> {
   PaymentOption? selectedPaymentOption;
 
   void payWithCard() async {
-    final paymentService = FlutterwavePaymentService(context: context);
-
     try {
       setState(() => isLoading = true);
       final paymentDTO = await _bookSession();
 
       if (paymentDTO != null) {
+        final paymentService = FlutterwavePaymentService(context: context);
         final response = await paymentService.processTransaction(
           paymentDto: paymentDTO,
           paymentOption: PaymentOption.card,
@@ -86,7 +87,7 @@ class _BodyState extends State<_Body> {
           reason: reason,
           patientId: user.id,
           therapistId: therapist.id,
-          price: therapist.serviceChargePerHour.toDouble(),
+          price: widget.amount.toDouble(),
           time: time,
           date: date,
         );
@@ -95,7 +96,7 @@ class _BodyState extends State<_Body> {
           trxRef: trxRef,
           customerName: user.fullName,
           email: user.email,
-          amount: therapist.serviceChargePerHour,
+          amount: widget.amount,
           narration: 'Appointment Booking',
           message: 'Payment for session with ${therapist.fullName} and ${user.fullName}',
         );
@@ -136,7 +137,7 @@ class _BodyState extends State<_Body> {
         SizedBox(height: 40.h),
         Align(
           alignment: Alignment.centerLeft,
-          child: AmountText(amount: 4750.00, amountFontSize: 24.sp),
+          child: AmountText(amount: widget.amount, amountFontSize: 24.sp),
         ),
         SizedBox(height: 18.h),
         Text(

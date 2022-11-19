@@ -28,7 +28,9 @@ class TherapistBookingSummary extends StatelessWidget {
           child: CustomChildScrollView(
             child: Column(
               children: [
-                AppImageView(therapist.profilePicture, size: 100.h),
+                DefaultAppImage(size: 100.h),
+
+                //CircularNetworkImage(image: therapist.profilePicture, size: 100.h),
                 SizedBox(height: 19.h),
                 Text(
                   doctorName,

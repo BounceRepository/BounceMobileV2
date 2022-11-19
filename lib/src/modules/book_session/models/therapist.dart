@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
@@ -21,7 +19,7 @@ class Therapist {
   final WorkingHours workingHours;
   final int serviceChargePerHour;
   final int reviews;
-  final int patients;
+  final int patientCount;
 
   Therapist({
     required this.id,
@@ -38,7 +36,7 @@ class Therapist {
     required this.workingHours,
     required this.serviceChargePerHour,
     required this.reviews,
-    required this.patients,
+    required this.patientCount,
   });
 
   String get fullName {
@@ -61,21 +59,21 @@ class Therapist {
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       desc: json['about'] as String,
-      specializations: List<String>.from((json['specialization'] as List<String>)),
+      specializations: List<String>.from(json["specialization"].map((x) => x)),
       //certifications: List<String>.from((map['certifications'] as List<String>)),
       certifications: [json['descipline']],
       profilePicture: json['picturePath'] as String,
-      rating: json['ratings'] as double,
+      rating: json['ratings'].toDouble(),
       experience: int.parse(json['yearsExperience']),
       phoneNumber: json['phoneNUmber'] as String,
       workingHours: WorkingHours.fromJson(
-        workDays: json['listofDays'],
+        workDays: List<String>.from(json["listofDays"].map((x) => x)),
         startTime: json['startTime'],
         endTime: json['endTime'],
       ),
-      serviceChargePerHour: Random().nextInt(10000) + 5000,
+      serviceChargePerHour: json['serviceChargePerHoure'],
       reviews: json['revew'] as int,
-      patients: Random().nextInt(1000) + 45,
+      patientCount: json['numberOfPatient'] as int,
     );
   }
 
@@ -152,7 +150,7 @@ class WorkingHours {
 List<WeekDays> _getWorkDays(List<String> workDaysStr) {
   final List<WeekDays> weekdays = [];
 
-  for (int i = 0; i <= workDaysStr.length; i++) {
+  for (int i = 0; i < workDaysStr.length; i++) {
     final day = workDaysStr[i].toLowerCase();
 
     if (day == WeekDays.monday.name.toLowerCase()) {

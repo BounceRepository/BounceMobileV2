@@ -9,11 +9,16 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RescheduleSessionScreen extends StatelessWidget {
+class RescheduleSessionScreen extends StatefulWidget {
   const RescheduleSessionScreen(this.session, {super.key});
 
   final Session session;
 
+  @override
+  State<RescheduleSessionScreen> createState() => _RescheduleSessionScreenState();
+}
+
+class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

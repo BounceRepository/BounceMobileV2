@@ -6,7 +6,7 @@ import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
 class FakeBookAppointmentServiceImpl implements IBookAppointmentService {
   @override
-  Future<String> book({
+  Future<String> bookSession({
     required SessionType appointmentType,
     required PaymentOption paymentType,
     required int patientId,

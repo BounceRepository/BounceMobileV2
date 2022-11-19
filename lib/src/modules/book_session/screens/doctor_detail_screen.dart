@@ -55,7 +55,8 @@ class TherapistDetailScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    AppImageView(therapist.profilePicture, size: 100.h),
+                    DefaultAppImage(size: 100.h),
+                    //CircularNetworkImage(image: therapist.profilePicture, size: 100.h),
                     SizedBox(height: 24.h),
                     Text(
                       therapist.fullNameWithTitle,
@@ -77,7 +78,7 @@ class TherapistDetailScreen extends StatelessWidget {
                       children: [
                         infoCard(
                           context,
-                          title: '${therapist.patients}+',
+                          title: '${therapist.patientCount}+',
                           subTitle: 'Patients',
                         ),
                         SizedBox(width: 16.w),

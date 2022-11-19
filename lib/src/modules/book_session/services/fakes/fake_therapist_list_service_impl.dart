@@ -54,5 +54,5 @@ final therapist = Therapist(
   ),
   serviceChargePerHour: Random().nextInt(5000),
   reviews: Random().nextInt(200),
-  patients: Random().nextInt(2000),
+  patientCount: Random().nextInt(2000),
 );

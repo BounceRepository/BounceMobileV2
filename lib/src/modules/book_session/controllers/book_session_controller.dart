@@ -26,7 +26,7 @@ class BookSessionController extends BaseController {
     required DateTime date,
   }) async {
     try {
-      final trxRef = await _service.book(
+      final trxRef = await _service.bookSession(
         appointmentType: appointmentType,
         paymentType: paymentType,
         reason: reason,

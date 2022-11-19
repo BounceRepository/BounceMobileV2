@@ -11,7 +11,7 @@ class SessionServiceImpl implements IBookAppointmentService {
   SessionServiceImpl({required IApi api}) : _api = api;
 
   @override
-  Future<String> book({
+  Future<String> bookSession({
     required SessionType appointmentType,
     required PaymentOption paymentType,
     required int patientId,
@@ -23,12 +23,12 @@ class SessionServiceImpl implements IBookAppointmentService {
   }) async {
     var body = {
       "appointmentType": appointmentType.name,
-      "patientId": patientId,
       "paymentType": paymentType.name,
       "problemDecription": reason,
       "therapistId": therapistId,
-      "price": price,
-      "availableTime": time,
+      "price": price.toInt(),
+      "totalAMount": price.toInt(),
+      "availableTime": date.toIso8601String(),
       "date": date.toIso8601String()
     };
 

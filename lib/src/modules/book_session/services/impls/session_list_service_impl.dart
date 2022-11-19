@@ -1,5 +1,7 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
+import 'package:bounce_patient_app/src/modules/book_session/services/api_urls.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/session_list_service.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
 class SessionListServiceImpl implements ISessionListService {
@@ -9,13 +11,31 @@ class SessionListServiceImpl implements ISessionListService {
 
   @override
   Future<List<Session>> getAll() async {
-    // TODO: implement getAllAppointment
-    throw UnimplementedError();
+    try {
+      final response = await _api.get(BookAppointmentURLS.getAllUpComingSession);
+      final List collection = response['data'];
+      return collection.map((json) => Session.fromJson(json)).toList();
+    } on Failure {
+      rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
+    }
   }
 
   @override
   Future<List<Session>> getAllUpComing() async {
-    // TODO: implement getAllUpComing
-    throw UnimplementedError();
+    try {
+      final response = await _api.get(BookAppointmentURLS.getAllUpComingSession);
+      final List collection = response['data'];
+      return collection.map((json) => Session.fromJson(json)).toList();
+    } on Failure {
+      rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
+    }
   }
 }

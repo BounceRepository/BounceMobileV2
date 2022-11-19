@@ -29,7 +29,8 @@ class TherapistListItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppImageView(therapist.profilePicture),
+            const DefaultAppImage(),
+            //CircularNetworkImage(image: therapist.profilePicture),
             SizedBox(width: 17.13.w),
             Expanded(
               child: Column(

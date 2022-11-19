@@ -1,5 +1,4 @@
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_list_controller.dart';
-import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/join_session_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/sessions_item_tile.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -10,6 +9,7 @@ import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -22,34 +22,31 @@ class UpComingSessionListScreen extends StatefulWidget {
 }
 
 class _UpComingSessionListScreenState extends State<UpComingSessionListScreen> {
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getAllUpcomingSession();
-      getAllSession();
+      init();
     });
   }
 
-  void getAllUpcomingSession() async {
+  void init() async {
     final controller = context.read<SessionListController>();
 
-    if (controller.upComingSessions.isEmpty) {
+    if (controller.sessions.isEmpty ||
+        controller.upComingSessions.isEmpty ||
+        controller.failure != null) {
       try {
-        await controller.getUpComingSessions();
+        setState(() => isLoading = true);
+        await Future.wait([
+          controller.getAllSession(),
+          controller.getUpComingSessions(),
+        ]);
+        setState(() => isLoading = false);
       } on Failure catch (e) {
-        controller.setFailure(e);
-      }
-    }
-  }
-
-  void getAllSession() async {
-    final controller = context.read<SessionListController>();
-
-    if (controller.sessions.isEmpty) {
-      try {
-        await controller.getAllSession();
-      } on Failure catch (e) {
+        setState(() => isLoading = false);
         controller.setFailure(e);
       }
     }
@@ -61,12 +58,13 @@ class _UpComingSessionListScreenState extends State<UpComingSessionListScreen> {
       appBar: const CustomAppBar(label: 'New Session'),
       body: Consumer<SessionListController>(
         builder: (context, controller, _) {
-          if (controller.isLoading) {
+          if (isLoading) {
             return const CustomLoadingIndicator();
           }
 
-          if (controller.failure != null) {
-            // show error view
+          final error = controller.failure;
+          if (error != null) {
+            return ErrorScreen(error: error, retry: init);
           }
 
           if (controller.upComingSessions.isEmpty && controller.sessions.isEmpty) {
