@@ -7,14 +7,14 @@ import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-class HaapySongListView extends StatefulWidget {
-  const HaapySongListView({super.key});
+class HappySongListView extends StatefulWidget {
+  const HappySongListView({super.key});
 
   @override
-  State<HaapySongListView> createState() => _HaapySongListViewState();
+  State<HappySongListView> createState() => _HappySongListViewState();
 }
 
-class _HaapySongListViewState extends State<HaapySongListView> {
+class _HappySongListViewState extends State<HappySongListView> {
   @override
   void initState() {
     super.initState();

@@ -24,15 +24,17 @@ class AppImageView extends StatelessWidget {
   }
 }
 
-class CircularNetworkImage extends StatelessWidget {
-  const CircularNetworkImage({
+class CustomCacheNetworkImage extends StatelessWidget {
+  const CustomCacheNetworkImage({
     Key? key,
     required this.image,
     this.size,
+    this.isCirclular = true,
   }) : super(key: key);
 
   final String image;
   final double? size;
+  final bool isCirclular;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class CircularNetworkImage extends StatelessWidget {
         width: size ?? 68.h,
         height: size ?? 68.h,
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
+          shape: isCirclular ? BoxShape.circle : BoxShape.rectangle,
           image: DecorationImage(
             image: imageProvider,
             fit: BoxFit.cover,

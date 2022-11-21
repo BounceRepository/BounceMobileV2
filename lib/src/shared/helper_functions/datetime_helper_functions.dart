@@ -33,6 +33,9 @@ class DateTimeHelperFunctions {
 
   static String getDateFullStr(DateTime date) => DateFormat.yMMMMd('en_US').format(date);
 
+  static String convertDateTimeToAMPM(DateTime date) =>
+      DateFormat('hh:mm a').format(date);
+
   static TimeOfDay parseTimeOfDay(String t) {
     final dateTime = DateFormat("HH:mm a").parse(t);
     return TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);

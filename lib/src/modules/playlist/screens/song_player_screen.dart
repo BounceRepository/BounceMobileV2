@@ -127,7 +127,7 @@ class _ImageFrame extends StatelessWidget {
             shape: BoxShape.circle,
             color: AppColors.primary,
           ),
-          child: CircularNetworkImage(
+          child: CustomCacheNetworkImage(
             image: song.image,
             size: 252.h,
           ),

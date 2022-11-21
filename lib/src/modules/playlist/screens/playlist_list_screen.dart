@@ -43,7 +43,7 @@ class PlayListScreen extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               children: [
                 AllSongsView(),
-                HaapySongListView(),
+                HappySongListView(),
                 SadSongListView(),
                 LoveSongListView(),
                 WorkSongListView(),

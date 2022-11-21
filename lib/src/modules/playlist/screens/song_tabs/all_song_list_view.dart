@@ -6,6 +6,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,9 @@ class _AllSongsViewState extends State<AllSongsView> {
   void getAllSongs() async {
     final controller = context.read<SongListController>();
 
-    if (controller.songs.isEmpty || controller.myPlaylist.isEmpty) {
+    if (controller.songs.isEmpty ||
+        controller.myPlaylist.isEmpty ||
+        controller.failure != null) {
       try {
         setState(() => isLoading = true);
         await Future.wait([
@@ -66,9 +69,9 @@ class _AllSongsViewState extends State<AllSongsView> {
           return const CustomLoadingIndicator();
         }
 
-        final failure = controller.failure;
-        if (failure != null) {
-          //TODO: Add failure view
+        final error = controller.failure;
+        if (error != null) {
+          return ErrorScreen(error: error, retry: getAllSongs);
         }
 
         return const CustomScrollView(

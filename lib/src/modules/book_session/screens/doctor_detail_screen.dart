@@ -1,5 +1,6 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/therapist_booking_summary.dart';
+import 'package:bounce_patient_app/src/modules/chat/screens/chat_window_screen.dart';
 import 'package:bounce_patient_app/src/modules/reviews/screens/review_list_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -121,7 +122,7 @@ class TherapistDetailScreen extends StatelessWidget {
                       description: therapist.workingHours.toString(),
                     ),
                     SizedBox(height: 24.h),
-                    const _CommunicationSection(),
+                    _CommunicationSection(therapist: therapist),
                     SizedBox(height: 46.h),
                     AppButton(
                       label: 'Book Session',
@@ -207,7 +208,9 @@ class TherapistDetailScreen extends StatelessWidget {
 }
 
 class _CommunicationSection extends StatelessWidget {
-  const _CommunicationSection({Key? key}) : super(key: key);
+  const _CommunicationSection({Key? key, required this.therapist}) : super(key: key);
+
+  final Therapist therapist;
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +230,9 @@ class _CommunicationSection extends StatelessWidget {
           icon: AppIcons.message,
           title: 'Messaging',
           subTitle: 'Chat and share photos.',
-          onTap: () {},
+          onTap: () {
+            AppNavigator.to(context, ChatWindowScreen(therapist: therapist));
+          },
         ),
         SizedBox(height: 20.h),
         tile(
@@ -256,47 +261,50 @@ class _CommunicationSection extends StatelessWidget {
     required String subTitle,
     required Function() onTap,
   }) {
-    return Row(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 12.h,
-            horizontal: 12.h,
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 12.h,
+              horizontal: 12.h,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.r),
+              color: const Color(0xffFCE7D8).withOpacity(.52),
+            ),
+            child: SvgPicture.asset(
+              icon,
+              height: 24.h,
+              width: 24.h,
+              fit: BoxFit.fill,
+              color: AppColors.primary,
+            ),
           ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.r),
-            color: const Color(0xffFCE7D8).withOpacity(.52),
-          ),
-          child: SvgPicture.asset(
-            icon,
-            height: 24.h,
-            width: 24.h,
-            fit: BoxFit.fill,
-            color: AppColors.primary,
-          ),
-        ),
-        SizedBox(width: 12.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: AppText.bold600(context).copyWith(
-                  fontSize: 14.sp,
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppText.bold600(context).copyWith(
+                    fontSize: 14.sp,
+                  ),
                 ),
-              ),
-              SizedBox(height: 4.h),
-              Text(
-                subTitle,
-                style: AppText.bold400(context).copyWith(
-                  fontSize: 12.sp,
+                SizedBox(height: 4.h),
+                Text(
+                  subTitle,
+                  style: AppText.bold400(context).copyWith(
+                    fontSize: 12.sp,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

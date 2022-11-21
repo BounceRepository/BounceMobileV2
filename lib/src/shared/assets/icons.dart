@@ -21,6 +21,9 @@ class AppIcons {
   static const emptyView = 'assets/icons/empty_view.svg';
   static const stetoscope = 'assets/icons/stetoscope.svg';
   static const error = 'assets/icons/error.svg';
+  static const camera = 'assets/icons/camera.svg';
+  static const send = 'assets/icons/send.svg';
+  static const prescription = 'assets/icons/prescription.svg';
   static const emptyJournal = 'assets/icons/empty-journal.svg';
 }
 

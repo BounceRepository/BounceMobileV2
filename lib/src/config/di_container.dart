@@ -6,6 +6,7 @@ import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/
 import 'package:bounce_patient_app/src/modules/auth/di.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/impls/auth_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
+import 'package:bounce_patient_app/src/modules/chat/services/di.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/di.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/services/impls/mood_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/services/interfaces/mood_service.dart';
@@ -30,20 +31,22 @@ final diContainer = GetIt.instance;
 
 Future<void> init() async {
   // controllers
-  authControllersInit(useFake: false);
+  authControllersInit(useFake: true);
   moodControllersInit(useFake: true);
   notificationControllersInit(useFake: true);
-  appointmentControllersInit(useFake: false);
+  appointmentControllersInit(useFake: true);
   playListControllersInit(useFake: true);
-  walletControllersInit(useFake: false);
+  walletControllersInit(useFake: true);
   journalControllersInit(useFake: true);
   subscriptionControllersInit(useFake: false);
+  chatControllersInit(useFake: true);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
 
   //service
   walletServicesInit();
   journalServicesInit();
   subscriptionServicesInit();
+  chatServicesInit();
   diContainer
       .registerLazySingleton<IAuthService>(() => AuthServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<ImageService>(() => ImageServiceImpl());
