@@ -4,32 +4,18 @@ enum MessageType {
   prescription,
 }
 
-class Participant {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String image;
-
-  Participant({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.image,
-  });
-}
-
-class Message {
-  final int id;
+class ChatMessage {
+  final String id;
   final String text;
-  final Participant sender;
+  final int receiverId;
   final MessageType type;
   final DateTime createdAt;
   final Precription? precription;
 
-  Message({
+  ChatMessage({
     required this.id,
     required this.text,
-    required this.sender,
+    required this.receiverId,
     required this.type,
     required this.createdAt,
     this.precription,

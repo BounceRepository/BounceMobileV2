@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_controller.dart';
-import 'package:bounce_patient_app/src/modules/chat/models/message.dart';
+import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/widgets/chat_bubble.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
@@ -32,21 +31,32 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getAllMessage();
+      init();
     });
   }
 
-  void getAllMessage() async {
+  void init() async {
+    setState(() => isLoading = true);
+    final controller = context.read<ChatListController>();
+
+    try {
+      await controller.openConnection();
+      await getAllMessage();
+    } on Failure catch (e) {
+      setState(() => isLoading = false);
+      controller.setFailure(e);
+    }
+    setState(() => isLoading = false);
+  }
+
+  Future<void> getAllMessage() async {
     final controller = context.read<ChatListController>();
 
     if (controller.messages.isEmpty) {
       try {
-        setState(() => isLoading = true);
         await controller.getAllMessage();
-        setState(() => isLoading = false);
-      } on Failure catch (e) {
-        setState(() => isLoading = false);
-        controller.setFailure(e);
+      } on Failure {
+        rethrow;
       }
     }
   }
@@ -119,9 +129,8 @@ class _ChatMessageListSection extends StatelessWidget {
         final messages = controller.messages.reversed;
         List<ChatBubble> chatBubbles = [];
         for (var message in messages) {
-          final senderID = message.sender.id;
           final chatBubble = ChatBubble(
-            isMe: user.id == senderID,
+            isMe: user.id == message.receiverId,
             message: message,
           );
           chatBubbles.add(chatBubble);
@@ -131,6 +140,7 @@ class _ChatMessageListSection extends StatelessWidget {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             reverse: true,
+            padding: EdgeInsets.only(top: 20.h),
             children: chatBubbles,
           ),
         );
@@ -175,15 +185,10 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
 
     if (_messageController.text.isNotEmpty) {
       final controller = context.read<ChatListController>();
-      final newMessage = Message(
-        id: Random().nextInt(100) + 1,
+      final newMessage = ChatMessage(
+        id: Utils.getGuid(),
         text: _messageController.text,
-        sender: Participant(
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          image: '',
-        ),
+        receiverId: user.id,
         type: MessageType.text,
         createdAt: DateTime.now(),
       );

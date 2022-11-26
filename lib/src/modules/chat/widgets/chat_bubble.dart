@@ -1,7 +1,8 @@
-import 'package:bounce_patient_app/src/modules/chat/models/message.dart';
+import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/prescription_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -17,7 +18,7 @@ class ChatBubble extends StatelessWidget {
   });
 
   final bool isMe;
-  final Message message;
+  final ChatMessage message;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class _TextMessageBox extends StatelessWidget {
   const _TextMessageBox({required this.isMe, required this.message});
 
   final bool isMe;
-  final Message message;
+  final ChatMessage message;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class _TextMessageBox extends StatelessWidget {
 class _PresciptionMessage extends StatelessWidget {
   const _PresciptionMessage({required this.message});
 
-  final Message message;
+  final ChatMessage message;
 
   @override
   Widget build(BuildContext context) {
@@ -117,47 +118,49 @@ class _MessageBox extends StatelessWidget {
   });
 
   final bool isMe;
-  final Message message;
+  final ChatMessage message;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     final radius = Radius.circular(16.r);
     final time = DateTimeHelperFunctions.convertDateTimeToAMPM(message.createdAt);
-    final contentArea = Column(
-      crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 264.w,
-          margin: EdgeInsets.only(left: isMe ? 43.w : 0, right: isMe ? 0 : 43.w),
-          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 11.w),
-          decoration: BoxDecoration(
-            color: isMe
-                ? const Color(0xffF2F2F2).withOpacity(.32)
-                : const Color(0xffFCE7D8).withOpacity(.32),
-            borderRadius: BorderRadius.only(
-              topLeft: isMe ? radius : const Radius.circular(0),
-              topRight: isMe ? const Radius.circular(0) : radius,
-              bottomLeft: radius,
-              bottomRight: radius,
+    final contentArea = SizedBox(
+      width: 305.w,
+      child: Column(
+        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: isMe ? 43.w : 0, right: isMe ? 0 : 43.w),
+            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 11.w),
+            decoration: BoxDecoration(
+              color: isMe
+                  ? const Color(0xffF2F2F2).withOpacity(.32)
+                  : const Color(0xffFCE7D8).withOpacity(.32),
+              borderRadius: BorderRadius.only(
+                topLeft: isMe ? radius : const Radius.circular(0),
+                topRight: isMe ? const Radius.circular(0) : radius,
+                bottomLeft: radius,
+                bottomRight: radius,
+              ),
+            ),
+            child: child,
+          ),
+          SizedBox(height: 4.h),
+          Align(
+            alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+            child: Text(
+              time,
+              style: AppText.bold400(context).copyWith(
+                fontSize: 12.sp,
+              ),
             ),
           ),
-          child: child,
-        ),
-        SizedBox(height: 4.h),
-        Align(
-          alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-          child: Text(
-            time,
-            style: AppText.bold400(context).copyWith(
-              fontSize: 12.sp,
-            ),
-          ),
-        ),
-        SizedBox(height: 32.h),
-      ],
+          SizedBox(height: 32.h),
+        ],
+      ),
     );
-    final participant = message.sender;
+    final participant = message.receiverId;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,8 +172,10 @@ class _MessageBox extends StatelessWidget {
                 image: AppImages.joinSession,
                 size: 40.h,
               ),
+              SizedBox(width: AppPadding.horizontal),
             ]
           : [
+              SizedBox(width: AppPadding.horizontal),
               CustomCacheNetworkImage(
                 image: AppImages.joinSession,
                 size: 40.h,

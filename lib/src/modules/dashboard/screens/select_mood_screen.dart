@@ -57,6 +57,7 @@ class _SelectMoodsScreenState extends State<SelectMoodsScreen> {
       },
       child: Scaffold(
         body: SafeArea(
+          bottom: false,
           child: CustomChildScrollView(
             padding: EdgeInsets.symmetric(
               horizontal: AppPadding.horizontal,

@@ -1,5 +1,7 @@
-import 'package:bounce_patient_app/src/modules/chat/models/message.dart';
+import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 
 abstract class IChatService {
-  Future<List<Message>> getAllMessage();
+  Future<List<ChatMessage>> getAllMessage();
 }
+
+
