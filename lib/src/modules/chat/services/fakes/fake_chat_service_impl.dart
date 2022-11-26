@@ -9,17 +9,34 @@ import 'package:flutter_lorem/flutter_lorem.dart';
 
 class FakeChatServiceImpl implements IChatService {
   @override
-  Future<List<ChatMessage>> getAllMessage() async {
+  Future<List<ChatMessage>> getAllMessage({required int receiverId}) async {
     await fakeNetworkDelay();
+    int senderId = 0;
+    final user = AppSession.user;
+
+    if (user == null) {
+      return [];
+    }
+
+    senderId = user.id;
     return List.generate(
         Random().nextInt(50),
         (index) => ChatMessage(
               id: Utils.getGuid(),
               text: lorem(paragraphs: 1, words: Random().nextInt(50) + 10),
-              receiverId: _getId(),
+              receiverId: receiverId,
+              senderId: senderId,
               type: MessageType.text,
               createdAt: DateTime.now(),
             ));
+  }
+
+  @override
+  Future<void> pushMessage({
+    required ChatMessage chatMessage,
+    required String connectionId,
+  }) async {
+    await fakeNetworkDelay();
   }
 }
 

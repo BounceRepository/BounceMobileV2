@@ -10,6 +10,7 @@ import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,7 +55,7 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
 
     if (controller.messages.isEmpty) {
       try {
-        await controller.getAllMessage();
+        await controller.getAllMessage(receiverId: widget.therapist.id);
       } on Failure {
         rethrow;
       }
@@ -68,6 +69,7 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         label: widget.therapist.fullNameWithTitle,
+        centerTitle: false,
         actions: [
           AppBarSvgIcon(
             AppIcons.call,
@@ -91,8 +93,8 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
               children: <Widget>[
                 isLoading
                     ? const Expanded(child: CustomLoadingIndicator())
-                    : const _ChatMessageListSection(),
-                const _MessageInputSection(),
+                    : _ChatMessageListSection(onRetry: init),
+                _MessageInputSection(therapist: widget.therapist),
               ],
             ),
           ),
@@ -103,7 +105,9 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
 }
 
 class _ChatMessageListSection extends StatelessWidget {
-  const _ChatMessageListSection({Key? key}) : super(key: key);
+  const _ChatMessageListSection({Key? key, required this.onRetry}) : super(key: key);
+
+  final Function() onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +119,11 @@ class _ChatMessageListSection extends StatelessWidget {
 
     return Consumer<ChatListController>(
       builder: (BuildContext context, controller, Widget? child) {
+        final error = controller.failure;
+        if (error != null) {
+          return ErrorScreen(error: error, retry: onRetry);
+        }
+
         if (controller.messages.isEmpty) {
           return Expanded(
             child: Center(
@@ -130,7 +139,7 @@ class _ChatMessageListSection extends StatelessWidget {
         List<ChatBubble> chatBubbles = [];
         for (var message in messages) {
           final chatBubble = ChatBubble(
-            isMe: user.id == message.receiverId,
+            isMe: user.id == message.senderId,
             message: message,
           );
           chatBubbles.add(chatBubble);
@@ -150,7 +159,9 @@ class _ChatMessageListSection extends StatelessWidget {
 }
 
 class _MessageInputSection extends StatefulWidget {
-  const _MessageInputSection();
+  const _MessageInputSection({required this.therapist});
+
+  final Therapist therapist;
 
   @override
   State<_MessageInputSection> createState() => _MessageInputSectionState();
@@ -188,7 +199,8 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
       final newMessage = ChatMessage(
         id: Utils.getGuid(),
         text: _messageController.text,
-        receiverId: user.id,
+        receiverId: widget.therapist.id,
+        senderId: user.id,
         type: MessageType.text,
         createdAt: DateTime.now(),
       );

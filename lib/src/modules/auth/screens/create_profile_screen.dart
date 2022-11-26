@@ -57,6 +57,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   late final TextEditingController _emotionalHealthRateController;
   late final TextEditingController _eatingHabitController;
   File? image;
+  bool isLoadingImage = false;
 
   @override
   void initState() {
@@ -153,9 +154,11 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   void _pickImage() async {
     final controller = context.read<ImageController>();
     try {
+      setState(() => isLoadingImage = true);
       image = await controller.pickImageFromGallery();
-      setState(() {});
+      setState(() => isLoadingImage = false);
     } on Failure catch (e) {
+      setState(() => isLoadingImage = false);
       Messenger.error(message: e.message);
     }
   }
@@ -183,6 +186,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   children: [
                     _ImageUploadSection(
                       image: image,
+                      isLoading: isLoadingImage,
                       onTap: _pickImage,
                     ),
                     SizedBox(height: 4.h),
@@ -402,33 +406,54 @@ class _ImageUploadSection extends StatelessWidget {
     Key? key,
     required this.image,
     required this.onTap,
+    required this.isLoading,
   }) : super(key: key);
 
   final File? image;
   final Function() onTap;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          image != null
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(100.r),
-                  child: Image.file(
-                    image!,
-                    height: 88.h,
-                    width: 88.h,
-                    fit: BoxFit.cover,
-                    filterQuality: FilterQuality.high,
+      child: isLoading
+          ? Container(
+              height: 88.h,
+              width: 88.h,
+              decoration: const BoxDecoration(
+                color: AppColors.grey3,
+                shape: BoxShape.circle,
+              ),
+              child: SizedBox(
+                height: 40.h,
+                width: 40.h,
+                child: const FittedBox(
+                  fit: BoxFit.fill,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
-                )
-              : const DefaultAppImage(),
-        ],
-      ),
+                ),
+              ),
+            )
+          : Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                image != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(100.r),
+                        child: Image.file(
+                          image!,
+                          height: 88.h,
+                          width: 88.h,
+                          fit: BoxFit.cover,
+                          filterQuality: FilterQuality.high,
+                        ),
+                      )
+                    : const DefaultAppImage(),
+              ],
+            ),
     );
   }
 }

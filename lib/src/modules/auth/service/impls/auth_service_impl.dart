@@ -47,12 +47,12 @@ class AuthServiceImpl implements IAuthService {
       AppSession.authToken = data['token'];
       AppSession.user = User.fromJson(data);
 
-      if (data['hasProfile'] == false) {
-        throw InCompleteProfileFailure();
+      if (data['confirmedEmail'] == false) {
+        throw ConfirmEmailFailure();
       }
 
       if (data['hasProfile'] == false) {
-        throw ConfirmEmailFailure();
+        throw InCompleteProfileFailure();
       }
     } on Failure {
       rethrow;

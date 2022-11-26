@@ -14,25 +14,34 @@ class ChatListController extends BaseController {
   })  : _chatService = chatService,
         _chatWebsocketService = websocketService;
 
+  String? _connectionId;
   List<ChatMessage> _messages = [];
   List<ChatMessage> get messages => _messages;
 
   Future<void> openConnection() async {
     try {
-      final newMessage = await _chatWebsocketService.openConnection();
-
-      if (newMessage != null) {
-        _messages.add(newMessage);
-        notifyListeners();
-      }
+      await _chatWebsocketService.openConnection();
+      _getConnectionId();
+      _listenForIncomingMessage();
     } on Failure {
       rethrow;
     }
   }
 
-  Future<void> getAllMessage() async {
+  void _getConnectionId() {
+    _connectionId = _chatWebsocketService.getConnectionId();
+  }
+
+  void _listenForIncomingMessage() {
+    _chatWebsocketService.getIncomingMessage().listen((newChatMessage) {
+      _messages.add(newChatMessage);
+      notifyListeners();
+    });
+  }
+
+  Future<void> getAllMessage({required int receiverId}) async {
     try {
-      _messages = await _chatService.getAllMessage();
+      _messages = await _chatService.getAllMessage(receiverId: receiverId);
       notifyListeners();
     } on Failure {
       rethrow;
@@ -40,14 +49,21 @@ class ChatListController extends BaseController {
   }
 
   Future<void> send(ChatMessage chatMessage) async {
-    try {
-      _messages.add(chatMessage);
-      notifyListeners();
-      // await _chatWebsocketService.sendMessage(chatMessage);
-    } on Failure {
-      _messages.removeLast();
-      notifyListeners();
-      rethrow;
+    final connectionId = _connectionId;
+
+    if (connectionId != null) {
+      try {
+        _messages.add(chatMessage);
+        notifyListeners();
+        await _chatService.pushMessage(
+          chatMessage: chatMessage,
+          connectionId: connectionId,
+        );
+      } on Failure {
+        _messages.removeLast();
+        notifyListeners();
+        rethrow;
+      }
     }
   }
 }

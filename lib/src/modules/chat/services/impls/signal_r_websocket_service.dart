@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/interfaces/chat_websocket_service.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
@@ -12,17 +12,18 @@ const _serverURL = 'http://bouneproj-001-site1.btempurl.com/chat';
 class SignalRWebsocketService implements IChatWebsocketService {
   HubConnection? _hubConnection;
   bool connectionIsOpen = false;
+  final _messageController = StreamController<ChatMessage>();
 
   @override
-  Future<ChatMessage?> openConnection() async {
+  Future<void> openConnection() async {
     try {
-      return await _openChatConnection();
+      await _openChatConnection();
     } on Failure {
       rethrow;
     }
   }
 
-  Future<ChatMessage?> _openChatConnection() async {
+  Future<void> _openChatConnection() async {
     try {
       if (_hubConnection == null) {
         final httpConnectionOptions = HttpConnectionOptions(
@@ -40,10 +41,20 @@ class SignalRWebsocketService implements IChatWebsocketService {
           connectionIsOpen = true;
         });
         _hubConnection!.on("OnMessage", (data) async {
-          try {
-            await _handleIncommingChatMessage(data);
-          } on Failure {
-            rethrow;
+          final user = AppSession.user;
+
+          if (user != null) {
+            final dataList = data;
+
+            if (dataList != null) {
+              final chatMessage =
+                  ChatMessage.fromMap(dataList.first as Map<String, dynamic>);
+
+              //TODO: Change != to ==
+              if (chatMessage.receiverId != user.id) {
+                _messageController.sink.add(chatMessage);
+              }
+            }
           }
         });
       }
@@ -56,24 +67,6 @@ class SignalRWebsocketService implements IChatWebsocketService {
     } catch (e) {
       throw Failure('Failed to connect to the server');
     }
-    return null;
-  }
-
-  Future<ChatMessage> _handleIncommingChatMessage(List<Object?>? args) async {
-    log('New message');
-    try {
-      final newMessage = ChatMessage(
-        id: Utils.getGuid(),
-        text: args![0] as String,
-        receiverId: args[1] as int,
-        type: MessageType.text,
-        createdAt: DateTime.parse(args[3] as String),
-      );
-      return newMessage;
-    } catch (e) {
-      log(e.toString());
-      throw Failure('Failed to process incoming message');
-    }
   }
 
   @override
@@ -85,5 +78,20 @@ class SignalRWebsocketService implements IChatWebsocketService {
       log(e.toString());
       throw Failure('Failed to send message');
     }
+  }
+
+  @override
+  String? getConnectionId() {
+    final hubconeection = _hubConnection;
+    if (hubconeection == null) {
+      return null;
+    }
+
+    return hubconeection.connectionId;
+  }
+
+  @override
+  Stream<ChatMessage> getIncomingMessage() async* {
+    yield* _messageController.stream;
   }
 }
