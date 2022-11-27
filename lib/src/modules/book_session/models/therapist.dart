@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
 class Therapist {
@@ -122,8 +122,8 @@ class WorkingHours {
   }
 
   List<String> get availableTime {
-    final startTimeOfDay = DateTimeHelperFunctions.parseTimeOfDay(startTime);
-    final endTimeOfDay = DateTimeHelperFunctions.parseTimeOfDay(endTime);
+    final startTimeOfDay = DateTimeUtils.parseTimeOfDay(startTime);
+    final endTimeOfDay = DateTimeUtils.parseTimeOfDay(endTime);
     List<TimeOfDay> _timesInTimeOfDay = [];
     List<String> _timesInAMPM = [];
 
@@ -132,7 +132,7 @@ class WorkingHours {
     }
 
     _timesInAMPM = _timesInTimeOfDay
-        .map((element) => DateTimeHelperFunctions.convertTimeOfDayToAMPM(element))
+        .map((element) => DateTimeUtils.convertTimeOfDayToAMPM(element))
         .toList();
 
     return _timesInAMPM;

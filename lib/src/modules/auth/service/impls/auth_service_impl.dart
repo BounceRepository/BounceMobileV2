@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bounce_patient_app/src/modules/auth/constants/auth_urls.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
@@ -169,7 +169,7 @@ class AuthServiceImpl implements IAuthService {
     String fileName = image.path.split('/').last;
 
     var body = {
-      'DateOfBirth': DateTimeHelperFunctions.getDate(dateOfBirth).toIso8601String(),
+      'DateOfBirth': DateTimeUtils.getDate(dateOfBirth).toIso8601String(),
       'FirstName': firstName,
       'LastName': lastName,
       'Phone': phoneNumber,

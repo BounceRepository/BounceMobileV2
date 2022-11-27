@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -104,7 +104,7 @@ class _CalendarItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              DateTimeHelperFunctions.getDayOfMonth(date),
+              DateTimeUtils.getDayOfMonth(date),
               style: AppText.bold700(context).copyWith(
                 fontSize: 14.sp,
                 color: isSeleted ? Colors.white : AppColors.lightText,
@@ -112,7 +112,7 @@ class _CalendarItem extends StatelessWidget {
             ),
             SizedBox(height: 8.h),
             Text(
-              DateTimeHelperFunctions.getDayOfWeek(date).toUpperCase(),
+              DateTimeUtils.getDayOfWeek(date).toUpperCase(),
               style: AppText.bold400(context).copyWith(
                 fontSize: 12.sp,
                 color: isSeleted ? Colors.white : AppColors.lightText,

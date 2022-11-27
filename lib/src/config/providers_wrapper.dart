@@ -20,6 +20,8 @@ import 'package:bounce_patient_app/src/shared/image/controller/image_controller.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../modules/feed/controllers/controllers.dart';
+
 class ProvidersWrapper extends StatelessWidget {
   const ProvidersWrapper({Key? key, required this.child}) : super(key: key);
 
@@ -42,6 +44,10 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<JournalController>()),
         ChangeNotifierProvider(create: (_) => diContainer<SubscriptionListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<ChatListController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<CommentListController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<CommentController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<FeedListController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<FeedController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),
         ChangeNotifierProvider(create: (_) => PhysicalHealthLevelController()),
         ChangeNotifierProvider(create: (_) => MentalHealthLevelController()),

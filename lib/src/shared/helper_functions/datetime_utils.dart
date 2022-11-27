@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DateTimeHelperFunctions {
-  DateTimeHelperFunctions._();
+class DateTimeUtils {
+  DateTimeUtils._();
 
   static Future<String?> pickDate(BuildContext context) async {
     final initialDate = DateTime(DateTime.now().year - 18);

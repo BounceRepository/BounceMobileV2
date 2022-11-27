@@ -3,7 +3,7 @@ import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_contro
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/widgets/chat_bubble.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';

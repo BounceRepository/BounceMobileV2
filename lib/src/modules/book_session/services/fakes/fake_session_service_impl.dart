@@ -1,7 +1,7 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/services.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
 class FakeBookAppointmentServiceImpl implements IBookAppointmentService {

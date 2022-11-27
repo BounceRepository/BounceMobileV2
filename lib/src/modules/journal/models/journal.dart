@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
 import 'package:flutter/material.dart';
 
 class Journal {
@@ -15,9 +15,9 @@ class Journal {
   });
 
   String get date {
-    final dateFullText = DateTimeHelperFunctions.getDateFullStr(createdAt);
+    final dateFullText = DateTimeUtils.getDateFullStr(createdAt);
     final timeOfDay = TimeOfDay(hour: createdAt.hour, minute: createdAt.minute);
-    final timeInAMPM = DateTimeHelperFunctions.convertTimeOfDayToAMPM(timeOfDay);
+    final timeInAMPM = DateTimeUtils.convertTimeOfDayToAMPM(timeOfDay);
 
     return '$dateFullText $timeInAMPM';
   }

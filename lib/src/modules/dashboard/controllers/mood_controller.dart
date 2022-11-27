@@ -2,7 +2,7 @@ import 'package:bounce_patient_app/src/modules/dashboard/models/mood.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/services/interfaces/mood_service.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/controllers/base_controller.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 

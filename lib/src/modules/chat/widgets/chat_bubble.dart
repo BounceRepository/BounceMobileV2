@@ -1,7 +1,7 @@
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/prescription_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
@@ -124,7 +124,7 @@ class _MessageBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = Radius.circular(16.r);
-    final time = DateTimeHelperFunctions.convertDateTimeToAMPM(message.createdAt);
+    final time = DateTimeUtils.convertDateTimeToAMPM(message.createdAt);
     final contentArea = SizedBox(
       width: 305.w,
       child: Column(

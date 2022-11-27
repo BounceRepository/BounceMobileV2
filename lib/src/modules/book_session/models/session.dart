@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
 
 enum SessionType {
   audio,

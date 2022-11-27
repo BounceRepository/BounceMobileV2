@@ -7,7 +7,7 @@ import 'package:bounce_patient_app/src/modules/auth/screens/select_health_level_
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -143,7 +143,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   }
 
   void _pickDate() async {
-    final date = await DateTimeHelperFunctions.pickDate(context);
+    final date = await DateTimeUtils.pickDate(context);
     if (date != null) {
       setState(() {
         _dateOfBirthController.text = date;

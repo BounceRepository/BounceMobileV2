@@ -1,9 +1,9 @@
-import 'package:bounce_patient_app/src/modules/chat/widgets/room_item_tile.dart';
+import 'package:bounce_patient_app/src/modules/feed/widgets/room_item_tile.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_tabbar.dart';
 import 'package:flutter/material.dart';
 
-class RoomScreen extends StatelessWidget {
-  const RoomScreen({super.key});
+class FeedScreen extends StatelessWidget {
+  const FeedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,14 @@ class RoomScreen extends StatelessWidget {
                 ),
               ];
             },
-            body: const _RoomChatListView(),
+            body: const FeedListView(),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
           ),
         ),
       ),
@@ -39,26 +46,17 @@ class RoomScreen extends StatelessWidget {
   }
 }
 
-class _RoomChatListView extends StatelessWidget {
-  const _RoomChatListView();
+class FeedListView extends StatelessWidget {
+  const FeedListView();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: 30,
-        itemBuilder: (context, index) {
-          return const RoomChatItem();
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      itemCount: 30,
+      itemBuilder: (context, index) {
+        return const RoomChatItem();
+      },
     );
   }
 }

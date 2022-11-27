@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bounce_patient_app/src/modules/journal/models/journal.dart';
 import 'package:bounce_patient_app/src/modules/journal/services/interfaces/journal_service.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 

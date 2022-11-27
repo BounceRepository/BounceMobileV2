@@ -1,5 +1,5 @@
 import 'package:bounce_patient_app/src/modules/auth/models/health_level.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/helper_functions.dart';
+import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
 import 'package:flutter/cupertino.dart';
 
 class PhysicalHealthLevelController extends HealthLevelController {}

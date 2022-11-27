@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/chat/widgets/comment_bottomsheet.dart';
+import 'package:bounce_patient_app/src/modules/feed/widgets/comment_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
