@@ -12,22 +12,23 @@ class FakeFeedListServiceImpl implements IFeedListService {
   Future<List<Feed>> getAllTrending() async {
     await fakeNetworkDelay();
     return List.generate(
-        Random().nextInt(100) + 10,
-        (index) => Feed(
-              id: Random().nextInt(10000),
-              author: Author(
-                id: Random().nextInt(10000),
-                userName: lorem(paragraphs: 1, words: 2),
-                profilePicture: AppImages.joinSession,
-              ),
-              message: lorem(paragraphs: 1, words: Random().nextInt(60) + 20),
-              likesCount: Random().nextInt(10000),
-              commentCount: Random().nextInt(1000),
-              createdAt: DateTime(
-                DateTime.now().year,
-                Random().nextInt(12) + 1,
-                Random().nextInt(25) + 1,
-              ),
-            ));
+      Random().nextInt(100) + 10,
+      (index) => Feed(
+        id: Random().nextInt(10000),
+        author: Author(
+          id: Random().nextInt(10000),
+          userName: lorem(paragraphs: 1, words: 2),
+          profilePicture: AppImages.joinSession,
+        ),
+        message: lorem(paragraphs: 1, words: Random().nextInt(60) + 20),
+        likesCount: Random().nextInt(10000),
+        commentCount: Random().nextInt(1000),
+        createdAt: DateTime(
+          DateTime.now().year,
+          Random().nextInt(12) + 1,
+          Random().nextInt(25) + 1,
+        ),
+      ),
+    );
   }
 }

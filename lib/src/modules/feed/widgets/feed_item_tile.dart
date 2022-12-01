@@ -1,17 +1,34 @@
-import 'package:bounce_patient_app/src/modules/feed/widgets/comment_bottomsheet.dart';
+import 'dart:developer';
+
+import 'package:bounce_patient_app/src/modules/feed/controllers/controllers.dart';
+import 'package:bounce_patient_app/src/modules/feed/models/feed.dart';
+import 'package:bounce_patient_app/src/modules/feed/screens/comment_list_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/extensions/string.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_divider.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:readmore/readmore.dart';
 
-class RoomChatItem extends StatelessWidget {
-  const RoomChatItem({Key? key}) : super(key: key);
+class FeedItemTile<T extends FeedController> extends StatelessWidget {
+  const FeedItemTile(this.feed, {Key? key}) : super(key: key);
+
+  final Feed feed;
+
+  void likeFeed(BuildContext context) async {
+    try {
+      await context.read<T>().likeFeed(feed.id);
+    } on Failure catch (e) {
+      log(e.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +53,13 @@ class RoomChatItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Coal Dingo',
+                          feed.author.userName.toTitleCase,
                           style: AppText.bold600(context).copyWith(
                             fontSize: 14.sp,
                           ),
                         ),
                         Text(
-                          'Just now',
+                          feed.formattedTime,
                           style: AppText.bold400(context).copyWith(
                             fontSize: 12.sp,
                             color: AppColors.grey3,
@@ -51,10 +68,22 @@ class RoomChatItem extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 4.h),
-                    Text(
-                      lorem(paragraphs: 1, words: 10),
+                    ReadMoreText(
+                      feed.message,
+                      trimLines: 3,
+                      trimMode: TrimMode.Line,
+                      trimCollapsedText: 'Show more',
+                      trimExpandedText: 'Show less',
                       style: AppText.bold400(context).copyWith(
                         fontSize: 13.sp,
+                      ),
+                      moreStyle: AppText.bold400(context).copyWith(
+                        fontSize: 13.sp,
+                        color: AppColors.primary,
+                      ),
+                      lessStyle: AppText.bold400(context).copyWith(
+                        fontSize: 13.sp,
+                        color: AppColors.primary,
                       ),
                     ),
                     SizedBox(height: 17.95.h),
@@ -62,13 +91,19 @@ class RoomChatItem extends StatelessWidget {
                       children: [
                         _ActionButton(
                           icon: ChatRoomIcons.like,
-                          value: 12,
-                          onTap: () {},
+                          value: feed.likesCount,
+                          onTap: () => likeFeed(context),
                         ),
                         SizedBox(width: 29.7.w),
                         _ActionButton(
                           icon: ChatRoomIcons.comment,
-                          onTap: () => showCommentListBottomsheet(context),
+                          onTap: () {
+                            if (T == TrendingFeedController) {
+                              showCommentListBottomsheet<TrendingCommentController>(
+                                  context: context, feed: feed);
+                              return;
+                            }
+                          },
                         ),
                       ],
                     ),

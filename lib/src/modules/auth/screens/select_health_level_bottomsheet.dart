@@ -34,7 +34,7 @@ class _BodyState<T extends HealthLevelController> extends State<_Body<T>> {
     return CustomBottomSheetBody(
       height: 400.h,
       body: [
-        const Dragger(),
+        const BottomSheetDragger(),
         SizedBox(height: 30.h),
         SizedBox(
           height: 220.h,

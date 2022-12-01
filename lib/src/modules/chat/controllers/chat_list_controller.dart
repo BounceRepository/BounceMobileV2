@@ -22,7 +22,7 @@ class ChatListController extends BaseController {
     try {
       await _chatWebsocketService.openConnection();
       _getConnectionId();
-      _listenForIncomingMessage();
+      // _listenForIncomingMessage();
     } on Failure {
       rethrow;
     }

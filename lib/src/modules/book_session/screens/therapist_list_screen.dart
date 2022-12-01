@@ -50,9 +50,16 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
   }
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         automaticallyImplyLeading: false,
         label: 'Therapists',
         centerTitle: false,

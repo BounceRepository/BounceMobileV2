@@ -103,8 +103,8 @@ class BottomSheetTitle extends StatelessWidget {
   }
 }
 
-class Dragger extends StatelessWidget {
-  const Dragger({super.key});
+class BottomSheetDragger extends StatelessWidget {
+  const BottomSheetDragger({super.key});
 
   @override
   Widget build(BuildContext context) {

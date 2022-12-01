@@ -62,6 +62,13 @@ class _AllSongsViewState extends State<AllSongsView> {
   }
 
   @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<SongListController>(
       builder: (context, controller, _) {

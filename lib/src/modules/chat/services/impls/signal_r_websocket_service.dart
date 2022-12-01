@@ -8,6 +8,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 const _serverURL = 'http://bouneproj-001-site1.btempurl.com/chat';
+const _errorMessage = 'Failed to connect to the server';
 
 class SignalRWebsocketService implements IChatWebsocketService {
   HubConnection? _hubConnection;
@@ -59,13 +60,25 @@ class SignalRWebsocketService implements IChatWebsocketService {
         });
       }
 
-      if (_hubConnection!.state != HubConnectionState.Connected) {
+      await _startConnection();
+    } on Exception {
+      throw Failure(_errorMessage);
+    } on Error {
+      throw Failure(_errorMessage);
+    }
+  }
+
+  Future<void> _startConnection() async {
+    if (_hubConnection!.state != HubConnectionState.Connected) {
+      try {
         await _hubConnection!.start();
         connectionIsOpen = true;
         log('Websocket connection state ===========> ${_hubConnection!.state}');
+      } on Exception {
+        throw Failure(_errorMessage);
+      } on Error {
+        throw Failure(_errorMessage);
       }
-    } catch (e) {
-      throw Failure('Failed to connect to the server');
     }
   }
 
@@ -74,9 +87,10 @@ class SignalRWebsocketService implements IChatWebsocketService {
     try {
       _openChatConnection();
       _hubConnection!.invoke("Send", args: <Object>[]);
-    } catch (e) {
-      log(e.toString());
-      throw Failure('Failed to send message');
+    } on Exception {
+      throw Failure(_errorMessage);
+    } on Error {
+      throw Failure(_errorMessage);
     }
   }
 

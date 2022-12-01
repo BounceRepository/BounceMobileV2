@@ -38,7 +38,7 @@ class _LocationListBody extends StatelessWidget {
         right: AppPadding.horizontal,
       ),
       body: [
-        const Dragger(),
+        const BottomSheetDragger(),
         SizedBox(height: 30.h),
         SizedBox(
           height: 340.h,

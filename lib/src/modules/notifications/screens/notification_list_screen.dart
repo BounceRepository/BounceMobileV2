@@ -49,6 +49,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
         label: 'Notifications',
       ),
       body: SafeArea(
+        bottom: false,
         child: Consumer<NotificationController>(
           builder: (context, controller, _) {
             if (controller.isLoading) {

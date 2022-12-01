@@ -3,31 +3,59 @@ import 'package:bounce_patient_app/src/modules/feed/services/interfaces/i_commen
 import 'package:bounce_patient_app/src/shared/controllers/base_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 
-class CommentController extends BaseController {
+abstract class CommentController extends BaseController {
   final ICommentService _commentService;
+  final ICommentListService _commentListService;
 
-  CommentController({required ICommentService commentService})
-      : _commentService = commentService;
+  CommentController(
+      {required ICommentService commentService,
+      required ICommentListService commentListService})
+      : _commentService = commentService,
+        _commentListService = commentListService;
+
+  List<Comment> _comments = [];
+  List<Comment> get comments => _comments;
+  List<Comment> _replies = [];
+  List<Comment> get replies => _replies;
+
+  Future<void> getCommentList(int feedId) async {
+    reset();
+    try {
+      _comments = await _commentListService.getAllComment(feedId);
+    } on Failure {
+      rethrow;
+    }
+  }
+
+  Future<void> getReplyList(int feedId) async {
+    reset();
+    try {
+      _replies = await _commentListService.getAllReply(feedId);
+    } on Failure {
+      rethrow;
+    }
+  }
 
   Future<void> createComment(Comment comment) async {
     try {
-      setIsLoading(true);
       await _commentService.createComment(comment);
-      setIsLoading(false);
     } on Failure {
-      setIsLoading(false);
       rethrow;
     }
   }
 
   Future<void> createReply(Comment comment) async {
     try {
-      setIsLoading(true);
       await _commentService.createReply(comment);
-      setIsLoading(false);
     } on Failure {
-      setIsLoading(false);
       rethrow;
     }
   }
+}
+
+class TrendingCommentController extends CommentController {
+  TrendingCommentController({
+    required super.commentService,
+    required super.commentListService,
+  });
 }

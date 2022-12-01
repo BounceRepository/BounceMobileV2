@@ -44,7 +44,6 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
       await controller.openConnection();
       await getAllMessage();
     } on Failure catch (e) {
-      setState(() => isLoading = false);
       controller.setFailure(e);
     }
     setState(() => isLoading = false);
@@ -117,43 +116,45 @@ class _ChatMessageListSection extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Consumer<ChatListController>(
-      builder: (BuildContext context, controller, Widget? child) {
-        final error = controller.failure;
-        if (error != null) {
-          return ErrorScreen(error: error, retry: onRetry);
-        }
+    return Expanded(
+      child: Consumer<ChatListController>(
+        builder: (BuildContext context, controller, Widget? child) {
+          final error = controller.failure;
+          if (error != null) {
+            return ErrorScreen(error: error, retry: onRetry);
+          }
 
-        if (controller.messages.isEmpty) {
-          return Expanded(
-            child: Center(
-              child: Text(
-                'Start a new message',
-                style: AppText.titleStyle(context),
+          if (controller.messages.isEmpty) {
+            return Expanded(
+              child: Center(
+                child: Text(
+                  'Start a new message',
+                  style: AppText.titleStyle(context),
+                ),
               ),
+            );
+          }
+
+          final messages = controller.messages.reversed;
+          List<ChatBubble> chatBubbles = [];
+          for (var message in messages) {
+            final chatBubble = ChatBubble(
+              isMe: user.id == message.senderId,
+              message: message,
+            );
+            chatBubbles.add(chatBubble);
+          }
+
+          return Expanded(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              reverse: true,
+              padding: EdgeInsets.only(top: 20.h),
+              children: chatBubbles,
             ),
           );
-        }
-
-        final messages = controller.messages.reversed;
-        List<ChatBubble> chatBubbles = [];
-        for (var message in messages) {
-          final chatBubble = ChatBubble(
-            isMe: user.id == message.senderId,
-            message: message,
-          );
-          chatBubbles.add(chatBubble);
-        }
-
-        return Expanded(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            reverse: true,
-            padding: EdgeInsets.only(top: 20.h),
-            children: chatBubbles,
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 }
