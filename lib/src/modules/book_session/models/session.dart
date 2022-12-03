@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 
 enum SessionType {
   audio,
@@ -7,11 +7,11 @@ enum SessionType {
 }
 
 class Session {
-  final String id;
+  final int id;
   final int therapistId;
   final String therapistName;
   final String therapistDiscipline;
-  final String date;
+  final DateTime date;
   final String startTime;
   final bool isCompleted;
 
@@ -26,17 +26,25 @@ class Session {
   });
 
   String get period {
-    return '$startTime - $startTime';
+    var endTimeInDateTime = DateTimeUtils.convertAMPMToDateTime(startTime);
+    endTimeInDateTime = DateTime(
+      endTimeInDateTime.year,
+      endTimeInDateTime.month,
+      endTimeInDateTime.day,
+      endTimeInDateTime.hour + 1,
+    );
+    final endTime = DateTimeUtils.convertDateTimeToAMPM(endTimeInDateTime);
+    return '$startTime - $endTime';
   }
 
   factory Session.fromJson(Map<String, dynamic> json) {
     return Session(
-      id: Utils.getGuid(),
+      id: json['sessionId'],
       therapistId: json['therapistId'],
-      therapistName: json['therapistName'],
+      therapistName: json['therapistFirstName'],
       therapistDiscipline: json['discipline'],
-      date: json['date'],
-      startTime: json['time'] as String,
+      date: DateTime.parse(json["date"]),
+      startTime: DateTimeUtils.convertDateTimeToAMPM(DateTime.parse(json["startTime"])),
       isCompleted: false,
     );
   }

@@ -1,10 +1,13 @@
+import 'dart:developer';
+
 import 'package:bounce_patient_app/src/modules/notifications/controllers/notification_controller.dart';
 import 'package:bounce_patient_app/src/modules/notifications/widgets/notification_tile.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
-import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,17 +31,21 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
   void getAllNotification() async {
     final controller = context.read<NotificationController>();
 
-    if (controller.notifications.isEmpty) {
+    if (controller.notifications.isEmpty || controller.failure != null) {
       try {
         await controller.getAllNotification();
       } on Failure catch (e) {
-        Messenger.error(message: e.message);
+        controller.setFailure(e);
       }
     }
   }
 
-  void markAsRead() {
-    context.read<NotificationController>().markAsRead();
+  void markAsRead() async {
+    try {
+      await context.read<NotificationController>().readNotifications();
+    } on Failure catch (e) {
+      log(e.message);
+    }
   }
 
   @override
@@ -56,7 +63,14 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
               return const Center(child: CustomLoadingIndicator());
             }
 
-            if (controller.notifications.isEmpty) {}
+            final error = controller.failure;
+            if (error != null) {
+              return ErrorScreen(error: error, retry: getAllNotification);
+            }
+
+            if (controller.notifications.isEmpty) {
+              return const EmptyListView();
+            }
 
             final notifications = controller.notifications;
             return ListView.builder(

@@ -57,6 +57,17 @@ class NotificationServiceImpl implements INotificationService {
     }
   }
 
+  @override
+  Future<void> readNotification() async {
+    try {
+      await _api.post(NotificationApiURLS.markAsRead, body: {});
+    } on Exception {
+      throw InternalFailure();
+    } on Error {
+      throw InternalFailure();
+    }
+  }
+
   // void _onRefreshToken() async {
   //   _firebaseMessagingService.onTokenRefresh
   //       .listen(_service?.saveFirebaseTokenToDatabase);

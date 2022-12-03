@@ -3,7 +3,7 @@ import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_contro
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/widgets/chat_bubble.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
@@ -125,12 +125,10 @@ class _ChatMessageListSection extends StatelessWidget {
           }
 
           if (controller.messages.isEmpty) {
-            return Expanded(
-              child: Center(
-                child: Text(
-                  'Start a new message',
-                  style: AppText.titleStyle(context),
-                ),
+            return Center(
+              child: Text(
+                'Start a new message',
+                style: AppText.titleStyle(context),
               ),
             );
           }
@@ -145,13 +143,11 @@ class _ChatMessageListSection extends StatelessWidget {
             chatBubbles.add(chatBubble);
           }
 
-          return Expanded(
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              reverse: true,
-              padding: EdgeInsets.only(top: 20.h),
-              children: chatBubbles,
-            ),
+          return ListView(
+            physics: const BouncingScrollPhysics(),
+            reverse: true,
+            padding: EdgeInsets.only(top: 20.h),
+            children: chatBubbles,
           );
         },
       ),
@@ -249,6 +245,7 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
                   borderRadius: BorderRadius.circular(18.r),
                 ),
               ),
+              onSubmitted: (value) => send(),
             ),
           ),
           _button(

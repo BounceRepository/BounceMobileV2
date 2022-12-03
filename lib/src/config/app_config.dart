@@ -8,5 +8,5 @@ class APIURLs {
   APIURLs._();
 
   /// url/api
-  static const baseURL = 'http://bouneproj-001-site1.btempurl.com/api';
+  static const baseURL = 'http://bouncedev1-001-site1.btempurl.com/api';
 }

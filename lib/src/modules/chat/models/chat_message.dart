@@ -1,5 +1,5 @@
 import 'package:bounce_patient_app/src/modules/chat/models/prescription.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 
 enum MessageType {

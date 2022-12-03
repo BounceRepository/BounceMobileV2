@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/interfaces/chat_service.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';

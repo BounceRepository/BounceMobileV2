@@ -2,7 +2,7 @@ import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.
 import 'package:bounce_patient_app/src/modules/auth/screens/otp_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/validator.dart';
+import 'package:bounce_patient_app/src/shared/utils/validator.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';

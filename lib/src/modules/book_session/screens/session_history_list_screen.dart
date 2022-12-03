@@ -9,6 +9,7 @@ import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart
 import 'package:bounce_patient_app/src/shared/widgets/appbars/sliver_appbar_delegate.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -63,13 +64,19 @@ class _UpComingSessionListViewState extends State<_UpComingSessionListView> {
   void getAllUpcomingSession() async {
     final controller = context.read<SessionListController>();
 
-    if (controller.upComingSessions.isEmpty) {
-      try {
-        await controller.getUpComingSessions();
-      } on Failure catch (e) {
-        controller.setFailure(e);
-      }
+    try {
+      await controller.getUpComingSessions();
+    } on Failure catch (e) {
+      controller.setFailure(e);
     }
+
+    // if (controller.upComingSessions.isEmpty) {
+    //   try {
+    //     await controller.getUpComingSessions();
+    //   } on Failure catch (e) {
+    //     controller.setFailure(e);
+    //   }
+    // }
   }
 
   @override
@@ -78,6 +85,11 @@ class _UpComingSessionListViewState extends State<_UpComingSessionListView> {
       builder: (context, controller, _) {
         if (controller.isLoading) {
           return const CustomLoadingIndicator();
+        }
+
+        final error = controller.failure;
+        if (error != null) {
+          return ErrorScreen(error: error, retry: getAllUpcomingSession);
         }
 
         if (controller.upComingSessions.isEmpty) {

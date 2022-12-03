@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/shared/helper_functions/validator.dart';
+import 'package:bounce_patient_app/src/shared/utils/validator.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:flutter/material.dart';

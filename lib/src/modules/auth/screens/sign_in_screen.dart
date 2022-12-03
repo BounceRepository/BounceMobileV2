@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/create_profile_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password_screen.dart';
@@ -9,8 +11,9 @@ import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/password_textfield.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/select_mood_screen.dart';
+import 'package:bounce_patient_app/src/modules/notifications/controllers/notification_controller.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/validator.dart';
+import 'package:bounce_patient_app/src/shared/utils/validator.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
@@ -60,6 +63,7 @@ class _SignInScreenState extends State<SignInScreen> {
           password: _passwordController.text,
         );
         Messenger.success(message: 'Login successful');
+        worker();
         AppNavigator.removeAllUntil(context, const SelectMoodsScreen());
       } on Failure catch (e) {
         final user = AppSession.user;
@@ -102,6 +106,16 @@ class _SignInScreenState extends State<SignInScreen> {
       );
     } on Failure catch (e) {
       Messenger.error(message: e.message);
+    }
+  }
+
+  void worker() async {
+    try {
+      Future.wait([
+        context.read<NotificationController>().getAllNotification(),
+      ]);
+    } on Failure catch (e) {
+      log(e.message);
     }
   }
 

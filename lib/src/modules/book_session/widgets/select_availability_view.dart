@@ -31,7 +31,9 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
       selectedIndex = availableTimes
           .indexWhere((element) => element.toLowerCase() == selectedTime.toLowerCase());
     } else {
-      controller.selectedTime = availableTimes[selectedIndex];
+      if (availableTimes.isNotEmpty) {
+        controller.selectedTime = availableTimes[selectedIndex];
+      }
     }
   }
 

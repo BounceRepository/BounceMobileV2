@@ -7,7 +7,7 @@ import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/password_textfield.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/validator.dart';
+import 'package:bounce_patient_app/src/shared/utils/validator.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -59,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _createAccount() async {
     if (_formKey.currentState!.validate()) {
       if (!hasAcceptedTerms) {
-        Messenger.error( message: 'Agree to Bounce terms and conditions');
+        Messenger.error(message: 'Agree to Bounce terms and conditions');
         return;
       }
 
@@ -72,15 +72,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
         controller.userId = userId;
         controller.email = _emailController.text.trim();
-        Messenger.success(
-            message: 'A confirmation link has been sent to your email');
+        Messenger.success(message: 'A confirmation link has been sent to your email');
         AppNavigator.to(
             context,
             IncomingEmailScreen(
-                email: _emailController.text.trim(),
-                userName: _userNameController.text.trim()));
+              email: _emailController.text.trim(),
+              userName: _userNameController.text.trim(),
+            ));
       } on Failure catch (e) {
-        Messenger.error( message: e.message);
+        Messenger.error(message: e.message);
       }
     }
   }
@@ -149,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(width: 5.w),
                 LinkText(
-                  text1: 'I agree to the BOUNCE',
+                  text1: 'I agree to the',
                   text2: 'Terms and Conditions',
                   onClick: _acceptTerms,
                 ),

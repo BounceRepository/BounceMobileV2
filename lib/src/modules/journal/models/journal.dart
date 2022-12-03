@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:flutter/material.dart';
 
 class Journal {

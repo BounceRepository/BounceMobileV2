@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bounce_patient_app/src/modules/wallet/models/transaction.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/transaction_list_service.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 

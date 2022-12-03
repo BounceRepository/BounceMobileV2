@@ -54,16 +54,18 @@ class _AllSongsViewState extends State<AllSongsView> {
   }
 
   void updateSongList() {
-    final controller = context.read<SongListController>();
-    final songs = controller.myPlaylist;
-    final allSongs = controller.songs;
-    songs.addAll(allSongs);
-    context.read<AudioPlayerController>().updateSongList(songs);
+    if (mounted) {
+      final controller = context.read<SongListController>();
+      final songs = controller.myPlaylist;
+      final allSongs = controller.songs;
+      songs.addAll(allSongs);
+      context.read<AudioPlayerController>().updateSongList(songs);
+    }
   }
 
   @override
   void setState(fn) {
-    if(mounted) {
+    if (mounted) {
       super.setState(fn);
     }
   }

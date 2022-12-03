@@ -35,7 +35,16 @@ class NotificationController extends BaseController {
     }
   }
 
-  void markAsRead() {
+  Future<void> readNotifications() async {
+    try {
+      await _notificationService.readNotification();
+      _markAsRead();
+    } on Failure {
+      rethrow;
+    }
+  }
+
+  void _markAsRead() {
     for (final element in notifications) {
       element.isRead = true;
     }

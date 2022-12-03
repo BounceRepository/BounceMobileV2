@@ -1,5 +1,5 @@
 class NotificationMessage {
-  final String id;
+  final int id;
   final String title;
   final String body;
   final DateTime createdAt;
@@ -15,21 +15,21 @@ class NotificationMessage {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'id': id,
+      'notificationId': id,
       'title': title,
-      'body': body,
-      'creeatedAt': createdAt.millisecondsSinceEpoch,
+      'message': body,
+      'time': createdAt.millisecondsSinceEpoch,
       'isRead': isRead,
     };
   }
 
   factory NotificationMessage.fromJson(Map<String, dynamic> json) {
     return NotificationMessage(
-      id: json['id'] as String,
+      id: json['notificationId'] as int,
       title: json['title'] as String,
-      body: json['body'] as String,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(json['creeatedAt'] as int),
-      isRead: json['isRead'] as bool,
+      body: json['message'] as String,
+      createdAt: DateTime.fromMillisecondsSinceEpoch(json['time'] as int),
+      isRead: json['isNewNotification'] as bool,
     );
   }
 }

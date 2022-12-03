@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.
 import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/health_level_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/select_health_level_bottomsheet.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/select_mood_screen.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -104,39 +104,36 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       final image = this.image;
       final gender = context.read<GenderController>().selectedGender;
       if (userId != null) {
-        if (image != null) {
-          try {
-            await controller.createProfile(
-              userId: userId,
-              gender: gender,
-              firstName: _firstNameController.text,
-              lastName: _lastNameController.text,
-              phoneNumber: _phoneNumberController.text,
-              image: image,
-              dateOfBirth: _dateOfBirthController.text,
-              physicalHealtRate: _physicalHealthRateController.text,
-              mentalHealtRate: _mentalHealthRateController.text,
-              emotionalHealtRate: _emotionalHealthRateController.text,
-              eatingHabit: _eatingHabitController.text,
-            );
-            AppSession.user = User(
-              userName: widget.userName,
-              gender: gender,
-              firstName: _firstNameController.text,
-              lastName: _lastNameController.text,
-              id: userId,
-              email: widget.email,
-              phone: '0${_phoneNumberController.text}',
-              dateOfBirth: _dateOfBirthController.text,
-            );
-            AppNavigator.removeAllUntil(
-                context, widget.nextScreen ?? const SignInScreen());
-            Messenger.success(message: 'Profile updated successfully');
-          } on Failure catch (e) {
-            Messenger.error(message: e.message);
-          }
-        } else {
-          Messenger.error(message: 'Upload your image');
+        try {
+          await controller.createProfile(
+            userId: userId,
+            gender: gender,
+            firstName: _firstNameController.text,
+            lastName: _lastNameController.text,
+            phoneNumber: _phoneNumberController.text,
+            image: image,
+            dateOfBirth: _dateOfBirthController.text,
+            physicalHealtRate: _physicalHealthRateController.text,
+            mentalHealtRate: _mentalHealthRateController.text,
+            emotionalHealtRate: _emotionalHealthRateController.text,
+            eatingHabit: _eatingHabitController.text,
+            email: widget.email,
+          );
+          AppSession.user = User(
+            userName: widget.userName,
+            gender: gender,
+            firstName: _firstNameController.text,
+            lastName: _lastNameController.text,
+            id: userId,
+            email: widget.email,
+            phone: '0${_phoneNumberController.text}',
+            dateOfBirth: _dateOfBirthController.text,
+          );
+          AppNavigator.removeAllUntil(
+              context, widget.nextScreen ?? const SelectMoodsScreen());
+          Messenger.success(message: 'Profile updated successfully');
+        } on Failure catch (e) {
+          Messenger.error(message: e.message);
         }
       }
     }

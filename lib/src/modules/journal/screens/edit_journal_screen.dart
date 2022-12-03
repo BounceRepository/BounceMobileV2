@@ -1,6 +1,6 @@
 import 'package:bounce_patient_app/src/modules/journal/controllers/journal_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/journal/models/journal.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';

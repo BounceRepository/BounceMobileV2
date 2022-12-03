@@ -15,6 +15,12 @@ class BookSessionController extends BaseController {
   String? selectedTime;
   String? note;
 
+  void init() {
+    reason = null;
+    selectedTime = null;
+    note = null;
+  }
+
   Future<String> bookSession({
     required SessionType appointmentType,
     required PaymentOption paymentType,
@@ -47,6 +53,25 @@ class BookSessionController extends BaseController {
     try {
       await _service.confirmPayment(trxRef);
     } on Failure {
+      rethrow;
+    }
+  }
+
+  Future<void> rescheduleAppointment({
+    required int sessionId,
+    required String startTime,
+    required String endTime,
+  }) async {
+    try {
+      setIsLoading(true);
+      await _service.rescheduleSession(
+        sessionId: sessionId,
+        startTime: startTime,
+        endTime: endTime,
+      );
+      setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
       rethrow;
     }
   }

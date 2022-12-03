@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/interfaces/chat_service.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/interfaces/chat_websocket_service.dart';
@@ -19,10 +21,11 @@ class ChatListController extends BaseController {
   List<ChatMessage> get messages => _messages;
 
   Future<void> openConnection() async {
+    reset();
     try {
       await _chatWebsocketService.openConnection();
       _getConnectionId();
-      // _listenForIncomingMessage();
+      await _listenForIncomingMessage();
     } on Failure {
       rethrow;
     }
@@ -32,10 +35,16 @@ class ChatListController extends BaseController {
     _connectionId = _chatWebsocketService.getConnectionId();
   }
 
-  void _listenForIncomingMessage() {
+  Future<void> _listenForIncomingMessage() async {
     _chatWebsocketService.getIncomingMessage().listen((newChatMessage) {
-      _messages.add(newChatMessage);
-      notifyListeners();
+      try {
+        _messages.add(newChatMessage);
+        notifyListeners();
+      } on Failure {
+        rethrow;
+      }
+    }).onError((err) {
+      log(err.toString());
     });
   }
 

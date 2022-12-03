@@ -1,9 +1,11 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
+import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/api_urls.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/book_appointment_service.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 
 class SessionServiceImpl implements IBookAppointmentService {
   final IApi _api;
@@ -52,6 +54,46 @@ class SessionServiceImpl implements IBookAppointmentService {
       await _api.post(url, body: '');
     } on Failure {
       rethrow;
+    } on Exception {
+      throw InternalFailure();
+    } on Error {
+      throw InternalFailure();
+    }
+  }
+
+  @override
+  Future<void> rescheduleSession({
+    required int sessionId,
+    required String startTime,
+    required String endTime,
+  }) async {
+    var body = {
+      "sessionId": sessionId,
+      "startTime": DateTimeUtils.convertAMPMToDateTime(startTime).toIso8601String(),
+      "endTime": DateTimeUtils.convertAMPMToDateTime(endTime).toIso8601String(),
+    };
+
+    try {
+      await _api.post(BookAppointmentURLS.rescheduleAppointment, body: body);
+    } on Failure {
+      rethrow;
+    } on Exception {
+      throw InternalFailure();
+    } on Error {
+      throw InternalFailure();
+    }
+  }
+
+  @override
+  Future<Therapist> getOneTherapist(int id) async {
+    try {
+      throw InternalFailure();
+    } on Failure {
+      rethrow;
+    } on Exception {
+      throw InternalFailure();
+    } on Error {
+      throw InternalFailure();
     }
   }
 }

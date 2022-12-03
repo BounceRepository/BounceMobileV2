@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/session_list_service.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
@@ -13,9 +12,9 @@ class FakeSessionListServiceImpl implements ISessionListService {
     return List.generate(
       25,
       (index) => Session(
-        id: Utils.getGuid(),
+        id: Random().nextInt(100),
         therapistId: Random().nextInt(10),
-        date: "Sat, 12 Nov 2022",
+        date: DateTime.now(),
         startTime: '10:00 AM',
         isCompleted: Random().nextBool(),
         therapistName: lorem(paragraphs: 1, words: 3),
@@ -30,9 +29,9 @@ class FakeSessionListServiceImpl implements ISessionListService {
     return List.generate(
       5,
       (index) => Session(
-        id: Utils.getGuid(),
+        id: Random().nextInt(100),
         therapistId: Random().nextInt(10),
-        date: "Sat, 12 Nov 2022",
+        date: DateTime.now(),
         startTime: '06:00 PM',
         isCompleted: false,
         therapistName: lorem(paragraphs: 1, words: 3),

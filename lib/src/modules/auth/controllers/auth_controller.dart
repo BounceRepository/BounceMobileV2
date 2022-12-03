@@ -126,12 +126,13 @@ class AuthController extends BaseController {
     required String firstName,
     required String lastName,
     required String phoneNumber,
-    required File image,
+    File? image,
     required String dateOfBirth,
     required String physicalHealtRate,
     required String mentalHealtRate,
     required String emotionalHealtRate,
     required String eatingHabit,
+    required String email,
   }) async {
     try {
       setIsLoading(true);
@@ -147,6 +148,7 @@ class AuthController extends BaseController {
         mentalHealtRate: mentalHealtRate,
         emotionalHealtRate: emotionalHealtRate,
         eatingHabit: eatingHabit,
+        email: email,
       );
       setIsLoading(false);
     } on Failure {

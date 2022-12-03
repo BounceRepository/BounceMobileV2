@@ -1,11 +1,9 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
-import 'package:bounce_patient_app/src/modules/book_session/screens/join_session_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/reschedule_session_screen.dart';
-import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +17,6 @@ class SessionItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: [
         Container(
@@ -72,7 +69,7 @@ class SessionItemTile extends StatelessWidget {
                   SizedBox(width: 17.25.w),
                   _DateTimeView(
                     icon: Icons.calendar_month,
-                    dateTime: session.date,
+                    dateTime: DateTimeUtils.getDateFullStr(session.date),
                   ),
                 ],
               ),

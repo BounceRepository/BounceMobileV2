@@ -4,4 +4,5 @@ import 'package:bounce_patient_app/src/modules/notifications/models/notification
 abstract class INotificationService {
   Future<NotificationListResponse> getAllNotification();
   Future<void> updateToken();
+  Future<void> readNotification();
 }

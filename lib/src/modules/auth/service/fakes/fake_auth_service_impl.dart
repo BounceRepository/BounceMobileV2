@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
-import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
@@ -80,12 +79,13 @@ class FakeAuthServiceImpl implements IAuthService {
     required String firstName,
     required String lastName,
     required String phoneNumber,
-    required File image,
+    File? image,
     required String dateOfBirth,
     required String physicalHealtRate,
     required String mentalHealtRate,
     required String emotionalHealtRate,
     required String eatingHabit,
+    required String email,
   }) async {
     await fakeNetworkDelay();
     //throw InternalFailure();

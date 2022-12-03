@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';

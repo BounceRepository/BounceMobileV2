@@ -6,4 +6,5 @@ class NotificationApiURLS {
   static const getAllNotification =
       APIURLs.baseURL + '/Notification/GetAllUserNotifications';
   static const updateToken = APIURLs.baseURL + '/Notification/UpdateNotificationToken';
+  static const markAsRead = APIURLs.baseURL + '/Notification/ReadNotification';
 }

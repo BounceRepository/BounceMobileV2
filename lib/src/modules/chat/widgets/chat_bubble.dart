@@ -1,7 +1,7 @@
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/prescription_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';

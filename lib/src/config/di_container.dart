@@ -32,10 +32,10 @@ final diContainer = GetIt.instance;
 
 Future<void> init() async {
   // controllers
-  authControllersInit(useFake: true);
+  authControllersInit(useFake: false);
   moodControllersInit(useFake: true);
   notificationControllersInit(useFake: true);
-  appointmentControllersInit(useFake: true);
+  appointmentControllersInit(useFake: false);
   playListControllersInit(useFake: true);
   walletControllersInit(useFake: false);
   journalControllersInit(useFake: true);

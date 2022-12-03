@@ -1,7 +1,7 @@
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
 class Therapist {
@@ -59,20 +59,24 @@ class Therapist {
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       desc: json['about'] as String,
-      specializations: List<String>.from(json["specialization"].map((x) => x)),
+      specializations: [json['specialization']],
+      // specializations: List<String>.from(json["specialization"].map((x) => x)),
       //certifications: List<String>.from((map['certifications'] as List<String>)),
-      certifications: [json['descipline']],
+      certifications: ['PHD'],
+      // certifications: [json['descipline']],
       profilePicture: json['picturePath'] as String,
       rating: json['ratings'].toDouble(),
       experience: int.parse(json['yearsExperience']),
       phoneNumber: json['phoneNUmber'] as String,
       workingHours: WorkingHours.fromJson(
-        workDays: List<String>.from(json["listofDays"].map((x) => x)),
+        //workDays: List<String>.from(json["listofDays"].map((x) => x)),
+        workDays: ['Monday', 'Tuesday', 'Friday'],
         startTime: json['startTime'],
         endTime: json['endTime'],
       ),
       serviceChargePerHour: json['serviceChargePerHoure'],
-      reviews: json['revew'] as int,
+      reviews: 10,
+      //reviews: json['revew'] as int,
       patientCount: json['numberOfPatient'] as int,
     );
   }
@@ -122,20 +126,31 @@ class WorkingHours {
   }
 
   List<String> get availableTime {
-    final startTimeOfDay = DateTimeUtils.parseTimeOfDay(startTime);
-    final endTimeOfDay = DateTimeUtils.parseTimeOfDay(endTime);
+    var startTimeOfDay = DateTimeUtils.convertAMPMToTimeOfDay(startTime);
+    final endTimeOfDay = DateTimeUtils.convertAMPMToTimeOfDay(endTime);
     List<TimeOfDay> _timesInTimeOfDay = [];
-    List<String> _timesInAMPM = [];
 
-    for (int i = startTimeOfDay.hour; i <= endTimeOfDay.hour; i++) {
-      _timesInTimeOfDay.add(TimeOfDay(hour: i, minute: 0));
+    if (startTimeOfDay.hour < endTimeOfDay.hour) {
+      for (int i = startTimeOfDay.hour; i <= endTimeOfDay.hour; i++) {
+        _timesInTimeOfDay.add(TimeOfDay(hour: i, minute: 0));
+      }
+
+      return _timesInTimeOfDay
+          .map((element) => DateTimeUtils.convertTimeOfDayToAMPM(element))
+          .toList();
+    } else {
+      for (int i = endTimeOfDay.hour; i <= startTimeOfDay.hour; i++) {
+        _timesInTimeOfDay.add(TimeOfDay(hour: i, minute: 0));
+      }
+
+      return _timesInTimeOfDay
+          .map((element) => DateTimeUtils.convertTimeOfDayToAMPM(element))
+          .toList();
     }
 
-    _timesInAMPM = _timesInTimeOfDay
-        .map((element) => DateTimeUtils.convertTimeOfDayToAMPM(element))
-        .toList();
-
-    return _timesInAMPM;
+    // return _timesInTimeOfDay
+    //     .map((element) => DateTimeUtils.convertTimeOfDayToAMPM(element))
+    //     .toList();
   }
 
   @override

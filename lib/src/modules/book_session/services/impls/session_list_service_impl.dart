@@ -29,7 +29,8 @@ class SessionListServiceImpl implements ISessionListService {
     try {
       final response = await _api.get(BookAppointmentURLS.getAllUpComingSession);
       final List collection = response['data'];
-      return collection.map((json) => Session.fromJson(json)).toList();
+      final items = collection.map((json) => Session.fromJson(json)).toList();
+      return items;
     } on Failure {
       rethrow;
     } on Error {

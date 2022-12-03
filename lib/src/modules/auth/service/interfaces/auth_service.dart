@@ -30,11 +30,12 @@ abstract class IAuthService {
     required String firstName,
     required String lastName,
     required String phoneNumber,
-    required File image,
+     File? image,
     required String dateOfBirth,
     required String physicalHealtRate,
     required String mentalHealtRate,
     required String emotionalHealtRate,
     required String eatingHabit,
+    required String email,
   });
 }

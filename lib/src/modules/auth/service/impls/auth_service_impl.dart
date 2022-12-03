@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bounce_patient_app/src/modules/auth/constants/auth_urls.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
@@ -158,32 +158,54 @@ class AuthServiceImpl implements IAuthService {
     required String firstName,
     required String lastName,
     required String phoneNumber,
-    required File image,
+    File? image,
     required String dateOfBirth,
     required String physicalHealtRate,
     required String mentalHealtRate,
     required String emotionalHealtRate,
     required String eatingHabit,
+    required String email,
   }) async {
     var url = AuthURLs.createProfile;
-    String fileName = image.path.split('/').last;
+    Map<String, dynamic> body = {};
+    FormData formData;
 
-    var body = {
-      'DateOfBirth': DateTimeUtils.getDate(dateOfBirth).toIso8601String(),
-      'FirstName': firstName,
-      'LastName': lastName,
-      'Phone': phoneNumber,
-      'UserId': userId,
-      'Gender': gender.type.name.toString().toUpperCase(),
-      'PhysicalHealthRate': physicalHealtRate,
-      'MentalHealthRate': mentalHealtRate,
-      'EmotionalHealthRate': emotionalHealtRate,
-      'EatingHabit': eatingHabit,
-      'ImageFile': await MultipartFile.fromFile(image.path, filename: fileName),
-      'MeansOfIdentification':
-          await MultipartFile.fromFile(image.path, filename: fileName)
-    };
-    var formData = FormData.fromMap(body);
+    if (image != null) {
+      String fileName = image.path.split('/').last;
+      body = {
+        'DateOfBirth': DateTimeUtils.getDate(dateOfBirth).toIso8601String(),
+        'FirstName': firstName,
+        'LastName': lastName,
+        'Phone': phoneNumber,
+        'UserId': userId,
+        'Gender': gender.type.name.toString().toUpperCase(),
+        'PhysicalHealthRate': physicalHealtRate,
+        'MentalHealthRate': mentalHealtRate,
+        'EmotionalHealthRate': emotionalHealtRate,
+        'EatingHabit': eatingHabit,
+        'Email': email,
+        'ImageFile': await MultipartFile.fromFile(image.path, filename: fileName),
+        'MeansOfIdentification':
+            await MultipartFile.fromFile(image.path, filename: fileName)
+      };
+
+      formData = FormData.fromMap(body);
+    } else {
+      body = {
+        'DateOfBirth': DateTimeUtils.getDate(dateOfBirth).toIso8601String(),
+        'FirstName': firstName,
+        'LastName': lastName,
+        'Phone': phoneNumber,
+        'UserId': userId,
+        'Gender': gender.type.name.toString().toUpperCase(),
+        'PhysicalHealthRate': physicalHealtRate,
+        'MentalHealthRate': mentalHealtRate,
+        'EmotionalHealthRate': emotionalHealtRate,
+        'EatingHabit': eatingHabit,
+        'Email': email,
+      };
+      formData = FormData.fromMap(body);
+    }
 
     try {
       await _api.patch(url, body: formData, isFormData: true);

@@ -1,6 +1,6 @@
 import 'package:bounce_patient_app/src/modules/wallet/models/transaction_ref.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet_service.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
 class FakeWalletServiceImpl implements IWalletService {

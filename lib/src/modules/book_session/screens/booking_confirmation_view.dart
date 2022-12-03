@@ -3,7 +3,7 @@ import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dar
 import 'package:bounce_patient_app/src/modules/book_session/widgets/amount_per_hour_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
-import 'package:bounce_patient_app/src/shared/helper_functions/datetime_utils.dart';
+import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -18,7 +18,7 @@ class BookingConfirmationView extends StatelessWidget {
   final Therapist therapist;
 
   String getTimeRange(String startTime) {
-    final startTimeOfDay = DateTimeUtils.parseTimeOfDay(startTime);
+    final startTimeOfDay = DateTimeUtils.convertAMPMToTimeOfDay(startTime);
     final endTimeOfDay = TimeOfDay(
       hour: startTimeOfDay.hour + 1,
       minute: startTimeOfDay.minute,

@@ -28,8 +28,8 @@ class IncomingEmailScreen extends StatelessWidget {
   void _checkEmailStatus(BuildContext context) async {
     final controller = context.read<AuthController>();
     try {
-      final status = await controller.getVerificationStatus(email: email);
-      if (status) {
+      final hasConfirmedEmail = await controller.getVerificationStatus(email: email);
+      if (hasConfirmedEmail) {
         AppNavigator.removeAllUntil(
             context,
             _VerifiedSuccessScreen(

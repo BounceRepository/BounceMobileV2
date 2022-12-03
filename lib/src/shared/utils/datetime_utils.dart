@@ -36,7 +36,7 @@ class DateTimeUtils {
   static String convertDateTimeToAMPM(DateTime date) =>
       DateFormat('hh:mm a').format(date);
 
-  static TimeOfDay parseTimeOfDay(String t) {
+  static TimeOfDay convertAMPMToTimeOfDay(String t) {
     final dateTime = DateFormat("HH:mm a").parse(t);
     return TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
   }
@@ -46,5 +46,14 @@ class DateTimeUtils {
         DateFormat("hh:mm").parse(time.hour.toString() + ":" + time.minute.toString());
     final dateFormat = DateFormat("h:mm a");
     return (dateFormat.format(tempDate));
+  }
+
+  static DateTime convertAMPMToDateTime(String time) {
+    return DateFormat.jm().parse(time);
+  }
+
+  static bool compare({required TimeOfDay startTime, required TimeOfDay endtime}) {
+    double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+    return toDouble(startTime) < toDouble(endtime);
   }
 }
