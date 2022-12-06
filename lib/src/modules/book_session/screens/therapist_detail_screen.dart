@@ -9,10 +9,10 @@ import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/bottom_navbar_container.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_child_scrollview.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -27,9 +27,8 @@ class TherapistDetailScreen extends StatelessWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: const CustomAppBar(backgroundColor: Colors.transparent),
-        extendBody: true,
         extendBodyBehindAppBar: true,
-        body: CustomChildScrollView(
+        body: ScrollToBottomListenerWidget(
           padding: EdgeInsets.zero,
           child: Column(
             children: [
@@ -113,7 +112,7 @@ class TherapistDetailScreen extends StatelessWidget {
                     columnText(
                       context,
                       title: 'About',
-                      description: lorem(paragraphs: 1, words: 25),
+                      description: therapist.about,
                     ),
                     SizedBox(height: 24.h),
                     columnText(
@@ -123,18 +122,19 @@ class TherapistDetailScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 24.h),
                     _CommunicationSection(therapist: therapist),
-                    SizedBox(height: 46.h),
-                    AppButton(
-                      label: 'Book Session',
-                      onTap: () {
-                        AppNavigator.to(
-                            context, TherapistBookingSummary(therapist: therapist));
-                      },
-                    ),
+                    SizedBox(height: 80.h),
                   ],
                 ),
               ),
             ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavBarContainer(
+          child: AppButton(
+            label: 'Book Session',
+            onTap: () {
+              AppNavigator.to(context, TherapistBookingSummary(therapist: therapist));
+            },
           ),
         ),
       ),

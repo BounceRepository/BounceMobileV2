@@ -11,7 +11,7 @@ class Therapist {
   final String lastName;
   final List<String> certifications;
   final List<String> specializations;
-  final String desc;
+  final String about;
   final String profilePicture;
   final double rating;
   final int experience;
@@ -28,7 +28,7 @@ class Therapist {
     required this.lastName,
     required this.certifications,
     required this.specializations,
-    required this.desc,
+    required this.about,
     required this.profilePicture,
     required this.rating,
     required this.experience,
@@ -58,7 +58,7 @@ class Therapist {
       title: 'Dr',
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
-      desc: json['about'] as String,
+      about: json['about'] as String,
       specializations: [json['specialization']],
       // specializations: List<String>.from(json["specialization"].map((x) => x)),
       //certifications: List<String>.from((map['certifications'] as List<String>)),

@@ -60,6 +60,7 @@ class _MoodIconsViewState extends State<MoodIconsView> {
             },
           ),
         ),
+        SizedBox(height: 26.h),
       ],
     );
   }

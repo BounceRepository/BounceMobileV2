@@ -49,12 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = AppSession.user;
-
-    if (user == null) {
-      return const SizedBox.shrink();
-    }
-
     return WillPopScope(
       onWillPop: () {
         SystemNavigator.pop();
@@ -71,51 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(vertical: AppPadding.vertical),
                   children: [
-                    Padding(
-                      padding: AppPadding.symetricHorizontalOnly,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const DefaultAppImage(),
-                          SizedBox(width: 8.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Good Afternoon,',
-                                style: AppText.bold400(context).copyWith(
-                                  fontSize: 18.sp,
-                                ),
-                              ),
-                              Text(
-                                user.userName.toTitleCase,
-                                style: AppText.bold700(context).copyWith(
-                                  fontSize: 18.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              AppNavigator.to(
-                                context,
-                                const NotificationListScreen(),
-                              );
-                            },
-                            child: Consumer<NotificationController>(
-                                builder: (context, controller, _) {
-                              return NotificationBell(
-                                count: controller.unReadNotificationCount,
-                              );
-                            }),
-                          ),
-                        ],
-                      ),
-                    ),
+                    const _ProfileHeaderSection(),
                     SizedBox(height: 26.h),
                     const MoodIconsView(),
-                    SizedBox(height: 26.h),
                     const _SessionsCard(),
                     SizedBox(height: 40.h),
                     const _ChatRoomSection(),
@@ -179,6 +131,63 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ProfileHeaderSection extends StatelessWidget {
+  const _ProfileHeaderSection({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final user = AppSession.user;
+
+    if (user == null) {
+      return const SizedBox.shrink();
+    }
+
+    final image = user.profilePicture;
+    return Padding(
+      padding: AppPadding.symetricHorizontalOnly,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          image == null ? const DefaultAppImage() : CustomCacheNetworkImage(image: image),
+          SizedBox(width: 8.w),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Good Afternoon,',
+                style: AppText.bold400(context).copyWith(
+                  fontSize: 18.sp,
+                ),
+              ),
+              Text(
+                user.userName.toTitleCase,
+                style: AppText.bold700(context).copyWith(
+                  fontSize: 18.sp,
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {
+              AppNavigator.to(
+                context,
+                const NotificationListScreen(),
+              );
+            },
+            child: Consumer<NotificationController>(builder: (context, controller, _) {
+              return NotificationBell(
+                count: controller.unReadNotificationCount,
+              );
+            }),
+          ),
+        ],
       ),
     );
   }

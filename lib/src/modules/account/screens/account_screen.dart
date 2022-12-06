@@ -1,7 +1,6 @@
 import 'package:bounce_patient_app/src/modules/account/screens/contact_us_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/account/screens/log_out_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/session_history_list_screen.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/journal/screens/journal_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/playlist/screens/discover_screen.dart';
@@ -31,6 +30,7 @@ class AccountScreen extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final image = user.profilePicture;
     return Scaffold(
       body: SafeArea(
         child: CustomChildScrollView(
@@ -40,10 +40,9 @@ class AccountScreen extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  AppImageView(
-                    AppImages.image,
-                    size: 68.h,
-                  ),
+                  image == null
+                      ? const DefaultAppImage()
+                      : CustomCacheNetworkImage(image: image),
                   SizedBox(width: 8.w),
                   Text(
                     user.userName.toTitleCase,
@@ -200,7 +199,6 @@ class _MenuListSection extends StatelessWidget {
           color: AppColors.error,
           onTap: () {
             showLogoutBottomsheet(context: context);
-           
           },
         ),
       ],

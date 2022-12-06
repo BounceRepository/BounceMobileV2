@@ -7,6 +7,7 @@ import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/bottom_navbar_container.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_child_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,35 +17,35 @@ class BookingScheduleView extends StatelessWidget {
   const BookingScheduleView({Key? key, required this.therapist}) : super(key: key);
 
   final Therapist therapist;
-
   @override
   Widget build(BuildContext context) {
     final gap = 40.h;
 
-    return CustomChildScrollView(
-      padding: AppPadding.symetricVerticalOnly,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SelectDateView(),
-          SizedBox(height: gap),
-          SelectAvailableTimeView(therapist: therapist),
-          SizedBox(height: gap),
-          const _ReasonForTherapySection(),
-          SizedBox(height: gap),
-          const _AddNoteSection(),
-          SizedBox(height: gap),
-          Padding(
-            padding: AppPadding.symetricHorizontalOnly,
-            child: AppButton(
-              label: 'Confirmation',
-              onTap: () {
-                DefaultTabController.of(context)!.animateTo(1);
-              },
-            ),
-          ),
-          SizedBox(height: gap),
-        ],
+    return Scaffold(
+      body: ScrollToBottomListenerWidget(
+        padding: AppPadding.symetricVerticalOnly,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SelectDateView(),
+            SizedBox(height: gap),
+            SelectAvailableTimeView(therapist: therapist),
+            SizedBox(height: gap),
+            const _ReasonForTherapySection(),
+            SizedBox(height: gap),
+            const _AddNoteSection(),
+            SizedBox(height: gap * 2),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavBarContainer(
+        bottomPadding: 50.h,
+        child: AppButton(
+          label: 'Confirmation',
+          onTap: () {
+            DefaultTabController.of(context)!.animateTo(1);
+          },
+        ),
       ),
     );
   }

@@ -38,7 +38,7 @@ final therapist = Therapist(
     'Psycology',
     'Psychiatry',
   ],
-  desc: lorem(paragraphs: 1, words: 20),
+  about: lorem(paragraphs: 1, words: 20),
   profilePicture: AppImages.joinSession,
   rating: 4.5,
   experience: 5,

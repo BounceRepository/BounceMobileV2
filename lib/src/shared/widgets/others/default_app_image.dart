@@ -49,11 +49,24 @@ class CustomCacheNetworkImage extends StatelessWidget {
             image: imageProvider,
             fit: BoxFit.cover,
           ),
+          border:
+              isCirclular ? Border.all(color: AppColors.primary.withOpacity(.5)) : null,
         ),
       ),
       width: size ?? 68.h,
       height: size ?? 68.h,
       fit: BoxFit.cover,
+      progressIndicatorBuilder: (context, url, progress) => Container(
+        width: size ?? 68.h,
+        height: size ?? 68.h,
+        decoration: BoxDecoration(
+          shape: isCirclular ? BoxShape.circle : BoxShape.rectangle,
+          border:
+              isCirclular ? Border.all(color: AppColors.primary.withOpacity(.5)) : null,
+        ),
+        child: CircularProgressIndicator.adaptive(
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary.withOpacity(.5))),
+      ),
       errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }

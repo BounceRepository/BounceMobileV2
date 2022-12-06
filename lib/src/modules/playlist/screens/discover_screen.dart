@@ -26,6 +26,7 @@ class DiscoverScreen extends StatelessWidget {
       child: Scaffold(
         appBar: const CustomAppBar(label: 'Discover'),
         body: SafeArea(
+          bottom: false,
           child: NestedScrollView(
             physics: const BouncingScrollPhysics(),
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
