@@ -94,7 +94,8 @@ class TherapistDetailScreen extends StatelessWidget {
                           title: '${therapist.rating}',
                           subTitle: 'Ratings',
                           onTap: () {
-                            AppNavigator.to(context, const ReviewListScreen());
+                            AppNavigator.to(
+                                context, ReviewListScreen(therapist: therapist));
                           },
                         ),
                       ],

@@ -15,7 +15,7 @@ class CustomProgressIndicator extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(24.r),
       child: LinearProgressIndicator(
-        value: value,
+        value: value / 100,
         minHeight: 8.h,
         color: AppColors.primary,
         backgroundColor: AppColors.grey6,

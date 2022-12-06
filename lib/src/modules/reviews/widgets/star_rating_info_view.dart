@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/reviews/models/review.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_progress_indicator.dart';
@@ -5,37 +6,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StarRatingInfoView extends StatelessWidget {
-  const StarRatingInfoView({super.key});
+  const StarRatingInfoView({super.key, required this.reviewInfo});
+
+  final ReviewInfo reviewInfo;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       direction: Axis.vertical,
       runSpacing: 16.h,
-      children: const [
+      children: [
         _RatingProgressTile(
-          value: 0.6,
-          percent: 8,
+          value: reviewInfo.fiveStarPercentage,
+          percent: reviewInfo.fiveStarPercentage,
           starCount: 5,
         ),
         _RatingProgressTile(
-          value: 0.43,
-          percent: 5,
+          value: reviewInfo.fourStarPercentage,
+          percent: reviewInfo.fourStarPercentage,
           starCount: 4,
         ),
         _RatingProgressTile(
-          value: 0.32,
-          percent: 3,
+          value: reviewInfo.threeStarPercentage,
+          percent: reviewInfo.threeStarPercentage,
           starCount: 3,
         ),
         _RatingProgressTile(
-          value: 0.32,
-          percent: 3,
+          value: reviewInfo.twoStarPercentage,
+          percent: reviewInfo.twoStarPercentage,
           starCount: 2,
         ),
         _RatingProgressTile(
-          value: 0.2,
-          percent: 1,
+          value: reviewInfo.oneStarPercentage,
+          percent: reviewInfo.oneStarPercentage,
           starCount: 1,
         ),
       ],
@@ -51,7 +54,7 @@ class _RatingProgressTile extends StatelessWidget {
   });
 
   final double value;
-  final int percent;
+  final double percent;
   final int starCount;
 
   @override

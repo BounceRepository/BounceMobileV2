@@ -18,6 +18,7 @@ import 'package:bounce_patient_app/src/modules/notifications/services/interfaces
 import 'package:bounce_patient_app/src/modules/playlist/di.dart';
 import 'package:bounce_patient_app/src/modules/playlist/services/impls/song_list_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/playlist/services/interfaces/song_list_service.dart';
+import 'package:bounce_patient_app/src/modules/reviews/services/di.dart';
 import 'package:bounce_patient_app/src/modules/subscription/services/di.dart';
 import 'package:bounce_patient_app/src/modules/wallet/di.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
@@ -42,6 +43,7 @@ Future<void> init() async {
   subscriptionControllersInit(useFake: false);
   chatControllersInit(useFake: true);
   feedControllersInit(useFake: true);
+  reviewControllersInit(useFake: false);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
 
   //service
@@ -50,6 +52,7 @@ Future<void> init() async {
   subscriptionServicesInit();
   chatServicesInit();
   feedServicesInit();
+  reviewServicesInit();
   diContainer
       .registerLazySingleton<IAuthService>(() => AuthServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<ImageService>(() => ImageServiceImpl());

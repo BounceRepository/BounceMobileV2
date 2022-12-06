@@ -13,6 +13,7 @@ import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding
 import 'package:bounce_patient_app/src/config/di_container.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/audio_player_controller.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/song_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/reviews/controllers/review_controller.dart';
 import 'package:bounce_patient_app/src/modules/subscription/controllers/subscription_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
@@ -48,6 +49,7 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<TrendingFeedController>()),
         ChangeNotifierProvider(create: (_) => diContainer<CommentController>()),
         ChangeNotifierProvider(create: (_) => diContainer<TrendingCommentController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<ReviewController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),
         ChangeNotifierProvider(create: (_) => PhysicalHealthLevelController()),
         ChangeNotifierProvider(create: (_) => MentalHealthLevelController()),
