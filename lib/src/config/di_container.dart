@@ -35,7 +35,7 @@ Future<void> init() async {
   // controllers
   authControllersInit(useFake: false);
   moodControllersInit(useFake: true);
-  notificationControllersInit(useFake: true);
+  notificationControllersInit(useFake: false);
   appointmentControllersInit(useFake: false);
   playListControllersInit(useFake: true);
   walletControllersInit(useFake: false);

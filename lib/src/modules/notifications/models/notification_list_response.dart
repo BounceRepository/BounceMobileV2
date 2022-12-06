@@ -13,8 +13,8 @@ class NotificationListResponse {
     return NotificationListResponse(
       unReadNotificationCount: json['total'] - json['totalOpenNotifcation'],
       notifications: List<NotificationMessage>.from(
-        (json['records'] as List<int>).map<NotificationMessage>(
-          (x) => NotificationMessage.fromJson(x as Map<String, dynamic>),
+        (json['records']).map<NotificationMessage>(
+          (x) => NotificationMessage.fromJson(x),
         ),
       ),
     );
