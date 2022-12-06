@@ -30,7 +30,7 @@ class ReviewController extends BaseController {
 
   Future<void> create({
     required int therapistId,
-    required int rating,
+    required double rating,
     required String comment,
     required DateTime createdAt,
   }) async {

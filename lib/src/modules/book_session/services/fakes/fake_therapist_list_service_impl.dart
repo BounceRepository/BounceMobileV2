@@ -39,7 +39,7 @@ final therapist = Therapist(
     'Psychiatry',
   ],
   desc: lorem(paragraphs: 1, words: 20),
-  profilePicture: AppImages.image,
+  profilePicture: AppImages.joinSession,
   rating: 4.5,
   experience: 5,
   phoneNumber: '0902000121',

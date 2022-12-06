@@ -9,11 +9,13 @@ class CustomStarRating extends StatelessWidget {
     this.size,
     required this.rating,
     this.isNotSelectable = true,
+    this.onRatingUpdate,
   }) : super(key: key);
 
   final double rating;
   final double? size;
   final bool isNotSelectable;
+  final void Function(double)? onRatingUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,7 @@ class CustomStarRating extends StatelessWidget {
           half: const Icon(Icons.star_half, color: color),
           empty: const Icon(Icons.star_border, color: color),
         ),
-        onRatingUpdate: (rating) {
-          print(rating);
-        },
+        onRatingUpdate: onRatingUpdate ?? (value) {},
       ),
     );
   }

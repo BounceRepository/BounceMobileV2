@@ -12,13 +12,13 @@ class ReviewServiceImpl implements IReviewService {
   @override
   Future<void> create({
     required int therapistId,
-    required int rating,
+    required double rating,
     required String comment,
     required DateTime createdAt,
   }) async {
     var body = {
       "reviewComment": comment,
-      "reviewStarCount": rating.toString(),
+      "reviewStarCount": rating.toInt().toString(),
       "time": createdAt.toIso8601String(),
       "therapistUserId": therapistId.toString()
     };

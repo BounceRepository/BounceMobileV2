@@ -56,8 +56,7 @@ class TherapistDetailScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    DefaultAppImage(size: 100.h),
-                    //CircularNetworkImage(image: therapist.profilePicture, size: 100.h),
+                    CustomCacheNetworkImage(image: therapist.profilePicture, size: 100.h),
                     SizedBox(height: 24.h),
                     Text(
                       therapist.fullNameWithTitle,

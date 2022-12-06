@@ -4,7 +4,7 @@ abstract class IReviewService {
   Future<ReviewInfo> getTherapistReviewInfo(int id);
   Future<void> create({
     required int therapistId,
-    required int rating,
+    required double rating,
     required String comment,
     required DateTime createdAt,
   });
