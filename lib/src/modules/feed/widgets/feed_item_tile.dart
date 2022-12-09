@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bounce_patient_app/src/modules/feed/controllers/controllers.dart';
 import 'package:bounce_patient_app/src/modules/feed/models/feed.dart';
 import 'package:bounce_patient_app/src/modules/feed/screens/comment_list_bottomsheet.dart';
@@ -25,8 +23,18 @@ class FeedItemTile<T extends FeedController> extends StatelessWidget {
   void likeFeed(BuildContext context) async {
     try {
       await context.read<T>().likeFeed(feed.id);
-    } on Failure catch (e) {
-      log(e.message);
+    } on Failure {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: AppColors.error,
+          content: Text(
+            'Failed to like',
+            style: AppText.bold500(context).copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
     }
   }
 
@@ -91,6 +99,7 @@ class FeedItemTile<T extends FeedController> extends StatelessWidget {
                       children: [
                         _ActionButton(
                           icon: ChatRoomIcons.like,
+                          color: feed.isLikedByMe ? AppColors.primary : null,
                           value: feed.likesCount,
                           onTap: () => likeFeed(context),
                         ),
@@ -125,12 +134,14 @@ class _ActionButton extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.onTap,
+    this.color,
     this.value,
   }) : super(key: key);
 
   final String icon;
   final int? value;
   final Function() onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +166,7 @@ class _ActionButton extends StatelessWidget {
             height: 20.h,
             width: 20.h,
             fit: BoxFit.cover,
+            color: color,
           ),
           SizedBox(width: 8.85.w),
           Text(

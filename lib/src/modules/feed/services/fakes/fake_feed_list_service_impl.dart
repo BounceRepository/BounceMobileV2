@@ -28,6 +28,7 @@ class FakeFeedListServiceImpl implements IFeedListService {
           Random().nextInt(12) + 1,
           Random().nextInt(25) + 1,
         ),
+        isLikedByMe: Random().nextBool(),
       ),
     );
   }

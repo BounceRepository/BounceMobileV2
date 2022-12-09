@@ -97,7 +97,7 @@ class _LocationOptionTile extends StatelessWidget {
       onTap: () {
         Navigator.pop(context, title);
       },
-      child: OptionTile(
+      child: SelectableOptionTile(
         title: title,
         isSelected: isSelected,
       ),
@@ -105,8 +105,8 @@ class _LocationOptionTile extends StatelessWidget {
   }
 }
 
-class OptionTile extends StatelessWidget {
-  const OptionTile({
+class SelectableOptionTile extends StatelessWidget {
+  const SelectableOptionTile({
     super.key,
     required this.isSelected,
     required this.title,

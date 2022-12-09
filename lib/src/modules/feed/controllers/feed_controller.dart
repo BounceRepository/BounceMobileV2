@@ -27,24 +27,26 @@ abstract class FeedController extends BaseController {
 
   Future<void> likeFeed(int feedId) async {
     try {
-      _increaseFeedLikeCount(feedId);
+      _computeFeedLike(feedId);
       await _feedService.likeFeed(feedId);
     } on Failure {
-      _decreaseFeedLikeCount(feedId);
+      _computeFeedLike(feedId);
       rethrow;
     }
   }
 
-  void _increaseFeedLikeCount(int feedId) {
+  void _computeFeedLike(int feedId) {
     final feed = feeds.firstWhere((element) => element.id == feedId);
-    feed.likesCount++;
-    notifyListeners();
-  }
 
-  void _decreaseFeedLikeCount(int feedId) {
-    final feed = feeds.firstWhere((element) => element.id == feedId);
-    feed.likesCount--;
-    notifyListeners();
+    if (feed.isLikedByMe == true) {
+      feed.isLikedByMe = false;
+      feed.likesCount--;
+      notifyListeners();
+    } else {
+      feed.isLikedByMe = true;
+      feed.likesCount++;
+      notifyListeners();
+    }
   }
 }
 

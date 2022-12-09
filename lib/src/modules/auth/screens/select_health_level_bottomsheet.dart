@@ -78,7 +78,7 @@ class _OptionListView<T extends HealthLevelController> extends StatelessWidget {
 
               return InkWell(
                 onTap: () => controller.select(healthLevel),
-                child: OptionTile(
+                child: SelectableOptionTile(
                   isSelected: healthLevel.isSelected,
                   title: healthLevel.title,
                   onChanged: (value) => controller.select(healthLevel),
