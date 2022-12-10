@@ -127,16 +127,4 @@ class AudioPlayerController extends ChangeNotifier {
       throw Failure(_errorMessage);
     }
   }
-
-  Future<String> _loadAsset(Song song) async {
-    try {
-      final player = AudioCache(prefix: 'assets/audio/');
-      final url = await player.load(song.file.path);
-      return url.path;
-    } on Exception {
-      throw Failure(_errorMessage);
-    } on Error {
-      throw Failure(_errorMessage);
-    }
-  }
 }

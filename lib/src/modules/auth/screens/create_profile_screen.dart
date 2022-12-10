@@ -172,6 +172,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SafeArea(
+            bottom: false,
             child: CustomChildScrollView(
               padding: EdgeInsets.symmetric(
                 vertical: 40.h,

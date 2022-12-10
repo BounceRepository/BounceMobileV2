@@ -91,7 +91,7 @@ class _SongPlayerScreenState extends State<SongPlayerScreen> {
                 const Spacer(),
                 _PlayTrackSection(song),
                 const Spacer(),
-                _PlayerControlsSection(song),
+                const _PlayerControlsSection(),
                 const Spacer(),
               ],
             ),
@@ -213,9 +213,7 @@ class _PlayTrackSection extends StatelessWidget {
 }
 
 class _PlayerControlsSection extends StatelessWidget {
-  const _PlayerControlsSection(this.song);
-
-  final Song song;
+  const _PlayerControlsSection();
 
   void play(BuildContext context) async {
     final controller = context.read<AudioPlayerController>();

@@ -93,7 +93,7 @@ class _ContentView extends StatelessWidget {
         child: Column(
           children: [
             const _Indicator(),
-            const Spacer(),
+            SizedBox(height: 25.h),
             Text(
               currentOnboarding.title,
               textAlign: TextAlign.center,

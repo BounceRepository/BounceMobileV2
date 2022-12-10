@@ -32,7 +32,7 @@ class _BodyState<T extends HealthLevelController> extends State<_Body<T>> {
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
-      height: 400.h,
+      height: 420.h,
       body: [
         const BottomSheetDragger(),
         SizedBox(height: 30.h),
@@ -53,7 +53,7 @@ class _BodyState<T extends HealthLevelController> extends State<_Body<T>> {
             }
           },
         ),
-        SizedBox(height: 40.h),
+        SizedBox(height: 20.h),
       ],
     );
   }

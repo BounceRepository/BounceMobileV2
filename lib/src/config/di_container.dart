@@ -35,13 +35,13 @@ Future<void> init() async {
   // controllers
   authControllersInit(useFake: true);
   moodControllersInit(useFake: true);
-  notificationControllersInit(useFake: true);
-  appointmentControllersInit(useFake: false);
+  notificationControllersInit(useFake: false);
+  appointmentControllersInit(useFake: true);
   playListControllersInit(useFake: true);
   walletControllersInit(useFake: false);
   journalControllersInit(useFake: true);
   subscriptionControllersInit(useFake: true);
-  chatControllersInit(useFake: true);
+  chatControllersInit(useFake: false);
   feedControllersInit(useFake: true);
   reviewControllersInit(useFake: false);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
