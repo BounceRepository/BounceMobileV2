@@ -43,9 +43,9 @@ class Session {
       therapistId: json['therapistId'],
       therapistName: json['therapistFirstName'],
       therapistDiscipline: json['discipline'],
-      date: DateTime.parse(json["date"]),
-      startTime: DateTimeUtils.convertDateTimeToAMPM(DateTime.parse(json["startTime"])),
-      isCompleted: false,
+      date: json["date"] == null ? DateTime.now() : DateTime.parse(json["date"]),
+      startTime: json["startTime"],
+      isCompleted: json["isCompleted"],
     );
   }
 

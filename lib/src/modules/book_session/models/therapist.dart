@@ -10,7 +10,7 @@ class Therapist {
   final String firstName;
   final String lastName;
   final List<String> certifications;
-  final List<String> specializations;
+  final String specializations;
   final String about;
   final String profilePicture;
   final double rating;
@@ -18,7 +18,7 @@ class Therapist {
   final String phoneNumber;
   final WorkingHours workingHours;
   final int serviceChargePerHour;
-  final int reviews;
+  final int reviewCount;
   final int patientCount;
 
   Therapist({
@@ -35,7 +35,7 @@ class Therapist {
     required this.phoneNumber,
     required this.workingHours,
     required this.serviceChargePerHour,
-    required this.reviews,
+    required this.reviewCount,
     required this.patientCount,
   });
 
@@ -49,34 +49,33 @@ class Therapist {
   }
 
   String get specializationList {
-    return specializations.join(' • ');
+    return specializations;
   }
 
   factory Therapist.fromJson(Map<String, dynamic> json) {
     return Therapist(
       id: json['therapistId'] as int,
-      title: 'Dr',
+      title: json["title"],
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       about: json['about'] as String,
-      specializations: [json['specialization']],
+      specializations: json['specialization'],
       // specializations: List<String>.from(json["specialization"].map((x) => x)),
       //certifications: List<String>.from((map['certifications'] as List<String>)),
       certifications: ['PHD'],
       // certifications: [json['descipline']],
       profilePicture: json['picturePath'] as String,
-      rating: json['ratings'].toDouble(),
       experience: int.parse(json['yearsExperience']),
       phoneNumber: json['phoneNUmber'] as String,
       workingHours: WorkingHours.fromJson(
-        //workDays: List<String>.from(json["listofDays"].map((x) => x)),
-        workDays: ['Monday', 'Tuesday', 'Friday'],
+        workDays: List<String>.from(json["consultaionDays"].map((x) => x)),
+        //workDays: ['Monday', 'Tuesday', 'Friday'],
         startTime: json['startTime'],
         endTime: json['endTime'],
       ),
       serviceChargePerHour: json['serviceChargePerHoure'],
-      reviews: 10,
-      //reviews: json['revew'] as int,
+      rating: json['reviewRatio'].toDouble(),
+      reviewCount: json['reviewCount'],
       patientCount: json['numberOfPatient'] as int,
     );
   }

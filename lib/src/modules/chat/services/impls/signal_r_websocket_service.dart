@@ -16,7 +16,7 @@ class SignalRWebsocketService implements IChatWebsocketService {
   final _messageController = StreamController<ChatMessage>();
 
   @override
-  Future<void> openConnection() async { 
+  Future<void> openConnection() async {
     try {
       await _openChatConnection();
     } on Failure {

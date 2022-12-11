@@ -2,18 +2,20 @@ import 'dart:math';
 
 import 'package:bounce_patient_app/src/modules/journal/models/journal.dart';
 import 'package:bounce_patient_app/src/modules/journal/services/interfaces/journal_service.dart';
-import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
 class FakeJournalServiceImpl implements IJournalService {
   @override
-  Future<void> create(Journal journal) async {
+  Future<void> create({
+    required String title,
+    required String text,
+  }) async {
     await fakeNetworkDelay();
   }
 
   @override
-  Future<void> delete(String id) async {
+  Future<void> delete(int id) async {
     await fakeNetworkDelay();
   }
 
@@ -23,7 +25,7 @@ class FakeJournalServiceImpl implements IJournalService {
     return List.generate(
         4,
         (index) => Journal(
-              id: Utils.getGuid(),
+              id: Random().nextInt(1000),
               title: lorem(paragraphs: 1, words: Random().nextInt(7) + 3),
               content: lorem(
                   paragraphs: Random().nextInt(5), words: Random().nextInt(70) + 20),

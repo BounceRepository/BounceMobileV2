@@ -40,7 +40,7 @@ Future<void> init() async {
   appointmentControllersInit(useFake: useFake);
   playListControllersInit(useFake: true);
   walletControllersInit(useFake: useFake);
-  journalControllersInit(useFake: true);
+  journalControllersInit(useFake: useFake);
   subscriptionControllersInit(useFake: useFake);
   chatControllersInit(useFake: useFake);
   feedControllersInit(useFake: useFake);

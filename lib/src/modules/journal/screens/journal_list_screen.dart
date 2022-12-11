@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/journal/controllers/journal_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/journal/screens/edit_journal_screen.dart';
 import 'package:bounce_patient_app/src/modules/journal/widgets/journal_list_item.dart';
@@ -20,6 +21,8 @@ class JournalListScreen extends StatefulWidget {
 }
 
 class _JournalListScreenState extends State<JournalListScreen> {
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -33,8 +36,11 @@ class _JournalListScreenState extends State<JournalListScreen> {
 
     if (controller.journals.isEmpty || controller.failure != null) {
       try {
+        setState(() => isLoading = true);
         await controller.getAllJournal();
+        setState(() => isLoading = false);
       } on Failure catch (e) {
+        setState(() => isLoading = false);
         controller.setFailure(e);
       }
     }
@@ -43,10 +49,17 @@ class _JournalListScreenState extends State<JournalListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(label: 'My Journal'),
+      appBar: CustomAppBar(
+        label: 'My Journal',
+        leading: BackButton(
+          onPressed: () {
+            AppNavigator.to(context, const DashboardView(selectedIndex: 4));
+          },
+        ),
+      ),
       body: Consumer<JournalController>(
         builder: (context, controller, _) {
-          if (controller.isLoading) {
+          if (isLoading) {
             return const CustomLoadingIndicator();
           }
 

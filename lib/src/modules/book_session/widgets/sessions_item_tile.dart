@@ -1,4 +1,5 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/join_session_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/reschedule_session_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -64,7 +65,7 @@ class SessionItemTile extends StatelessWidget {
                 children: [
                   _DateTimeView(
                     icon: Icons.schedule_outlined,
-                    dateTime: session.period,
+                    dateTime: session.startTime,
                   ),
                   SizedBox(width: 17.25.w),
                   _DateTimeView(
@@ -105,8 +106,8 @@ class SessionItemTile extends StatelessWidget {
                             backgroundColor: Colors.transparent,
                             padding: EdgeInsets.zero,
                             onTap: () {
-                              // AppNavigator.to(
-                              //     context, JoinSessionScreen(therapist: therapist));
+                              AppNavigator.to(context,
+                                  JoinSessionScreen(therapistId: session.therapistId));
                             },
                           ),
                         ),

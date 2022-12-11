@@ -11,9 +11,47 @@ class DioApiServiceImpl implements IApi {
   final dio = Dio();
 
   @override
-  Future delete({required String url}) async {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future delete({
+    required String url,
+     Map<String, String>? headers,
+  }) async {
+    headers ??= <String, String>{};
+
+    final token = AppSession.authToken;
+    if (token != null) {
+      var authHeader = <String, String>{'Authorization': 'Bearer ' + token};
+      dio.options.headers.addAll(authHeader);
+    }
+
+    log('URL--$url');
+    log('HEADERS--${dio.options.headers}');
+
+    try {
+      final response = await dio.delete(url);
+
+      if (response.statusCode == 200) {
+        log('PAYLOAD--${response.data}');
+        return response.data;
+      }
+    } on DioError catch (e) {
+      final response = e.response;
+
+      if (response != null) {
+        log('ERROR--${response.data}');
+        final message = response.data['message'];
+        if (message != null) {
+          throw Failure(message);
+        }
+      }
+
+      throw InternalFailure();
+    } on SocketException {
+      throw Failure('No Internet connection 😑');
+    } on FormatException {
+      throw InternalFailure();
+    } on Error {
+      throw InternalFailure();
+    }
   }
 
   @override

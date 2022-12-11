@@ -15,19 +15,19 @@ class JournalController extends BaseController {
   Future<void> getAllJournal() async {
     reset();
     try {
-      setIsLoading(true);
       _journals = await _journalService.getAllJournal();
-      setIsLoading(false);
+      notifyListeners();
     } on Failure {
-      setIsLoading(false);
       rethrow;
     }
   }
 
   Future<void> create(Journal journal) async {
     try {
-      await _journalService.create(journal);
-      _journals.add(journal);
+      await _journalService.create(
+        text: journal.content,
+        title: journal.title,
+      );
       notifyListeners();
     } on Failure {
       rethrow;
@@ -45,7 +45,7 @@ class JournalController extends BaseController {
     }
   }
 
-  Future<void> delete(String id) async {
+  Future<void> delete(int id) async {
     try {
       await _journalService.delete(id);
       journals.removeWhere((element) => element.id == id);

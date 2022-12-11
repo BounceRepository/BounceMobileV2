@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:bounce_patient_app/src/modules/journal/controllers/journal_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/journal/models/journal.dart';
-import 'package:bounce_patient_app/src/shared/utils/utils.dart';
+import 'package:bounce_patient_app/src/modules/journal/screens/journal_list_screen.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
+import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_divider.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +28,7 @@ class EditJournalScreen extends StatefulWidget {
 class _EditJournalScreenState extends State<EditJournalScreen> {
   late final TextEditingController titleController;
   late final TextEditingController contentController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -65,21 +70,26 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
   Future<void> create() async {
     final controller = context.read<JournalController>();
     final journal = Journal(
-      id: Utils.getGuid(),
+      id: Random().nextInt(100000),
       title: titleController.text,
       content: contentController.text,
       createdAt: DateTime.now(),
     );
 
     try {
+      setState(() => isLoading = true);
       await controller.create(journal);
+      setState(() => isLoading = false);
+      AppNavigator.removeAllUntil(context, const JournalListScreen());
       Messenger.success(message: 'Created successfully');
+      getAllJournals();
     } on Failure {
+      setState(() => isLoading = false);
       rethrow;
     }
   }
 
-  Future<void> update(String id) async {
+  Future<void> update(int id) async {
     final controller = context.read<JournalController>();
     final journal = Journal(
       id: id,
@@ -89,10 +99,25 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
     );
 
     try {
+      setState(() => isLoading = true);
       await controller.update(journal);
+      setState(() => isLoading = false);
+      AppNavigator.removeAllUntil(context, const JournalListScreen());
       Messenger.success(message: 'Updated successfully');
+      getAllJournals();
     } on Failure {
+      setState(() => isLoading = false);
       rethrow;
+    }
+  }
+
+  void getAllJournals() async {
+    final controller = context.read<JournalController>();
+
+    try {
+      await controller.getAllJournal();
+    } on Failure catch (e) {
+      Messenger.error(message: e.message);
     }
   }
 
@@ -111,12 +136,15 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
           appBar: CustomAppBar(
             label: 'My Journal',
             actions: [
-              AppBarIcon(
-                Icons.check,
-                onTap: () {
-                  submit();
-                  Navigator.pop(context);
-                },
+              SizedBox(
+                height: 40.h,
+                width: 70.w,
+                child: AppButton(
+                  label: 'Done',
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  isLoading: isLoading,
+                  onTap: submit,
+                ),
               ),
             ],
           ),

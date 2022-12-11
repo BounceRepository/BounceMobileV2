@@ -86,8 +86,11 @@ class SessionServiceImpl implements IBookAppointmentService {
 
   @override
   Future<Therapist> getOneTherapist(int id) async {
+    var url = BookAppointmentURLS.getOneTherapist + '?id=$id';
+
     try {
-      throw InternalFailure();
+      final response = await _api.get(url);
+      return Therapist.fromJson(response['data']);
     } on Failure {
       rethrow;
     } on Exception {

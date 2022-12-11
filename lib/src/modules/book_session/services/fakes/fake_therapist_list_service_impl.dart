@@ -34,10 +34,7 @@ final therapist = Therapist(
   certifications: [
     'PHD',
   ],
-  specializations: [
-    'Psycology',
-    'Psychiatry',
-  ],
+  specializations: 'Psycology',
   about: lorem(paragraphs: 1, words: 20),
   profilePicture: AppImages.joinSession,
   rating: 4.5,
@@ -53,6 +50,6 @@ final therapist = Therapist(
     endTime: '8:00 AM',
   ),
   serviceChargePerHour: Random().nextInt(5000),
-  reviews: Random().nextInt(200),
+  reviewCount: Random().nextInt(200),
   patientCount: Random().nextInt(2000),
 );

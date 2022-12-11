@@ -105,7 +105,10 @@ class HttpApiServiceImpl implements IApi {
   }
 
   @override
-  Future delete({required String url}) {
+  Future delete({
+    required String url,
+    Map<String, String>? headers,
+  }) {
     // TODO: implement delete
     throw UnimplementedError();
   }

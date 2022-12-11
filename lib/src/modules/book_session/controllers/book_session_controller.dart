@@ -1,4 +1,5 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
+import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/book_appointment_service.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/shared/controllers/base_controller.dart';
@@ -70,6 +71,19 @@ class BookSessionController extends BaseController {
         endTime: endTime,
       );
       setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
+      rethrow;
+    }
+  }
+
+  Future<Therapist> getOneTherapist(int therapistId) async {
+    reset();
+    try {
+      setIsLoading(true);
+      final result = await _service.getOneTherapist(therapistId);
+      setIsLoading(false);
+      return result;
     } on Failure {
       setIsLoading(false);
       rethrow;

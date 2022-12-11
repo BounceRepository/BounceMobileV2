@@ -1,6 +1,7 @@
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/prescription_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -161,17 +162,25 @@ class _MessageBox extends StatelessWidget {
       ),
     );
     final participant = message.receiverId;
+    final user = AppSession.user;
 
+    if (user == null) {
+      return const SizedBox.shrink();
+    }
+
+    final profilePicture = user.profilePicture;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: isMe
           ? [
               contentArea,
               SizedBox(width: 12.w),
-              CustomCacheNetworkImage(
-                image: AppImages.joinSession,
-                size: 40.h,
-              ),
+              profilePicture != null
+                  ? CustomCacheNetworkImage(
+                      image: profilePicture,
+                      size: 40.h,
+                    )
+                  : DefaultAppImage(size: 40.h),
               SizedBox(width: AppPadding.horizontal),
             ]
           : [

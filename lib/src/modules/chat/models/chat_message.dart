@@ -39,7 +39,7 @@ class ChatMessage {
         receiverId: map["receieverId"] as int,
         senderId: 0,
         type: MessageType.text,
-        createdAt: DateTime.parse(map["time"]),
+        createdAt: DateTime.parse(map["time"]).toLocal(),
         file: map['files'] != null ? map['files'] as String : null,
       );
     }

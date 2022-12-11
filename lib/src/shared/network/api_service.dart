@@ -20,5 +20,8 @@ abstract class IApi {
     Map<String, String>? headers,
     bool isFormData = false,
   });
-  Future<dynamic> delete({required String url});
+  Future<dynamic> delete({
+    required String url,
+     Map<String, String>? headers,
+  });
 }

@@ -56,7 +56,7 @@ class TherapistBookingSummary extends StatelessWidget {
                     CustomStarRating(rating: therapist.rating),
                     SizedBox(width: 8.w),
                     Text(
-                      '${therapist.reviews} Reviews',
+                      '${therapist.reviewCount} Reviews',
                       style: AppText.bold500(context).copyWith(
                         fontSize: 10.sp,
                       ),

@@ -32,7 +32,7 @@ class ChatServiceImpl implements IChatService {
     required String connectionId,
   }) async {
     var body = {
-      "revceieverId": 11,
+      "revceieverId": chatMessage.receiverId,
       "message": chatMessage.text,
       "filePaths": 'chatMessage.file',
       "connectionId": connectionId,
