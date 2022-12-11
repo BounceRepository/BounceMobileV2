@@ -31,7 +31,7 @@ class FakeBookAppointmentServiceImpl implements IBookAppointmentService {
   Future<void> rescheduleSession({
     required int sessionId,
     required String startTime,
-    required String endTime,
+    required DateTime date,
   }) async {
     await fakeNetworkDelay();
     //throw InternalFailure();

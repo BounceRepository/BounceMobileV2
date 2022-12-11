@@ -17,7 +17,7 @@ abstract class IBookAppointmentService {
   Future<void> rescheduleSession({
     required int sessionId,
     required String startTime,
-    required String endTime,
+    required DateTime date,
   });
   Future<Therapist> getOneTherapist(int id);
 }

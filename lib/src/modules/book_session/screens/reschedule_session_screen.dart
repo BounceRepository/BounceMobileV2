@@ -1,15 +1,18 @@
 import 'package:bounce_patient_app/src/modules/book_session/controllers/controllers.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/select_availability_view.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/select_date_view.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
-import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,17 +28,27 @@ class RescheduleSessionScreen extends StatefulWidget {
 }
 
 class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
-  Therapist? therapist;
+  Therapist? _therapist;
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
     context.read<BookSessionController>().init();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getTherapist();
+    });
   }
 
-  void getTherapist() async {}
+  void getTherapist() async {
+    final controller = context.read<BookSessionController>();
+
+    try {
+      _therapist = await controller.getOneTherapist(widget.session.therapistId);
+    } on Failure catch (e) {
+      controller.setFailure(e);
+    }
+  }
 
   void confirm() async {
     final controller = context.read<BookSessionController>();
@@ -45,15 +58,33 @@ class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
       return;
     }
 
-    final selectedTimeInDateTime = DateTimeUtils.convertAMPMToDateTime(selectedTime);
     try {
-      // await controller.rescheduleAppointment(
-      //   sessionId: sessionId,
-      //   startTime: startTime,
-      //   endTime: endTime,
-      // );
+      setState(() => isLoading = true);
+      await controller.rescheduleAppointment(
+        sessionId: widget.session.id,
+        startTime: selectedTime,
+        date: controller.selectedDate,
+      );
+      getAllSessions();
+      setState(() => isLoading = false);
+      AppNavigator.to(context, const UpComingSessionListScreen());
+      Messenger.success(message: 'Session reschedule success');
     } on Failure catch (e) {
+      setState(() => isLoading = false);
       Messenger.error(message: e.message);
+    }
+  }
+
+  void getAllSessions() async {
+    final controller = context.read<SessionListController>();
+
+    try {
+      await Future.wait([
+        controller.getAllSession(),
+        controller.getUpComingSessions(),
+      ]);
+    } on Failure {
+      Messenger.error(message: 'Failed to refetch sessions');
     }
   }
 
@@ -61,39 +92,61 @@ class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: const CustomAppBar(label: 'Reschedule'),
-      body: isLoading
-          ? const CustomLoadingIndicator()
-          : therapist != null
-              ? SizedBox(
-                  height: size.height,
-                  width: size.width,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 56.h),
-                      const SelectDateView(),
-                      SizedBox(height: 48.h),
-                      SelectAvailableTimeView(therapist: therapist!),
-                      const Spacer(),
-                      Padding(
-                        padding: AppPadding.symetricHorizontalOnly,
-                        child: Consumer<BookSessionController>(
-                          builder: (context, controller, _) {
-                            return AppButton(
-                              label: 'Confirm Schedule',
-                              isLoading: controller.isLoading,
-                              onTap: confirm,
-                            );
-                          },
-                        ),
+    return WillPopScope(
+      onWillPop: () {
+        AppNavigator.to(context, const DashboardView());
+        return Future.value(true);
+      },
+      child: Scaffold(
+          appBar: CustomAppBar(
+            label: 'Reschedule',
+            leading: BackButton(
+              onPressed: () {
+                AppNavigator.to(context, const DashboardView(selectedIndex: 4));
+              },
+            ),
+          ),
+          body: Consumer<BookSessionController>(
+            builder: (context, controller, _) {
+              if (controller.isLoading) {
+                return const CustomLoadingIndicator();
+              }
+
+              final error = controller.failure;
+              if (error != null) {
+                return ErrorScreen(error: error, retry: getTherapist);
+              }
+
+              final therapist = _therapist;
+              if (therapist == null) {
+                return const SizedBox.shrink();
+              }
+
+              return SizedBox(
+                height: size.height,
+                width: size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 56.h),
+                    const SelectDateView(),
+                    SizedBox(height: 48.h),
+                    SelectAvailableTimeView(therapist: therapist),
+                    const Spacer(),
+                    Padding(
+                      padding: AppPadding.symetricHorizontalOnly,
+                      child: AppButton(
+                        label: 'Confirm Schedule',
+                        isLoading: isLoading,
+                        onTap: confirm,
                       ),
-                      SizedBox(height: 40.h),
-                    ],
-                  ),
-                )
-              : const SizedBox.shrink(),
+                    ),
+                    SizedBox(height: 40.h),
+                  ],
+                ),
+              );
+            },
+          )),
     );
   }
 }

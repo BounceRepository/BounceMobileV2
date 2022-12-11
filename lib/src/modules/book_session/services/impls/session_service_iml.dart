@@ -5,7 +5,6 @@ import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
-import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 
 class SessionServiceImpl implements IBookAppointmentService {
   final IApi _api;
@@ -65,12 +64,12 @@ class SessionServiceImpl implements IBookAppointmentService {
   Future<void> rescheduleSession({
     required int sessionId,
     required String startTime,
-    required String endTime,
+    required DateTime date,
   }) async {
     var body = {
       "sessionId": sessionId,
-      "startTime": DateTimeUtils.convertAMPMToDateTime(startTime).toIso8601String(),
-      "endTime": DateTimeUtils.convertAMPMToDateTime(endTime).toIso8601String(),
+      "startTime": startTime,
+      "date": date.toLocal().toIso8601String()
     };
 
     try {

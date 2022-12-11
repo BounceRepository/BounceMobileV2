@@ -48,52 +48,58 @@ class _JournalListScreenState extends State<JournalListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        label: 'My Journal',
-        leading: BackButton(
-          onPressed: () {
-            AppNavigator.to(context, const DashboardView(selectedIndex: 4));
+    return WillPopScope(
+       onWillPop: () {
+        AppNavigator.to(context, const DashboardView(selectedIndex: 4));
+        return Future.value(true);
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          label: 'My Journal',
+          leading: BackButton(
+            onPressed: () {
+              AppNavigator.to(context, const DashboardView(selectedIndex: 4));
+            },
+          ),
+        ),
+        body: Consumer<JournalController>(
+          builder: (context, controller, _) {
+            if (isLoading) {
+              return const CustomLoadingIndicator();
+            }
+    
+            final error = controller.failure;
+            if (error != null) {
+              return ErrorScreen(error: error, retry: getAllJournal);
+            }
+    
+            if (controller.journals.isEmpty) {
+              return const EmptyListView(
+                icon: AppIcons.emptyJournal,
+                text: 'You have not made a journal',
+              );
+            }
+    
+            final journals = controller.journals.reversed.toList();
+            return ListView.builder(
+              padding: AppPadding.defaultPadding,
+              physics: const BouncingScrollPhysics(),
+              itemCount: journals.length,
+              itemBuilder: (context, index) {
+                final journal = journals[index];
+                return JournalListItem(journal);
+              },
+            );
           },
         ),
-      ),
-      body: Consumer<JournalController>(
-        builder: (context, controller, _) {
-          if (isLoading) {
-            return const CustomLoadingIndicator();
-          }
-
-          final error = controller.failure;
-          if (error != null) {
-            return ErrorScreen(error: error, retry: getAllJournal);
-          }
-
-          if (controller.journals.isEmpty) {
-            return const EmptyListView(
-              icon: AppIcons.emptyJournal,
-              text: 'You have not made a journal',
-            );
-          }
-
-          final journals = controller.journals.reversed.toList();
-          return ListView.builder(
-            padding: AppPadding.defaultPadding,
-            physics: const BouncingScrollPhysics(),
-            itemCount: journals.length,
-            itemBuilder: (context, index) {
-              final journal = journals[index];
-              return JournalListItem(journal);
-            },
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AppNavigator.to(context, const EditJournalScreen());
-        },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            AppNavigator.to(context, const EditJournalScreen());
+          },
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ),
     );

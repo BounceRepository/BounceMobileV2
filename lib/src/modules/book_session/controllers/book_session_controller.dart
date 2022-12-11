@@ -20,6 +20,7 @@ class BookSessionController extends BaseController {
     reason = null;
     selectedTime = null;
     note = null;
+    selectedDate = DateTime.now();
   }
 
   Future<String> bookSession({
@@ -61,18 +62,15 @@ class BookSessionController extends BaseController {
   Future<void> rescheduleAppointment({
     required int sessionId,
     required String startTime,
-    required String endTime,
+    required DateTime date,
   }) async {
     try {
-      setIsLoading(true);
       await _service.rescheduleSession(
         sessionId: sessionId,
         startTime: startTime,
-        endTime: endTime,
+        date: date,
       );
-      setIsLoading(false);
     } on Failure {
-      setIsLoading(false);
       rethrow;
     }
   }
