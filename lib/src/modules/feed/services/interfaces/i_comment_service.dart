@@ -6,6 +6,12 @@ abstract class ICommentListService {
 }
 
 abstract class ICommentService {
-  Future<void> createComment(Comment comment);
-  Future<void> createReply(Comment comment);
+  Future<void> createComment({
+    required String comment,
+    required int feedId,
+  });
+  Future<void> createReply({
+    required String comment,
+    required int commentId,
+  });
 }

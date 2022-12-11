@@ -5,6 +5,12 @@ import 'package:bounce_patient_app/src/modules/feed/services/fakes/fake_comment_
 import 'package:bounce_patient_app/src/modules/feed/services/fakes/fake_comment_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/feed/services/fakes/fake_feed_list_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/feed/services/fakes/fake_feed_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/feed/services/impls/comment_list_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/feed/services/impls/comment_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/feed/services/impls/feed_list_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/feed/services/impls/feed_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/feed/services/interfaces/i_comment_service.dart';
+import 'package:bounce_patient_app/src/modules/feed/services/interfaces/i_feed_service.dart';
 
 void feedControllersInit({required bool useFake}) {
   _commentControllers(useFake: useFake);
@@ -40,6 +46,13 @@ void _commentControllers({required bool useFake}) {
 }
 
 void feedServicesInit() {
-  // diContainer
-  //     .registerLazySingleton<IFeedListService>(() => FeedListService(api: diContainer()));
+  diContainer
+      .registerLazySingleton<IFeedService>(() => FeedServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IFeedListService>(
+      () => FeedListServiceImpl(api: diContainer()));
+
+  diContainer.registerLazySingleton<ICommentService>(
+      () => CommentServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<ICommentListService>(
+      () => CommentListServiceImpl(api: diContainer()));
 }

@@ -44,6 +44,10 @@ class NotificationServiceImpl implements INotificationService {
       }
     } on Failure {
       rethrow;
+    } on Exception {
+      throw InternalFailure();
+    } on Error {
+      throw InternalFailure();
     }
   }
 
@@ -65,6 +69,8 @@ class NotificationServiceImpl implements INotificationService {
       throw InternalFailure();
     } on Error {
       throw InternalFailure();
+    } on Failure {
+      rethrow;
     }
   }
 

@@ -22,31 +22,42 @@ abstract class CommentController extends BaseController {
     reset();
     try {
       _comments = await _commentListService.getAllComment(feedId);
+      notifyListeners();
     } on Failure {
       rethrow;
     }
   }
 
-  Future<void> getReplyList(int feedId) async {
+  Future<void> getReplyList(int commentId) async {
     reset();
     try {
-      _replies = await _commentListService.getAllReply(feedId);
+      _replies = await _commentListService.getAllReply(commentId);
+      notifyListeners();
     } on Failure {
       rethrow;
     }
   }
 
-  Future<void> createComment(Comment comment) async {
+  Future<void> createComment({
+    required String comment,
+    required int feedId,
+  }) async {
     try {
-      await _commentService.createComment(comment);
+      await _commentService.createComment(comment: comment, feedId: feedId);
     } on Failure {
       rethrow;
     }
   }
 
-  Future<void> createReply(Comment comment) async {
+  Future<void> createReply({
+    required String comment,
+    required int commentId,
+  }) async {
     try {
-      await _commentService.createReply(comment);
+      await _commentService.createReply(
+        comment: comment,
+        commentId: commentId,
+      );
     } on Failure {
       rethrow;
     }

@@ -7,6 +7,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_divider.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
@@ -15,31 +16,38 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
-class FeedItemTile<T extends FeedController> extends StatelessWidget {
-  const FeedItemTile(this.feed, {Key? key}) : super(key: key);
+class FeedItemTile<T extends FeedController> extends StatefulWidget {
+  const FeedItemTile(this.feed, {Key? key, this.showComment = true}) : super(key: key);
 
   final Feed feed;
+  final bool showComment;
+
+  @override
+  State<FeedItemTile<T>> createState() => _FeedItemTileState<T>();
+}
+
+class _FeedItemTileState<T extends FeedController> extends State<FeedItemTile<T>> {
+  late bool isLikedByMe = widget.feed.isLikedByMe;
+  late int likesCount = widget.feed.likesCount;
 
   void likeFeed(BuildContext context) async {
     try {
-      await context.read<T>().likeFeed(feed.id);
+      isLikedByMe = !isLikedByMe;
+      likesCount++;
+      setState(() {});
+      await context.read<T>().likeFeed(widget.feed.id);
     } on Failure {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: AppColors.error,
-          content: Text(
-            'Failed to like',
-            style: AppText.bold500(context).copyWith(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
+      Messenger.error(message: 'Failed to like');
+      isLikedByMe = !isLikedByMe;
+      likesCount--;
+      setState(() {});
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final author = widget.feed.author;
+
     return Padding(
       padding: EdgeInsets.only(
         left: AppPadding.horizontal,
@@ -51,7 +59,9 @@ class FeedItemTile<T extends FeedController> extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DefaultAppImage(size: 35.h),
+              author.profilePicture != null
+                  ? CustomCacheNetworkImage(image: author.profilePicture!, size: 35.h)
+                  : DefaultAppImage(size: 35.h),
               SizedBox(width: 20.w),
               Expanded(
                 child: Column(
@@ -61,13 +71,13 @@ class FeedItemTile<T extends FeedController> extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          feed.author.userName.toTitleCase,
+                          widget.feed.author.name.toTitleCase,
                           style: AppText.bold600(context).copyWith(
                             fontSize: 14.sp,
                           ),
                         ),
                         Text(
-                          feed.formattedTime,
+                          widget.feed.formattedTime,
                           style: AppText.bold400(context).copyWith(
                             fontSize: 12.sp,
                             color: AppColors.grey3,
@@ -77,7 +87,7 @@ class FeedItemTile<T extends FeedController> extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     ReadMoreText(
-                      feed.message,
+                      widget.feed.message,
                       trimLines: 3,
                       trimMode: TrimMode.Line,
                       trimCollapsedText: 'Show more',
@@ -99,21 +109,24 @@ class FeedItemTile<T extends FeedController> extends StatelessWidget {
                       children: [
                         _ActionButton(
                           icon: ChatRoomIcons.like,
-                          color: feed.isLikedByMe ? AppColors.primary : null,
-                          value: feed.likesCount,
+                          color: isLikedByMe ? AppColors.primary : null,
+                          value: likesCount,
                           onTap: () => likeFeed(context),
                         ),
                         SizedBox(width: 29.7.w),
-                        _ActionButton(
-                          icon: ChatRoomIcons.comment,
-                          onTap: () {
-                            if (T == TrendingFeedController) {
-                              showCommentListBottomsheet<TrendingCommentController>(
-                                  context: context, feed: feed);
-                              return;
-                            }
-                          },
-                        ),
+                        widget.showComment
+                            ? _ActionButton(
+                                icon: ChatRoomIcons.comment,
+                                value: widget.feed.commentCount,
+                                onTap: () {
+                                  if (T == TrendingFeedController) {
+                                    showCommentListBottomsheet<TrendingCommentController>(
+                                        context: context, feed: widget.feed);
+                                    return;
+                                  }
+                                },
+                              )
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   ],
@@ -121,8 +134,11 @@ class FeedItemTile<T extends FeedController> extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 17.95.h),
-          const CustomDivider(),
+          widget.showComment
+              ? Column(
+                  children: [SizedBox(height: 17.95.h), const CustomDivider()],
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );

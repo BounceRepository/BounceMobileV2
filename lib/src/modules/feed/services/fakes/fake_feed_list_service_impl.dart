@@ -16,8 +16,7 @@ class FakeFeedListServiceImpl implements IFeedListService {
       (index) => Feed(
         id: Random().nextInt(10000),
         author: Author(
-          id: Random().nextInt(10000),
-          userName: lorem(paragraphs: 1, words: 2),
+          name: lorem(paragraphs: 1, words: 2),
           profilePicture: AppImages.joinSession,
         ),
         message: lorem(paragraphs: 1, words: Random().nextInt(60) + 20),

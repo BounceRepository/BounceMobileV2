@@ -16,8 +16,7 @@ class FakeCommentListServiceImpl implements ICommentListService {
         (index) => Comment(
               id: Random().nextInt(100),
               author: Author(
-                id: Random().nextInt(10000),
-                userName: lorem(paragraphs: 1, words: 2),
+                name: lorem(paragraphs: 1, words: 2),
                 profilePicture: AppImages.joinSession,
               ),
               message: lorem(paragraphs: 1, words: Random().nextInt(40) + 10),
@@ -38,8 +37,7 @@ class FakeCommentListServiceImpl implements ICommentListService {
         (index) => Comment(
               id: Random().nextInt(100),
               author: Author(
-                id: Random().nextInt(10000),
-                userName: lorem(paragraphs: 1, words: 2),
+                name: lorem(paragraphs: 1, words: 2),
                 profilePicture: AppImages.joinSession,
               ),
               message: lorem(paragraphs: 1, words: Random().nextInt(40) + 10),

@@ -1,6 +1,13 @@
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
+import 'package:bounce_patient_app/src/modules/feed/controllers/feed_controller.dart';
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -8,6 +15,7 @@ import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dar
 import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class AddFeedScreen extends StatefulWidget {
   const AddFeedScreen({super.key});
@@ -17,45 +25,99 @@ class AddFeedScreen extends StatefulWidget {
 }
 
 class _AddFeedScreenState extends State<AddFeedScreen> {
-  late final TextEditingController _textEditingController;
+  final _formKey = GlobalKey<FormState>();
+  late final TextEditingController messageController;
 
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController();
+    messageController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    messageController.dispose();
     super.dispose();
   }
 
-  void send() {
-    FocusScope.of(context).unfocus();
+  void send() async {
+    if (_formKey.currentState!.validate()) {
+      FocusScope.of(context).unfocus();
+
+      final controller = context.read<TrendingFeedController>();
+      final selectedFeedGroup = controller.selectedFeedGroup;
+
+      if (selectedFeedGroup == null) {
+        return;
+      }
+
+      final feedGroupId = Utils.getFeedGroupId(selectedFeedGroup);
+
+      if (feedGroupId == null) {
+        return;
+      }
+
+      try {
+        await controller.create(
+          message: messageController.text,
+          feedGroupId: feedGroupId,
+        );
+        AppNavigator.to(context, const DashboardView(selectedIndex: 3));
+        worker();
+        Messenger.success(message: 'New message added successfully');
+      } on Failure catch (e) {
+        Messenger.error(message: e.message);
+      }
+    }
+  }
+
+  void worker() async {
+    final controller = context.read<TrendingFeedController>();
+
+    try {
+      await controller.getFeedList();
+    } on Failure catch (e) {
+      Messenger.error(message: e.message);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = AppSession.user;
+
+    if (user == null) {
+      return const SizedBox.shrink();
+    }
+
+    final userProfilePicture = user.profilePicture;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: const CustomAppBar(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const _ChooseGroupSection(),
-              SizedBox(height: 20.h),
-              CustomTextField(
-                controller: _textEditingController,
-                hintText: 'What is wrong?',
-                filled: false,
-                textInputType: TextInputType.multiline,
-                maxLines: null,
-              ),
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const _ChooseGroupSection(),
+                SizedBox(height: 20.h),
+                CustomTextField(
+                  controller: messageController,
+                  hintText: 'What is wrong?',
+                  filled: false,
+                  textInputType: TextInputType.multiline,
+                  maxLines: null,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -64,12 +126,19 @@ class _AddFeedScreenState extends State<AddFeedScreen> {
               EdgeInsets.symmetric(horizontal: AppPadding.horizontal, vertical: 14.h),
           child: Row(
             children: [
-              DefaultAppImage(size: 48.h),
+              userProfilePicture != null
+                  ? CustomCacheNetworkImage(image: userProfilePicture, size: 48.h)
+                  : DefaultAppImage(size: 48.h),
               SizedBox(width: 12.w),
               Expanded(
-                child: AppButton(
-                  label: 'Send',
-                  onTap: send,
+                child: Consumer<TrendingFeedController>(
+                  builder: (context, controller, _) {
+                    return AppButton(
+                      label: 'Send',
+                      isLoading: controller.isLoading,
+                      onTap: send,
+                    );
+                  },
                 ),
               ),
             ],
@@ -99,6 +168,7 @@ class _ChooseGroupSectionState extends State<_ChooseGroupSection> {
 
         if (result != null) {
           label = result as String;
+          context.read<TrendingFeedController>().selectedFeedGroup = result;
           setState(() {});
         }
       },

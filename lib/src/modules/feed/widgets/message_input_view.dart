@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
@@ -40,6 +41,13 @@ class _FeedMessageInputViewState extends State<FeedMessageInputView> {
 
   @override
   Widget build(BuildContext context) {
+    final user = AppSession.user;
+
+    if (user == null) {
+      return const SizedBox.shrink();
+    }
+
+    final profilePicture = user.profilePicture;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -50,7 +58,9 @@ class _FeedMessageInputViewState extends State<FeedMessageInputView> {
         children: [
           Padding(
             padding: AppPadding.symetricHorizontalOnly,
-            child: DefaultAppImage(size: 48.h),
+            child: profilePicture != null
+                ? CustomCacheNetworkImage(image: profilePicture, size: 48.h)
+                : DefaultAppImage(size: 48.h),
           ),
           Expanded(
             child: CustomTextField(

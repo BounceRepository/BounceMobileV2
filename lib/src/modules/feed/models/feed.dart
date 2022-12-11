@@ -24,4 +24,17 @@ class Feed {
     final loadedTime = createdAt.toLocal();
     return timeago.format(loadedTime);
   }
+
+  factory Feed.fromJson(Map<String, dynamic> json) => Feed(
+        id: json["feedId"],
+        message: json["feed"],
+        isLikedByMe: json["likeedByMe"],
+        author: Author(
+          name: json["creator"],
+          profilePicture: json["picturePath"],
+        ),
+        likesCount: json["likesCount"],
+        createdAt: DateTime.parse(json["time"]),
+        commentCount: json["commentCount"],
+      );
 }

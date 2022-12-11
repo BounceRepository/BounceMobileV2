@@ -32,18 +32,19 @@ import 'package:get_it/get_it.dart';
 final diContainer = GetIt.instance;
 
 Future<void> init() async {
+  bool useFake = false;
   // controllers
-  authControllersInit(useFake: true);
+  authControllersInit(useFake: useFake);
   moodControllersInit(useFake: true);
-  notificationControllersInit(useFake: false);
-  appointmentControllersInit(useFake: true);
+  notificationControllersInit(useFake: useFake);
+  appointmentControllersInit(useFake: useFake);
   playListControllersInit(useFake: true);
-  walletControllersInit(useFake: false);
+  walletControllersInit(useFake: useFake);
   journalControllersInit(useFake: true);
-  subscriptionControllersInit(useFake: true);
-  chatControllersInit(useFake: false);
-  feedControllersInit(useFake: true);
-  reviewControllersInit(useFake: false);
+  subscriptionControllersInit(useFake: useFake);
+  chatControllersInit(useFake: useFake);
+  feedControllersInit(useFake: useFake);
+  reviewControllersInit(useFake: useFake);
   diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
 
   //service

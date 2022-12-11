@@ -15,12 +15,23 @@ abstract class FeedController extends BaseController {
   List<Feed> _feeds = [];
   List<Feed> get feeds => _feeds;
 
+  String? selectedFeedGroup;
+
   Future<void> getFeedList();
 
-  Future<void> create(Feed feed) async {
+  Future<void> create({
+    required String message,
+    required int feedGroupId,
+  }) async {
     try {
-      await _feedService.create(feed);
+      setIsLoading(true);
+      await _feedService.create(
+        message: message,
+        feedGroupId: feedGroupId,
+      );
+      setIsLoading(false);
     } on Failure {
+      setIsLoading(false);
       rethrow;
     }
   }

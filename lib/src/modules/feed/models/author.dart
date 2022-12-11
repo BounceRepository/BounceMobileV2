@@ -1,11 +1,19 @@
 class Author {
-  final int id;
-  final String userName;
-  final String profilePicture;
+  final String name;
+  final String? profilePicture;
 
   Author({
-    required this.id,
-    required this.userName,
+    required this.name,
     required this.profilePicture,
   });
+
+  factory Author.fromMap({
+    required String name,
+    required String? profilePicture,
+  }) {
+    return Author(
+      name: name,
+      profilePicture: profilePicture,
+    );
+  }
 }

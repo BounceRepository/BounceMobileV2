@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
+import 'package:bounce_patient_app/src/modules/chat/screens/chat_window_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +23,17 @@ class JoinSessionScreen extends StatefulWidget {
 }
 
 class _JoinSessionScreenState extends State<JoinSessionScreen> {
+  Therapist? _therapist;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    
 
     return Scaffold(
       extendBody: true,
@@ -56,7 +67,7 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
       ),
       bottomNavigationBar: ClipRRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+          filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
           child: Container(
             height: 250.h,
             padding: EdgeInsets.only(
@@ -66,11 +77,17 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
               bottom: 50.h,
             ),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              border: Border.all(color: Colors.white, width: 2),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(40.r),
                 topRight: Radius.circular(40.r),
+              ),
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black.withOpacity(.1),
+                  Colors.black,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
             ),
             child: Column(
@@ -122,7 +139,9 @@ class _ActionButtonsSection extends StatelessWidget {
       children: [
         button(
           icon: AppIcons.message,
-          onTap: () {},
+          onTap: () {
+            //AppNavigator.to(context, ChatWindowScreen(therapist: therapist));
+          },
         ),
         button(
           icon: AppIcons.call,
@@ -141,23 +160,22 @@ class _ActionButtonsSection extends StatelessWidget {
     required Function() onTap,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 22.w),
+      height: 68.h,
+      width: 68.h,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: Colors.white, width: 2),
-        gradient: RadialGradient(
-          colors: [
-            const Color(0xffFAFAFA),
-            const Color(0xffF6F6F6).withOpacity(.4),
-          ],
-        ),
+        color: Colors.white,
       ),
-      child: SvgPicture.asset(
-        icon,
-        height: 24.h,
-        width: 24.h,
-        fit: BoxFit.cover,
-        color: AppColors.primary,
+      child: Padding(
+        padding: EdgeInsets.all(20.sp),
+        child: SvgPicture.asset(
+          icon,
+          height: 24.h,
+          width: 24.h,
+          fit: BoxFit.cover,
+          color: AppColors.primary,
+        ),
       ),
     );
   }

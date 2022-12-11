@@ -2,7 +2,10 @@ import 'package:bounce_patient_app/src/modules/feed/models/feed.dart';
 
 abstract class IFeedService {
   Future<void> likeFeed(int feedId);
-  Future<void> create(Feed feed);
+  Future<void> create({
+    required String message,
+    required int feedGroupId,
+  });
 }
 
 abstract class IFeedListService {
