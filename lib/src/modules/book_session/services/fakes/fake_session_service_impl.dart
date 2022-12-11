@@ -14,7 +14,7 @@ class FakeBookAppointmentServiceImpl implements IBookAppointmentService {
     required String reason,
     required int therapistId,
     required double price,
-    required String time,
+    required String startTime,
     required DateTime date,
   }) async {
     await fakeNetworkDelay();

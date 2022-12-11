@@ -1,7 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class NavbarItem extends Equatable {
+class NavbarItem {
   final String label;
   final String icon;
   final Widget screen;

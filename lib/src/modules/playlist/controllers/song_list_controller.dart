@@ -31,4 +31,9 @@ class SongListController extends BaseController {
       rethrow;
     }
   }
+
+  void clear() {
+    _songs.clear();
+    _myPlaylist.clear();
+  }
 }

@@ -54,4 +54,8 @@ class JournalController extends BaseController {
       rethrow;
     }
   }
+
+  void clear() {
+    _journals.clear();
+  }
 }

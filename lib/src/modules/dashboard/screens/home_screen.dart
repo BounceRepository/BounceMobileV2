@@ -8,6 +8,7 @@ import 'package:bounce_patient_app/src/modules/notifications/controllers/notific
 import 'package:bounce_patient_app/src/modules/notifications/screens/notification_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/notifications/widgets/notification_bell.dart';
 import 'package:bounce_patient_app/src/modules/playlist/screens/discover_screen.dart';
+import 'package:bounce_patient_app/src/modules/subscription/screens/care_plans_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
@@ -69,14 +70,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(height: 26.h),
                     const MoodIconsView(),
                     const _SessionsCard(),
-                    SizedBox(height: 40.h),
+                    SizedBox(height: 26.h),
                     const _ChatRoomSection(),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 26.h),
                     const _QuoteCard(),
+                    const _PlanExpiredCard(),
                     SizedBox(height: 26.h),
                     therapistCard(context),
                     SizedBox(height: 26.h),
-                    const _ArticlesSection(),
+                    //const _ArticlesSection(),
                   ],
                 ),
               ),
@@ -371,6 +373,84 @@ class _QuoteCard extends StatelessWidget {
             AppIcons.quote,
             width: 24.w,
             height: 20.h,
+            fit: BoxFit.cover,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PlanExpiredCard extends StatelessWidget {
+  const _PlanExpiredCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 26.h,
+        right: AppPadding.horizontal,
+        left: AppPadding.horizontal,
+      ),
+      padding: EdgeInsets.only(
+        top: 17.6.h,
+        left: 16.w,
+        bottom: 17.6.h,
+        right: 16.w,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.r),
+        color: AppColors.primary,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Plan Expired',
+                  style: AppText.bold700(context).copyWith(
+                    fontSize: 18.sp,
+                    color: AppColors.lightVersion,
+                  ),
+                ),
+                Text(
+                  'Get back chat access and meditation sessions',
+                  style: AppText.bold300(context).copyWith(
+                    fontSize: 14.sp,
+                    color: AppColors.lightVersion,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    AppNavigator.to(context, const CarePlansScreen());
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        'Buy More',
+                        style: AppText.bold700(context).copyWith(
+                          fontSize: 16.sp,
+                          color: AppColors.lightVersion,
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: AppColors.lightVersion,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 36.w),
+          SvgPicture.asset(
+            AppIcons.meditation,
+            width: 84.w,
+            height: 64.h,
             fit: BoxFit.cover,
           ),
         ],

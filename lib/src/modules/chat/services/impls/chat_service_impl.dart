@@ -11,7 +11,7 @@ class ChatServiceImpl implements IChatService {
 
   @override
   Future<List<ChatMessage>> getAllMessage({required int receiverId}) async {
-    var url = ChatApiUrls.getAllChatMessage + '?receiverId=1';
+    var url = ChatApiUrls.getAllChatMessage + '?receiverId=$receiverId';
 
     try {
       final response = await _api.get(url);

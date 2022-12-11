@@ -64,19 +64,13 @@ class _UpComingSessionListViewState extends State<_UpComingSessionListView> {
   void getAllUpcomingSession() async {
     final controller = context.read<SessionListController>();
 
-    try {
-      await controller.getUpComingSessions();
-    } on Failure catch (e) {
-      controller.setFailure(e);
+    if (controller.upComingSessions.isEmpty) {
+      try {
+        await controller.getUpComingSessions();
+      } on Failure catch (e) {
+        controller.setFailure(e);
+      }
     }
-
-    // if (controller.upComingSessions.isEmpty) {
-    //   try {
-    //     await controller.getUpComingSessions();
-    //   } on Failure catch (e) {
-    //     controller.setFailure(e);
-    //   }
-    // }
   }
 
   @override

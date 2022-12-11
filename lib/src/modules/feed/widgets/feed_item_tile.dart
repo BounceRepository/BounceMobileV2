@@ -27,20 +27,12 @@ class FeedItemTile<T extends FeedController> extends StatefulWidget {
 }
 
 class _FeedItemTileState<T extends FeedController> extends State<FeedItemTile<T>> {
-  late bool isLikedByMe = widget.feed.isLikedByMe;
-  late int likesCount = widget.feed.likesCount;
-
   void likeFeed(BuildContext context) async {
     try {
-      isLikedByMe = !isLikedByMe;
-      likesCount++;
-      setState(() {});
       await context.read<T>().likeFeed(widget.feed.id);
+      setState(() {});
     } on Failure {
       Messenger.error(message: 'Failed to like');
-      isLikedByMe = !isLikedByMe;
-      likesCount--;
-      setState(() {});
     }
   }
 
@@ -109,8 +101,8 @@ class _FeedItemTileState<T extends FeedController> extends State<FeedItemTile<T>
                       children: [
                         _ActionButton(
                           icon: ChatRoomIcons.like,
-                          color: isLikedByMe ? AppColors.primary : null,
-                          value: likesCount,
+                          color: widget.feed.isLikedByMe ? AppColors.primary : null,
+                          value: widget.feed.likesCount,
                           onTap: () => likeFeed(context),
                         ),
                         SizedBox(width: 29.7.w),

@@ -75,4 +75,9 @@ class ChatListController extends BaseController {
       }
     }
   }
+
+  void clear() {
+    _connectionId = null;
+    _messages.clear();
+  }
 }

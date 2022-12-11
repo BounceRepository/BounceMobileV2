@@ -24,4 +24,17 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- The Agora SDK requires Bluetooth permissions in case users are using Bluetooth devices.-->
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- Provide required visibility configuration for API level 30 and above -->
+    <queries>
+        <!-- If your app checks for EMAIL support -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:scheme="mailto" />
+        </intent>
+        <!-- If your app checks for CALL support -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="tel" />
+        </intent>
+    </queries>
 </manifest>

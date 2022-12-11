@@ -11,6 +11,8 @@ class SessionListController extends BaseController {
 
   List<Session> _upComingSessions = [];
   List<Session> get upComingSessions => _upComingSessions;
+  final List<Session> _todayUpComingSessions = [];
+  List<Session> get todayUpComingSessions => _todayUpComingSessions;
   List<Session> _sessions = [];
   List<Session> get sessions => _sessions;
   List<Session> _completedSessions = [];
@@ -21,6 +23,19 @@ class SessionListController extends BaseController {
     try {
       setIsLoading(true);
       _upComingSessions = await _sessionListService.getAllUpComing();
+
+      if (upComingSessions.isNotEmpty) {
+        for (final session in upComingSessions) {
+          final date = session.date;
+          final today = DateTime.now();
+
+          if (date.day == today.day &&
+              date.month == today.month &&
+              date.year == today.year) {
+            _todayUpComingSessions.add(session);
+          }
+        }
+      }
       setIsLoading(false);
     } on Failure {
       setIsLoading(false);
@@ -40,5 +55,11 @@ class SessionListController extends BaseController {
       setIsLoading(false);
       rethrow;
     }
+  }
+
+  void clear() {
+    _sessions.clear();
+    _upComingSessions.clear();
+    _completedSessions.clear();
   }
 }

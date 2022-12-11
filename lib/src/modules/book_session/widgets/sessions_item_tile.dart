@@ -63,12 +63,12 @@ class SessionItemTile extends StatelessWidget {
               SizedBox(height: 12.h),
               Row(
                 children: [
-                  _DateTimeView(
+                  SessionDateTimeView(
                     icon: Icons.schedule_outlined,
                     dateTime: session.startTime,
                   ),
                   SizedBox(width: 17.25.w),
-                  _DateTimeView(
+                  SessionDateTimeView(
                     icon: Icons.calendar_month,
                     dateTime: DateTimeUtils.getDateFullStr(session.date),
                   ),
@@ -121,8 +121,8 @@ class SessionItemTile extends StatelessWidget {
   }
 }
 
-class _DateTimeView extends StatelessWidget {
-  const _DateTimeView({
+class SessionDateTimeView extends StatelessWidget {
+  const SessionDateTimeView({
     Key? key,
     required this.icon,
     required this.dateTime,

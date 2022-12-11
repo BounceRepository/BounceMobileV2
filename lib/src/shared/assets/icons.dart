@@ -25,6 +25,7 @@ class AppIcons {
   static const send = 'assets/icons/send.svg';
   static const prescription = 'assets/icons/prescription.svg';
   static const emptyJournal = 'assets/icons/empty-journal.svg';
+  static const meditation = 'assets/icons/meditation.svg';
 }
 
 class MusicIcons {

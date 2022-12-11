@@ -10,7 +10,7 @@ abstract class IBookAppointmentService {
     required int patientId,
     required int therapistId,
     required double price,
-    required String time,
+    required String startTime,
     required DateTime date,
   });
   Future<void> confirmPayment(String trxRef);

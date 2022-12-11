@@ -19,13 +19,14 @@ class SessionServiceImpl implements IBookAppointmentService {
     required String reason,
     required int therapistId,
     required double price,
-    required String time,
+    required String startTime,
     required DateTime date,
   }) async {
     var body = {
       "appointmentType": appointmentType.name,
       "paymentType": paymentType.name,
       "problemDecription": reason,
+      "startTime": startTime,
       "therapistId": therapistId,
       "price": price.toInt(),
       "totalAMount": price.toInt(),

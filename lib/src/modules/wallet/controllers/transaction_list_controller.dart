@@ -42,4 +42,10 @@ class TransactionListController extends BaseController {
       rethrow;
     }
   }
+
+  void clear() {
+    _transactions.clear();
+    _paymenttransactions.clear();
+    _topUptransactions.clear();
+  }
 }

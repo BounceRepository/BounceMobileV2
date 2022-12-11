@@ -51,4 +51,9 @@ class NotificationController extends BaseController {
     unReadNotificationCount = 0;
     notifyListeners();
   }
+
+  void clear() {
+    unReadNotificationCount = 0;
+    _notifications.clear();
+  }
 }

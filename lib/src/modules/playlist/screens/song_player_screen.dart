@@ -262,7 +262,7 @@ class _PlayerControlsSection extends StatelessWidget {
         SizedBox(width: 20.w),
         button(
           //icon: MusicIcons.play,
-          icon: controller.isPlaying ? Icons.play_arrow_outlined : Icons.pause,
+          icon: controller.isPlaying ? Icons.pause : Icons.play_arrow_outlined,
           size: 72.h,
           iconSize: 60.h,
           showShadow: true,

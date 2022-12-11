@@ -59,6 +59,10 @@ abstract class FeedController extends BaseController {
       notifyListeners();
     }
   }
+
+  void clear() {
+    _feeds.clear();
+  }
 }
 
 class TrendingFeedController extends FeedController {

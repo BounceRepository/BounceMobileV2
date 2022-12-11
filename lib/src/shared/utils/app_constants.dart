@@ -73,6 +73,7 @@ class AppConstants {
     MoodIcons.happy,
     MoodIcons.manic,
   ];
+  static const agoraAppId = '';
 }
 
 Future<void> fakeNetworkDelay({int seconds = 2}) async {

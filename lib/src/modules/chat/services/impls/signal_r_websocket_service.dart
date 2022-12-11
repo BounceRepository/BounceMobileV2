@@ -52,7 +52,7 @@ class SignalRWebsocketService implements IChatWebsocketService {
                   ChatMessage.fromMap(dataList.first as Map<String, dynamic>);
 
               //TODO: Change != to ==
-              if (chatMessage.receiverId != user.id) {
+              if (chatMessage.receiverId == user.id) {
                 _messageController.sink.add(chatMessage);
               }
             }

@@ -41,7 +41,7 @@ class BookSessionController extends BaseController {
         patientId: patientId,
         therapistId: therapistId,
         price: price,
-        time: time,
+        startTime: time,
         date: date,
       );
 
