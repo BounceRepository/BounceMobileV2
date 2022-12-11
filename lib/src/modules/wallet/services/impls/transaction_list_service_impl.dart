@@ -23,8 +23,10 @@ class TransactionListServiceImpl implements ITransactionListService {
 
   @override
   Future<List<Transaction>> getAllTopUp() async {
+    var url = WalletApiURLS.getTopUpTransactionList + '?filter=topup';
+
     try {
-      final response = await _api.get(WalletApiURLS.getTopUpTransactionList);
+      final response = await _api.get(url);
       final List collection = response['data'];
       return collection.map((json) => Transaction.fromJson(json)).toList();
     } on Failure {

@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/screens/top_up_bottomsheet.dart';
@@ -7,6 +8,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/sliver_appbar_delegate.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -83,37 +85,39 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Scaffold(body: CustomLoadingIndicator());
-    }
-
-    final error = _error;
-    if (error != null) {
-      return ErrorScreen(error: error, retry: init);
-    }
-
     final tabs = ['All', 'Top Up', 'Payment'];
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
-        appBar: const CustomAppBar(label: 'My Wallet'),
-        body: NestedScrollView(
-          physics: const BouncingScrollPhysics(),
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              const _BalanceSection(),
-              _TabsSection(tabs),
-            ];
-          },
-          body: const TabBarView(
-            physics: BouncingScrollPhysics(),
-            children: [
-              AllTransactionListScreen(),
-              TopUpTransactionListScreen(),
-              PaymentTransactionListScreen(),
-            ],
+        appBar: CustomAppBar(
+          label: 'My Wallet',
+          leading: BackButton(
+            onPressed: () {
+              AppNavigator.to(context, const DashboardView(selectedIndex: 4));
+            },
           ),
         ),
+        body: isLoading
+            ? const CustomLoadingIndicator()
+            : _error != null
+                ? ErrorScreen(error: _error!, retry: init)
+                : NestedScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[
+                        const _BalanceSection(),
+                        _TabsSection(tabs),
+                      ];
+                    },
+                    body: const TabBarView(
+                      physics: BouncingScrollPhysics(),
+                      children: [
+                        AllTransactionListScreen(),
+                        TopUpTransactionListScreen(),
+                        PaymentTransactionListScreen(),
+                      ],
+                    ),
+                  ),
       ),
     );
   }

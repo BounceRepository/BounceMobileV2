@@ -9,7 +9,7 @@ class WalletApiURLS {
   static const topUp = APIURLs.baseURL + '/transaction/WalletTop';
   static const confirmTopUp = APIURLs.baseURL + '/transaction/ComfirmTopUp';
   static const getTopUpTransactionList =
-      APIURLs.baseURL + '/transaction/WalletTransactionHistory';
+      APIURLs.baseURL + '/transaction/GetTransactionHistory';
 }
 
 class PaymentApiURLS {
