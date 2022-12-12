@@ -48,6 +48,16 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
     }
   }
 
+  void onRefresh() async {
+    final controller = context.read<NotificationController>();
+
+    try {
+      await controller.getAllNotification();
+    } on Failure catch (e) {
+      controller.setFailure(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,14 +83,18 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
             }
 
             final notifications = controller.notifications;
-            return ListView.builder(
-              itemCount: notifications.length,
-              padding: AppPadding.defaultPadding,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                final notification = notifications[index];
-                return NotificationTile(notification);
-              },
+            return RefreshIndicator(
+              onRefresh: () async => onRefresh(),
+              child: ListView.builder(
+                itemCount: notifications.length,
+                padding: AppPadding.defaultPadding,
+                physics:
+                    const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+                itemBuilder: (context, index) {
+                  final notification = notifications[index];
+                  return NotificationTile(notification);
+                },
+              ),
             );
           },
         ),

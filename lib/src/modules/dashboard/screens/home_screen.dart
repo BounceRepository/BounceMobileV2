@@ -423,8 +423,9 @@ class _PlanExpiredCard extends StatelessWidget {
                     color: AppColors.lightVersion,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
+                SizedBox(height: 12.h),
+                GestureDetector(
+                  onTap: () {
                     AppNavigator.to(context, const CarePlansScreen());
                   },
                   child: Row(

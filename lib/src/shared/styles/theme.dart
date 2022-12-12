@@ -10,7 +10,6 @@ class AppTheme {
     return ThemeData(
       primaryColor: AppColors.primary,
       primaryColorLight: AppColors.primary,
-      canvasColor: Colors.transparent,
       colorScheme: ColorScheme.fromSwatch(
         brightness: Brightness.light,
         primarySwatch: MaterialColor(

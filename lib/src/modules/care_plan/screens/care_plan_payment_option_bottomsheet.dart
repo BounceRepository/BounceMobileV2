@@ -6,10 +6,8 @@ import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.
 import 'package:bounce_patient_app/src/modules/wallet/controllers/payment_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
-import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/transaction_ref.dart';
-import 'package:bounce_patient_app/src/modules/wallet/services/impls/flutterwave_payment_service.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
@@ -20,7 +18,6 @@ import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottoms
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/amount_text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_divider.dart';
-import 'package:bounce_patient_app/src/shared/widgets/others/select_payment_type_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -47,29 +44,20 @@ class _SelectPaymentOptionBody extends StatefulWidget {
 }
 
 class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
-  PaymentOption? selectedPaymentOption;
   bool isLoading = false;
 
   void submit() async {
-    if (selectedPaymentOption != null) {
-      try {
-        setState(() => isLoading = true);
-        final paymentDto = await subscribeToPlan();
+    try {
+      setState(() => isLoading = true);
+      final paymentDto = await subscribeToPlan();
 
-        if (paymentDto != null) {
-          // if (selectedPaymentOption == PaymentOption.card) {
-          //   await payWithCard(paymentDto);
-          // }
-
-          if (selectedPaymentOption == PaymentOption.wallet) {
-            await payWithWallet(TransactionRef(value: paymentDto.trxRef));
-          }
-        }
-        setState(() => isLoading = false);
-      } on Failure catch (e) {
-        setState(() => isLoading = false);
-        Messenger.error(message: e.message);
+      if (paymentDto != null) {
+        await payWithWallet(TransactionRef(value: paymentDto.trxRef));
       }
+      setState(() => isLoading = false);
+    } on Failure catch (e) {
+      setState(() => isLoading = false);
+      Messenger.error(message: e.message);
     }
   }
 
@@ -94,18 +82,6 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
       }
     }
     return null;
-  }
-
-  Future<void> payWithCard(PaymentDto paymentDto) async {
-    try {
-      final paymentService = FlutterwavePaymentService(context: context);
-      final trxRef = await paymentService.processTransaction(
-        paymentDto: paymentDto,
-        paymentOption: selectedPaymentOption!,
-      );
-    } on Failure {
-      rethrow;
-    }
   }
 
   Future<void> payWithWallet(TransactionRef trxRef) async {
@@ -137,7 +113,7 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
-      height: 488.h,
+      height: 320.h,
       padding: EdgeInsets.zero,
       body: [
         isLoading
@@ -156,29 +132,25 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
         Padding(
           padding: EdgeInsets.only(left: AppPadding.horizontal),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${widget.plan.title} - ${widget.plan.parentPlantitle} subscription'),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: AmountText(
-                  amount: widget.plan.amount,
-                  amountFontSize: 24.sp,
-                ),
+              Text(
+                '${widget.plan.title} - ${widget.plan.parentPlantitle} subscription',
+                style: AppText.bold300(context),
+              ),
+              AmountText(
+                amount: widget.plan.amount,
+                amountFontSize: 24.sp,
               ),
             ],
           ),
         ),
         SizedBox(height: 16.h),
         const CustomDivider(),
-        SizedBox(height: 41.h),
-        Padding(
-          padding: AppPadding.symetricHorizontalOnly,
-          child: SelectPaymentTypeView(
-            options: const [PaymentOption.wallet, PaymentOption.card],
-            onSelect: (paymentOption) {
-              selectedPaymentOption = paymentOption;
-            },
+        SizedBox(height: 16.h),
+        Text(
+          'Payment with ThriveX Wallet',
+          style: AppText.bold300(context).copyWith(
+            fontSize: 11.sp,
           ),
         ),
         const Spacer(),

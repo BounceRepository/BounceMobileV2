@@ -26,8 +26,8 @@ class CarePlanServiceImpl implements ICarePlanService {
   }
 
   @override
-  Future<TransactionRef> choosePlan(SubPlan plan) async {
-    var body = {"planId": plan.id};
+  Future<TransactionRef> choosePlan(SubPlan subPlan) async {
+    var body = {"planId": subPlan.parentPlanId, "subPlanId": subPlan.id};
 
     try {
       final response = await _api.post(SubscriptionApiURLS.subscribeToPlan, body: body);

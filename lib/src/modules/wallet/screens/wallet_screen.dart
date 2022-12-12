@@ -68,18 +68,14 @@ class _WalletScreenState extends State<WalletScreen> {
   Future<void> getTransactions() async {
     final controller = context.read<TransactionListController>();
 
-    if (controller.allTransactions.isEmpty &&
-        controller.topUpTransactions.isEmpty &&
-        controller.paymentTransactions.isEmpty) {
-      try {
-        await Future.wait([
-          controller.getAll(),
-          controller.getAllPayment(),
-          controller.getAllTopUp(),
-        ]);
-      } on Failure {
-        rethrow;
-      }
+    try {
+      await Future.wait([
+        controller.getAll(),
+        controller.getAllPayment(),
+        controller.getAllTopUp(),
+      ]);
+    } on Failure {
+      rethrow;
     }
   }
 
@@ -106,19 +102,21 @@ class _WalletScreenState extends State<WalletScreen> {
               ? const CustomLoadingIndicator()
               : _error != null
                   ? ErrorScreen(error: _error!, retry: init)
-                  : RefreshIndicator(
-                      onRefresh: () async => init(),
-                      child: NestedScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        headerSliverBuilder:
-                            (BuildContext context, bool innerBoxIsScrolled) {
-                          return <Widget>[
-                            const _BalanceSection(),
-                            _TabsSection(tabs),
-                          ];
-                        },
-                        body: const TabBarView(
-                          physics: BouncingScrollPhysics(),
+                  : NestedScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                          parent: BouncingScrollPhysics()),
+                      headerSliverBuilder:
+                          (BuildContext context, bool innerBoxIsScrolled) {
+                        return <Widget>[
+                          const _BalanceSection(),
+                          _TabsSection(tabs),
+                        ];
+                      },
+                      body: RefreshIndicator(
+                        onRefresh: () async => init(),
+                        child: const TabBarView(
+                          physics: AlwaysScrollableScrollPhysics(
+                              parent: BouncingScrollPhysics()),
                           children: [
                             AllTransactionListScreen(),
                             TopUpTransactionListScreen(),

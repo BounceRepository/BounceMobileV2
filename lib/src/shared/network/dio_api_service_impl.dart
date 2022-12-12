@@ -13,7 +13,7 @@ class DioApiServiceImpl implements IApi {
   @override
   Future delete({
     required String url,
-     Map<String, String>? headers,
+    Map<String, String>? headers,
   }) async {
     headers ??= <String, String>{};
 
@@ -23,21 +23,21 @@ class DioApiServiceImpl implements IApi {
       dio.options.headers.addAll(authHeader);
     }
 
-    log('URL--$url');
-    log('HEADERS--${dio.options.headers}');
+    log('URL==>$url');
+    log('HEADERS==>${dio.options.headers}');
 
     try {
       final response = await dio.delete(url);
 
       if (response.statusCode == 200) {
-        log('PAYLOAD--${response.data}');
+        log('PAYLOAD==>${response.data}');
         return response.data;
       }
     } on DioError catch (e) {
       final response = e.response;
 
       if (response != null) {
-        log('ERROR--${response.data}');
+        log('ERROR==>${response.data}');
         final message = response.data['message'];
         if (message != null) {
           throw Failure(message);
@@ -64,21 +64,21 @@ class DioApiServiceImpl implements IApi {
       dio.options.headers.addAll(authHeader);
     }
 
-    log('URL--$url');
-    log('HEADERS--${dio.options.headers}');
+    log('URL==>$url');
+    log('HEADERS==>${dio.options.headers}');
 
     try {
       final response = await dio.get(url);
 
       if (response.statusCode == 200) {
-        log('PAYLOAD--${response.data}');
+        log('PAYLOAD==>${response.data}');
         return response.data;
       }
     } on DioError catch (e) {
       final response = e.response;
 
       if (response != null) {
-        log('ERROR--${response.data}');
+        log('ERROR==>${response.data}');
         final message = response.data['message'];
         if (message != null) {
           throw Failure(message);
@@ -117,25 +117,25 @@ class DioApiServiceImpl implements IApi {
       data = json.encode(body);
     }
 
-    log('URL--$url');
-    log('HEADERS--${dio.options.headers}');
+    log('URL==>$url');
+    log('HEADERS==>${dio.options.headers}');
     if (isFormData) {
-      log('BODY--${data.fields.toString()}');
+      log('BODY==>${data.fields.toString()}');
     } else {
-      log('BODY--$data');
+      log('BODY==>$data');
     }
 
     try {
       final response = await dio.patch(url, data: body);
       if (response.statusCode == 200) {
-        log('PAYLOAD--${response.data}');
+        log('PAYLOAD==>${response.data}');
         return response.data;
       }
     } on DioError catch (e) {
       final response = e.response;
 
       if (response != null) {
-        log('ERROR--${response.data}');
+        log('ERROR==>${response.data}');
         final message = response.data['message'];
         if (message != null) {
           throw Failure(message);
@@ -174,25 +174,25 @@ class DioApiServiceImpl implements IApi {
       data = json.encode(body);
     }
 
-    log('URL--$url');
-    log('HEADERS--${dio.options.headers}');
+    log('URL==>$url');
+    log('HEADERS==>${dio.options.headers}');
     if (isFormData) {
-      log('BODY--${data.fields.toString()}');
+      log('BODY==>${data.fields.toString()}');
     } else {
-      log('BODY--$data');
+      log('BODY==>$data');
     }
 
     try {
       final response = await dio.post(url, data: body);
       if (response.statusCode == 200) {
-        log('PAYLOAD--${response.data}');
+        log('PAYLOAD==>${response.data}');
         return response.data;
       }
     } on DioError catch (e) {
       final response = e.response;
 
       if (response != null) {
-        log('ERROR--${response.data}');
+        log('ERROR==>${response.data}');
         final message = response.data['message'];
         if (message != null) {
           throw Failure(message);
@@ -223,14 +223,14 @@ class DioApiServiceImpl implements IApi {
 
     var data = json.encode(body);
 
-    log('URL--$url');
-    log('HEADERS--${dio.options.headers}');
-    log('BODY--$data');
+    log('URL==>$url');
+    log('HEADERS==>${dio.options.headers}');
+    log('BODY==>$data');
 
     try {
       final response = await dio.put(url, data: data);
       if (response.statusCode == 200) {
-        log('PAYLOAD--${response.data}');
+        log('PAYLOAD==>${response.data}');
         return response.data;
       }
     } on DioError {

@@ -81,7 +81,7 @@ class SubPlan {
   factory SubPlan.fromJson(
       {required Map<String, dynamic> json, required String parentPlanTitle}) {
     return SubPlan(
-      id: json['id'] as int,
+      id: json['subPlanId'] as int,
       parentPlanId: json['pLanId'] as int,
       title: json['title'] as String,
       parentPlantitle: parentPlanTitle,
