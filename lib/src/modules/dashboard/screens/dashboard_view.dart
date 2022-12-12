@@ -14,9 +14,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class DashboardView extends StatefulWidget {
-  const DashboardView({Key? key, this.selectedIndex = 0}) : super(key: key);
+  const DashboardView({
+    Key? key,
+    this.selectedIndex = 0,
+    this.feedInitialIndex = 0,
+  }) : super(key: key);
 
   final int selectedIndex;
+  final int feedInitialIndex;
 
   @override
   State<DashboardView> createState() => _DashboardViewState();
@@ -24,13 +29,19 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   late int _selectedIndex = widget.selectedIndex;
-  static const screens = <Widget>[
-    HomeScreen(),
-    TherapistListScreen(),
-    PlayListScreen(),
-    FeedScreen(),
-    AccountScreen(),
-  ];
+  List<Widget> screens = <Widget>[];
+
+  @override
+  void initState() {
+    super.initState();
+    screens = <Widget>[
+      const HomeScreen(),
+      const TherapistListScreen(),
+      const PlayListScreen(),
+      FeedScreen(initialIndex: widget.feedInitialIndex),
+      const AccountScreen(),
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {

@@ -111,8 +111,42 @@ class _FeedItemTileState<T extends FeedController> extends State<FeedItemTile<T>
                                 icon: ChatRoomIcons.comment,
                                 value: widget.feed.commentCount,
                                 onTap: () {
-                                  if (T == TrendingFeedController) {
-                                    showCommentListBottomsheet<TrendingCommentController>(
+                                  if (T == MyFeedController) {
+                                    showCommentListBottomsheet<MyCommentController>(
+                                        context: context, feed: widget.feed);
+                                    return;
+                                  }
+                                  if (T == RelationShipFeedController) {
+                                    showCommentListBottomsheet<
+                                            RelationShipCommentController>(
+                                        context: context, feed: widget.feed);
+                                    return;
+                                  }
+                                  if (T == SelfCareFeedController) {
+                                    showCommentListBottomsheet<SelfCareCommentController>(
+                                        context: context, feed: widget.feed);
+                                    return;
+                                  }
+                                  if (T == WorkEthnicsFeedController) {
+                                    showCommentListBottomsheet<
+                                            WorkEthnicsCommentController>(
+                                        context: context, feed: widget.feed);
+                                    return;
+                                  }
+                                  if (T == FamilyFeedController) {
+                                    showCommentListBottomsheet<FamilyCommentController>(
+                                        context: context, feed: widget.feed);
+                                    return;
+                                  }
+                                  if (T == SexualityFeedController) {
+                                    showCommentListBottomsheet<
+                                            SexualityCommentController>(
+                                        context: context, feed: widget.feed);
+                                    return;
+                                  }
+                                  if (T == ParentingFeedController) {
+                                    showCommentListBottomsheet<
+                                            ParentingCommentController>(
                                         context: context, feed: widget.feed);
                                     return;
                                   }

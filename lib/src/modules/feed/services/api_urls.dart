@@ -6,7 +6,7 @@ class FeedApiURLS {
   static const likeFeed = APIURLs.baseURL + '/Notification/LikeFeed';
   // Feed
   static const createFeed = APIURLs.baseURL + '/Notification/CreateNewFeed';
-  static const getAllFeed = APIURLs.baseURL + '/Notification/GetAllFeeds';
+  static const getAllFeed = APIURLs.baseURL + '/Notification/GetAllFeedsGroupById';
 
   // comment
   static const createComment = APIURLs.baseURL + '/Notification/CreateComment';

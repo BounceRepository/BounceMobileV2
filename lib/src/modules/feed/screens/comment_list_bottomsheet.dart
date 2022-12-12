@@ -111,8 +111,20 @@ class _BodyState<T extends CommentController> extends State<_Body<T>> {
             ),
             body: [
               const CommentBottomsheetTitle(title: 'Comments'),
-              if (T == TrendingCommentController)
-                FeedItemTile<TrendingFeedController>(widget.feed, showComment: false),
+              if (T == MyCommentController)
+                FeedItemTile<MyFeedController>(widget.feed, showComment: false),
+              if (T == RelationShipCommentController)
+                FeedItemTile<RelationShipFeedController>(widget.feed, showComment: false),
+              if (T == SelfCareCommentController)
+                FeedItemTile<SelfCareFeedController>(widget.feed, showComment: false),
+              if (T == WorkEthnicsCommentController)
+                FeedItemTile<WorkEthnicsFeedController>(widget.feed, showComment: false),
+              if (T == FamilyCommentController)
+                FeedItemTile<FamilyFeedController>(widget.feed, showComment: false),
+              if (T == SexualityCommentController)
+                FeedItemTile<SexualityFeedController>(widget.feed, showComment: false),
+              if (T == ParentingCommentController)
+                FeedItemTile<ParentingFeedController>(widget.feed, showComment: false),
               SizedBox(height: 10.h),
               Padding(
                 padding: AppPadding.symetricHorizontalOnly,

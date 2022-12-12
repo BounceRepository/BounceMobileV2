@@ -1,4 +1,5 @@
 import 'package:bounce_patient_app/src/modules/feed/controllers/feed_controller.dart';
+import 'package:bounce_patient_app/src/modules/feed/models/feed.dart';
 import 'package:bounce_patient_app/src/modules/feed/screens/add_feed_screen.dart';
 import 'package:bounce_patient_app/src/modules/feed/widgets/feed_item_tile.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -11,7 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
-  const FeedScreen({super.key});
+  const FeedScreen({super.key, this.initialIndex = 0});
+
+  final int initialIndex;
 
   @override
   State<FeedScreen> createState() => _FeedScreenState();
@@ -20,18 +23,11 @@ class FeedScreen extends StatefulWidget {
 class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      'Trending',
-      'Relationship',
-      'Self Care',
-      'Work Ethics',
-      'Family',
-      'Sexuality',
-      'Parenting',
-    ];
+    final tabs = feedGroups.map((element) => element.name).toList();
 
     return DefaultTabController(
       length: tabs.length,
+      initialIndex: widget.initialIndex,
       child: Scaffold(
         body: SafeArea(
           child: NestedScrollView(
@@ -47,13 +43,13 @@ class _FeedScreenState extends State<FeedScreen> {
             body: const TabBarView(
               physics: BouncingScrollPhysics(),
               children: [
-                FeedListView<TrendingFeedController>(),
-                FeedListView<TrendingFeedController>(),
-                FeedListView<TrendingFeedController>(),
-                FeedListView<TrendingFeedController>(),
-                FeedListView<TrendingFeedController>(),
-                FeedListView<TrendingFeedController>(),
-                FeedListView<TrendingFeedController>(),
+                //FeedListView<MyFeedController>(),
+                FeedListView<RelationShipFeedController>(),
+                FeedListView<SelfCareFeedController>(),
+                FeedListView<WorkEthnicsFeedController>(),
+                FeedListView<FamilyFeedController>(),
+                FeedListView<SexualityFeedController>(),
+                FeedListView<ParentingFeedController>(),
               ],
             ),
           ),

@@ -9,11 +9,11 @@ abstract class IFeedService {
 }
 
 abstract class IFeedListService {
-  Future<List<Feed>> getAllTrending();
-  // Future<List<Feed>> getAllRelationship();
-  // Future<List<Feed>> getAllSelfCare();
-  // Future<List<Feed>> getAllWorkEthnics();
-  // Future<List<Feed>> getAllFamily();
-  // Future<List<Feed>> getAllSexuality();
-  // Future<List<Feed>> getAllParenting();
+  Future<List<Feed>> getAllMyFeed();
+  Future<List<Feed>> getAllRelationshipFeed();
+  Future<List<Feed>> getAllSelfCareFeed();
+  Future<List<Feed>> getAllWorkEthnicsFeed();
+  Future<List<Feed>> getAllFamilyFeed();
+  Future<List<Feed>> getAllSexualityFeed();
+  Future<List<Feed>> getAllParentingFeed();
 }

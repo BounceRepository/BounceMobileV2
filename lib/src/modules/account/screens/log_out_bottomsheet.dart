@@ -29,7 +29,7 @@ class _Body extends StatelessWidget {
   void logOut(BuildContext context) {
     context.read<NotificationController>().clear();
     context.read<JournalController>().clear();
-    context.read<TrendingFeedController>().clear();
+    context.read<MyFeedController>().clear();
     context.read<ChatListController>().clear();
     context.read<SessionListController>().clear();
     context.read<TransactionListController>().clear();

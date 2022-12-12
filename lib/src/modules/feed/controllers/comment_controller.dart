@@ -64,8 +64,50 @@ abstract class CommentController extends BaseController {
   }
 }
 
-class TrendingCommentController extends CommentController {
-  TrendingCommentController({
+class MyCommentController extends CommentController {
+  MyCommentController({
+    required super.commentService,
+    required super.commentListService,
+  });
+}
+
+class RelationShipCommentController extends CommentController {
+  RelationShipCommentController({
+    required super.commentService,
+    required super.commentListService,
+  });
+}
+
+class SelfCareCommentController extends CommentController {
+  SelfCareCommentController({
+    required super.commentService,
+    required super.commentListService,
+  });
+}
+
+class WorkEthnicsCommentController extends CommentController {
+  WorkEthnicsCommentController({
+    required super.commentService,
+    required super.commentListService,
+  });
+}
+
+class FamilyCommentController extends CommentController {
+  FamilyCommentController({
+    required super.commentService,
+    required super.commentListService,
+  });
+}
+
+class SexualityCommentController extends CommentController {
+  SexualityCommentController({
+    required super.commentService,
+    required super.commentListService,
+  });
+}
+
+class ParentingCommentController extends CommentController {
+  ParentingCommentController({
     required super.commentService,
     required super.commentListService,
   });

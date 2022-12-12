@@ -15,7 +15,7 @@ abstract class FeedController extends BaseController {
   List<Feed> _feeds = [];
   List<Feed> get feeds => _feeds;
 
-  String? selectedFeedGroup;
+  FeedGroup? selectedFeedGroup;
 
   Future<void> getFeedList();
 
@@ -65,8 +65,8 @@ abstract class FeedController extends BaseController {
   }
 }
 
-class TrendingFeedController extends FeedController {
-  TrendingFeedController({
+class MyFeedController extends FeedController {
+  MyFeedController({
     required super.feedService,
     required super.feedListService,
   });
@@ -76,7 +76,127 @@ class TrendingFeedController extends FeedController {
     reset();
     try {
       setIsLoading(true);
-      _feeds = await _feedListService.getAllTrending();
+      _feeds = await _feedListService.getAllMyFeed();
+      setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
+      rethrow;
+    }
+  }
+}
+
+class RelationShipFeedController extends FeedController {
+  RelationShipFeedController({
+    required super.feedService,
+    required super.feedListService,
+  });
+
+  @override
+  Future<void> getFeedList() async {
+    reset();
+    try {
+      setIsLoading(true);
+      _feeds = await _feedListService.getAllRelationshipFeed();
+      setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
+      rethrow;
+    }
+  }
+}
+
+class SelfCareFeedController extends FeedController {
+  SelfCareFeedController({
+    required super.feedService,
+    required super.feedListService,
+  });
+
+  @override
+  Future<void> getFeedList() async {
+    reset();
+    try {
+      setIsLoading(true);
+      _feeds = await _feedListService.getAllSelfCareFeed();
+      setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
+      rethrow;
+    }
+  }
+}
+
+class WorkEthnicsFeedController extends FeedController {
+  WorkEthnicsFeedController({
+    required super.feedService,
+    required super.feedListService,
+  });
+
+  @override
+  Future<void> getFeedList() async {
+    reset();
+    try {
+      setIsLoading(true);
+      _feeds = await _feedListService.getAllWorkEthnicsFeed();
+      setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
+      rethrow;
+    }
+  }
+}
+
+class FamilyFeedController extends FeedController {
+  FamilyFeedController({
+    required super.feedService,
+    required super.feedListService,
+  });
+
+  @override
+  Future<void> getFeedList() async {
+    reset();
+    try {
+      setIsLoading(true);
+      _feeds = await _feedListService.getAllFamilyFeed();
+      setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
+      rethrow;
+    }
+  }
+}
+
+class SexualityFeedController extends FeedController {
+  SexualityFeedController({
+    required super.feedService,
+    required super.feedListService,
+  });
+
+  @override
+  Future<void> getFeedList() async {
+    reset();
+    try {
+      setIsLoading(true);
+      _feeds = await _feedListService.getAllSexualityFeed();
+      setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
+      rethrow;
+    }
+  }
+}
+
+class ParentingFeedController extends FeedController {
+  ParentingFeedController({
+    required super.feedService,
+    required super.feedListService,
+  });
+
+  @override
+  Future<void> getFeedList() async {
+    reset();
+    try {
+      setIsLoading(true);
+      _feeds = await _feedListService.getAllParentingFeed();
       setIsLoading(false);
     } on Failure {
       setIsLoading(false);

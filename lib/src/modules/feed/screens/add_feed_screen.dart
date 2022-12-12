@@ -1,5 +1,6 @@
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/feed/controllers/feed_controller.dart';
+import 'package:bounce_patient_app/src/modules/feed/models/feed.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -7,7 +8,6 @@ import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
-import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -51,18 +51,17 @@ class _AddFeedScreenState<T extends FeedController> extends State<AddFeedScreen<
         return;
       }
 
-      final feedGroupId = Utils.getFeedGroupId(selectedFeedGroup);
-
-      if (feedGroupId == null) {
-        return;
-      }
-
       try {
         await controller.create(
           message: messageController.text,
-          feedGroupId: feedGroupId,
+          feedGroupId: selectedFeedGroup.id,
         );
-        AppNavigator.to(context, const DashboardView(selectedIndex: 3));
+        AppNavigator.to(
+            context,
+            DashboardView(
+              selectedIndex: 3,
+              feedInitialIndex: selectedFeedGroup.tabIndex,
+            ));
         worker();
         Messenger.success(message: 'New message added successfully');
       } on Failure catch (e) {
@@ -164,12 +163,16 @@ class _ChooseGroupSectionState<T extends FeedController>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        final result =
-            await _chooseGroupBottomsheet(context: context, selectedGroup: label);
+        final controller = context.read<T>();
+        final result = await _chooseGroupBottomsheet(
+          context: context,
+          selectedFeedGroup: controller.selectedFeedGroup,
+        );
 
         if (result != null) {
-          label = result as String;
-          context.read<T>().selectedFeedGroup = result;
+          final feedGroup = result as FeedGroup;
+          label = feedGroup.name;
+          controller.selectedFeedGroup = feedGroup;
           setState(() {});
         }
       },
@@ -208,41 +211,33 @@ class _ChooseGroupSectionState<T extends FeedController>
 
 Future<dynamic> _chooseGroupBottomsheet({
   required BuildContext context,
-  required String selectedGroup,
+  required FeedGroup? selectedFeedGroup,
 }) {
   return showCustomBottomSheet(context,
-      body: _ChooseGroupView(selectedGroup: selectedGroup));
+      body: _ChooseGroupView(selectedFeedGroup: selectedFeedGroup));
 }
 
 class _ChooseGroupView extends StatefulWidget {
-  const _ChooseGroupView({required this.selectedGroup});
+  const _ChooseGroupView({required this.selectedFeedGroup});
 
-  final String selectedGroup;
+  final FeedGroup? selectedFeedGroup;
 
   @override
   State<_ChooseGroupView> createState() => _ChooseGroupViewState();
 }
 
 class _ChooseGroupViewState extends State<_ChooseGroupView> {
-  final groups = [
-    'Relationship',
-    'Self Care',
-    'Work Ethics',
-    'Family',
-    'Sexuality',
-    'Parenting',
-  ];
-  String? selectedGroup;
+  FeedGroup? selectedFeedGroup;
 
   @override
   void initState() {
     super.initState();
-    selectedGroup = widget.selectedGroup;
+    selectedFeedGroup = widget.selectedFeedGroup;
   }
 
-  void select(String group) {
-    selectedGroup = group;
-    Navigator.pop(context, selectedGroup);
+  void select(FeedGroup feedGroup) {
+    selectedFeedGroup = feedGroup;
+    Navigator.pop(context, selectedFeedGroup);
   }
 
   @override
@@ -254,13 +249,14 @@ class _ChooseGroupViewState extends State<_ChooseGroupView> {
         const BottomSheetTitle('Choose Group'),
         SizedBox(height: 30.h),
         Column(
-          children: List.generate(
-              groups.length,
-              (index) => tile(
-                    label: groups[index],
-                    isSelected: selectedGroup == groups[index],
-                    onTap: () => select(groups[index]),
-                  )),
+          children: List.generate(feedGroups.length, (index) {
+            final feedGroup = feedGroups[index];
+            return tile(
+              label: feedGroup.name,
+              isSelected: selectedFeedGroup == feedGroup,
+              onTap: () => select(feedGroup),
+            );
+          }),
         ),
         SizedBox(height: 50.h),
       ],

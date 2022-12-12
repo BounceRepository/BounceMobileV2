@@ -72,24 +72,22 @@ class CommentListView<T extends CommentController> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.only(
-          left: AppPadding.horizontal,
-          right: AppPadding.horizontal,
-        ),
-        itemCount: comments.length,
-        itemBuilder: (context, index) {
-          final comment = comments[index];
-          return CommentListItem<T>(
-            hasReplies: isReplies,
-            comment: comment,
-            feed: feed,
-          );
-        },
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.only(
+        left: AppPadding.horizontal,
+        right: AppPadding.horizontal,
       ),
+      itemCount: comments.length,
+      itemBuilder: (context, index) {
+        final comment = comments[index];
+        return CommentListItem<T>(
+          hasReplies: isReplies,
+          comment: comment,
+          feed: feed,
+        );
+      },
     );
   }
 }
