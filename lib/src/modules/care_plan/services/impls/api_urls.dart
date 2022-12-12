@@ -4,4 +4,5 @@ class SubscriptionApiURLS {
   SubscriptionApiURLS._();
 
   static const getAllPlan = APIURLs.baseURL + '/Patient/GetPlans';
+  static const subscribeToPlan = APIURLs.baseURL + '/Patient/SubscribeToPlan';
 }

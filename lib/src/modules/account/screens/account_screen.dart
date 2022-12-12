@@ -4,7 +4,7 @@ import 'package:bounce_patient_app/src/modules/book_session/screens/session_hist
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/journal/screens/journal_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/playlist/screens/discover_screen.dart';
-import 'package:bounce_patient_app/src/modules/subscription/screens/care_plans_screen.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/screens/care_plans_screen.dart';
 import 'package:bounce_patient_app/src/modules/wallet/screens/wallet_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';

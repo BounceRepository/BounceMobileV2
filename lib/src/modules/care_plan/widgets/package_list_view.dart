@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/subscription/models/plan.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/models/plan.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:flutter/material.dart';

@@ -14,7 +14,8 @@ import 'package:bounce_patient_app/src/config/di_container.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/audio_player_controller.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/song_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/reviews/controllers/review_controller.dart';
-import 'package:bounce_patient_app/src/modules/subscription/controllers/subscription_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/controllers/care_plan_controller.dart';
+import 'package:bounce_patient_app/src/modules/wallet/controllers/payment_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
@@ -43,13 +44,14 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<TransactionListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<WalletController>()),
         ChangeNotifierProvider(create: (_) => diContainer<JournalController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<SubscriptionListController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<CarePlanController>()),
         ChangeNotifierProvider(create: (_) => diContainer<ChatListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<FeedController>()),
         ChangeNotifierProvider(create: (_) => diContainer<TrendingFeedController>()),
         ChangeNotifierProvider(create: (_) => diContainer<CommentController>()),
         ChangeNotifierProvider(create: (_) => diContainer<TrendingCommentController>()),
         ChangeNotifierProvider(create: (_) => diContainer<ReviewController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<PaymentController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),
         ChangeNotifierProvider(create: (_) => PhysicalHealthLevelController()),
         ChangeNotifierProvider(create: (_) => MentalHealthLevelController()),

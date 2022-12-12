@@ -1,12 +1,14 @@
 import 'dart:math';
 
-import 'package:bounce_patient_app/src/modules/subscription/models/plan.dart';
-import 'package:bounce_patient_app/src/modules/subscription/services/interfaces/subscription_service.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/models/plan.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/services/interfaces/care_plan_service.dart';
+import 'package:bounce_patient_app/src/modules/wallet/models/transaction_ref.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeSubscriptionServiceImpl implements ISubscriptionService {
+class FakeCarePlanServiceImpl implements ICarePlanService {
   final colors = [AppColors.bronze, AppColors.sliver, AppColors.gold];
 
   @override
@@ -21,8 +23,10 @@ class FakeSubscriptionServiceImpl implements ISubscriptionService {
         subPlans: List.generate(
           2,
           (index) => SubPlan(
-            planId: Random().nextInt(10),
+            id: Random().nextInt(10),
+            parentPlanId: Random().nextInt(10),
             title: lorem(paragraphs: 1, words: 1),
+            parentPlantitle: lorem(paragraphs: 1, words: 1),
             amount: Random().nextInt(10000) + 1000,
             freeTrialCount: Random().nextInt(7) + 1,
             meditationCount: Random().nextInt(30) + 5,
@@ -31,5 +35,11 @@ class FakeSubscriptionServiceImpl implements ISubscriptionService {
         ),
       ),
     );
+  }
+
+  @override
+  Future<TransactionRef> choosePlan(SubPlan plan) async {
+    await fakeNetworkDelay();
+    return TransactionRef(value: Utils.getGuid());
   }
 }

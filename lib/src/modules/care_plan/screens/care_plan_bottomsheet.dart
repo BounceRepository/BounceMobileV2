@@ -1,5 +1,6 @@
-import 'package:bounce_patient_app/src/modules/subscription/models/plan.dart';
-import 'package:bounce_patient_app/src/modules/subscription/widgets/package_list_view.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/models/plan.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/screens/care_plan_payment_option_bottomsheet.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/widgets/package_list_view.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -150,7 +151,10 @@ class _PageViewItem extends StatelessWidget {
                 backgroundColor: AppColors.primary,
                 padding: EdgeInsets.symmetric(vertical: 8.h),
                 borderRadius: BorderRadius.circular(20.r),
-                onTap: () {},
+                onTap: () {
+                  showCarePlanPaymentOptionBottomsheet(
+                      context: context, subplan: subPlan);
+                },
               ),
             ),
           ),

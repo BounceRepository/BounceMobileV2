@@ -6,5 +6,6 @@ abstract class IPaymentService {
     required PaymentOption paymentOption,
     required double amount,
   });
-  Future<void> confirmPayment(TransactionRef transactionRef);
+  Future<void> confirmPayment(TransactionRef trxRef);
+  Future<void> payWithWallet(TransactionRef trxRef);
 }

@@ -43,4 +43,19 @@ class PaymentServiceImpl implements IPaymentService {
       throw InternalFailure();
     }
   }
+
+  @override
+  Future<void> payWithWallet(TransactionRef trxRef) async {
+    var url = PaymentApiURLS.payWithWallet + '?TxRef=${trxRef.value}';
+
+    try {
+      await _api.post(url, body: {});
+    } on Failure {
+      rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
+    }
+  }
 }

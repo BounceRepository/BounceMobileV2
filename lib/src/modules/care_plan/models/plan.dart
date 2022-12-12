@@ -19,7 +19,8 @@ class Plan {
       id: json['id'] as int,
       title: json['name'] as String,
       color: _getColor(json['name']),
-      subPlans: List<SubPlan>.from(json["subPlans"].map((x) => SubPlan.fromJson(x))),
+      subPlans: List<SubPlan>.from(json["subPlans"]
+          .map((x) => SubPlan.fromJson(json: x, parentPlanTitle: json['name']))),
     );
   }
 
@@ -46,16 +47,20 @@ Color _getColor(String name) {
 }
 
 class SubPlan {
-  final int planId;
+  final int id;
+  final int parentPlanId;
   final String title;
+  final String parentPlantitle;
   final int amount;
   final int freeTrialCount;
   final int meditationCount;
   final int therapistCount;
 
   SubPlan({
-    required this.planId,
+    required this.id,
+    required this.parentPlanId,
     required this.title,
+    required this.parentPlantitle,
     required this.amount,
     required this.freeTrialCount,
     required this.meditationCount,
@@ -64,7 +69,7 @@ class SubPlan {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'planId': planId,
+      'planId': parentPlanId,
       'title': title,
       'amount': amount,
       'freeTrialCount': freeTrialCount,
@@ -73,10 +78,13 @@ class SubPlan {
     };
   }
 
-  factory SubPlan.fromJson(Map<String, dynamic> json) {
+  factory SubPlan.fromJson(
+      {required Map<String, dynamic> json, required String parentPlanTitle}) {
     return SubPlan(
-      planId: json['pLanId'] as int,
+      id: json['id'] as int,
+      parentPlanId: json['pLanId'] as int,
       title: json['title'] as String,
+      parentPlantitle: parentPlanTitle,
       amount: json['cost'] as int,
       freeTrialCount: json['freeTrialCount'] as int,
       meditationCount: json['numberOfMeditation'] as int,

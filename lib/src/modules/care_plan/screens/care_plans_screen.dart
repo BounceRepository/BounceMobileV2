@@ -1,7 +1,7 @@
-import 'package:bounce_patient_app/src/modules/subscription/controllers/subscription_list_controller.dart';
-import 'package:bounce_patient_app/src/modules/subscription/models/plan.dart';
-import 'package:bounce_patient_app/src/modules/subscription/screens/care_plan_bottomsheet.dart';
-import 'package:bounce_patient_app/src/modules/subscription/widgets/package_list_view.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/controllers/care_plan_controller.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/models/plan.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/screens/care_plan_bottomsheet.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/widgets/package_list_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -34,7 +34,7 @@ class _CarePlansScreenState extends State<CarePlansScreen> {
   }
 
   void getAllPlan() async {
-    final controller = context.read<SubscriptionListController>();
+    final controller = context.read<CarePlanController>();
 
     if (controller.plans.isEmpty || controller.failure != null) {
       try {
@@ -49,7 +49,7 @@ class _CarePlansScreenState extends State<CarePlansScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(label: 'My Care Plans'),
-      body: Consumer<SubscriptionListController>(
+      body: Consumer<CarePlanController>(
         builder: (context, controller, _) {
           if (controller.isLoading) {
             return const CustomLoadingIndicator();

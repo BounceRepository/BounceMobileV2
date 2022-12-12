@@ -8,7 +8,7 @@ import 'package:bounce_patient_app/src/modules/notifications/controllers/notific
 import 'package:bounce_patient_app/src/modules/notifications/screens/notification_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/notifications/widgets/notification_bell.dart';
 import 'package:bounce_patient_app/src/modules/playlist/screens/discover_screen.dart';
-import 'package:bounce_patient_app/src/modules/subscription/screens/care_plans_screen.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/screens/care_plans_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';

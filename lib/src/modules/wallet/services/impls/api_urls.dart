@@ -17,4 +17,5 @@ class PaymentApiURLS {
 
   static const initiate = APIURLs.baseURL + '/transaction/PaymentRequest';
   static const confirm = APIURLs.baseURL + '/transaction/PaymentRequery';
+  static const payWithWallet = APIURLs.baseURL + '/transaction/PaymentWithWallet';
 }
