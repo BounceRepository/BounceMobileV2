@@ -10,8 +10,8 @@ class Messenger {
     Get.snackbar(
       title ?? 'Message',
       message,
-      colorText: Colors.white,
-      backgroundColor: Colors.black,
+      // colorText: Colors.white,
+      // backgroundColor: Colors.black,
       barBlur: 10,
     );
   }

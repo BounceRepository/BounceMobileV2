@@ -3,13 +3,17 @@ import 'package:bounce_patient_app/src/config/app_config.dart';
 class WalletApiURLS {
   WalletApiURLS._();
 
-  static const getAllTransaction =
-      APIURLs.baseURL + '/transaction/WalletTransactionHistory';
   static const getBalance = APIURLs.baseURL + '/transaction/GetWalletBalance';
   static const topUp = APIURLs.baseURL + '/transaction/WalletTop';
   static const confirmTopUp = APIURLs.baseURL + '/transaction/ComfirmTopUp';
-  static const getTopUpTransactionList =
-      APIURLs.baseURL + '/transaction/GetTransactionHistory';
+
+  // Transactions
+  static const getAllTransaction =
+      APIURLs.baseURL + '/transaction/GetTransactionHistory?filter=all';
+  static const getAllTopUpTransaction =
+      APIURLs.baseURL + '/transaction/GetTransactionHistory?filter=topup';
+  static const getAllPaymentTransactionList =
+      APIURLs.baseURL + '/transaction/GetTransactionHistory?filter=payment';
 }
 
 class PaymentApiURLS {

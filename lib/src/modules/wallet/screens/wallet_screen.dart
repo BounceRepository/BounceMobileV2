@@ -68,13 +68,13 @@ class _WalletScreenState extends State<WalletScreen> {
   Future<void> getTransactions() async {
     final controller = context.read<TransactionListController>();
 
-    if (controller.transactions.isEmpty &&
-        controller.topUTtransactions.isEmpty &&
+    if (controller.allTransactions.isEmpty &&
+        controller.topUpTransactions.isEmpty &&
         controller.paymentTransactions.isEmpty) {
       try {
         await Future.wait([
-          // controller.getAll(),
-          // controller.getAllPayment(),
+          controller.getAll(),
+          controller.getAllPayment(),
           controller.getAllTopUp(),
         ]);
       } on Failure {
@@ -86,76 +86,50 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     final tabs = ['All', 'Top Up', 'Payment'];
-    return DefaultTabController(
-      length: tabs.length,
-      child: Scaffold(
-        appBar: CustomAppBar(
-          label: 'My Wallet',
-          leading: BackButton(
-            onPressed: () {
-              AppNavigator.to(context, const DashboardView(selectedIndex: 4));
-            },
+    return WillPopScope(
+      onWillPop: () {
+        AppNavigator.to(context, const DashboardView(selectedIndex: 4));
+        return Future.value(true);
+      },
+      child: DefaultTabController(
+        length: tabs.length,
+        child: Scaffold(
+          appBar: CustomAppBar(
+            label: 'My Wallet',
+            leading: BackButton(
+              onPressed: () {
+                AppNavigator.to(context, const DashboardView(selectedIndex: 4));
+              },
+            ),
           ),
-        ),
-        body: isLoading
-            ? const CustomLoadingIndicator()
-            : _error != null
-                ? ErrorScreen(error: _error!, retry: init)
-                : NestedScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                      return <Widget>[
-                        const _BalanceSection(),
-                        _TabsSection(tabs),
-                      ];
-                    },
-                    body: const TabBarView(
-                      physics: BouncingScrollPhysics(),
-                      children: [
-                        AllTransactionListScreen(),
-                        TopUpTransactionListScreen(),
-                        PaymentTransactionListScreen(),
-                      ],
+          body: isLoading
+              ? const CustomLoadingIndicator()
+              : _error != null
+                  ? ErrorScreen(error: _error!, retry: init)
+                  : RefreshIndicator(
+                      onRefresh: () async => init(),
+                      child: NestedScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        headerSliverBuilder:
+                            (BuildContext context, bool innerBoxIsScrolled) {
+                          return <Widget>[
+                            const _BalanceSection(),
+                            _TabsSection(tabs),
+                          ];
+                        },
+                        body: const TabBarView(
+                          physics: BouncingScrollPhysics(),
+                          children: [
+                            AllTransactionListScreen(),
+                            TopUpTransactionListScreen(),
+                            PaymentTransactionListScreen(),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+        ),
       ),
     );
-  }
-}
-
-class TopUpTransactionListScreen extends StatelessWidget {
-  const TopUpTransactionListScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.watch<TransactionListController>();
-    final transactions = controller.topUTtransactions;
-
-    return TransactionListView(transactions);
-  }
-}
-
-class AllTransactionListScreen extends StatelessWidget {
-  const AllTransactionListScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.watch<TransactionListController>();
-    final transactions = controller.topUTtransactions;
-
-    return TransactionListView(transactions);
-  }
-}
-
-class PaymentTransactionListScreen extends StatelessWidget {
-  const PaymentTransactionListScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.watch<TransactionListController>();
-    final transactions = controller.paymentTransactions;
-
-    return TransactionListView(transactions);
   }
 }
 
@@ -315,5 +289,41 @@ class _TabsSection extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class AllTransactionListScreen extends StatelessWidget {
+  const AllTransactionListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.watch<TransactionListController>();
+    final transactions = controller.allTransactions;
+
+    return TransactionListView(transactions);
+  }
+}
+
+class TopUpTransactionListScreen extends StatelessWidget {
+  const TopUpTransactionListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.watch<TransactionListController>();
+    final transactions = controller.topUpTransactions;
+
+    return TransactionListView(transactions);
+  }
+}
+
+class PaymentTransactionListScreen extends StatelessWidget {
+  const PaymentTransactionListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.watch<TransactionListController>();
+    final transactions = controller.paymentTransactions;
+
+    return TransactionListView(transactions);
   }
 }

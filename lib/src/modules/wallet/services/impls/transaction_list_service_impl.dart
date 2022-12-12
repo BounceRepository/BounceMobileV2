@@ -11,22 +11,38 @@ class TransactionListServiceImpl implements ITransactionListService {
 
   @override
   Future<List<Transaction>> getAll() async {
-    // TODO: implement getAll
-    throw UnimplementedError();
+    try {
+      final response = await _api.get(WalletApiURLS.getAllTransaction);
+      final List collection = response['data'];
+      return collection.map((json) => Transaction.fromJson(json)).toList();
+    } on Failure {
+      rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
+    }
   }
 
   @override
   Future<List<Transaction>> getAllPayment() async {
-    // TODO: implement getAllPayment
-    throw UnimplementedError();
+    try {
+      final response = await _api.get(WalletApiURLS.getAllPaymentTransactionList);
+      final List collection = response['data'];
+      return collection.map((json) => Transaction.fromJson(json)).toList();
+    } on Failure {
+      rethrow;
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
+    }
   }
 
   @override
   Future<List<Transaction>> getAllTopUp() async {
-    var url = WalletApiURLS.getTopUpTransactionList + '?filter=topup';
-
     try {
-      final response = await _api.get(url);
+      final response = await _api.get(WalletApiURLS.getAllTopUpTransaction);
       final List collection = response['data'];
       return collection.map((json) => Transaction.fromJson(json)).toList();
     } on Failure {

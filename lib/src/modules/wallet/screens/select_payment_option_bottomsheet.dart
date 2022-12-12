@@ -1,9 +1,9 @@
-import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/transaction_ref.dart';
+import 'package:bounce_patient_app/src/modules/wallet/screens/wallet_screen.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/impls/flutterwave_payment_service.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -101,8 +101,7 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
         controller.getBalance(),
         context.read<TransactionListController>().getAllTopUp(),
       ]);
-      AppNavigator.removeAllUntil(context, const DashboardView());
-      Messenger.success(message: 'Wallet Top Up Successfull');
+      AppNavigator.removeAllUntil(context, const WalletScreen());
       setState(() => isLoading = false);
     } on Failure {
       setState(() => isLoading = false);

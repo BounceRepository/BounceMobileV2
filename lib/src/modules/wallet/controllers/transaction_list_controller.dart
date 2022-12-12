@@ -9,17 +9,17 @@ class TransactionListController extends BaseController {
   TransactionListController({required ITransactionListService transactionListService})
       : _transactionListService = transactionListService;
 
-  List<Transaction> _transactions = [];
-  List<Transaction> get transactions => _transactions;
+  List<Transaction> _allTransactions = [];
+  List<Transaction> get allTransactions => _allTransactions;
   List<Transaction> _topUptransactions = [];
-  List<Transaction> get topUTtransactions => _topUptransactions;
+  List<Transaction> get topUpTransactions => _topUptransactions;
   List<Transaction> _paymenttransactions = [];
   List<Transaction> get paymentTransactions => _paymenttransactions;
 
   Future<void> getAll() async {
     reset();
     try {
-      _transactions = await _transactionListService.getAllTopUp();
+      _allTransactions = await _transactionListService.getAll();
     } on Failure {
       rethrow;
     }
@@ -44,7 +44,7 @@ class TransactionListController extends BaseController {
   }
 
   void clear() {
-    _transactions.clear();
+    _allTransactions.clear();
     _paymenttransactions.clear();
     _topUptransactions.clear();
   }
