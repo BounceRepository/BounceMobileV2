@@ -42,6 +42,7 @@ class AppConstants {
     'Taraba',
     'Yobe',
     'Zamfara',
+    'FCT',
   ];
 
   static const moods = [

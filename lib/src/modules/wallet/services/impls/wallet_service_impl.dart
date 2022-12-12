@@ -40,7 +40,7 @@ class WalletServiceImpl implements IWalletService {
 
   @override
   Future<TransactionRef> initiateTopUp(double amount) async {
-    var body = {"amount": amount};
+    var body = {"amount": amount.toInt()};
 
     try {
       final response = await _api.post(WalletApiURLS.topUp, body: body);

@@ -77,7 +77,7 @@ class _ContentView extends StatelessWidget {
       final currentOnboarding = controller.currentOnboarding;
 
       return Container(
-        height: 320.h,
+        height: 290.h,
         width: 375.w,
         padding: EdgeInsets.symmetric(
           vertical: 36.h,
@@ -93,7 +93,7 @@ class _ContentView extends StatelessWidget {
         child: Column(
           children: [
             const _Indicator(),
-            SizedBox(height: 25.h),
+            SizedBox(height: 30.h),
             Text(
               currentOnboarding.title,
               textAlign: TextAlign.center,

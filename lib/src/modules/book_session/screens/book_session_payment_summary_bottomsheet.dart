@@ -2,7 +2,6 @@ import 'package:bounce_patient_app/src/modules/book_session/controllers/controll
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
-import 'package:bounce_patient_app/src/modules/reviews/screens/add_review_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/impls/flutterwave_payment_service.dart';
@@ -116,7 +115,6 @@ class _BodyState extends State<_Body> {
       await controller.confirmAppointment(trxRef);
       AppNavigator.removeAllUntil(context, const DashboardView());
       Messenger.success(message: 'Booking Successfull');
-      showAddReviewBottomsheet(context: context, therapist: widget.therapist);
       setState(() => isLoading = false);
     } on Failure catch (e) {
       setState(() => isLoading = false);

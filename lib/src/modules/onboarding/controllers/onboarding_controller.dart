@@ -17,7 +17,8 @@ class OnboardingController extends ChangeNotifier {
     ),
     Onboarding(
       title: 'Find Trustworthy Health Information',
-      description: 'We will get you the right help, you need always.',
+      description:
+          'Access health articles, motivational quotes and meditation playlists.',
       image: OnboardingImages.image2,
     ),
   ];
