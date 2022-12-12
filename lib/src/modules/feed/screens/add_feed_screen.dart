@@ -17,14 +17,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class AddFeedScreen extends StatefulWidget {
+class AddFeedScreen<T extends FeedController> extends StatefulWidget {
   const AddFeedScreen({super.key});
 
   @override
-  State<AddFeedScreen> createState() => _AddFeedScreenState();
+  State<AddFeedScreen<T>> createState() => _AddFeedScreenState<T>();
 }
 
-class _AddFeedScreenState extends State<AddFeedScreen> {
+class _AddFeedScreenState<T extends FeedController> extends State<AddFeedScreen<T>> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController messageController;
 
@@ -44,7 +44,7 @@ class _AddFeedScreenState extends State<AddFeedScreen> {
     if (_formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
 
-      final controller = context.read<TrendingFeedController>();
+      final controller = context.read<T>();
       final selectedFeedGroup = controller.selectedFeedGroup;
 
       if (selectedFeedGroup == null) {
@@ -72,7 +72,7 @@ class _AddFeedScreenState extends State<AddFeedScreen> {
   }
 
   void worker() async {
-    final controller = context.read<TrendingFeedController>();
+    final controller = context.read<T>();
 
     try {
       await controller.getFeedList();
@@ -101,7 +101,7 @@ class _AddFeedScreenState extends State<AddFeedScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const _ChooseGroupSection(),
+                _ChooseGroupSection<T>(),
                 SizedBox(height: 20.h),
                 CustomTextField(
                   controller: messageController,
@@ -131,7 +131,7 @@ class _AddFeedScreenState extends State<AddFeedScreen> {
                   : DefaultAppImage(size: 48.h),
               SizedBox(width: 12.w),
               Expanded(
-                child: Consumer<TrendingFeedController>(
+                child: Consumer<T>(
                   builder: (context, controller, _) {
                     return AppButton(
                       label: 'Send',
@@ -149,14 +149,15 @@ class _AddFeedScreenState extends State<AddFeedScreen> {
   }
 }
 
-class _ChooseGroupSection extends StatefulWidget {
+class _ChooseGroupSection<T extends FeedController> extends StatefulWidget {
   const _ChooseGroupSection();
 
   @override
-  State<_ChooseGroupSection> createState() => _ChooseGroupSectionState();
+  State<_ChooseGroupSection<T>> createState() => _ChooseGroupSectionState<T>();
 }
 
-class _ChooseGroupSectionState extends State<_ChooseGroupSection> {
+class _ChooseGroupSectionState<T extends FeedController>
+    extends State<_ChooseGroupSection<T>> {
   String label = 'Choose Group';
 
   @override
@@ -168,7 +169,7 @@ class _ChooseGroupSectionState extends State<_ChooseGroupSection> {
 
         if (result != null) {
           label = result as String;
-          context.read<TrendingFeedController>().selectedFeedGroup = result;
+          context.read<T>().selectedFeedGroup = result;
           setState(() {});
         }
       },

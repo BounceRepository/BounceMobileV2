@@ -31,6 +31,8 @@ Future<dynamic> showCarePlanPaymentOptionBottomsheet({
 }) {
   return showCustomBottomSheet(
     context,
+    isDismissible: false,
+    enableDrag: false,
     body: _SelectPaymentOptionBody(subplan),
   );
 }
@@ -138,7 +140,12 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
       height: 488.h,
       padding: EdgeInsets.zero,
       body: [
-        SizedBox(height: 20.h),
+        isLoading
+            ? SizedBox(height: 20.h)
+            : const Align(
+                alignment: Alignment.centerRight,
+                child: CloseButton(),
+              ),
         Text(
           'Care Plan Subscription',
           style: AppText.bold700(context).copyWith(

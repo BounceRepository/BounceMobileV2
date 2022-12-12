@@ -10,7 +10,6 @@ import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
-import 'package:bounce_patient_app/src/shared/widgets/others/empty_view.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -133,34 +132,39 @@ class _BodyState<T extends CommentController> extends State<_Body<T>> {
                 ),
               ),
               SizedBox(height: 10.h),
-              Expanded(
-                child: SizedBox(
-                  height: 458.h,
-                  child: Column(
-                    children: isLoading
-                        ? [
-                            SizedBox(height: 200.h),
-                            const CustomLoadingIndicator(),
-                            Text(
-                              'Loading comments...',
-                              style: AppText.bold400(context),
-                            ),
-                          ]
-                        : controller.failure != null
-                            ? [ErrorScreen(error: controller.failure!, retry: init)]
-                            : controller.comments.isEmpty
-                                ? [
-                                    SizedBox(height: 150.h),
-                                    const EmptyListView(text: 'No comment'),
-                                  ]
-                                : [
-                                    CommentListView<T>(
-                                      isReplies: true,
-                                      comments: controller.comments,
-                                      feed: widget.feed,
-                                    ),
-                                  ],
-                  ),
+              SingleChildScrollView(
+                child: Column(
+                  children: isLoading
+                      ? [
+                          SizedBox(height: 200.h),
+                          const CustomLoadingIndicator(),
+                          Text(
+                            'Loading comments...',
+                            style: AppText.bold400(context),
+                          ),
+                        ]
+                      : controller.failure != null
+                          ? [
+                              ErrorScreen(
+                                height: 150.h,
+                                error: controller.failure!,
+                                retry: init,
+                              )
+                            ]
+                          : controller.comments.isEmpty
+                              ? [
+                                  Text(
+                                    'No comments',
+                                    style: AppText.bold300(context),
+                                  ),
+                                ]
+                              : [
+                                  CommentListView<T>(
+                                    isReplies: true,
+                                    comments: controller.comments,
+                                    feed: widget.feed,
+                                  ),
+                                ],
                 ),
               ),
             ],

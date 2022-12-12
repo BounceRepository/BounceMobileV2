@@ -58,15 +58,6 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            AppNavigator.to(context, const AddFeedScreen());
-          },
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-        ),
       ),
     );
   }
@@ -102,31 +93,42 @@ class _FeedListViewState<T extends FeedController> extends State<FeedListView<T>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<T>(
-      builder: (context, controller, _) {
-        if (controller.isLoading) {
-          return const CustomLoadingIndicator();
-        }
+    return Scaffold(
+      body: Consumer<T>(
+        builder: (context, controller, _) {
+          if (controller.isLoading) {
+            return const CustomLoadingIndicator();
+          }
 
-        final error = controller.failure;
-        if (error != null) {
-          return ErrorScreen(error: error, retry: getFeedList);
-        }
+          final error = controller.failure;
+          if (error != null) {
+            return ErrorScreen(error: error, retry: getFeedList);
+          }
 
-        if (controller.feeds.isEmpty) {
-          return const EmptyListView();
-        }
+          if (controller.feeds.isEmpty) {
+            return const EmptyListView();
+          }
 
-        final feeds = controller.feeds;
-        return ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: feeds.length,
-          itemBuilder: (context, index) {
-            final feed = feeds[index];
-            return FeedItemTile<T>(feed);
-          },
-        );
-      },
+          final feeds = controller.feeds;
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: feeds.length,
+            itemBuilder: (context, index) {
+              final feed = feeds[index];
+              return FeedItemTile<T>(feed);
+            },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          AppNavigator.to(context, AddFeedScreen<T>());
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

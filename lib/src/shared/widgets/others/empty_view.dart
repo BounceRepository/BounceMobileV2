@@ -5,10 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class EmptyListView extends StatelessWidget {
-  const EmptyListView({Key? key, this.icon, this.text}) : super(key: key);
+  const EmptyListView({Key? key, this.icon, this.text, this.height}) : super(key: key);
 
   final String? icon;
   final String? text;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class EmptyListView extends StatelessWidget {
           child: SvgPicture.asset(
             icon ?? AppIcons.emptyView,
             width: 256.w,
-            height: 212.h,
+            height: height ?? 212.h,
             fit: BoxFit.cover,
           ),
         ),
