@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:bounce_patient_app/src/modules/book_session/screens/upcoming_session_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/therapist_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/mood_icons_view.dart';
@@ -247,7 +246,7 @@ class _SessionsCard extends StatelessWidget {
   Widget bookNowButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.to(context, const UpComingSessionListScreen());
+        AppNavigator.to(context, const TherapistListScreen());
       },
       child: Row(
         children: [

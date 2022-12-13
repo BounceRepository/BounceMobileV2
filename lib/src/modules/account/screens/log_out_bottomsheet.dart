@@ -7,6 +7,7 @@ import 'package:bounce_patient_app/src/modules/notifications/controllers/notific
 import 'package:bounce_patient_app/src/modules/playlist/controllers/song_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
+import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -41,8 +42,15 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
       body: [
-        const BottomSheetTitle('Are you sure you want to logout?'),
-        SizedBox(height: 40.h),
+        const BottomSheetDragger(),
+        SizedBox(height: 20.h),
+        Text(
+          'Are you sure you want to logout?',
+          style: AppText.bold300(context).copyWith(
+            fontSize: 16.sp,
+          ),
+        ),
+        SizedBox(height: 20.h),
         Row(
           children: [
             Expanded(
