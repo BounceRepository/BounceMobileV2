@@ -1,6 +1,7 @@
 import 'package:bounce_patient_app/src/modules/book_session/controllers/controllers.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/upcoming_session_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
@@ -113,7 +114,7 @@ class _BodyState extends State<_Body> {
     try {
       setState(() => isLoading = true);
       await controller.confirmAppointment(trxRef);
-      AppNavigator.removeAllUntil(context, const DashboardView());
+      AppNavigator.removeAllUntil(context, const UpComingSessionListScreen());
       Messenger.success(message: 'Booking Successfull');
       setState(() => isLoading = false);
     } on Failure catch (e) {

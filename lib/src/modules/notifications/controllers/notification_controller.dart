@@ -16,13 +16,11 @@ class NotificationController extends BaseController {
   Future<void> getAllNotification() async {
     reset();
     try {
-      setIsLoading(true);
       final response = await _notificationService.getAllNotification();
       unReadNotificationCount = response.unReadNotificationCount;
       _notifications = response.notifications;
-      setIsLoading(false);
+      notifyListeners();
     } on Failure {
-      setIsLoading(false);
       rethrow;
     }
   }
@@ -55,5 +53,10 @@ class NotificationController extends BaseController {
   void clear() {
     unReadNotificationCount = 0;
     _notifications.clear();
+  }
+
+  void resetUnreadCount() {
+    unReadNotificationCount = 0;
+    notifyListeners();
   }
 }

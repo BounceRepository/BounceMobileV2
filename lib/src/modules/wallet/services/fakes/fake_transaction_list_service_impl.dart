@@ -27,6 +27,7 @@ class FakeTransactionListServiceImpl implements ITransactionListService {
   @override
   Future<List<Transaction>> getAllPayment() async {
     await fakeNetworkDelay();
+    return [];
     return List.generate(
         random.nextInt(25),
         (index) => Transaction(

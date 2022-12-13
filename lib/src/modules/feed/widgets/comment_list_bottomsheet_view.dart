@@ -220,6 +220,16 @@ class _CommentListItemState<T extends CommentController>
                               CustomTextField(
                                 controller: replyController,
                                 hintText: 'Reply',
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
+                                suffixIcon: replyController.text.isNotEmpty
+                                    ? TextFieldIcon(
+                                        icon: Icons.send,
+                                        color: AppColors.lightText,
+                                        onTap: createReply,
+                                      )
+                                    : null,
                               ),
                               SizedBox(height: 8.h),
                               widget.comment.replyCount != 0

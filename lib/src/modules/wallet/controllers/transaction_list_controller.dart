@@ -20,6 +20,7 @@ class TransactionListController extends BaseController {
     reset();
     try {
       _allTransactions = await _transactionListService.getAll();
+      notifyListeners();
     } on Failure {
       rethrow;
     }
@@ -29,6 +30,7 @@ class TransactionListController extends BaseController {
     reset();
     try {
       _paymenttransactions = await _transactionListService.getAllPayment();
+      notifyListeners();
     } on Failure {
       rethrow;
     }
@@ -38,6 +40,7 @@ class TransactionListController extends BaseController {
     reset();
     try {
       _topUptransactions = await _transactionListService.getAllTopUp();
+      notifyListeners();
     } on Failure {
       rethrow;
     }

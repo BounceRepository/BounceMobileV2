@@ -2,6 +2,7 @@ import 'package:bounce_patient_app/src/modules/book_session/controllers/session_
 import 'package:bounce_patient_app/src/modules/book_session/screens/join_session_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/sessions_item_tile.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/today_session_card.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
@@ -55,48 +56,61 @@ class _UpComingSessionListScreenState extends State<UpComingSessionListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(label: 'New Session'),
-      body: Consumer<SessionListController>(
-        builder: (context, controller, _) {
-          if (isLoading) {
-            return const CustomLoadingIndicator();
-          }
+    return WillPopScope(
+      onWillPop: () {
+        AppNavigator.removeAllUntil(context, const DashboardView());
+        return Future.value(true);
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          label: 'New Session',
+          leading: BackButton(
+            onPressed: () {
+              AppNavigator.removeAllUntil(context, const DashboardView());
+            },
+          ),
+        ),
+        body: Consumer<SessionListController>(
+          builder: (context, controller, _) {
+            if (isLoading) {
+              return const CustomLoadingIndicator();
+            }
 
-          final error = controller.failure;
-          if (error != null) {
-            return ErrorScreen(error: error, retry: init);
-          }
+            final error = controller.failure;
+            if (error != null) {
+              return ErrorScreen(error: error, retry: init);
+            }
 
-          if (controller.upComingSessions.isEmpty && controller.sessions.isEmpty) {
-            return const EmptyListView();
-          }
+            if (controller.upComingSessions.isEmpty && controller.sessions.isEmpty) {
+              return const EmptyListView();
+            }
 
-          return NestedScrollView(
-            physics: const BouncingScrollPhysics(),
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                const _UpcomingSessionCard(),
-                SliverPadding(
-                  padding: EdgeInsets.only(
-                    top: 20.h,
-                    left: AppPadding.horizontal,
-                    bottom: 20.h,
-                  ),
-                  sliver: SliverToBoxAdapter(
-                    child: Text(
-                      'This Month',
-                      style: AppText.bold500(context).copyWith(
-                        fontSize: 16.sp,
+            return NestedScrollView(
+              physics: const BouncingScrollPhysics(),
+              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  const _UpcomingSessionCard(),
+                  SliverPadding(
+                    padding: EdgeInsets.only(
+                      top: 20.h,
+                      left: AppPadding.horizontal,
+                      bottom: 20.h,
+                    ),
+                    sliver: SliverToBoxAdapter(
+                      child: Text(
+                        'This Month',
+                        style: AppText.bold500(context).copyWith(
+                          fontSize: 16.sp,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ];
-            },
-            body: const _AllSessionSection(),
-          );
-        },
+                ];
+              },
+              body: const _AllSessionSection(),
+            );
+          },
+        ),
       ),
     );
   }

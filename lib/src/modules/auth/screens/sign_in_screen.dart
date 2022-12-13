@@ -112,10 +112,21 @@ class _SignInScreenState extends State<SignInScreen> {
   void worker() async {
     try {
       await Future.wait([
-        context.read<NotificationController>().getAllNotification(),
+        getAllNotifications(),
       ]);
     } on Failure catch (e) {
       log(e.message);
+    }
+  }
+
+  Future<void> getAllNotifications() async {
+    final controller = context.read<NotificationController>();
+
+    try {
+      await controller.getAllNotification();
+    } on Failure catch (e) {
+      controller.setFailure(e);
+      rethrow;
     }
   }
 

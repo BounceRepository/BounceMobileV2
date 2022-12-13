@@ -91,7 +91,7 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
       await controller.payWithWallet(trxRef);
       updateWalletDetails();
       AppNavigator.removeAllUntil(context, const DashboardView());
-      Messenger.success(message: 'Wallet Top Up Successfull');
+      Messenger.success(message: 'Subscription Successfull');
     } on Failure {
       rethrow;
     }

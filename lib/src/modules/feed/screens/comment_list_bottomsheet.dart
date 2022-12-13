@@ -144,40 +144,41 @@ class _BodyState<T extends CommentController> extends State<_Body<T>> {
                 ),
               ),
               SizedBox(height: 10.h),
-              SingleChildScrollView(
-                child: Column(
-                  children: isLoading
-                      ? [
-                          SizedBox(height: 200.h),
-                          const CustomLoadingIndicator(),
-                          Text(
-                            'Loading comments...',
-                            style: AppText.bold400(context),
-                          ),
-                        ]
-                      : controller.failure != null
-                          ? [
-                              ErrorScreen(
-                                height: 150.h,
-                                error: controller.failure!,
-                                retry: init,
-                              )
-                            ]
-                          : controller.comments.isEmpty
-                              ? [
-                                  Text(
-                                    'No comments',
-                                    style: AppText.bold300(context),
-                                  ),
-                                ]
-                              : [
-                                  CommentListView<T>(
+              Column(
+                children: isLoading
+                    ? [
+                        SizedBox(height: 200.h),
+                        const CustomLoadingIndicator(),
+                        Text(
+                          'Loading comments...',
+                          style: AppText.bold400(context),
+                        ),
+                      ]
+                    : controller.failure != null
+                        ? [
+                            ErrorScreen(
+                              height: 150.h,
+                              error: controller.failure!,
+                              retry: init,
+                            )
+                          ]
+                        : controller.comments.isEmpty
+                            ? [
+                                Text(
+                                  'No comments',
+                                  style: AppText.bold300(context),
+                                ),
+                              ]
+                            : [
+                                SizedBox(
+                                  height: 422.h,
+                                  child: CommentListView<T>(
                                     isReplies: true,
                                     comments: controller.comments,
                                     feed: widget.feed,
                                   ),
-                                ],
-                ),
+                                ),
+                              ],
               ),
             ],
           );

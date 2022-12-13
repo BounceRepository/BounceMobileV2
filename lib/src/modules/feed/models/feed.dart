@@ -34,7 +34,7 @@ class Feed {
           profilePicture: json["picturePath"],
         ),
         likesCount: json["likesCount"],
-        createdAt: DateTime.parse(json["time"]),
+        createdAt: DateTime.parse(json["time"]).toLocal(),
         commentCount: json["commentCount"],
       );
 }

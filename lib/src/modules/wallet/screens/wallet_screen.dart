@@ -2,7 +2,7 @@ import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.
 import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/screens/top_up_bottomsheet.dart';
-import 'package:bounce_patient_app/src/modules/wallet/widgets/transaction_list_view.dart';
+import 'package:bounce_patient_app/src/modules/wallet/screens/transaction_listviews.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -40,18 +40,20 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   void init() async {
-    context.read<WalletController>().reset();
-    context.read<TransactionListController>().reset();
-    try {
-      setState(() => isLoading = true);
-      await Future.wait([
-        getBalance(),
-        getTransactions(),
-      ]);
-      setState(() => isLoading = false);
-    } on Failure catch (e) {
-      setState(() => isLoading = false);
-      _error = e;
+    final transactionListController = context.read<TransactionListController>();
+
+    if (transactionListController.allTransactions.isEmpty) {
+      try {
+        setState(() => isLoading = true);
+        await Future.wait([
+          getBalance(),
+          getTransactions(),
+        ]);
+        setState(() => isLoading = false);
+      } on Failure catch (e) {
+        setState(() => isLoading = false);
+        _error = e;
+      }
     }
   }
 
@@ -143,7 +145,7 @@ class _BalanceSection extends StatelessWidget {
         top: 20.h,
         left: AppPadding.horizontal,
         right: AppPadding.horizontal,
-        bottom: 52.h,
+        bottom: 35.h,
       ),
       sliver: SliverToBoxAdapter(
         child: Column(
@@ -287,41 +289,5 @@ class _TabsSection extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class AllTransactionListScreen extends StatelessWidget {
-  const AllTransactionListScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.watch<TransactionListController>();
-    final transactions = controller.allTransactions;
-
-    return TransactionListView(transactions);
-  }
-}
-
-class TopUpTransactionListScreen extends StatelessWidget {
-  const TopUpTransactionListScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.watch<TransactionListController>();
-    final transactions = controller.topUpTransactions;
-
-    return TransactionListView(transactions);
-  }
-}
-
-class PaymentTransactionListScreen extends StatelessWidget {
-  const PaymentTransactionListScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.watch<TransactionListController>();
-    final transactions = controller.paymentTransactions;
-
-    return TransactionListView(transactions);
   }
 }

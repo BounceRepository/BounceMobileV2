@@ -4,7 +4,6 @@ import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dar
 import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/select_availability_view.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/select_date_view.dart';
-import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
@@ -92,61 +91,48 @@ class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return WillPopScope(
-      onWillPop: () {
-        AppNavigator.to(context, const DashboardView());
-        return Future.value(true);
-      },
-      child: Scaffold(
-          appBar: CustomAppBar(
-            label: 'Reschedule',
-            leading: BackButton(
-              onPressed: () {
-                AppNavigator.to(context, const DashboardView(selectedIndex: 4));
-              },
-            ),
-          ),
-          body: Consumer<BookSessionController>(
-            builder: (context, controller, _) {
-              if (controller.isLoading) {
-                return const CustomLoadingIndicator();
-              }
+    return Scaffold(
+        appBar: const CustomAppBar(label: 'Reschedule'),
+        body: Consumer<BookSessionController>(
+          builder: (context, controller, _) {
+            if (controller.isLoading) {
+              return const CustomLoadingIndicator();
+            }
 
-              final error = controller.failure;
-              if (error != null) {
-                return ErrorScreen(error: error, retry: getTherapist);
-              }
+            final error = controller.failure;
+            if (error != null) {
+              return ErrorScreen(error: error, retry: getTherapist);
+            }
 
-              final therapist = _therapist;
-              if (therapist == null) {
-                return const SizedBox.shrink();
-              }
+            final therapist = _therapist;
+            if (therapist == null) {
+              return const SizedBox.shrink();
+            }
 
-              return SizedBox(
-                height: size.height,
-                width: size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 56.h),
-                    const SelectDateView(),
-                    SizedBox(height: 48.h),
-                    SelectAvailableTimeView(therapist: therapist),
-                    const Spacer(),
-                    Padding(
-                      padding: AppPadding.symetricHorizontalOnly,
-                      child: AppButton(
-                        label: 'Confirm Schedule',
-                        isLoading: isLoading,
-                        onTap: confirm,
-                      ),
+            return SizedBox(
+              height: size.height,
+              width: size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 56.h),
+                  const SelectDateView(),
+                  SizedBox(height: 48.h),
+                  SelectAvailableTimeView(therapist: therapist),
+                  const Spacer(),
+                  Padding(
+                    padding: AppPadding.symetricHorizontalOnly,
+                    child: AppButton(
+                      label: 'Confirm Schedule',
+                      isLoading: isLoading,
+                      onTap: confirm,
                     ),
-                    SizedBox(height: 40.h),
-                  ],
-                ),
-              );
-            },
-          )),
-    );
+                  ),
+                  SizedBox(height: 40.h),
+                ],
+              ),
+            );
+          },
+        ));
   }
 }

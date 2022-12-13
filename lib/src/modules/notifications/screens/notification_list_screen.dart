@@ -19,6 +19,8 @@ class NotificationListScreen extends StatefulWidget {
 }
 
 class _NotificationListScreenState extends State<NotificationListScreen> {
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -33,16 +35,21 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
 
     if (controller.notifications.isEmpty || controller.failure != null) {
       try {
+        setState(() => isLoading = true);
         await controller.getAllNotification();
+        setState(() => isLoading = false);
       } on Failure catch (e) {
+        setState(() => isLoading = false);
         controller.setFailure(e);
       }
     }
   }
 
   void markAsRead() async {
+    final controller = context.read<NotificationController>();
+    controller.resetUnreadCount();
     try {
-      await context.read<NotificationController>().readNotifications();
+      await controller.readNotifications();
     } on Failure catch (e) {
       log(e.message);
     }
@@ -69,7 +76,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
         bottom: false,
         child: Consumer<NotificationController>(
           builder: (context, controller, _) {
-            if (controller.isLoading) {
+            if (isLoading) {
               return const Center(child: CustomLoadingIndicator());
             }
 

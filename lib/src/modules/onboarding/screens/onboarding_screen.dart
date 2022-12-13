@@ -77,7 +77,7 @@ class _ContentView extends StatelessWidget {
       final currentOnboarding = controller.currentOnboarding;
 
       return Container(
-        height: 290.h,
+        height: 320.h,
         width: 375.w,
         padding: EdgeInsets.symmetric(
           vertical: 36.h,
