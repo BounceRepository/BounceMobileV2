@@ -1,6 +1,8 @@
 import 'package:bounce_patient_app/src/modules/book_session/controllers/controllers.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/custom_chip_button.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
+import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:flutter/material.dart';
@@ -18,31 +20,48 @@ class SelectAvailableTimeView extends StatefulWidget {
 
 class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
   int selectedIndex = 0;
-  late List<String> availableTimes;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    availableTimes = widget.therapist.workingHours.availableTime;
-    final controller = context.read<BookSessionController>();
-    final selectedTime = controller.selectedTime;
+    setSelectedTime();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getAvailableBookingTimeListForTherapist();
+    });
+  }
 
-    if (selectedTime != null) {
-      selectedIndex = availableTimes
-          .indexWhere((element) => element.toLowerCase() == selectedTime.toLowerCase());
-    } else {
-      if (availableTimes.isNotEmpty) {
-        controller.selectedTime = availableTimes[selectedIndex];
+  void getAvailableBookingTimeListForTherapist() async {
+    final controller = context.read<BookSessionController>();
+
+    if (controller.availableTimeList.isEmpty) {
+      try {
+        setState(() => isLoading = true);
+        await controller.getAvailableBookingTimeListForTherapist(
+            therapistId: widget.therapist.id);
+        controller.selectedTime = controller.availableTimeList[selectedIndex];
+        setState(() => isLoading = false);
+      } on Failure catch (e) {
+        controller.setFailure(e);
       }
     }
   }
 
-  void onSelect(int index) {
-    context.read<BookSessionController>().selectedTime = availableTimes[index];
+  void setSelectedTime() {
+    final controller = context.read<BookSessionController>();
+    final selectedTime = controller.selectedTime;
 
-    setState(() {
-      selectedIndex = index;
-    });
+    if (selectedTime != null) {
+      selectedIndex = controller.availableTimeList
+          .indexWhere((element) => element.toLowerCase() == selectedTime.toLowerCase());
+    }
+  }
+
+  void onSelect(int index) {
+    final controller = context.read<BookSessionController>();
+    controller.selectedTime = controller.availableTimeList[index];
+    selectedIndex = index;
+    setState(() {});
   }
 
   @override
@@ -58,31 +77,88 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
           ),
         ),
         SizedBox(height: 20.h),
-        GridView.count(
-          crossAxisCount: 3,
-          shrinkWrap: true,
-          padding: EdgeInsets.only(
-            left: AppPadding.horizontal,
-            right: AppPadding.horizontal,
-            bottom: 10.h,
-          ),
-          physics: const NeverScrollableScrollPhysics(),
-          childAspectRatio: 100.w / 40.h,
-          crossAxisSpacing: 22.w,
-          mainAxisSpacing: 12.h,
-          children: List.generate(
-            availableTimes.length,
-            (index) {
-              final time = availableTimes[index];
-
-              return CustomChipButton(
-                width: 100.w,
-                title: time,
-                isSelected: index == selectedIndex,
-                onTap: () => onSelect(index),
+        Consumer<BookSessionController>(
+          builder: (context, controller, _) {
+            if (controller.isLoading) {
+              return SizedBox(
+                height: 110.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircularProgressIndicator.adaptive(),
+                    SizedBox(height: 10.h),
+                    Text(
+                      'Loading therapist available time...',
+                      textAlign: TextAlign.center,
+                      style: AppText.bold500(context).copyWith(
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ],
+                ),
               );
-            },
-          ),
+            }
+
+            final error = controller.failure;
+            if (error != null) {
+              return SizedBox(
+                height: 110.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.error,
+                      color: AppColors.primary,
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      error.message,
+                      textAlign: TextAlign.center,
+                      style: AppText.bold500(context),
+                    ),
+                    SizedBox(height: 10.h),
+                    TextButton(
+                      onPressed: getAvailableBookingTimeListForTherapist,
+                      child: Text(
+                        'Reload',
+                        style: AppText.bold400(context),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            final availableTimes = controller.availableTimeList;
+            return GridView.count(
+              crossAxisCount: 3,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(
+                left: AppPadding.horizontal,
+                right: AppPadding.horizontal,
+                bottom: 10.h,
+              ),
+              physics: const NeverScrollableScrollPhysics(),
+              childAspectRatio: 100.w / 40.h,
+              crossAxisSpacing: 22.w,
+              mainAxisSpacing: 12.h,
+              children: List.generate(
+                availableTimes.length,
+                (index) {
+                  final time = availableTimes[index];
+
+                  return CustomChipButton(
+                    width: 100.w,
+                    title: time,
+                    isSelected: index == selectedIndex,
+                    onTap: () => onSelect(index),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ],
     );

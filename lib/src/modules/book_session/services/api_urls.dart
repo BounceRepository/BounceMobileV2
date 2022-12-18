@@ -9,4 +9,6 @@ class BookAppointmentURLS {
   static const rescheduleAppointment = APIURLs.baseURL + '/Patient/ReScheduleAppointment';
   static const getAllTherapist = APIURLs.baseURL + '/Patient/GetAllTherapists';
   static const getAllUpComingSession = APIURLs.baseURL + '/Patient/UpComingSessions';
+  static const getAvailableBookingTimeListForTherapist =
+      APIURLs.baseURL + '/Patient/GetAvaialbleBookingTime';
 }

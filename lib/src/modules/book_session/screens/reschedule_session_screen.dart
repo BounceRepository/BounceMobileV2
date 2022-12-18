@@ -116,7 +116,7 @@ class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 56.h),
-                  const SelectDateView(),
+                  SelectDateView(therapist: therapist),
                   SizedBox(height: 48.h),
                   SelectAvailableTimeView(therapist: therapist),
                   const Spacer(),

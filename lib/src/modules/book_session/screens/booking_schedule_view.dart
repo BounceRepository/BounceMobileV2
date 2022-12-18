@@ -27,7 +27,7 @@ class BookingScheduleView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SelectDateView(),
+            SelectDateView(therapist: therapist),
             SizedBox(height: gap),
             SelectAvailableTimeView(therapist: therapist),
             SizedBox(height: gap),

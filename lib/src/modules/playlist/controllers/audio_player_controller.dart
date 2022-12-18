@@ -127,4 +127,10 @@ class AudioPlayerController extends ChangeNotifier {
       throw Failure(_errorMessage);
     }
   }
+
+   @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
 }

@@ -77,13 +77,13 @@ class BorderAppButton extends StatelessWidget {
   const BorderAppButton({
     Key? key,
     required this.label,
-    required this.labelColor,
+    this.labelColor,
     this.borderColor,
     required this.onTap,
   }) : super(key: key);
 
   final String label;
-  final Color labelColor;
+  final Color? labelColor;
   final Color? borderColor;
   final Function() onTap;
 
@@ -91,10 +91,10 @@ class BorderAppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppButton(
       label: label.toTitleCase,
-      labelColor: labelColor,
+      labelColor: labelColor ?? AppColors.primary,
       backgroundColor: Colors.transparent,
       elevation: 0,
-      border: Border.all(color: borderColor ?? AppColors.border, width: 2.h),
+      border: Border.all(color: borderColor ?? AppColors.primary, width: 2.h),
       onTap: onTap,
     );
   }

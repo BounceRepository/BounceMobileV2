@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/book_session/controllers/book_session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/amount_per_hour_view.dart';
@@ -11,15 +12,27 @@ import 'package:bounce_patient_app/src/shared/widgets/others/custom_star_rating.
 import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
-class TherapistBookingSummary extends StatelessWidget {
+class TherapistBookingSummary extends StatefulWidget {
   const TherapistBookingSummary({Key? key, required this.therapist}) : super(key: key);
 
   final Therapist therapist;
 
   @override
+  State<TherapistBookingSummary> createState() => _TherapistBookingSummaryState();
+}
+
+class _TherapistBookingSummaryState extends State<TherapistBookingSummary> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<BookSessionController>().init();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final doctorName = '${therapist.title} ${therapist.firstName}';
+    final doctorName = '${widget.therapist.title} ${widget.therapist.firstName}';
 
     return Scaffold(
       appBar: const CustomAppBar(label: 'Book Session'),
@@ -29,7 +42,7 @@ class TherapistBookingSummary extends StatelessWidget {
             child: Column(
               children: [
                 CustomCacheNetworkImage(
-                  image: therapist.profilePicture,
+                  image: widget.therapist.profilePicture,
                   size: 100.h,
                 ),
                 SizedBox(height: 19.h),
@@ -43,7 +56,7 @@ class TherapistBookingSummary extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  therapist.specializationList,
+                  widget.therapist.specializationList,
                   textAlign: TextAlign.center,
                   style: AppText.bold400(context).copyWith(
                     fontSize: 14.sp,
@@ -53,10 +66,10 @@ class TherapistBookingSummary extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomStarRating(rating: therapist.rating),
+                    CustomStarRating(rating: widget.therapist.rating),
                     SizedBox(width: 8.w),
                     Text(
-                      '${therapist.reviewCount} Reviews',
+                      '${widget.therapist.reviewCount} Reviews',
                       style: AppText.bold500(context).copyWith(
                         fontSize: 10.sp,
                       ),
@@ -85,14 +98,15 @@ class TherapistBookingSummary extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 12.w),
-                    AmountPerHourView(amount: therapist.serviceChargePerHour),
+                    AmountPerHourView(amount: widget.therapist.serviceChargePerHour),
                   ],
                 ),
                 SizedBox(height: 72.h),
                 AppButton(
                   label: 'Book Now',
                   onTap: () {
-                    AppNavigator.to(context, BookSessionScreen(therapist: therapist));
+                    AppNavigator.to(
+                        context, BookSessionScreen(therapist: widget.therapist));
                   },
                 ),
               ],

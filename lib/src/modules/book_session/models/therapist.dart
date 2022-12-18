@@ -1,6 +1,3 @@
-import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
-import 'package:flutter/material.dart';
-
 import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
@@ -122,34 +119,6 @@ class WorkingHours {
       startTime: startTime,
       endTime: endTime,
     );
-  }
-
-  List<String> get availableTime {
-    var startTimeOfDay = DateTimeUtils.convertAMPMToTimeOfDay(startTime);
-    final endTimeOfDay = DateTimeUtils.convertAMPMToTimeOfDay(endTime);
-    List<TimeOfDay> _timesInTimeOfDay = [];
-
-    if (startTimeOfDay.hour < endTimeOfDay.hour) {
-      for (int i = startTimeOfDay.hour; i <= endTimeOfDay.hour; i++) {
-        _timesInTimeOfDay.add(TimeOfDay(hour: i, minute: 0));
-      }
-
-      return _timesInTimeOfDay
-          .map((element) => DateTimeUtils.convertTimeOfDayToAMPM(element))
-          .toList();
-    } else {
-      for (int i = endTimeOfDay.hour; i <= startTimeOfDay.hour; i++) {
-        _timesInTimeOfDay.add(TimeOfDay(hour: i, minute: 0));
-      }
-
-      return _timesInTimeOfDay
-          .map((element) => DateTimeUtils.convertTimeOfDayToAMPM(element))
-          .toList();
-    }
-
-    // return _timesInTimeOfDay
-    //     .map((element) => DateTimeUtils.convertTimeOfDayToAMPM(element))
-    //     .toList();
   }
 
   @override

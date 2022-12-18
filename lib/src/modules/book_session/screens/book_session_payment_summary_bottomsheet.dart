@@ -1,19 +1,12 @@
 import 'package:bounce_patient_app/src/modules/book_session/controllers/controllers.dart';
-import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/upcoming_session_list_screen.dart';
-import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
-import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
-import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
-import 'package:bounce_patient_app/src/modules/wallet/services/impls/flutterwave_payment_service.dart';
-import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
-import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/response_bottomsheets.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/amount_text.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +20,8 @@ Future<dynamic> showBookSessionPaymentSummaryBottomsheet({
 }) {
   return showCustomBottomSheet(
     context,
+    isDismissible: false,
+    enableDrag: false,
     body: _Body(therapist: therapist, amount: amount),
   );
 }
@@ -43,90 +38,38 @@ class _Body extends StatefulWidget {
 
 class _BodyState extends State<_Body> {
   bool isLoading = false;
-  PaymentOption? selectedPaymentOption;
 
-  void payWithCard() async {
-    try {
-      setState(() => isLoading = true);
-      final paymentDTO = await _bookSession();
-
-      if (paymentDTO != null) {
-        final paymentService = FlutterwavePaymentService(context: context);
-        final response = await paymentService.processTransaction(
-          paymentDto: paymentDTO,
-          paymentOption: PaymentOption.card,
-        );
-        if (response != null) {
-          await confirmPayment(response.value);
-        }
-      }
-      setState(() => isLoading = false);
-    } on Failure {
-      setState(() => isLoading = false);
-      showErrorBottomsheet(
-        context,
-        desc:
-            'Your prefered doctor would be not be available for this session, please choose another doctor from our top therapists.',
-      );
-    }
-  }
-
-  Future<PaymentDto?> _bookSession() async {
+  void bookSession() async {
     final controller = context.read<BookSessionController>();
     final date = controller.selectedDate;
     final time = controller.selectedTime;
     final reason = controller.reason;
+    final problemDesc = controller.problemDesc;
     final user = AppSession.user;
 
     if (time != null && reason != null && user != null) {
       final therapist = widget.therapist;
 
       try {
-        final trxRef = await controller.bookSession(
-          appointmentType: SessionType.audio,
-          paymentType: PaymentOption.card,
+        setState(() => isLoading = true);
+        await controller.bookSession(
           reason: reason,
           patientId: user.id,
           therapistId: therapist.id,
           price: widget.amount.toDouble(),
           time: time,
           date: date,
+          problemDesc: problemDesc,
         );
-
-        return PaymentDto(
-          trxRef: trxRef,
-          customerName: user.fullName,
-          email: user.email,
-          amount: widget.amount,
-          narration: 'Appointment Booking',
-          message: 'Payment for session with ${therapist.fullName} and ${user.fullName}',
-        );
-      } on Failure {
-        rethrow;
+        setState(() => isLoading = false);
+        AppNavigator.removeAllUntil(context, const UpComingSessionListScreen());
+        Messenger.success(message: 'Booking Successfull');
+      } on Failure catch (e) {
+        setState(() => isLoading = false);
+        Messenger.error(message: e.message);
       }
     }
     return null;
-  }
-
-  Future<void> confirmPayment(String trxRef) async {
-    final controller = context.read<BookSessionController>();
-
-    try {
-      setState(() => isLoading = true);
-      await controller.confirmAppointment(trxRef);
-      AppNavigator.removeAllUntil(context, const UpComingSessionListScreen());
-      Messenger.success(message: 'Booking Successfull');
-      setState(() => isLoading = false);
-    } on Failure catch (e) {
-      setState(() => isLoading = false);
-      showErrorBottomsheet(
-        context,
-        desc: e.message.toTitleCase,
-        onTap: () {
-          AppNavigator.removeAllUntil(context, const DashboardView());
-        },
-      );
-    }
   }
 
   @override
@@ -134,7 +77,23 @@ class _BodyState extends State<_Body> {
     return CustomBottomSheetBody(
       height: 488.h,
       body: [
-        const BottomSheetTitle('Payment'),
+        isLoading
+            ? SizedBox(
+                height: 48.h,
+              )
+            : const Align(
+                alignment: Alignment.centerRight,
+                child: CloseButton(),
+              ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Payment',
+            style: AppText.bold700(context).copyWith(
+              fontSize: 20.sp,
+            ),
+          ),
+        ),
         SizedBox(height: 40.h),
         Align(
           alignment: Alignment.centerLeft,
@@ -149,7 +108,7 @@ class _BodyState extends State<_Body> {
         AppButton(
           label: 'Book Session',
           isLoading: isLoading,
-          onTap: payWithCard,
+          onTap: bookSession,
         ),
         SizedBox(height: 20.h),
       ],

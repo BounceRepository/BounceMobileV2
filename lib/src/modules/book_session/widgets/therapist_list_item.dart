@@ -15,58 +15,60 @@ class TherapistListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        AppNavigator.to(context, TherapistDetailScreen(therapist));
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 32.h),
-        padding: EdgeInsets.symmetric(vertical: 15.4.h, horizontal: 14.75.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.r),
-          color: const Color(0xffFEF3E7),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomCacheNetworkImage(image: therapist.profilePicture),
-            SizedBox(width: 17.13.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${therapist.fullName}, ${therapist.certifications.first.toUpperCase()}',
-                    style: AppText.bold800(context).copyWith(
-                      fontSize: 16.sp,
-                      color: AppColors.textBrown,
-                    ),
-                  ),
-                  SizedBox(height: 3.h),
-                  Text(
-                    '${therapist.specializationList} • ${therapist.experience} Years Experience',
-                    style: AppText.bold400(context).copyWith(
-                      fontSize: 12.sp,
-                      color: AppColors.textBrown,
-                    ),
-                  ),
-                  SizedBox(height: 10.h),
-                  Row(
-                    children: [
-                      CustomStarRating(rating: therapist.rating),
-                      SizedBox(width: 8.w),
-                      Text(
-                        '${therapist.reviewCount} Reviews',
-                        style: AppText.bold500(context).copyWith(
-                          fontSize: 10.sp,
-                        ),
+    return Padding(
+      padding: EdgeInsets.only(bottom: 15.h),
+      child: InkWell(
+        onTap: () {
+          AppNavigator.to(context, TherapistDetailScreen(therapist));
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 15.4.h, horizontal: 14.75.w),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.r),
+            color: const Color(0xffFEF3E7),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomCacheNetworkImage(image: therapist.profilePicture),
+              SizedBox(width: 17.13.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${therapist.fullName}, ${therapist.certifications.first.toUpperCase()}',
+                      style: AppText.bold800(context).copyWith(
+                        fontSize: 16.sp,
+                        color: AppColors.textBrown,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(height: 3.h),
+                    Text(
+                      '${therapist.specializationList} • ${therapist.experience} Years Experience',
+                      style: AppText.bold400(context).copyWith(
+                        fontSize: 12.sp,
+                        color: AppColors.textBrown,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Row(
+                      children: [
+                        CustomStarRating(rating: therapist.rating),
+                        SizedBox(width: 8.w),
+                        Text(
+                          '${therapist.reviewCount} Reviews',
+                          style: AppText.bold500(context).copyWith(
+                            fontSize: 10.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

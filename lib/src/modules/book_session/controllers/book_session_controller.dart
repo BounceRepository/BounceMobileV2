@@ -1,42 +1,41 @@
-import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/book_appointment_service.dart';
-import 'package:bounce_patient_app/src/modules/wallet/models/payment.dart';
 import 'package:bounce_patient_app/src/shared/controllers/base_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 
 class BookSessionController extends BaseController {
-  final IBookAppointmentService _service;
+  final IBookSessionService _service;
 
-  BookSessionController({required IBookAppointmentService sessionBookingService})
+  BookSessionController({required IBookSessionService sessionBookingService})
       : _service = sessionBookingService;
 
   DateTime selectedDate = DateTime.now();
   String? reason;
   String? selectedTime;
-  String? note;
+  String? problemDesc;
+  List<String> _availableTimeList = [];
+  List<String> get availableTimeList => _availableTimeList;
 
   void init() {
     reason = null;
     selectedTime = null;
-    note = null;
+    problemDesc = null;
     selectedDate = DateTime.now();
+    _availableTimeList.clear();
   }
 
-  Future<String> bookSession({
-    required SessionType appointmentType,
-    required PaymentOption paymentType,
+  Future<void> bookSession({
     required String reason,
     required int patientId,
     required int therapistId,
     required double price,
     required String time,
     required DateTime date,
+    String? problemDesc,
   }) async {
     try {
-      final trxRef = await _service.bookSession(
-        appointmentType: appointmentType,
-        paymentType: paymentType,
+      await _service.bookSession(
+        problemDesc: problemDesc,
         reason: reason,
         patientId: patientId,
         therapistId: therapistId,
@@ -44,16 +43,6 @@ class BookSessionController extends BaseController {
         startTime: time,
         date: date,
       );
-
-      return trxRef;
-    } on Failure {
-      rethrow;
-    }
-  }
-
-  Future<void> confirmAppointment(String trxRef) async {
-    try {
-      await _service.confirmPayment(trxRef);
     } on Failure {
       rethrow;
     }
@@ -71,6 +60,21 @@ class BookSessionController extends BaseController {
         date: date,
       );
     } on Failure {
+      rethrow;
+    }
+  }
+
+  Future<void> getAvailableBookingTimeListForTherapist({
+    required int therapistId,
+  }) async {
+    reset();
+    try {
+      setIsLoading(true);
+      _availableTimeList = await _service.getAvailableBookingTimeListForTherapist(
+          therapistId: therapistId, date: selectedDate);
+      setIsLoading(false);
+    } on Failure {
+      setIsLoading(false);
       rethrow;
     }
   }

@@ -32,7 +32,8 @@ import 'package:get_it/get_it.dart';
 final diContainer = GetIt.instance;
 
 Future<void> init() async {
-  bool useFake = true;
+  bool useFake = false;
+
   // controllers
   authControllersInit(useFake: useFake);
   moodControllersInit(useFake: true);
@@ -59,8 +60,8 @@ Future<void> init() async {
   diContainer.registerLazySingleton<ImageService>(() => ImageServiceImpl());
   diContainer.registerLazySingleton<ITherapistListService>(
       () => TherapistListServiceImpl(api: diContainer()));
-  diContainer.registerLazySingleton<IBookAppointmentService>(
-      () => SessionServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IBookSessionService>(
+      () => BookSessionService(api: diContainer()));
   diContainer.registerLazySingleton<ISessionListService>(
       () => SessionListServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<ISongListService>(
