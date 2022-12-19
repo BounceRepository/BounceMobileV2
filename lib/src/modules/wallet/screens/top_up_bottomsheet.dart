@@ -1,11 +1,14 @@
 import 'package:bounce_patient_app/src/modules/wallet/screens/select_payment_option_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 Future<dynamic> showTopUpBottomsheet({
   required BuildContext context,
@@ -41,7 +44,8 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
 
   void submit() {
     if (_formKey.currentState!.validate()) {
-      final amount = double.tryParse(amountController.text);
+      final amount =
+          double.tryParse(Utils.getNumberFromFormattedAmount(amountController.text));
 
       if (amount != null) {
         showWalletTopUpPaymentOptionBottomsheet(context: context, amount: amount);
@@ -55,7 +59,6 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
       key: _formKey,
       child: SingleChildScrollView(
         child: CustomBottomSheetBody(
-          //height: 488.h,
           body: [
             const BottomSheetTitle('My Wallet Top Up'),
             SizedBox(height: 64.h),
@@ -63,8 +66,11 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
               controller: amountController,
               hintText: 'Amount',
               textInputType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                CurrencyInputFormatter(),
+              ],
               textInputAction: TextInputAction.done,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the amount';
@@ -82,7 +88,6 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
                 fontSize: 14.sp,
               ),
             ),
-            //const Spacer(),
             SizedBox(height: 185.h),
             AppButton(
               label: 'Continue',
@@ -92,6 +97,32 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CurrencyInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.selection.baseOffset == 0) {
+      return newValue;
+    }
+
+    double value = double.parse(newValue.text);
+
+    final formatter = NumberFormat.currency(
+      symbol: AppConstants.nairaSymbol,
+      decimalDigits: 0,
+    );
+
+    String newText = formatter.format(value);
+
+    return newValue.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
     );
   }
 }

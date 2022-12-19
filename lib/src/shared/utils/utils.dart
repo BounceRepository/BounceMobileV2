@@ -48,4 +48,11 @@ class Utils {
     }
     return 'Good Evening,';
   }
+
+  static String getNumberFromFormattedAmount(String str) {
+    if (str.length == 1) {
+      return str;
+    }
+    return str.substring(1).replaceAll(',', '');
+  }
 }
