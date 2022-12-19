@@ -9,7 +9,7 @@ abstract class IAuthService {
     required String password,
   });
   Future<void> login({
-    required String userName,
+    required String email,
     required String password,
   });
   Future<void> resetPassword({
@@ -30,7 +30,7 @@ abstract class IAuthService {
     required String firstName,
     required String lastName,
     required String phoneNumber,
-     File? image,
+    File? image,
     required String dateOfBirth,
     required String physicalHealtRate,
     required String mentalHealtRate,

@@ -75,6 +75,8 @@ class AppConstants {
     MoodIcons.manic,
   ];
   static const agoraAppId = '';
+  static const emailPref = "emailPref";
+  static const userNamePref = 'userNamePref';
 }
 
 Future<void> fakeNetworkDelay({int seconds = 2}) async {

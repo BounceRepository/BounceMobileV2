@@ -21,7 +21,7 @@ class AuthController extends BaseController {
     try {
       setIsLoading(true);
       await _authService.login(
-        userName: userName,
+        email: userName,
         password: password,
       );
       setIsLoading(false);

@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   agora_rtc_engine
   audioplayers_windows
+  flutter_secure_storage_windows
   iris_event
   permission_handler_windows
   url_launcher_windows

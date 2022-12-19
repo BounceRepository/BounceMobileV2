@@ -4,7 +4,7 @@ import 'package:bounce_patient_app/src/modules/book_session/services/impls/impls
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/session_list_service.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/interfaces.dart';
 import 'package:bounce_patient_app/src/modules/auth/di.dart';
-import 'package:bounce_patient_app/src/modules/auth/service/impls/auth_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/auth/service/impls/auth_service.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/di.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/di.dart';
@@ -55,8 +55,7 @@ Future<void> init() async {
   chatServicesInit();
   feedServicesInit();
   reviewServicesInit();
-  diContainer
-      .registerLazySingleton<IAuthService>(() => AuthServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IAuthService>(() => AuthService(api: diContainer()));
   diContainer.registerLazySingleton<ImageService>(() => ImageServiceImpl());
   diContainer.registerLazySingleton<ITherapistListService>(
       () => TherapistListServiceImpl(api: diContainer()));

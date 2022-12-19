@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:bounce_patient_app/src/local_storage/local_storage_service.dart';
 import 'package:bounce_patient_app/src/modules/auth/constants/auth_urls.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
@@ -9,10 +11,10 @@ import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:dio/dio.dart';
 
-class AuthServiceImpl implements IAuthService {
+class AuthService implements IAuthService {
   final IApi _api;
 
-  AuthServiceImpl({required IApi api}) : _api = api;
+  AuthService({required IApi api}) : _api = api;
 
   @override
   Future<void> changePassword({
@@ -35,17 +37,18 @@ class AuthServiceImpl implements IAuthService {
 
   @override
   Future<void> login({
-    required String userName,
+    required String email,
     required String password,
   }) async {
     var url = AuthURLs.login;
-    var body = {'username': userName, 'password': password};
+    var body = {'username': email, 'password': password};
 
     try {
       final response = await _api.post(url, body: body);
       final data = response['data'];
       AppSession.authToken = data['token'];
       AppSession.user = User.fromJson(data);
+      _saveDetailsToLocalStorage(email: email, userName: data['userName']);
 
       if (data['confirmedEmail'] == false) {
         throw ConfirmEmailFailure();
@@ -60,6 +63,20 @@ class AuthServiceImpl implements IAuthService {
       throw InternalFailure();
     } on Exception {
       throw InternalFailure();
+    }
+  }
+
+  void _saveDetailsToLocalStorage({
+    required String email,
+    required String userName,
+  }) async {
+    try {
+      await LocalStorageService.saveLoginDetails(
+        email: email,
+        userName: userName,
+      );
+    } on Failure catch (e) {
+      log(e.message);
     }
   }
 
