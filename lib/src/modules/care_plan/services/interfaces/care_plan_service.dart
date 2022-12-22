@@ -3,5 +3,5 @@ import 'package:bounce_patient_app/src/modules/wallet/models/transaction_ref.dar
 
 abstract class ICarePlanService {
   Future<List<Plan>> getAllPlan();
-  Future<TransactionRef> choosePlan(SubPlan plan);
+  Future<void> choosePlan(SubPlan plan);
 }

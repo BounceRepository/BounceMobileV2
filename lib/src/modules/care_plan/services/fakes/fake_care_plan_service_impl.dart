@@ -38,8 +38,7 @@ class FakeCarePlanServiceImpl implements ICarePlanService {
   }
 
   @override
-  Future<TransactionRef> choosePlan(SubPlan plan) async {
+  Future<void> choosePlan(SubPlan plan) async {
     await fakeNetworkDelay();
-    return TransactionRef(value: Utils.getGuid());
   }
 }

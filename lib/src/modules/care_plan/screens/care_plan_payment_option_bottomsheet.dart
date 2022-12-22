@@ -3,12 +3,8 @@ import 'dart:developer';
 import 'package:bounce_patient_app/src/modules/care_plan/controllers/care_plan_controller.dart';
 import 'package:bounce_patient_app/src/modules/care_plan/models/plan.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
-import 'package:bounce_patient_app/src/modules/wallet/controllers/payment_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/wallet/controllers/wallet_controller.dart';
-import 'package:bounce_patient_app/src/modules/wallet/models/payment_dto.dart';
-import 'package:bounce_patient_app/src/modules/wallet/models/transaction_ref.dart';
-import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -46,67 +42,33 @@ class _SelectPaymentOptionBody extends StatefulWidget {
 class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
   bool isLoading = false;
 
-  void submit() async {
+  void subscribeToPlan() async {
+    final controller = context.read<CarePlanController>();
     try {
       setState(() => isLoading = true);
-      final paymentDto = await subscribeToPlan();
-
-      if (paymentDto != null) {
-        await payWithWallet(TransactionRef(value: paymentDto.trxRef));
-      }
+      await controller.subscribeToPlan(widget.plan);
       setState(() => isLoading = false);
+      updateWalletDetails();
+      AppNavigator.removeAllUntil(context, const DashboardView());
+      Messenger.success(message: 'Subscription Successfull');
     } on Failure catch (e) {
       setState(() => isLoading = false);
       Messenger.error(message: e.message);
     }
   }
 
-  Future<PaymentDto?> subscribeToPlan() async {
-    final user = AppSession.user;
-
-    if (user != null) {
-      final controller = context.read<CarePlanController>();
-
-      try {
-        final trxRef = await controller.subscribeToPlan(widget.plan);
-        return PaymentDto(
-          trxRef: trxRef.value,
-          customerName: user.fullName,
-          email: user.email,
-          amount: widget.plan.amount,
-          narration: 'Care Plan Subscription',
-          message: '${widget.plan.title} subscription',
-        );
-      } on Failure {
-        rethrow;
-      }
-    }
-    return null;
-  }
-
-  Future<void> payWithWallet(TransactionRef trxRef) async {
-    final controller = context.read<PaymentController>();
-
-    try {
-      await controller.payWithWallet(trxRef);
-      updateWalletDetails();
-      AppNavigator.removeAllUntil(context, const DashboardView());
-      Messenger.success(message: 'Subscription Successfull');
-    } on Failure {
-      rethrow;
-    }
-  }
-
   void updateWalletDetails() async {
-    final controller = context.read<WalletController>();
+    final transactionController = context.read<TransactionListController>();
 
     try {
       await Future.wait([
-        controller.getBalance(),
-        context.read<TransactionListController>().getAllTopUp(),
+        context.read<WalletController>().getBalance(),
+        transactionController.getAll(),
+        transactionController.getAllTopUp(),
+        transactionController.getAllPayment(),
       ]);
     } on Failure {
-      log('ERROR => Failed to update wallet details');
+      log('ERROR => Failed to update wallet details, after care plan subscription');
     }
   }
 
@@ -117,7 +79,10 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
       padding: EdgeInsets.zero,
       body: [
         isLoading
-            ? SizedBox(height: 20.h)
+            ? const Align(
+                alignment: Alignment.centerRight,
+                child: CloseButton(color: Colors.transparent),
+              )
             : const Align(
                 alignment: Alignment.centerRight,
                 child: CloseButton(),
@@ -159,7 +124,7 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
           child: AppButton(
             label: 'Subscribe',
             isLoading: isLoading,
-            onTap: submit,
+            onTap: subscribeToPlan,
           ),
         ),
         SizedBox(height: 22.h),
