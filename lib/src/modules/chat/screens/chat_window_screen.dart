@@ -137,7 +137,7 @@ class _ChatMessageListSection extends StatelessWidget {
           List<ChatBubble> chatBubbles = [];
           for (var message in messages) {
             final chatBubble = ChatBubble(
-              isMe: user.id == message.senderId,
+              isMe: user.id != message.receiverId,
               message: message,
             );
             chatBubbles.add(chatBubble);

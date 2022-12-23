@@ -1,7 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:bounce_patient_app/src/local_storage/local_storage_service.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
+import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
@@ -37,10 +40,25 @@ class FakeAuthServiceImpl implements IAuthService {
       phone: '07017247035',
       dateOfBirth: '1990-02-08',
     );
+    _saveDetailsToLocalStorage(email: 'appleyard@gmail.com', userName: 'applevinctest');
 
     //throw InCompleteProfileFailure();
     //throw ConfirmEmailFailure();
     //throw InternalFailure();
+  }
+
+  void _saveDetailsToLocalStorage({
+    required String email,
+    required String userName,
+  }) async {
+    try {
+      await LocalStorageService.saveLoginDetails(
+        email: email,
+        userName: userName,
+      );
+    } on Failure catch (e) {
+      log(e.message);
+    }
   }
 
   @override
