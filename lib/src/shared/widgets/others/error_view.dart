@@ -56,3 +56,61 @@ class ErrorScreen extends StatelessWidget {
     );
   }
 }
+
+class ErrorView extends StatelessWidget {
+  const ErrorView({
+    super.key,
+    required this.error,
+    required this.retry,
+    this.iconHeight,
+    this.iconWidth,
+  });
+
+  final Failure error;
+  final Function() retry;
+  final double? iconHeight;
+  final double? iconWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 20.h),
+          SvgPicture.asset(
+            AppIcons.error,
+            width: iconWidth ?? 200.w,
+            height: iconHeight ?? 150.h,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(height: 20.h),
+          Text(
+            'Error!',
+            style: AppText.bold700(context).copyWith(
+              fontSize: 20.sp,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Text(
+            error.message.toTitleCase,
+            textAlign: TextAlign.center,
+            style: AppText.bold300(context).copyWith(
+              fontSize: 14.sp,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          SizedBox(
+            width: 200.w,
+            child: BorderAppButton(
+              label: 'Try Again',
+              labelColor: AppColors.primary,
+              borderColor: AppColors.primary,
+              onTap: retry,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

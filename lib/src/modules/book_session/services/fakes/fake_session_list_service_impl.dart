@@ -7,7 +7,7 @@ import 'package:flutter_lorem/flutter_lorem.dart';
 
 class FakeSessionListServiceImpl implements ISessionListService {
   @override
-  Future<List<Session>> getAll() async {
+  Future<List<Session>> getAllCompleted() async {
     await fakeNetworkDelay();
     return List.generate(
       25,

@@ -6,11 +6,11 @@ import 'package:bounce_patient_app/src/modules/chat/services/interfaces/chat_web
 import 'package:bounce_patient_app/src/shared/controllers/base_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 
-class ChatListController extends BaseController {
+class ChatController extends BaseController {
   final IChatService _chatService;
   final IChatWebsocketService _chatWebsocketService;
 
-  ChatListController({
+  ChatController({
     required IChatService chatService,
     required IChatWebsocketService websocketService,
   })  : _chatService = chatService,
@@ -57,14 +57,14 @@ class ChatListController extends BaseController {
     }
   }
 
-  Future<void> send(ChatMessage chatMessage) async {
+  Future<void> sendMessage(ChatMessage chatMessage) async {
     final connectionId = _connectionId;
 
     if (connectionId != null) {
       try {
         _messages.add(chatMessage);
         notifyListeners();
-        await _chatService.pushMessage(
+        await _chatService.sendMessage(
           chatMessage: chatMessage,
           connectionId: connectionId,
         );

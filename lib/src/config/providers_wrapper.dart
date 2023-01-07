@@ -45,7 +45,7 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => diContainer<WalletController>()),
         ChangeNotifierProvider(create: (_) => diContainer<JournalController>()),
         ChangeNotifierProvider(create: (_) => diContainer<CarePlanController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<ChatListController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<ChatController>()),
         ChangeNotifierProvider(create: (_) => diContainer<FeedController>()),
         ChangeNotifierProvider(create: (_) => diContainer<MyFeedController>()),
         ChangeNotifierProvider(create: (_) => diContainer<RelationShipFeedController>()),

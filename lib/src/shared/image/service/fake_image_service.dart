@@ -1,13 +1,19 @@
 import 'dart:io';
 
-import 'package:bounce_patient_app/src/shared/image/service/image_service.dart';
+import 'package:bounce_patient_app/src/shared/assets/images.dart';
+import 'package:bounce_patient_app/src/shared/image/service/i_image_service.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
+import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:image_picker/image_picker.dart';
 
-const _errorMessage = 'An error occuried';
+class FakeImageService implements IImageService {
+  final _imagePicker = ImagePicker();
 
-class ImageServiceImpl implements ImageService {
-  final ImagePicker _imagePicker = ImagePicker();
+  @override
+  Future<String> getImageUrl(File file) async {
+    await fakeNetworkDelay();
+    return AppImages.joinSession;
+  }
 
   @override
   Future<File?> pickImageFromCamera() async {
@@ -18,7 +24,9 @@ class ImageServiceImpl implements ImageService {
       }
       return File(image.path);
     } on Exception {
-      throw Failure(_errorMessage);
+      throw InternalFailure();
+    } on Error {
+      throw InternalFailure();
     }
   }
 
@@ -31,7 +39,9 @@ class ImageServiceImpl implements ImageService {
       }
       return File(image.path);
     } on Exception {
-      throw Failure(_errorMessage);
+      throw InternalFailure();
+    } on Error {
+      throw InternalFailure();
     }
   }
 }

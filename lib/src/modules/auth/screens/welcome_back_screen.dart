@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bounce_patient_app/src/local/local_storage_service.dart';
 import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/create_profile_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/registration_success_screens.dart';
@@ -10,8 +11,14 @@ import 'package:bounce_patient_app/src/modules/auth/widgets/auth_body.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/password_textfield.dart';
+import 'package:bounce_patient_app/src/modules/book_session/controllers/session_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/select_mood_screen.dart';
+import 'package:bounce_patient_app/src/modules/feed/controllers/feed_controller.dart';
+import 'package:bounce_patient_app/src/modules/journal/controllers/journal_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/notifications/controllers/notification_controller.dart';
+import 'package:bounce_patient_app/src/modules/playlist/controllers/song_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/wallet/controllers/transaction_list_controller.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -170,7 +177,15 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
               text1: 'Not You?',
               text2: 'Switch Account',
               onClick: () {
-                AppNavigator.to(context, const SignInScreen());
+                context.read<NotificationController>().clear();
+                context.read<JournalController>().clear();
+                context.read<MyFeedController>().clear();
+                context.read<ChatController>().clear();
+                context.read<SessionListController>().clear();
+                context.read<TransactionListController>().clear();
+                context.read<SongListController>().clear();
+                LocalStorageService.clear();
+                AppNavigator.removeAllUntil(context, const SignInScreen());
               },
             ),
             SizedBox(height: 19.h),

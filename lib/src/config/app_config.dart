@@ -7,6 +7,8 @@ class AppConfig {
 class APIURLs {
   APIURLs._();
 
+  static const domain = 'https://reginald160.bsite.net';
+
   /// url/api
-  static const baseURL = 'http://bouncedev1-001-site1.btempurl.com/api';
+  static const baseURL = '$domain/api';
 }

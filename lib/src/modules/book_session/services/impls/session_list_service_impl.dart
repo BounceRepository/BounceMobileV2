@@ -10,9 +10,11 @@ class SessionListServiceImpl implements ISessionListService {
   SessionListServiceImpl({required IApi api}) : _api = api;
 
   @override
-  Future<List<Session>> getAll() async {
+  Future<List<Session>> getAllCompleted() async {
+    var url = BookAppointmentURLS.getAllSession + '?filter=completed';
+
     try {
-      final response = await _api.get(BookAppointmentURLS.getAllUpComingSession);
+      final response = await _api.get(url);
       final List collection = response['data'];
       return collection.map((json) => Session.fromJson(json)).toList();
     } on Failure {
@@ -26,8 +28,10 @@ class SessionListServiceImpl implements ISessionListService {
 
   @override
   Future<List<Session>> getAllUpComing() async {
+    var url = BookAppointmentURLS.getAllSession + '?filter=upcoming';
+
     try {
-      final response = await _api.get(BookAppointmentURLS.getAllUpComingSession);
+      final response = await _api.get(url);
       final List collection = response['data'];
       final items = collection.map((json) => Session.fromJson(json)).toList();
       return items;

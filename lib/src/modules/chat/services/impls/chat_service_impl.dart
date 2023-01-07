@@ -16,7 +16,7 @@ class ChatServiceImpl implements IChatService {
     try {
       final response = await _api.get(url);
       final List collection = response['data'];
-      return collection.map((map) => ChatMessage.fromMap(map)).toList();
+      return collection.map((map) => ChatMessage.fromJson(map)).toList();
     } on Failure {
       rethrow;
     } on Error {
@@ -27,7 +27,7 @@ class ChatServiceImpl implements IChatService {
   }
 
   @override
-  Future<void> pushMessage({
+  Future<void> sendMessage({
     required ChatMessage chatMessage,
     required String connectionId,
   }) async {

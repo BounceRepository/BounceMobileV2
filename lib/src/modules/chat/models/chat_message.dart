@@ -29,39 +29,29 @@ class ChatMessage {
     this.precription,
   });
 
-  factory ChatMessage.fromMap(Map<String, dynamic> map) {
+  factory ChatMessage.fromJson(Map<String, dynamic> json) {
     final user = AppSession.user;
 
     if (user == null) {
       return ChatMessage(
         id: Utils.getGuid(),
-        text: map['message'] as String,
-        receiverId: map["receieverId"] as int,
+        text: json['message'] as String,
+        receiverId: json["receieverId"] as int,
         senderId: 0,
-        type: MessageType.text,
-        createdAt: DateTime.parse(map["time"]).toLocal(),
-        file: map['files'] != null ? map['files'] as String : null,
+        type: json['isPrecription'] ? MessageType.prescription : MessageType.text,
+        createdAt: DateTime.parse(json["time"]).toLocal(),
+        file: json['files'] != null ? json['files'] as String : null,
       );
     }
 
     return ChatMessage(
       id: Utils.getGuid(),
-      text: map['message'] as String,
-      receiverId: map["receieverId"] as int,
-      senderId: map["senderId"] ?? user.id,
-      type: MessageType.text,
-      createdAt: DateTime.parse(map["time"]),
-      file: map['files'] != null ? map['files'] as String : null,
+      text: json['message'] as String,
+      receiverId: json["receieverId"] as int,
+      senderId: json["senderId"] ?? user.id,
+      type: json['isPrescription'] ? MessageType.prescription : MessageType.text,
+      createdAt: DateTime.parse(json["time"]),
+      file: json['filePath'] != null ? json['filePath'] as String : null,
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'text': text,
-      'receiverId': receiverId,
-      'createdAt': createdAt.millisecondsSinceEpoch,
-      'file': file,
-    };
   }
 }

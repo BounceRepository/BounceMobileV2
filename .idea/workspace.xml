@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afba0268-5656-4d86-b7ea-ed2bd5277598" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/config/di_container.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/di_container.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/modules/auth/screens/select_health_level_bottomsheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/auth/screens/select_health_level_bottomsheet.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/modules/feed/controllers/feed_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/feed/controllers/feed_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/modules/feed/models/feed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/feed/models/feed.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/modules/feed/services/fakes/fake_feed_list_service_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/feed/services/fakes/fake_feed_list_service_impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/modules/feed/services/fakes/fake_feed_service_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/feed/services/fakes/fake_feed_service_impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/modules/feed/widgets/feed_item_tile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/feed/widgets/feed_item_tile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/shared/widgets/bottomsheet/select_location_bottomsheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/shared/widgets/bottomsheet/select_location_bottomsheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/local_storage/local_storage_service.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/modules/auth/service/fakes/fake_auth_service_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/auth/service/fakes/fake_auth_service_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/modules/auth/service/impls/auth_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/auth/service/impls/auth_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/modules/onboarding/screens/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modules/onboarding/screens/splash_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

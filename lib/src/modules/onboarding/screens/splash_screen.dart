@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bounce_patient_app/src/local_storage/local_storage_service.dart';
+import 'package:bounce_patient_app/src/local/local_storage_service.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/welcome_back_screen.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/screens/onboarding_screen.dart';

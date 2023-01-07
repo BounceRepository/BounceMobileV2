@@ -6,7 +6,7 @@ class AuthURLs {
   static const baseURL = APIURLs.baseURL + '/Authentication';
 
   static const register = '$baseURL/register/user';
-  static const login = '$baseURL/login';
+  static const login = '$baseURL/PatientLogin';
   static const resetPassword = '$baseURL/ResetPassword';
   static const validateToken = '$baseURL/ValidateToken';
   static const changePassword = '$baseURL/ChangePassword';

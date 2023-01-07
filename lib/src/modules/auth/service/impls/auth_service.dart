@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:bounce_patient_app/src/local_storage/local_storage_service.dart';
+import 'package:bounce_patient_app/src/local/local_storage_service.dart';
 import 'package:bounce_patient_app/src/modules/auth/constants/auth_urls.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
 import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';

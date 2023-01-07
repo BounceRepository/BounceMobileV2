@@ -79,7 +79,7 @@ class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
 
     try {
       await Future.wait([
-        controller.getAllSession(),
+        controller.getAllCompleted(),
         controller.getUpComingSessions(),
       ]);
     } on Failure {

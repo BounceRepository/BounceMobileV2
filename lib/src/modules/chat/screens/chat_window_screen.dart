@@ -1,14 +1,19 @@
+import 'dart:io';
+
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
+import 'package:bounce_patient_app/src/modules/chat/screens/send_image_view_screen.dart';
 import 'package:bounce_patient_app/src/modules/chat/widgets/chat_bubble.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
+import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/pick_image_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +43,7 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
 
   void init() async {
     setState(() => isLoading = true);
-    final controller = context.read<ChatListController>();
+    final controller = context.read<ChatController>();
 
     try {
       await controller.openConnection();
@@ -50,7 +55,7 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
   }
 
   Future<void> getAllMessage() async {
-    final controller = context.read<ChatListController>();
+    final controller = context.read<ChatController>();
 
     if (controller.messages.isEmpty) {
       try {
@@ -94,6 +99,7 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
                     ? const Expanded(child: CustomLoadingIndicator())
                     : _ChatMessageListSection(onRetry: init),
                 _MessageInputSection(therapist: widget.therapist),
+                SizedBox(height: 20.h),
               ],
             ),
           ),
@@ -117,7 +123,7 @@ class _ChatMessageListSection extends StatelessWidget {
     }
 
     return Expanded(
-      child: Consumer<ChatListController>(
+      child: Consumer<ChatController>(
         builder: (BuildContext context, controller, Widget? child) {
           final error = controller.failure;
           if (error != null) {
@@ -179,7 +185,16 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
     super.dispose();
   }
 
-  void pickImage() async {}
+  void pickImage() async {
+    final result = await pickImageBottomSheet(context: context);
+
+    if (result != null) {
+      final imageFile = result as File;
+      if (!mounted) return;
+      AppNavigator.to(
+          context, SendImageViewScreen(image: imageFile, therapist: widget.therapist));
+    }
+  }
 
   void send() async {
     if (_messageController.text.isEmpty) {
@@ -192,7 +207,7 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
     }
 
     if (_messageController.text.isNotEmpty) {
-      final controller = context.read<ChatListController>();
+      final controller = context.read<ChatController>();
       final newMessage = ChatMessage(
         id: Utils.getGuid(),
         text: _messageController.text,
@@ -204,7 +219,7 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
 
       try {
         _messageController.clear();
-        await controller.send(newMessage);
+        await controller.sendMessage(newMessage);
       } on Failure catch (e) {
         debugPrint(e.message);
       }

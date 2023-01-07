@@ -1,19 +1,20 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:bounce_patient_app/src/config/app_config.dart';
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/interfaces/chat_websocket_service.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
-const _serverURL = 'http://bouncedev1-001-site1.btempurl.com/chat';
 const _errorMessage = 'Failed to connect to the server';
 
 class SignalRWebsocketService implements IChatWebsocketService {
   HubConnection? _hubConnection;
   bool connectionIsOpen = false;
   final _messageController = StreamController<ChatMessage>();
+  final serverURL = '${APIURLs.domain}/chat';
 
   @override
   Future<void> openConnection() async {
@@ -32,7 +33,7 @@ class SignalRWebsocketService implements IChatWebsocketService {
         );
 
         _hubConnection = HubConnectionBuilder()
-            .withUrl(_serverURL, options: httpConnectionOptions)
+            .withUrl(serverURL, options: httpConnectionOptions)
             .withAutomaticReconnect(retryDelays: [2000, 5000, 10000, 20000]).build();
         _hubConnection!.onclose(({error}) => connectionIsOpen = false);
         _hubConnection!.onreconnecting(({error}) {
@@ -49,9 +50,8 @@ class SignalRWebsocketService implements IChatWebsocketService {
 
             if (dataList != null) {
               final chatMessage =
-                  ChatMessage.fromMap(dataList.first as Map<String, dynamic>);
+                  ChatMessage.fromJson(dataList.first as Map<String, dynamic>);
 
-              //TODO: Change != to ==
               if (chatMessage.receiverId == user.id) {
                 _messageController.sink.add(chatMessage);
               }

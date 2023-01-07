@@ -32,7 +32,7 @@ class FakeChatServiceImpl implements IChatService {
   }
 
   @override
-  Future<void> pushMessage({
+  Future<void> sendMessage({
     required ChatMessage chatMessage,
     required String connectionId,
   }) async {

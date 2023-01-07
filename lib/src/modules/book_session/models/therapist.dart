@@ -6,6 +6,7 @@ class Therapist {
   final String title;
   final String firstName;
   final String lastName;
+  final String email;
   final List<String> certifications;
   final String specializations;
   final String about;
@@ -23,6 +24,7 @@ class Therapist {
     required this.title,
     required this.firstName,
     required this.lastName,
+    required this.email,
     required this.certifications,
     required this.specializations,
     required this.about,
@@ -55,47 +57,26 @@ class Therapist {
       title: json["title"],
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
-      about: json['about'] as String,
+      email: json['emailAddress'],
+      phoneNumber: json['phoneNUmber'] as String,
+      profilePicture: json['profilePicture'] as String,
+      about: json['aboutMe'] as String,
       specializations: json['specialization'],
       // specializations: List<String>.from(json["specialization"].map((x) => x)),
       //certifications: List<String>.from((map['certifications'] as List<String>)),
       certifications: ['PHD'],
-      // certifications: [json['descipline']],
-      profilePicture: json['picturePath'] as String,
-      experience: int.parse(json['yearsExperience']),
-      phoneNumber: json['phoneNUmber'] as String,
+      experience: json['yearsOfExperience'],
       workingHours: WorkingHours.fromJson(
-        workDays: List<String>.from(json["consultaionDays"].map((x) => x)),
-        //workDays: ['Monday', 'Tuesday', 'Friday'],
-        startTime: json['startTime'],
-        endTime: json['endTime'],
+        workDays: List<String>.from(json["consultationDays"].map((x) => x)),
+        startTime: json['consultationStartTime'],
+        endTime: json['consultationEndTime'],
       ),
       serviceChargePerHour: json['serviceChargePerHoure'],
-      rating: json['reviewRatio'].toDouble(),
+      rating: json['reviewRatio'],
       reviewCount: json['reviewCount'],
       patientCount: json['numberOfPatient'] as int,
     );
   }
-
-  // Map<String, dynamic> toJson() {
-  //   return <String, dynamic>{
-  //     'id': id,
-  //     'title': title,
-  //     'firstName': firstName,
-  //     'lastName': lastName,
-  //     'certifications': certifications,
-  //     'specializations': specializations,
-  //     'desc': desc,
-  //     'profilePicture': profilePicture,
-  //     'rating': rating,
-  //     'experience': experience,
-  //     'phoneNumber': phoneNumber,
-  //     'workingHours': workingHours.toMap(),
-  //     'serviceChargePerHour': serviceChargePerHour,
-  //     'reviews': reviews,
-  //     'patients': patients,
-  //   };
-  // }
 }
 
 class WorkingHours {

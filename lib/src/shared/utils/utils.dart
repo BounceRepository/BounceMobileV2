@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:uuid/uuid.dart';
+
+final random = Random();
 
 class Utils {
   Utils._();

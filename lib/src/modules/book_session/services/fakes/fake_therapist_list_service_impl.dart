@@ -35,6 +35,7 @@ final therapist = Therapist(
     'PHD',
   ],
   specializations: 'Psycology',
+  email: 'applevinc@gmail.com',
   about: lorem(paragraphs: 1, words: 20),
   profilePicture: AppImages.joinSession,
   rating: 4.5,

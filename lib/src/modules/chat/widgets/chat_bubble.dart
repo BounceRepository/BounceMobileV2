@@ -44,11 +44,20 @@ class _TextMessageBox extends StatelessWidget {
     return _MessageBox(
       isMe: isMe,
       message: message,
-      child: Text(
-        message.text,
-        style: AppText.bold300(context).copyWith(
-          fontSize: 14.sp,
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _ImageView(image: message.file, id: message.id),
+          message.file == null ? const SizedBox.shrink() : SizedBox(height: 12.h),
+          message.text.isEmpty
+              ? const SizedBox.shrink()
+              : Text(
+                  message.text,
+                  style: AppText.bold300(context).copyWith(
+                    fontSize: 14.sp,
+                  ),
+                ),
+        ],
       ),
     );
   }
@@ -61,18 +70,18 @@ class _PresciptionMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = 212.w;
-    final height = 176.h;
     final prescription = message.precription;
+    final image = message.file;
 
     if (prescription == null) {
       return const SizedBox.shrink();
     }
 
     return _MessageBox(
-      isMe: false,
+      isMe: true,
       message: message,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Prescription',
@@ -81,31 +90,88 @@ class _PresciptionMessage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 12.h),
+          _ImageView(image: image, id: message.id),
+          SizedBox(height: 12.h),
           AppButton(
-            label: 'See',
+            label: 'View Details',
+            padding: EdgeInsets.symmetric(vertical: 5.h),
             onTap: () {
               AppNavigator.to(context, PrescriptionScreen(prescription));
             },
           ),
-          // CachedNetworkImage(
-          //   imageUrl: AppImages.joinSession,
-          //   imageBuilder: (context, imageProvider) => Container(
-          //     width: width,
-          //     height: height,
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(8.r),
-          //       image: DecorationImage(
-          //         image: imageProvider,
-          //         fit: BoxFit.cover,
-          //       ),
-          //     ),
-          //   ),
-          //   width: width,
-          //   height: height,
-          //   fit: BoxFit.cover,
-          //   errorWidget: (context, url, error) => const Icon(Icons.error),
-          // ),
         ],
+      ),
+    );
+  }
+}
+
+class _ImageView extends StatelessWidget {
+  const _ImageView({required this.image, required this.id});
+
+  final String id;
+  final String? image;
+
+  @override
+  Widget build(BuildContext context) {
+    final width = 235.w;
+    final height = 176.h;
+    final image = this.image;
+
+    if (image == null) {
+      return const SizedBox.shrink();
+    }
+
+    return GestureDetector(
+      onTap: () {
+        AppNavigator.to(context, ImageViewScreen(image: image, id: id));
+      },
+      child: InteractiveViewer(
+        clipBehavior: Clip.none,
+        child: Hero(
+          tag: id,
+          child: CustomCacheNetworkImage(
+            image: image,
+            isCirclular: false,
+            height: height,
+            width: width,
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ImageViewScreen extends StatelessWidget {
+  const ImageViewScreen({super.key, required this.image, required this.id});
+
+  final String id;
+  final String image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
+        actions: const [CloseButton(color: Colors.white)],
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(top: 80.h),
+        child: Hero(
+          tag: id,
+          child: InteractiveViewer(
+            clipBehavior: Clip.none,
+            child: CustomCacheNetworkImage(
+              image: image,
+              isCirclular: false,
+              height: 400.h,
+              width: double.infinity,
+              borderRadius: BorderRadius.circular(0),
+            ),
+          ),
+        ),
       ),
     );
   }

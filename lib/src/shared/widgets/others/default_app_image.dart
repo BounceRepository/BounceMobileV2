@@ -29,32 +29,38 @@ class CustomCacheNetworkImage extends StatelessWidget {
     Key? key,
     required this.image,
     this.size,
+    this.height,
+    this.width,
+    this.borderRadius,
     this.isCirclular = true,
   }) : super(key: key);
 
   final String image;
   final double? size;
+  final double? height;
+  final double? width;
   final bool isCirclular;
+  final BorderRadiusGeometry? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: image,
       imageBuilder: (context, imageProvider) => Container(
-        width: size ?? 68.h,
-        height: size ?? 68.h,
+        width: width ?? size ?? 68.h,
+        height: height ?? size ?? 68.h,
         decoration: BoxDecoration(
           shape: isCirclular ? BoxShape.circle : BoxShape.rectangle,
+          borderRadius: borderRadius,
           image: DecorationImage(
             image: imageProvider,
             fit: BoxFit.cover,
           ),
-          border:
-              isCirclular ? Border.all(color: AppColors.primary.withOpacity(.5)) : null,
+          border: Border.all(color: AppColors.primary.withOpacity(.5)),
         ),
       ),
-      width: size ?? 68.h,
-      height: size ?? 68.h,
+      width: width ?? size ?? 68.h,
+      height: height ?? size ?? 68.h,
       fit: BoxFit.cover,
       progressIndicatorBuilder: (context, url, progress) => Container(
         width: size ?? 68.h,

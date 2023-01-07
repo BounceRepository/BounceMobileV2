@@ -43,7 +43,7 @@ class _UpComingSessionListScreenState extends State<UpComingSessionListScreen> {
       try {
         setState(() => isLoading = true);
         await Future.wait([
-          controller.getAllSession(),
+          controller.getAllCompleted(),
           controller.getUpComingSessions(),
         ]);
         setState(() => isLoading = false);

@@ -43,11 +43,11 @@ class SessionListController extends BaseController {
     }
   }
 
-  Future<void> getAllSession() async {
+  Future<void> getAllCompleted() async {
     reset();
     try {
       setIsLoading(true);
-      final result = await _sessionListService.getAll();
+      final result = await _sessionListService.getAllCompleted();
       _sessions = result;
       _completedSessions = result.where((element) => element.isCompleted).toList();
       setIsLoading(false);

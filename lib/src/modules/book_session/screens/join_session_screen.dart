@@ -57,8 +57,11 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: const CustomAppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+      appBar: CustomAppBar(
+        iconTheme: IconThemeData(
+            color: controller.failure != null || controller.isLoading
+                ? Colors.black
+                : Colors.white),
       ),
       body: controller.isLoading
           ? const CustomLoadingIndicator()

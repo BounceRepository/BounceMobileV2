@@ -118,7 +118,7 @@ class _CompletedSessionListViewState extends State<_CompletedSessionListView> {
 
     if (controller.sessions.isEmpty) {
       try {
-        await controller.getAllSession();
+        await controller.getAllCompleted();
       } on Failure catch (e) {
         controller.setFailure(e);
       }

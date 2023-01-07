@@ -22,8 +22,8 @@ import 'package:bounce_patient_app/src/modules/reviews/services/di.dart';
 import 'package:bounce_patient_app/src/modules/care_plan/services/di.dart';
 import 'package:bounce_patient_app/src/modules/wallet/di.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
+import 'package:bounce_patient_app/src/shared/image/service/i_image_service.dart';
 import 'package:bounce_patient_app/src/shared/image/service/image_service.dart';
-import 'package:bounce_patient_app/src/shared/image/service/image_service_impl.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:bounce_patient_app/src/shared/network/dio_api_service_impl.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -56,7 +56,8 @@ Future<void> init() async {
   feedServicesInit();
   reviewServicesInit();
   diContainer.registerLazySingleton<IAuthService>(() => AuthService(api: diContainer()));
-  diContainer.registerLazySingleton<ImageService>(() => ImageServiceImpl());
+  diContainer
+      .registerLazySingleton<IImageService>(() => ImageService(api: diContainer()));
   diContainer.registerLazySingleton<ITherapistListService>(
       () => TherapistListServiceImpl(api: diContainer()));
   diContainer.registerLazySingleton<IBookSessionService>(
