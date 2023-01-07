@@ -11,11 +11,11 @@ class Therapist {
   final String specializations;
   final String about;
   final String profilePicture;
-  final double rating;
   final int experience;
   final String phoneNumber;
   final WorkingHours workingHours;
   final int serviceChargePerHour;
+  final double rating;
   final int reviewCount;
   final int patientCount;
 
@@ -58,7 +58,7 @@ class Therapist {
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['emailAddress'],
-      phoneNumber: json['phoneNUmber'] as String,
+      phoneNumber: json['phoneNumber'] as String,
       profilePicture: json['profilePicture'] as String,
       about: json['aboutMe'] as String,
       specializations: json['specialization'],
@@ -72,9 +72,9 @@ class Therapist {
         endTime: json['consultationEndTime'],
       ),
       serviceChargePerHour: json['serviceChargePerHoure'],
-      rating: json['reviewRatio'],
-      reviewCount: json['reviewCount'],
-      patientCount: json['numberOfPatient'] as int,
+      rating: json['reviewRatio'].toDouble(),
+      reviewCount: json['reviewCount'].toInt(),
+      patientCount: json['numberOfPatient'].toInt(),
     );
   }
 }
