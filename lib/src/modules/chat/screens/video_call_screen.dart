@@ -8,6 +8,7 @@ import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
+import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +29,7 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
-  bool isLoading = true;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -44,11 +45,13 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     if (sessionJoiningDetails != null) {
       final controller = context.read<CallController>();
       try {
+        setState(() => isLoading = true);
         await controller.setupVideoSDKEngine();
         await controller.join(sessionJoiningDetails);
         setState(() => isLoading = false);
       } on Failure catch (e) {
         controller.setFailure(e);
+        setState(() => isLoading = false);
       }
     }
   }
@@ -56,6 +59,13 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: isLoading
+          ? const CustomAppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
+            )
+          : null,
       backgroundColor: Colors.black,
       body: Consumer<CallController>(
         builder: (context, controller, _) {

@@ -44,6 +44,10 @@ class CallControlsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<CallController>();
 
+    if (controller.failure != null) {
+      return const SizedBox.shrink();
+    }
+
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),

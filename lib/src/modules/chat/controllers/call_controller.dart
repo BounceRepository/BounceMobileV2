@@ -112,6 +112,8 @@ class CallController extends BaseController {
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
         channelProfile: ChannelProfileType.channelProfileCommunication,
       );
+      log('Token ==> ${sessionJoiningDetails.token}');
+      log('Channel Name ==> ${sessionJoiningDetails.channel}');
 
       await _agoraEngine.joinChannel(
         token: sessionJoiningDetails.token,

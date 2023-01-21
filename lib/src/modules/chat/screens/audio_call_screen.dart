@@ -7,6 +7,7 @@ import 'package:bounce_patient_app/src/modules/chat/widgets/call_controls_view.d
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class AudioCallScreen extends StatefulWidget {
 }
 
 class _AudioCallScreenState extends State<AudioCallScreen> {
-  bool isLoading = true;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -44,11 +45,13 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
     if (sessionJoiningDetails != null) {
       final controller = context.read<CallController>();
       try {
+        setState(() => isLoading = true);
         await controller.setupVoiceSDKEngine();
         await controller.join(sessionJoiningDetails);
         setState(() => isLoading = false);
       } on Failure catch (e) {
         controller.setFailure(e);
+        setState(() => isLoading = false);
       }
     }
   }
@@ -56,6 +59,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: isLoading ? const CustomAppBar() : null,
       body: Consumer<CallController>(
         builder: (context, controller, _) {
           if (isLoading) {
@@ -80,7 +84,6 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
           final error = controller.failure;
           if (error != null) {
             return ErrorScreen(
-              textColor: Colors.white,
               error: error,
               retry: init,
             );
