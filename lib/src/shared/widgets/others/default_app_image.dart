@@ -33,6 +33,7 @@ class CustomCacheNetworkImage extends StatelessWidget {
     this.width,
     this.borderRadius,
     this.isCirclular = true,
+    this.loadingColor,
   }) : super(key: key);
 
   final String image;
@@ -41,6 +42,7 @@ class CustomCacheNetworkImage extends StatelessWidget {
   final double? width;
   final bool isCirclular;
   final BorderRadiusGeometry? borderRadius;
+  final Color? loadingColor;
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +73,19 @@ class CustomCacheNetworkImage extends StatelessWidget {
               isCirclular ? Border.all(color: AppColors.primary.withOpacity(.5)) : null,
         ),
         child: CircularProgressIndicator.adaptive(
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary.withOpacity(.5))),
+            valueColor: AlwaysStoppedAnimation<Color>(
+                loadingColor ?? AppColors.primary.withOpacity(.5))),
       ),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) => Container(
+        width: size ?? 68.h,
+        height: size ?? 68.h,
+        decoration: BoxDecoration(
+          shape: isCirclular ? BoxShape.circle : BoxShape.rectangle,
+          border:
+              isCirclular ? Border.all(color: AppColors.primary.withOpacity(.5)) : null,
+        ),
+        child: const Icon(Icons.error_outline),
+      ),
     );
   }
 }

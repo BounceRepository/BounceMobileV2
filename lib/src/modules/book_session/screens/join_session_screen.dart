@@ -1,15 +1,22 @@
 import 'dart:ui';
 
 import 'package:bounce_patient_app/src/modules/book_session/controllers/controllers.dart';
+import 'package:bounce_patient_app/src/modules/book_session/controllers/session_controller.dart';
+import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
+import 'package:bounce_patient_app/src/modules/chat/screens/audio_call_screen.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/chat_window_screen.dart';
+import 'package:bounce_patient_app/src/modules/chat/screens/video_call_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
+import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
+import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
+import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,9 +26,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class JoinSessionScreen extends StatefulWidget {
-  const JoinSessionScreen({super.key, required this.therapistId});
+  const JoinSessionScreen({
+    super.key,
+    required this.therapistId,
+    required this.session,
+  });
 
   final int therapistId;
+  final Session session;
 
   @override
   State<JoinSessionScreen> createState() => _JoinSessionScreenState();
@@ -29,6 +41,8 @@ class JoinSessionScreen extends StatefulWidget {
 
 class _JoinSessionScreenState extends State<JoinSessionScreen> {
   Therapist? _therapist;
+  bool isReadyToJoin = false;
+  bool isStarting = false;
 
   @override
   void initState() {
@@ -45,6 +59,22 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
       _therapist = await controller.getOneTherapist(widget.therapistId);
     } on Failure catch (e) {
       controller.setFailure(e);
+    }
+  }
+
+  void startSession() async {
+    if (_therapist != null) {
+      try {
+        setState(() => isStarting = true);
+        await context
+            .read<SessionController>()
+            .start(sessionId: widget.session.id, therapisId: _therapist!.id);
+        isReadyToJoin = true;
+        setState(() => isStarting = false);
+      } on Failure catch (e) {
+        setState(() => isStarting = false);
+        Messenger.error(message: e.message);
+      }
     }
   }
 
@@ -94,74 +124,89 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
                     ),
       bottomNavigationBar: therapist == null
           ? const SizedBox.shrink()
-          : ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-                child: Container(
-                  height: 250.h,
-                  padding: EdgeInsets.only(
-                    top: 32.h,
-                    left: 44.w,
-                    right: 44.w,
-                    bottom: 50.h,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40.r),
-                      topRight: Radius.circular(40.r),
-                    ),
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.black.withOpacity(.1),
-                        Colors.black,
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: 'Welcome to your consultation with ',
-                          style: AppText.bold500(context).copyWith(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '${therapist.title}, ${therapist.fullName}',
-                              style: AppText.bold700(context).copyWith(
-                                color: Colors.white,
-                                fontSize: 16.sp,
-                              ),
-                            ),
-                            TextSpan(
-                              text: ', let’s talk!',
+          : isReadyToJoin
+              ? ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                    child: Container(
+                      height: 250.h,
+                      padding: EdgeInsets.only(
+                        top: 32.h,
+                        left: 44.w,
+                        right: 44.w,
+                        bottom: 50.h,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40.r),
+                          topRight: Radius.circular(40.r),
+                        ),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black.withOpacity(.1),
+                            Colors.black,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: 'Welcome to your consultation with ',
                               style: AppText.bold500(context).copyWith(
                                 color: Colors.white,
                                 fontSize: 16.sp,
                               ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: '${therapist.title}, ${therapist.fullName}',
+                                  style: AppText.bold700(context).copyWith(
+                                    color: Colors.white,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ', let’s talk!',
+                                  style: AppText.bold500(context).copyWith(
+                                    color: Colors.white,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 40.h),
+                          _ActionButtonsSection(
+                            therapist: therapist,
+                            session: widget.session,
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 40.h),
-                      _ActionButtonsSection(therapist: therapist),
-                    ],
+                    ),
+                  ),
+                )
+              : SafeArea(
+                  child: Padding(
+                    padding: AppPadding.symetricHorizontalOnly,
+                    child: AppButton(
+                      label: 'Join with ${therapist.nameWithTitle}',
+                      isLoading: isStarting,
+                      onTap: startSession,
+                    ),
                   ),
                 ),
-              ),
-            ),
     );
   }
 }
 
 class _ActionButtonsSection extends StatelessWidget {
-  const _ActionButtonsSection({required this.therapist});
+  const _ActionButtonsSection({required this.therapist, required this.session});
 
   final Therapist therapist;
+  final Session session;
 
   @override
   Widget build(BuildContext context) {
@@ -171,16 +216,23 @@ class _ActionButtonsSection extends StatelessWidget {
         button(
           icon: AppIcons.message,
           onTap: () {
-            AppNavigator.to(context, ChatWindowScreen(therapist: therapist));
+            AppNavigator.to(
+                context, ChatWindowScreen(therapist: therapist, sessionId: session.id));
           },
         ),
         button(
           icon: AppIcons.call,
-          onTap: () {},
+          onTap: () {
+            AppNavigator.to(
+                context, AudioCallScreen(therapist: therapist, sessionId: session.id));
+          },
         ),
         button(
           icon: AppIcons.video,
-          onTap: () {},
+          onTap: () {
+            AppNavigator.to(
+                context, VideoCallScreen(therapist: therapist, sessionId: session.id));
+          },
         ),
       ],
     );

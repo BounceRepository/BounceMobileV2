@@ -1,6 +1,6 @@
+import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/prescription_screen.dart';
-import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
@@ -16,33 +16,45 @@ class ChatBubble extends StatelessWidget {
     super.key,
     required this.message,
     required this.isMe,
+    required this.therapist,
   });
 
   final bool isMe;
   final ChatMessage message;
+  final Therapist therapist;
 
   @override
   Widget build(BuildContext context) {
     final type = message.type;
 
     if (type == MessageType.prescription) {
-      return _PresciptionMessage(message: message);
+      return _PresciptionMessage(
+        message: message,
+        therapist: therapist,
+      );
     }
 
-    return _TextMessageBox(isMe: isMe, message: message);
+    return _TextMessageBox(
+      isMe: isMe,
+      message: message,
+      therapist: therapist,
+    );
   }
 }
 
 class _TextMessageBox extends StatelessWidget {
-  const _TextMessageBox({required this.isMe, required this.message});
+  const _TextMessageBox(
+      {required this.isMe, required this.message, required this.therapist});
 
   final bool isMe;
   final ChatMessage message;
+  final Therapist therapist;
 
   @override
   Widget build(BuildContext context) {
     return _MessageBox(
       isMe: isMe,
+      therapist: therapist,
       message: message,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,9 +76,10 @@ class _TextMessageBox extends StatelessWidget {
 }
 
 class _PresciptionMessage extends StatelessWidget {
-  const _PresciptionMessage({required this.message});
+  const _PresciptionMessage({required this.message, required this.therapist});
 
   final ChatMessage message;
+  final Therapist therapist;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +93,7 @@ class _PresciptionMessage extends StatelessWidget {
     return _MessageBox(
       isMe: true,
       message: message,
+      therapist: therapist,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -182,11 +196,13 @@ class _MessageBox extends StatelessWidget {
     required this.isMe,
     required this.child,
     required this.message,
+    required this.therapist,
   });
 
   final bool isMe;
   final ChatMessage message;
   final Widget child;
+  final Therapist therapist;
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +268,7 @@ class _MessageBox extends StatelessWidget {
           : [
               SizedBox(width: AppPadding.horizontal),
               CustomCacheNetworkImage(
-                image: AppImages.joinSession,
+                image: therapist.profilePicture,
                 size: 40.h,
               ),
               SizedBox(width: 12.w),

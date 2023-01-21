@@ -1,10 +1,6 @@
 import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 
-enum SessionType {
-  audio,
-  video,
-  chat,
-}
+enum SessionType { audio, video, chat }
 
 class Session {
   final int id;
@@ -59,4 +55,25 @@ class Session {
   //     'isCompleted': isCompleted,
   //   };
   // }
+}
+
+class SessionJoiningDetails {
+  final String channel;
+  final String token;
+
+  SessionJoiningDetails({
+    required this.channel,
+    required this.token,
+  });
+
+  factory SessionJoiningDetails.fromJson(Map<String, dynamic> json) =>
+      SessionJoiningDetails(
+        channel: json["channelToken"],
+        token: json["channeName"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "channelToken": channel,
+        "channeName": token,
+      };
 }

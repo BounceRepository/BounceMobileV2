@@ -17,22 +17,39 @@ class ChatController extends BaseController {
         _chatWebsocketService = websocketService;
 
   String? _connectionId;
+  bool _isConnected = false;
+  bool get isConnected => _isConnected;
   List<ChatMessage> _messages = [];
   List<ChatMessage> get messages => _messages;
 
-  Future<void> openConnection() async {
+  Future<void> startConnection() async {
     reset();
     try {
       await _chatWebsocketService.openConnection();
-      _getConnectionId();
-      await _listenForIncomingMessage();
+      final id = _getConnectionId();
+      if (id != null) {
+        _connectionId = id;
+        _isConnected = true;
+        await _listenForIncomingMessage();
+      }
     } on Failure {
       rethrow;
     }
   }
 
-  void _getConnectionId() {
-    _connectionId = _chatWebsocketService.getConnectionId();
+  String? _getConnectionId() {
+    return _chatWebsocketService.getConnectionId();
+  }
+
+  Future<void> closeConnection() async {
+    try {
+      await _chatWebsocketService.closeConnection();
+      _isConnected = false;
+      _connectionId = null;
+      _messages.clear();
+    } on Failure {
+      rethrow;
+    }
   }
 
   Future<void> _listenForIncomingMessage() async {
@@ -50,6 +67,7 @@ class ChatController extends BaseController {
 
   Future<void> getAllMessage({required int receiverId}) async {
     try {
+      _messages.clear();
       _messages = await _chatService.getAllMessage(receiverId: receiverId);
       notifyListeners();
     } on Failure {

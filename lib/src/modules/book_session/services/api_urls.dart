@@ -11,4 +11,6 @@ class BookAppointmentURLS {
   static const getAllSession = APIURLs.baseURL + '/Patient/UpComingSessions';
   static const getAvailableBookingTimeListForTherapist =
       APIURLs.baseURL + '/Patient/GetAvaialbleBookingTime';
+  static const startSession = APIURLs.baseURL + '/Communication/StartConsultaion?appointRequestId=';
+  static const endSession = APIURLs.baseURL + '/Communication/EndConsultaion?appointRequestId=';
 }

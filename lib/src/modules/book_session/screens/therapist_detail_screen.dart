@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/modules/book_session/controllers/session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/therapist_booking_summary.dart';
 import 'package:bounce_patient_app/src/modules/chat/screens/chat_window_screen.dart';
@@ -15,6 +16,7 @@ import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class TherapistDetailScreen extends StatelessWidget {
   const TherapistDetailScreen(this.therapist, {Key? key}) : super(key: key);
@@ -231,7 +233,25 @@ class _CommunicationSection extends StatelessWidget {
           title: 'Messaging',
           subTitle: 'Chat and share photos.',
           onTap: () {
-            AppNavigator.to(context, ChatWindowScreen(therapist: therapist));
+            final controller = context.read<SessionController>();
+
+            if (!controller.inSession) {
+              AppNavigator.to(
+                  context, ChatWindowScreen(therapist: therapist, closed: true));
+            }
+
+            // if (controller.inSession) {
+
+            //   // final specifictherapistIdInSession = controller.therapisId;
+
+            //   // if (specifictherapistIdInSession != null &&
+            //   //     specifictherapistIdInSession == therapist.id) {
+            //   //   AppNavigator.to(context, ChatWindowScreen(therapist: therapist));
+            //   // }
+            // } else {
+            //   AppNavigator.to(
+            //       context, ChatWindowScreen(therapist: therapist, closed: true));
+            // }
           },
         ),
         SizedBox(height: 20.h),

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
-import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/chat/controllers/chat_controller.dart';
 import 'package:bounce_patient_app/src/modules/chat/models/chat_message.dart';
 import 'package:bounce_patient_app/src/modules/chat/widgets/message_input.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
@@ -162,18 +162,21 @@ class _SendImageViewScreenState extends State<SendImageViewScreen> {
                         height: 400.h,
                         width: double.infinity,
                         borderRadius: BorderRadius.circular(0),
+                        loadingColor: Colors.white,
                       ),
                     ),
                   ),
                   SizedBox(height: 40.h),
-                  MessageInput(
-                    textEditingController: messageController,
-                    send: sendMessage,
-                    textStyle: AppText.bold300(context).copyWith(
-                      fontSize: 14.sp,
-                      color: Colors.white,
+                  SafeArea(
+                    child: MessageInput(
+                      textEditingController: messageController,
+                      send: sendMessage,
+                      textStyle: AppText.bold300(context).copyWith(
+                        fontSize: 14.sp,
+                        color: Colors.white,
+                      ),
+                      sendButtonColor: Colors.white,
                     ),
-                    sendButtonColor: Colors.white,
                   ),
                 ],
               );

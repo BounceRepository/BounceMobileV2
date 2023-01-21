@@ -10,11 +10,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ErrorScreen extends StatelessWidget {
-  const ErrorScreen({super.key, required this.error, required this.retry, this.height});
+  const ErrorScreen({
+    super.key,
+    required this.error,
+    required this.retry,
+    this.height,
+    this.textColor,
+  });
 
   final Failure error;
   final Function() retry;
   final double? height;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,7 @@ class ErrorScreen extends StatelessWidget {
             'Error!',
             style: AppText.bold700(context).copyWith(
               fontSize: 20.sp,
+              color: textColor,
             ),
           ),
           SizedBox(height: 20.h),
@@ -42,6 +50,7 @@ class ErrorScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppText.bold300(context).copyWith(
               fontSize: 14.sp,
+              color: textColor,
             ),
           ),
           SizedBox(height: 64.h),

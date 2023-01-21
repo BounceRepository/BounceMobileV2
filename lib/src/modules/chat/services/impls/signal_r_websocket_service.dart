@@ -115,4 +115,18 @@ class SignalRWebsocketService implements IChatWebsocketService {
       throw InternalFailure();
     }
   }
+
+  @override
+  Future<void> closeConnection() async {
+    try {
+      if (_hubConnection != null) {
+        await _hubConnection!.stop();
+      }
+      await _messageController.close();
+    } on Error {
+      throw InternalFailure();
+    } on Exception {
+      throw InternalFailure();
+    }
+  }
 }

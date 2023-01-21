@@ -106,8 +106,11 @@ class SessionItemTile extends StatelessWidget {
                             backgroundColor: Colors.transparent,
                             padding: EdgeInsets.zero,
                             onTap: () {
-                              AppNavigator.to(context,
-                                  JoinSessionScreen(therapistId: session.therapistId));
+                              AppNavigator.to(
+                                  context,
+                                  JoinSessionScreen(
+                                      therapistId: session.therapistId,
+                                      session: session));
                             },
                           ),
                         ),

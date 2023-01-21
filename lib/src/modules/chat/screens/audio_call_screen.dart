@@ -1,20 +1,20 @@
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'dart:ui';
+
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/chat/controllers/call_controller.dart';
 import 'package:bounce_patient_app/src/modules/chat/widgets/call_controls_view.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
-import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
-import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
+import 'package:bounce_patient_app/src/shared/widgets/others/default_app_image.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class VideoCallScreen extends StatefulWidget {
-  const VideoCallScreen({
+class AudioCallScreen extends StatefulWidget {
+  const AudioCallScreen({
     super.key,
     required this.sessionId,
     required this.therapist,
@@ -24,10 +24,10 @@ class VideoCallScreen extends StatefulWidget {
   final Therapist therapist;
 
   @override
-  State<VideoCallScreen> createState() => _VideoCallScreenState();
+  State<AudioCallScreen> createState() => _AudioCallScreenState();
 }
 
-class _VideoCallScreenState extends State<VideoCallScreen> {
+class _AudioCallScreenState extends State<AudioCallScreen> {
   bool isLoading = true;
 
   @override
@@ -44,7 +44,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     if (sessionJoiningDetails != null) {
       final controller = context.read<CallController>();
       try {
-        await controller.setupVideoSDKEngine();
+        await controller.setupVoiceSDKEngine();
         await controller.join(sessionJoiningDetails);
         setState(() => isLoading = false);
       } on Failure catch (e) {
@@ -56,7 +56,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Consumer<CallController>(
         builder: (context, controller, _) {
           if (isLoading) {
@@ -71,10 +70,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  'Setting up video',
-                  style: AppText.bold600(context).copyWith(
-                    color: Colors.white,
-                  ),
+                  'Setting up audio',
+                  style: AppText.bold600(context),
                 ),
               ],
             );
@@ -89,20 +86,65 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             );
           }
 
-          if (controller.engineStarted) {
-            return Stack(
-              children: [
-                const Positioned.fill(child: _RemoteVideoView()),
-                Positioned(
-                  top: AppPadding.vertical,
-                  right: AppPadding.horizontal,
-                  child: const _LocalVideoView(),
-                ),
-              ],
-            );
+          String statusText;
+
+          if (controller.remoteUid == null) {
+            statusText = 'Waiting for a remote user to join...';
           } else {
-            return const SizedBox.shrink();
+            statusText = 'Connected';
           }
+
+          return Column(
+            children: [
+              const Spacer(flex: 2),
+              Align(
+                alignment: Alignment.center,
+                child: ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: Container(
+                      padding: EdgeInsets.all(80.sp),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withOpacity(.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(width: 16, color: const Color(0xffF5B283)),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(width: 7, color: const Color(0xffF5BB91)),
+                          ),
+                          child: CustomCacheNetworkImage(
+                            image: widget.therapist.profilePicture,
+                            size: 168.h,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                widget.therapist.nameWithTitle,
+                style: AppText.bold700(context).copyWith(
+                  fontSize: 24.sp,
+                ),
+              ),
+              SizedBox(height: 5.h),
+              Text(
+                statusText,
+                style: AppText.bold300(context).copyWith(
+                  fontSize: 15.sp,
+                ),
+              ),
+              const Spacer(flex: 4),
+            ],
+          );
         },
       ),
       bottomNavigationBar: isLoading
@@ -110,66 +152,9 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           : CallControlsView(
               sessionId: widget.sessionId,
               therapist: widget.therapist,
-              backgroundColor: Colors.white,
-              iconColor: Colors.white,
+              backgroundColor: Colors.black,
+              iconColor: AppColors.textGrey,
             ),
-    );
-  }
-}
-
-class _RemoteVideoView extends StatelessWidget {
-  const _RemoteVideoView();
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.watch<CallController>();
-    final remoteUid = controller.remoteUid;
-    final isJoined = controller.isJoined;
-
-    if (remoteUid != null) {
-      return AgoraVideoView(
-        controller: VideoViewController.remote(
-          rtcEngine: controller.agoraEngine,
-          canvas: VideoCanvas(uid: remoteUid),
-          connection: const RtcConnection(channelId: AppConstants.channelName),
-        ),
-      );
-    } else {
-      String msg = '';
-      if (isJoined) msg = 'Waiting for a remote user to join';
-      return Center(
-        child: Text(
-          msg,
-          textAlign: TextAlign.center,
-          style: AppText.bold600(context).copyWith(
-            color: Colors.white,
-          ),
-        ),
-      );
-    }
-  }
-}
-
-class _LocalVideoView extends StatelessWidget {
-  const _LocalVideoView();
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.watch<CallController>();
-
-    return Container(
-      height: 120.h,
-      width: 100.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.primary, width: 2.h),
-      ),
-      child: AgoraVideoView(
-        controller: VideoViewController(
-          rtcEngine: controller.agoraEngine,
-          canvas: VideoCanvas(uid: controller.uid),
-        ),
-      ),
     );
   }
 }

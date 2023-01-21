@@ -169,17 +169,17 @@ class _ListViewSectionView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.only(left: AppPadding.horizontal),
-          child: Text(
-            title,
-            style: AppText.bold500(context).copyWith(
-              fontSize: 16.sp,
-              color: AppColors.textBrown,
-            ),
-          ),
-        ),
-        SizedBox(height: 16.h),
+        // Padding(
+        //   padding: EdgeInsets.only(left: AppPadding.horizontal),
+        //   child: Text(
+        //     title,
+        //     style: AppText.bold500(context).copyWith(
+        //       fontSize: 16.sp,
+        //       color: AppColors.textBrown,
+        //     ),
+        //   ),
+        // ),
+        // SizedBox(height: 16.h),
         ListView.builder(
           physics: const BouncingScrollPhysics(),
           padding: AppPadding.symetricHorizontalOnly,

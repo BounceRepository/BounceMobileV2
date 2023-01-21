@@ -12,7 +12,7 @@ import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/password_textfield.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_list_controller.dart';
-import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/chat/controllers/chat_controller.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/select_mood_screen.dart';
 import 'package:bounce_patient_app/src/modules/feed/controllers/feed_controller.dart';
 import 'package:bounce_patient_app/src/modules/journal/controllers/journal_list_controller.dart';
@@ -158,6 +158,7 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
             SizedBox(height: 50.h),
             Text(
               'Welcome Back, ${widget.userName}',
+              textAlign: TextAlign.center,
               style: AppText.bold700(context).copyWith(
                 fontSize: 24.sp,
                 color: AppColors.primary,

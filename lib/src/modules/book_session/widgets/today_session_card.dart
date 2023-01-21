@@ -1,10 +1,8 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
-import 'package:bounce_patient_app/src/modules/book_session/screens/join_session_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/sessions_item_tile.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
-import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -72,7 +70,7 @@ class TodaySessionCard extends StatelessWidget {
   Widget bookNowButton(BuildContext context, int therapistId) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.to(context, JoinSessionScreen(therapistId: therapistId));
+        //AppNavigator.to(context, JoinSessionScreen(therapistId: therapistId));
       },
       child: Text(
         'Join Now',

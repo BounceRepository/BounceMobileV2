@@ -1,7 +1,7 @@
 import 'package:bounce_patient_app/src/local/local_storage_service.dart';
 import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_list_controller.dart';
-import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/chat/controllers/chat_controller.dart';
 import 'package:bounce_patient_app/src/modules/feed/controllers/feed_controller.dart';
 import 'package:bounce_patient_app/src/modules/journal/controllers/journal_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/notifications/controllers/notification_controller.dart';

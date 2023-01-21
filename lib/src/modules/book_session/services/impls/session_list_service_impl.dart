@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class SessionListServiceImpl implements ISessionListService {
+class SessionListService implements ISessionListService {
   final IApi _api;
 
-  SessionListServiceImpl({required IApi api}) : _api = api;
+  SessionListService({required IApi api}) : _api = api;
 
   @override
   Future<List<Session>> getAllCompleted() async {

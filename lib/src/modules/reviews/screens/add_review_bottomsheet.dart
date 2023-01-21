@@ -1,8 +1,10 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
+import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/modules/reviews/controllers/review_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
+import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
@@ -67,7 +69,7 @@ class _BodyState extends State<_Body> {
           createdAt: DateTime.now().toLocal(),
         );
         Navigator.pop(context);
-        //AppNavigator.removeAllUntil(context, const DashboardView());
+        AppNavigator.removeAllUntil(context, const DashboardView());
         Messenger.success(message: 'Review submitted');
       } on Failure catch (e) {
         Messenger.error(message: e.message);

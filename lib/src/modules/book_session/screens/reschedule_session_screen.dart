@@ -28,6 +28,7 @@ class RescheduleSessionScreen extends StatefulWidget {
 
 class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
   Therapist? _therapist;
+  bool isRescheduling = false;
   bool isLoading = false;
 
   @override
@@ -43,8 +44,11 @@ class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
     final controller = context.read<BookSessionController>();
 
     try {
+      setState(() => isLoading = true);
       _therapist = await controller.getOneTherapist(widget.session.therapistId);
+      setState(() => isLoading = false);
     } on Failure catch (e) {
+      setState(() => isLoading = false);
       controller.setFailure(e);
     }
   }
@@ -58,23 +62,23 @@ class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
     }
 
     try {
-      setState(() => isLoading = true);
+      setState(() => isRescheduling = true);
       await controller.rescheduleAppointment(
         sessionId: widget.session.id,
         startTime: selectedTime,
         date: controller.selectedDate,
       );
-      getAllSessions();
-      setState(() => isLoading = false);
+      updateAllSessionList();
+      setState(() => isRescheduling = false);
       AppNavigator.to(context, const UpComingSessionListScreen());
       Messenger.success(message: 'Session reschedule success');
     } on Failure catch (e) {
-      setState(() => isLoading = false);
+      setState(() => isRescheduling = false);
       Messenger.error(message: e.message);
     }
   }
 
-  void getAllSessions() async {
+  void updateAllSessionList() async {
     final controller = context.read<SessionListController>();
 
     try {
@@ -92,47 +96,48 @@ class _RescheduleSessionScreenState extends State<RescheduleSessionScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-        appBar: const CustomAppBar(label: 'Reschedule'),
-        body: Consumer<BookSessionController>(
-          builder: (context, controller, _) {
-            if (controller.isLoading) {
-              return const CustomLoadingIndicator();
-            }
+      appBar: const CustomAppBar(label: 'Reschedule'),
+      body: Consumer<BookSessionController>(
+        builder: (context, controller, _) {
+          if (isLoading) {
+            return const CustomLoadingIndicator();
+          }
 
-            final error = controller.failure;
-            if (error != null) {
-              return ErrorScreen(error: error, retry: getTherapist);
-            }
+          final error = controller.failure;
+          if (error != null) {
+            return ErrorScreen(error: error, retry: getTherapist);
+          }
 
-            final therapist = _therapist;
-            if (therapist == null) {
-              return const SizedBox.shrink();
-            }
+          final therapist = _therapist;
+          if (therapist == null) {
+            return const SizedBox.shrink();
+          }
 
-            return SizedBox(
-              height: size.height,
-              width: size.width,
+          return SizedBox(
+            height: size.height,
+            width: size.width,
+            child: SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 56.h),
-                  SelectDateView(therapist: therapist),
+                  SelectDateView(therapistId: widget.session.therapistId),
                   SizedBox(height: 48.h),
-                  SelectAvailableTimeView(therapist: therapist),
+                  SelectAvailableTimeView(therapistId: widget.session.therapistId),
                   const Spacer(),
                   Padding(
                     padding: AppPadding.symetricHorizontalOnly,
                     child: AppButton(
                       label: 'Confirm Schedule',
-                      isLoading: isLoading,
+                      isLoading: isRescheduling,
                       onTap: confirm,
                     ),
                   ),
-                  SizedBox(height: 40.h),
                 ],
               ),
-            );
-          },
-        ));
+            ),
+          );
+        },
+      ),
+    );
   }
 }

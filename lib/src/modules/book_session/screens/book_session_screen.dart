@@ -17,24 +17,21 @@ class BookSessionScreen extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: const CustomAppBar(label: 'Book Session'),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 24.h),
-              const BookingTabBar(),
-              SizedBox(
-                height: 678.h,
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    BookingScheduleView(therapist: therapist),
-                    BookingConfirmationView(therapist: therapist),
-                    BookingPaymentView(therapist: therapist),
-                  ],
-                ),
+        body: Column(
+          children: [
+            SizedBox(height: 24.h),
+            const BookingTabBar(),
+            Expanded(
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  BookingScheduleView(therapist: therapist),
+                  BookingConfirmationView(therapist: therapist),
+                  BookingPaymentView(therapist: therapist),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

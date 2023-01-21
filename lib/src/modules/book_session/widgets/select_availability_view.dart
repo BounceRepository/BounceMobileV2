@@ -1,5 +1,4 @@
 import 'package:bounce_patient_app/src/modules/book_session/controllers/controllers.dart';
-import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/widgets/custom_chip_button.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
@@ -10,9 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class SelectAvailableTimeView extends StatefulWidget {
-  const SelectAvailableTimeView({Key? key, required this.therapist}) : super(key: key);
+  const SelectAvailableTimeView({Key? key, required this.therapistId}) : super(key: key);
 
-  final Therapist therapist;
+  final int therapistId;
 
   @override
   State<SelectAvailableTimeView> createState() => _SelectAvailableTimeViewState();
@@ -34,16 +33,12 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
   void getAvailableBookingTimeListForTherapist() async {
     final controller = context.read<BookSessionController>();
 
-    if (controller.availableTimeList.isEmpty) {
-      try {
-        setState(() => isLoading = true);
-        await controller.getAvailableBookingTimeListForTherapist(
-            therapistId: widget.therapist.id);
-        controller.selectedTime = controller.availableTimeList[selectedIndex];
-        setState(() => isLoading = false);
-      } on Failure catch (e) {
-        controller.setFailure(e);
-      }
+    try {
+      await controller.getAvailableBookingTimeListForTherapist(
+          therapistId: widget.therapistId);
+      controller.selectedTime = controller.availableTimeList[selectedIndex];
+    } on Failure catch (e) {
+      controller.setFailure(e);
     }
   }
 

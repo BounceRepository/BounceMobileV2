@@ -27,9 +27,9 @@ class BookingScheduleView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SelectDateView(therapist: therapist),
+            SelectDateView(therapistId: therapist.id),
             SizedBox(height: gap),
-            SelectAvailableTimeView(therapist: therapist),
+            SelectAvailableTimeView(therapistId: therapist.id),
             SizedBox(height: gap),
             const _ReasonForTherapySection(),
             SizedBox(height: gap),
@@ -39,7 +39,7 @@ class BookingScheduleView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavBarContainer(
-        bottomPadding: 50.h,
+       
         child: AppButton(
           label: 'Confirmation',
           onTap: () {

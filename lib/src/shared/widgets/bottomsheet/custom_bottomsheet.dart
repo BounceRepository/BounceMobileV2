@@ -48,31 +48,29 @@ class CustomBottomSheetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: SafeArea(
-        child: Container(
-          height: height,
-          width: MediaQuery.of(context).size.width,
-          padding: padding ??
-              EdgeInsets.only(
-                top: 20.73.h,
-                right: AppPadding.horizontal,
-                left: AppPadding.horizontal,
-                bottom: MediaQuery.of(context).padding.bottom,
-              ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: borderRadius ??
-                BorderRadius.only(
-                  topLeft: Radius.circular(16.r),
-                  topRight: Radius.circular(16.r),
-                ),
-          ),
-          child: Padding(
-            padding: MediaQuery.of(context).viewInsets,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: body,
+      child: Container(
+        height: height,
+        width: MediaQuery.of(context).size.width,
+        padding: padding ??
+            EdgeInsets.only(
+              top: 20.73.h,
+              right: AppPadding.horizontal,
+              left: AppPadding.horizontal,
+              bottom: MediaQuery.of(context).padding.bottom,
             ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: borderRadius ??
+              BorderRadius.only(
+                topLeft: Radius.circular(16.r),
+                topRight: Radius.circular(16.r),
+              ),
+        ),
+        child: Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: body,
           ),
         ),
       ),

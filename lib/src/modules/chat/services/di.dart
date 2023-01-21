@@ -1,5 +1,5 @@
 import 'package:bounce_patient_app/src/config/di_container.dart';
-import 'package:bounce_patient_app/src/modules/chat/controllers/chat_list_controller.dart';
+import 'package:bounce_patient_app/src/modules/chat/controllers/chat_controller.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/fakes/fake_chat_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/fakes/fake_chat_websocket_service.dart';
 import 'package:bounce_patient_app/src/modules/chat/services/impls/chat_service_impl.dart';

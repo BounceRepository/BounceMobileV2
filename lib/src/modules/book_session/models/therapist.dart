@@ -42,6 +42,10 @@ class Therapist {
     return '$firstName $lastName';
   }
 
+  String get nameWithTitle {
+    return '$title. $firstName';
+  }
+
   String get fullNameWithTitle {
     return '$title. $firstName $lastName, ${certifications.join(',').toUpperCase()}'
         .toTitleCase;
