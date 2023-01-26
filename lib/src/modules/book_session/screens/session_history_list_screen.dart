@@ -64,7 +64,7 @@ class _UpComingSessionListViewState extends State<_UpComingSessionListView> {
   void getAllUpcomingSession() async {
     final controller = context.read<SessionListController>();
 
-    if (controller.upComingSessions.isEmpty) {
+    if (controller.upComingSessions.isEmpty || controller.failure != null) {
       try {
         await controller.getUpComingSessions();
       } on Failure catch (e) {
@@ -116,7 +116,7 @@ class _CompletedSessionListViewState extends State<_CompletedSessionListView> {
   void getAllSession() async {
     final controller = context.read<SessionListController>();
 
-    if (controller.sessions.isEmpty) {
+    if (controller.completedSessions.isEmpty || controller.failure != null) {
       try {
         await controller.getAllCompleted();
       } on Failure catch (e) {
@@ -131,6 +131,11 @@ class _CompletedSessionListViewState extends State<_CompletedSessionListView> {
       builder: (context, controller, _) {
         if (controller.isLoading) {
           return const CustomLoadingIndicator();
+        }
+
+        final error = controller.failure;
+        if (error != null) {
+          return Center(child: ErrorView(error: error, retry: getAllSession));
         }
 
         if (controller.completedSessions.isEmpty) {

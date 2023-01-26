@@ -9,33 +9,25 @@ class SessionListController extends BaseController {
   SessionListController({required ISessionListService sessionListService})
       : _sessionListService = sessionListService;
 
-  List<Session> _upComingSessions = [];
+  final List<Session> _upComingSessions = [];
   List<Session> get upComingSessions => _upComingSessions;
   final List<Session> _todayUpComingSessions = [];
   List<Session> get todayUpComingSessions => _todayUpComingSessions;
-  List<Session> _sessions = [];
+  final List<Session> _sessions = [];
   List<Session> get sessions => _sessions;
-  List<Session> _completedSessions = [];
+  final List<Session> _completedSessions = [];
   List<Session> get completedSessions => _completedSessions;
 
   Future<void> getUpComingSessions() async {
     reset();
     try {
       setIsLoading(true);
-      _upComingSessions = await _sessionListService.getAllUpComing();
+      final result = await _sessionListService.getAllUpComing();
 
-      if (upComingSessions.isNotEmpty) {
-        for (final session in upComingSessions) {
-          final date = session.date;
-          final today = DateTime.now();
-
-          if (date.day == today.day &&
-              date.month == today.month &&
-              date.year == today.year) {
-            _todayUpComingSessions.add(session);
-          }
-        }
+      for (final element in result) {
+        _upComingSessions.add(element);
       }
+
       setIsLoading(false);
     } on Failure {
       setIsLoading(false);
@@ -48,8 +40,11 @@ class SessionListController extends BaseController {
     try {
       setIsLoading(true);
       final result = await _sessionListService.getAllCompleted();
-      _sessions = result;
-      _completedSessions = result.where((element) => element.isCompleted).toList();
+
+      for (final element in result) {
+        _completedSessions.add(element);
+      }
+
       setIsLoading(false);
     } on Failure {
       setIsLoading(false);

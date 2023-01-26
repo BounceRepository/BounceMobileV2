@@ -52,9 +52,11 @@ class _EndSessionPromptViewState extends State<_EndSessionPromptView> {
   void endSession() async {
     try {
       setState(() => isLoading = true);
-      await context.read<SessionController>().end(sessionId: widget.sessionId);
-      await context.read<ChatController>().closeConnection();
-      if (widget.isVideoSession) context.read<CallController>().leave();
+      await Future.wait([
+        context.read<SessionController>().end(sessionId: widget.sessionId),
+        context.read<ChatController>().closeConnection(),
+        if (widget.isVideoSession) context.read<CallController>().leave(),
+      ]);
       setState(() => isLoading = false);
       showAddReviewBottomsheet(context: context, therapist: widget.therapist);
     } on Failure catch (e) {
@@ -110,9 +112,11 @@ class _EndSessionPromptViewState extends State<_EndSessionPromptView> {
               child: AppButton(
                 label: 'No',
                 backgroundColor: Colors.grey,
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: isLoading
+                    ? () {}
+                    : () {
+                        Navigator.pop(context);
+                      },
               ),
             ),
           ],

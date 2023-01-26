@@ -135,7 +135,8 @@ class TherapistDetailScreen extends StatelessWidget {
           child: AppButton(
             label: 'Book Session',
             onTap: () {
-              AppNavigator.to(context, TherapistBookingSummary(therapist: therapist));
+              AppNavigator.to(
+                  context, TherapistBookingSummary(therapistId: therapist.id));
             },
           ),
         ),

@@ -26,7 +26,7 @@ class ChatController extends BaseController {
     reset();
     try {
       await _chatWebsocketService.openConnection();
-      final id = _getConnectionId();
+      final id = _chatWebsocketService.getConnectionId();
       if (id != null) {
         _connectionId = id;
         _isConnected = true;
@@ -35,10 +35,6 @@ class ChatController extends BaseController {
     } on Failure {
       rethrow;
     }
-  }
-
-  String? _getConnectionId() {
-    return _chatWebsocketService.getConnectionId();
   }
 
   Future<void> closeConnection() async {

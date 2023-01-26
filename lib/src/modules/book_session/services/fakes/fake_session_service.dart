@@ -13,7 +13,7 @@ class FakeSessionService implements ISessionService {
     await fakeNetworkDelay();
     const channel = 'channel';
     const token =
-        '007eJxTYLjyS/KHo/e6h7s59x9PPjLPQ0e5V+fr8Xsd1Wn/It6eCLBUYDA2S0tLNTcyNDJIsjQxMzeytDQxtUw2sUg2NTRItbRImvH+VHJDICPDhQf/GBihEMRnZ0jOSMzLS81hYAAAkR0kMw==';
+        '007eJxTYFh9/Pi7yQydqRYettFtzb5PFugvERSz4L2g9XThvfidzVMVGIzN0tJSzY0MjQySLE3MzI0sLU1MLZNNLJJNDQ1SLS2ScjjPJjcEMjI8beljZmSAQBCfnSE5IzEvLzWHgQEAfpcf5w==';
     return SessionJoiningDetails(channel: channel, token: token);
   }
 }

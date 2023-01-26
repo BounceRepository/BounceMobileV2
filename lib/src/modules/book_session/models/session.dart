@@ -10,6 +10,8 @@ class Session {
   final DateTime date;
   final String startTime;
   final bool isCompleted;
+  final bool isDue;
+  final bool isOverDue;
 
   Session({
     required this.id,
@@ -19,6 +21,8 @@ class Session {
     required this.date,
     required this.startTime,
     required this.isCompleted,
+    required this.isDue,
+    required this.isOverDue,
   });
 
   String get period {
@@ -41,7 +45,9 @@ class Session {
       therapistDiscipline: json['discipline'],
       date: json["date"] == null ? DateTime.now() : DateTime.parse(json["date"]),
       startTime: json["startTime"],
-      isCompleted: json["isCompleted"],
+      isCompleted: _getStatus(json["status"]),
+      isDue: json["isDue"],
+      isOverDue: json["isOverdue"],
     );
   }
 
@@ -57,6 +63,14 @@ class Session {
   // }
 }
 
+bool _getStatus(String s) {
+  if (s.toLowerCase() == 'completed') {
+    return true;
+  }
+
+  return false;
+}
+
 class SessionJoiningDetails {
   final String channel;
   final String token;
@@ -68,8 +82,8 @@ class SessionJoiningDetails {
 
   factory SessionJoiningDetails.fromJson(Map<String, dynamic> json) =>
       SessionJoiningDetails(
-        channel: json["channelToken"],
-        token: json["channeName"],
+        channel: json["channeName"],
+        token: json["channelToken"],
       );
 
   Map<String, dynamic> toJson() => {

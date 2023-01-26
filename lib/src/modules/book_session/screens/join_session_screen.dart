@@ -28,11 +28,9 @@ import 'package:provider/provider.dart';
 class JoinSessionScreen extends StatefulWidget {
   const JoinSessionScreen({
     super.key,
-    required this.therapistId,
     required this.session,
   });
 
-  final int therapistId;
   final Session session;
 
   @override
@@ -56,7 +54,7 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
     final controller = context.read<BookSessionController>();
 
     try {
-      _therapist = await controller.getOneTherapist(widget.therapistId);
+      _therapist = await controller.getOneTherapist(widget.session.therapistId);
     } on Failure catch (e) {
       controller.setFailure(e);
     }

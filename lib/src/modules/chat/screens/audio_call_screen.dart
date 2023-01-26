@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/end_session_prompt_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/chat/controllers/call_controller.dart';
 import 'package:bounce_patient_app/src/modules/chat/widgets/call_controls_view.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -58,106 +59,118 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: isLoading ? const CustomAppBar() : null,
-      body: Consumer<CallController>(
-        builder: (context, controller, _) {
-          if (isLoading) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Align(
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+    return WillPopScope(
+      onWillPop: () {
+        endSessionPrompt(
+          context: context,
+          sessionId: widget.sessionId,
+          therapist: widget.therapist,
+          isCallSession: true,
+        );
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: isLoading ? const CustomAppBar(automaticallyImplyLeading: false) : null,
+        body: Consumer<CallController>(
+          builder: (context, controller, _) {
+            if (isLoading) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                    ),
                   ),
-                ),
-                SizedBox(height: 20.h),
-                Text(
-                  'Setting up audio',
-                  style: AppText.bold600(context),
-                ),
-              ],
-            );
-          }
+                  SizedBox(height: 20.h),
+                  Text(
+                    'Setting up audio',
+                    style: AppText.bold600(context),
+                  ),
+                ],
+              );
+            }
 
-          final error = controller.failure;
-          if (error != null) {
-            return ErrorScreen(
-              error: error,
-              retry: init,
-            );
-          }
+            final error = controller.failure;
+            if (error != null) {
+              return ErrorScreen(
+                error: error,
+                retry: init,
+              );
+            }
 
-          String statusText;
+            String statusText;
 
-          if (controller.remoteUid == null) {
-            statusText = 'Waiting for a remote user to join...';
-          } else {
-            statusText = 'Connected';
-          }
+            if (controller.remoteUid == null) {
+              statusText = 'Waiting for a remote user to join...';
+            } else {
+              statusText = 'Connected';
+            }
 
-          return Column(
-            children: [
-              const Spacer(flex: 2),
-              Align(
-                alignment: Alignment.center,
-                child: ClipRRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                    child: Container(
-                      padding: EdgeInsets.all(80.sp),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(.1),
-                        shape: BoxShape.circle,
-                      ),
+            return Column(
+              children: [
+                const Spacer(flex: 2),
+                Align(
+                  alignment: Alignment.center,
+                  child: ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(
+                        padding: EdgeInsets.all(80.sp),
                         decoration: BoxDecoration(
+                          color: AppColors.primary.withOpacity(.1),
                           shape: BoxShape.circle,
-                          border: Border.all(width: 16, color: const Color(0xffF5B283)),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(width: 7, color: const Color(0xffF5BB91)),
+                            border: Border.all(width: 16, color: const Color(0xffF5B283)),
                           ),
-                          child: CustomCacheNetworkImage(
-                            image: widget.therapist.profilePicture,
-                            size: 168.h,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border:
+                                  Border.all(width: 7, color: const Color(0xffF5BB91)),
+                            ),
+                            child: CustomCacheNetworkImage(
+                              image: widget.therapist.profilePicture,
+                              size: 168.h,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              const Spacer(),
-              Text(
-                widget.therapist.nameWithTitle,
-                style: AppText.bold700(context).copyWith(
-                  fontSize: 24.sp,
+                const Spacer(),
+                Text(
+                  widget.therapist.nameWithTitle,
+                  style: AppText.bold700(context).copyWith(
+                    fontSize: 24.sp,
+                  ),
                 ),
-              ),
-              SizedBox(height: 5.h),
-              Text(
-                statusText,
-                style: AppText.bold300(context).copyWith(
-                  fontSize: 15.sp,
+                SizedBox(height: 5.h),
+                Text(
+                  statusText,
+                  style: AppText.bold300(context).copyWith(
+                    fontSize: 15.sp,
+                  ),
                 ),
+                const Spacer(flex: 4),
+              ],
+            );
+          },
+        ),
+        bottomNavigationBar: isLoading
+            ? const SizedBox.shrink()
+            : CallControlsView(
+                sessionId: widget.sessionId,
+                therapist: widget.therapist,
+                backgroundColor: Colors.black,
+                iconColor: AppColors.textGrey,
               ),
-              const Spacer(flex: 4),
-            ],
-          );
-        },
       ),
-      bottomNavigationBar: isLoading
-          ? const SizedBox.shrink()
-          : CallControlsView(
-              sessionId: widget.sessionId,
-              therapist: widget.therapist,
-              backgroundColor: Colors.black,
-              iconColor: AppColors.textGrey,
-            ),
     );
   }
 }

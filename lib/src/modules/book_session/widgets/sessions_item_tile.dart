@@ -1,7 +1,9 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/session.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/join_session_screen.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/reschedule_session_screen.dart';
+import 'package:bounce_patient_app/src/modules/book_session/screens/therapist_booking_summary.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
+import 'package:bounce_patient_app/src/shared/extensions/string.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
@@ -48,7 +50,7 @@ class SessionItemTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                session.therapistName,
+                session.therapistName.toTitleCase,
                 style: AppText.bold800(context).copyWith(
                   fontSize: 14.sp,
                 ),
@@ -86,8 +88,10 @@ class SessionItemTile extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       onTap: session.isCompleted
                           ? () {
-                              // AppNavigator.to(
-                              //     context, BookSessionScreen(therapist: therapist));
+                              AppNavigator.to(
+                                  context,
+                                  TherapistBookingSummary(
+                                      therapistId: session.therapistId));
                             }
                           : () {
                               AppNavigator.to(context, RescheduleSessionScreen(session));
@@ -96,30 +100,54 @@ class SessionItemTile extends StatelessWidget {
                   ),
                   session.isCompleted
                       ? const SizedBox.shrink()
-                      : SizedBox(
-                          width: 117.w,
-                          height: 40.h,
-                          child: AppButton(
-                            label: 'Join Now',
-                            labelSize: 14.sp,
-                            labelColor: AppColors.primary,
-                            backgroundColor: Colors.transparent,
-                            padding: EdgeInsets.zero,
-                            onTap: () {
-                              AppNavigator.to(
-                                  context,
-                                  JoinSessionScreen(
-                                      therapistId: session.therapistId,
-                                      session: session));
-                            },
-                          ),
-                        ),
+                      : _JoinButton(session: session),
                 ],
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _JoinButton extends StatelessWidget {
+  const _JoinButton({required this.session});
+
+  final Session session;
+
+  @override
+  Widget build(BuildContext context) {
+    if (session.isDue) {
+      return SizedBox(
+        width: 117.w,
+        height: 40.h,
+        child: AppButton(
+          label: 'Join Now',
+          labelSize: 14.sp,
+          labelColor: AppColors.primary,
+          backgroundColor: Colors.transparent,
+          padding: EdgeInsets.zero,
+          onTap: () {
+            AppNavigator.to(context, JoinSessionScreen(session: session));
+          },
+        ),
+      );
+    }
+
+    return SizedBox(
+      width: 117.w,
+      height: 40.h,
+      child: AppButton(
+        label: 'Join Now',
+        labelSize: 14.sp,
+        labelColor: AppColors.primary,
+        backgroundColor: Colors.transparent,
+        padding: EdgeInsets.zero,
+        onTap: () {
+          AppNavigator.to(context, JoinSessionScreen(session: session));
+        },
+      ),
     );
   }
 }

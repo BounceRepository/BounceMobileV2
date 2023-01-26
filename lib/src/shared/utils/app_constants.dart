@@ -74,10 +74,7 @@ class AppConstants {
     MoodIcons.happy,
     MoodIcons.manic,
   ];
-  static const channelName = 'channel';
   static const agoraAppId = '36ffe72120b9467299459c48c510e98b';
-  static const agoraTempToken =
-      '007eJxTYFiszGhzYNr0adeLwo8ltwktkMhZItHIeqWE3SjiyJ0cTlEFBmOztLRUcyNDI4MkSxMzcyNLSxNTy2QTi2RTQ4NUS4skljfHkhsCGRkeqm9lZmSAQBCfnSE5IzEvLzWHgQEA3rkeCg==';
   static const emailPref = "emailPref";
   static const userNamePref = 'userNamePref';
 }
