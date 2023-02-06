@@ -47,19 +47,22 @@ class BookingTabBar extends StatelessWidget {
       fontSize: 14.sp,
     );
 
-    return SizedBox(
-      height: 38.h,
-      child: TabBar(
-        labelColor: AppColors.lightText,
-        unselectedLabelColor: AppColors.lightText,
-        indicatorColor: AppColors.primary,
-        labelStyle: labelStyle,
-        unselectedLabelStyle: labelStyle,
-        tabs: const [
-          Tab(text: 'Schedule'),
-          Tab(text: 'Confirmation'),
-          Tab(text: 'Payment'),
-        ],
+    return IgnorePointer(
+      ignoring: true,
+      child: SizedBox(
+        height: 38.h,
+        child: TabBar(
+          labelColor: AppColors.lightText,
+          unselectedLabelColor: AppColors.lightText,
+          indicatorColor: AppColors.primary,
+          labelStyle: labelStyle,
+          unselectedLabelStyle: labelStyle,
+          tabs: const [
+            Tab(text: 'Schedule'),
+            Tab(text: 'Confirmation'),
+            Tab(text: 'Payment'),
+          ],
+        ),
       ),
     );
   }

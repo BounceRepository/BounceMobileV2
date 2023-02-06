@@ -151,7 +151,6 @@ class CallController extends BaseController {
       _remoteUid = remoteUid;
       isMuted = true;
       engineStarted = true;
-
       throw Failure(_failedToJoinCall);
     } on Error catch (e) {
       log(e.toString());

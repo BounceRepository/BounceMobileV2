@@ -1,5 +1,6 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/services.dart';
+import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
@@ -32,33 +33,34 @@ class FakeBookAppointmentServiceImpl implements IBookSessionService {
   Future<Therapist> getOneTherapist(int id) async {
     await fakeNetworkDelay();
     //throw InternalFailure();
-    return therapist;
-    // return TherapistProfile(
-    //   emailAddress: lorem(paragraphs: 1, words: 1),
-    //   reviewCount: 0,
-    //   title: lorem(paragraphs: 1, words: 1),
-    //   yearsOfExperience: random.nextInt(100),
-    //   aboutMe: lorem(paragraphs: 1, words: 10),
-    //   commission: random.nextInt(100),
-    //   consultationEndTime: '10:00 PM',
-    //   consultationStartTime: '8:00 AM',
-    //   consultationDays: [
-    //     'Monday',
-    //     'Tuesday',
-    //     'Wednesday',
-    //   ],
-    //   country: '',
-    //   firstName: '',
-    //   lastName: '',
-    //   gender: '',
-    //   numberOfPatient: random.nextInt(100),
-    //   phoneNumber: '',
-    //   reviewRatio: random.nextInt(100).toDouble(),
-    //   serviceChargePerHoure: random.nextInt(100),
-    //   profilePicture: '',
-    //   specialization: '',
-    //   state: '',
-    // );
+    return Therapist(
+      id: random.nextInt(100),
+      title: 'Dr',
+      firstName: lorem(words: 1, paragraphs: 1),
+      lastName: lorem(words: 1, paragraphs: 1),
+      certifications: [
+        'PHD',
+      ],
+      specializations: lorem(words: 1, paragraphs: 1),
+      email: 'applevinc@gmail.com',
+      about: lorem(paragraphs: 1, words: 20),
+      profilePicture: AppImages.joinSession,
+      rating: 4.5,
+      experience: 5,
+      phoneNumber: '0902000121',
+      workingHours: WorkingHours(
+        workDays: [
+          WeekDays.monday,
+          WeekDays.thursday,
+          WeekDays.sunday,
+        ],
+        startTime: '5:00 PM',
+        endTime: '8:00 AM',
+      ),
+      serviceChargePerHour: random.nextInt(5000),
+      reviewCount: random.nextInt(200),
+      patientCount: random.nextInt(2000),
+    );
   }
 
   @override
@@ -78,6 +80,6 @@ class FakeBookAppointmentServiceImpl implements IBookSessionService {
       '6:00 PM',
     ];
     list.shuffle();
-    return list;
+    return [];
   }
 }

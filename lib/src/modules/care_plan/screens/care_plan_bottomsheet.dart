@@ -1,5 +1,5 @@
 import 'package:bounce_patient_app/src/modules/care_plan/models/plan.dart';
-import 'package:bounce_patient_app/src/modules/care_plan/screens/care_plan_payment_option_bottomsheet.dart';
+import 'package:bounce_patient_app/src/modules/care_plan/screens/care_plan_subscription_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/care_plan/widgets/package_list_view.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';

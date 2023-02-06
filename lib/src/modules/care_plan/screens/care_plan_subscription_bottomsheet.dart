@@ -75,7 +75,7 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetBody(
-      height: 320.h,
+      height: 350.h,
       padding: EdgeInsets.zero,
       body: [
         isLoading
@@ -119,15 +119,16 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
           ),
         ),
         const Spacer(),
-        Padding(
-          padding: AppPadding.symetricHorizontalOnly,
-          child: AppButton(
-            label: 'Subscribe',
-            isLoading: isLoading,
-            onTap: subscribeToPlan,
+        SafeArea(
+          child: Padding(
+            padding: AppPadding.symetricHorizontalOnly,
+            child: AppButton(
+              label: 'Subscribe',
+              isLoading: isLoading,
+              onTap: subscribeToPlan,
+            ),
           ),
         ),
-        SizedBox(height: 22.h),
       ],
     );
   }

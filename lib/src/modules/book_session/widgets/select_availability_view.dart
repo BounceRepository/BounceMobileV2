@@ -20,6 +20,7 @@ class SelectAvailableTimeView extends StatefulWidget {
 class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
   int selectedIndex = 0;
   bool isLoading = false;
+  Failure? failure;
 
   @override
   void initState() {
@@ -38,7 +39,8 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
           therapistId: widget.therapistId);
       controller.selectedTime = controller.availableTimeList[selectedIndex];
     } on Failure catch (e) {
-      controller.setFailure(e);
+      failure = e;
+      setState(() {});
     }
   }
 
@@ -95,7 +97,7 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
               );
             }
 
-            final error = controller.failure;
+            final error = failure;
             if (error != null) {
               return SizedBox(
                 height: 110.h,
@@ -105,7 +107,7 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
                   children: [
                     const Icon(
                       Icons.error,
-                      color: AppColors.primary,
+                      color: Colors.black,
                     ),
                     SizedBox(height: 10.h),
                     Text(
@@ -118,7 +120,9 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
                       onPressed: getAvailableBookingTimeListForTherapist,
                       child: Text(
                         'Reload',
-                        style: AppText.bold400(context),
+                        style: AppText.bold400(context).copyWith(
+                          color: AppColors.primary,
+                        ),
                       ),
                     ),
                   ],

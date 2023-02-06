@@ -3,6 +3,7 @@ import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dar
 import 'package:bounce_patient_app/src/modules/book_session/widgets/amount_per_hour_view.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
+import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
@@ -92,11 +93,28 @@ class BookingConfirmationView extends StatelessWidget {
               AmountChargedTile(
                   title: 'Service charge', amount: therapist.serviceChargePerHour),
               SizedBox(height: 54.h),
-              AppButton(
-                label: 'Payment',
-                onTap: () {
-                  DefaultTabController.of(context)!.animateTo(2);
-                },
+              Row(
+                children: [
+                  Expanded(
+                    child: AppButton(
+                      label: 'Back',
+                      labelColor: AppColors.lightText,
+                      backgroundColor: Colors.grey.withOpacity(.5),
+                      onTap: () {
+                        DefaultTabController.of(context)!.animateTo(0);
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 20.w),
+                  Expanded(
+                    child: AppButton(
+                      label: 'Payment',
+                      onTap: () {
+                        DefaultTabController.of(context)!.animateTo(2);
+                      },
+                    ),
+                  ),
+                ],
               )
             ],
           ),

@@ -236,23 +236,17 @@ class _CommunicationSection extends StatelessWidget {
           onTap: () {
             final controller = context.read<SessionController>();
 
-            if (!controller.inSession) {
+            if (controller.inSession) {
+              final specifictherapistIdInSession = controller.therapisId;
+
+              if (specifictherapistIdInSession != null &&
+                  specifictherapistIdInSession == therapist.id) {
+                AppNavigator.to(context, ChatWindowScreen(therapist: therapist));
+              }
+            } else {
               AppNavigator.to(
                   context, ChatWindowScreen(therapist: therapist, closed: true));
             }
-
-            // if (controller.inSession) {
-
-            //   // final specifictherapistIdInSession = controller.therapisId;
-
-            //   // if (specifictherapistIdInSession != null &&
-            //   //     specifictherapistIdInSession == therapist.id) {
-            //   //   AppNavigator.to(context, ChatWindowScreen(therapist: therapist));
-            //   // }
-            // } else {
-            //   AppNavigator.to(
-            //       context, ChatWindowScreen(therapist: therapist, closed: true));
-            // }
           },
         ),
         SizedBox(height: 20.h),
@@ -261,7 +255,6 @@ class _CommunicationSection extends StatelessWidget {
           icon: AppIcons.call,
           title: 'Audio Call',
           subTitle: 'Place a call directly to your doctor.',
-          onTap: () {},
         ),
         SizedBox(height: 20.h),
         tile(
@@ -269,7 +262,6 @@ class _CommunicationSection extends StatelessWidget {
           icon: AppIcons.video,
           title: 'Video Call',
           subTitle: 'Chat and share photos.',
-          onTap: () {},
         ),
       ],
     );
@@ -280,7 +272,7 @@ class _CommunicationSection extends StatelessWidget {
     required String icon,
     required String title,
     required String subTitle,
-    required Function() onTap,
+    Function()? onTap,
   }) {
     return InkWell(
       onTap: onTap,

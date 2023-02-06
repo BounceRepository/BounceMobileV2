@@ -32,6 +32,7 @@ class _TherapistBookingSummaryState extends State<TherapistBookingSummary> {
   @override
   void initState() {
     super.initState();
+    context.read<BookSessionController>().init();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getTherapist();
     });

@@ -89,11 +89,12 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
               ),
             ),
             SizedBox(height: 185.h),
-            AppButton(
-              label: 'Continue',
-              onTap: submit,
+            SafeArea(
+              child: AppButton(
+                label: 'Continue',
+                onTap: submit,
+              ),
             ),
-            SizedBox(height: 22.h),
           ],
         ),
       ),

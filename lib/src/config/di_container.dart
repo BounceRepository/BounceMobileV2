@@ -28,7 +28,7 @@ import 'package:get_it/get_it.dart';
 final diContainer = GetIt.instance;
 
 Future<void> init() async {
-  bool useFake = false;
+  bool useFake = true;
 
   // controllers
   authControllersInit(useFake: useFake);

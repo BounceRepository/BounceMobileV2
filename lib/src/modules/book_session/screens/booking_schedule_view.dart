@@ -39,11 +39,21 @@ class BookingScheduleView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavBarContainer(
-       
-        child: AppButton(
-          label: 'Confirmation',
-          onTap: () {
-            DefaultTabController.of(context)!.animateTo(1);
+        child: Consumer<BookSessionController>(
+          builder: (context, controller, _) {
+            bool enabled = true;
+
+            if (controller.selectedTime == null || controller.reason == null) {
+              enabled = false;
+            }
+
+            return AppButton(
+              label: 'Confirmation',
+              enabled: enabled,
+              onTap: () {
+                DefaultTabController.of(context)!.animateTo(1);
+              },
+            );
           },
         ),
       ),

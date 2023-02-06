@@ -136,7 +136,11 @@ class _ChatWindowScreenState extends State<ChatWindowScreen> {
               isLoading
                   ? const Expanded(child: CustomLoadingIndicator())
                   : _ChatMessageListSection(
-                      therapist: widget.therapist, onRetry: init, failure: failure),
+                      therapist: widget.therapist,
+                      onRetry: init,
+                      failure: failure,
+                      isClosed: widget.closed,
+                    ),
               _EndSessionView(sessionId: widget.sessionId, therapist: widget.therapist),
               _MessageInputSection(therapist: widget.therapist, closed: widget.closed),
             ],
@@ -194,11 +198,13 @@ class _ChatMessageListSection extends StatelessWidget {
     required this.therapist,
     required this.onRetry,
     required this.failure,
+    required this.isClosed,
   }) : super(key: key);
 
   final Function() onRetry;
   final Therapist therapist;
   final Failure? failure;
+  final bool isClosed;
 
   @override
   Widget build(BuildContext context) {
@@ -217,10 +223,21 @@ class _ChatMessageListSection extends StatelessWidget {
           }
 
           if (controller.messages.isEmpty) {
+            String msg = 'Start a new message';
+
+            if (isClosed) {
+              msg =
+                  'You do not have any old mesaages with ${therapist.fullNameWithTitle}';
+            }
+
             return Center(
-              child: Text(
-                'Start a new message',
-                style: AppText.titleStyle(context),
+              child: Padding(
+                padding: AppPadding.symetricHorizontalOnly,
+                child: Text(
+                  msg,
+                  style: AppText.titleStyle(context),
+                  textAlign: TextAlign.center,
+                ),
               ),
             );
           }

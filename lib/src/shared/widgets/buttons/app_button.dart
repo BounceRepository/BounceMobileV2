@@ -19,6 +19,7 @@ class AppButton extends StatelessWidget {
     this.border,
     this.padding,
     this.borderRadius,
+    this.enabled = true,
   }) : super(key: key);
 
   final String label;
@@ -33,6 +34,7 @@ class AppButton extends StatelessWidget {
   final BoxBorder? border;
   final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +43,19 @@ class AppButton extends StatelessWidget {
     return SizedBox(
       width: size.width,
       child: InkWell(
-        onTap: isLoading ? null : onTap,
+        onTap: enabled
+            ? isLoading
+                ? null
+                : onTap
+            : null,
         child: Container(
           height: 48.h,
           width: size.width,
           padding: padding ?? EdgeInsets.symmetric(vertical: 12.h),
           decoration: BoxDecoration(
-            color: backgroundColor ?? AppColors.primary,
+            color: enabled
+                ? backgroundColor ?? AppColors.primary
+                : Colors.grey.withOpacity(.5),
             borderRadius: borderRadius ?? BorderRadius.circular(12.r),
             border: border,
           ),

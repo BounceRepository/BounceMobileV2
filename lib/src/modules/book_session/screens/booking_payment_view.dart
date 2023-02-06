@@ -1,6 +1,7 @@
 import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/book_session_payment_summary_bottomsheet.dart';
 import 'package:bounce_patient_app/src/modules/book_session/screens/screens.dart';
+import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -92,13 +93,30 @@ class _PayNowView extends StatelessWidget {
           AmountChargedTile(
               title: 'Total charge', amount: therapist.serviceChargePerHour - 250),
           SizedBox(height: 30.h),
-          AppButton(
-            label: 'Pay Now',
-            onTap: () => showBookSessionPaymentSummaryBottomsheet(
-              context: context,
-              therapist: therapist,
-              amount: therapist.serviceChargePerHour - 250,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: AppButton(
+                  label: 'Back',
+                  labelColor: AppColors.lightText,
+                  backgroundColor: Colors.grey.withOpacity(.5),
+                  onTap: () {
+                    DefaultTabController.of(context)!.animateTo(1);
+                  },
+                ),
+              ),
+              SizedBox(width: 20.w),
+              Expanded(
+                child: AppButton(
+                  label: 'Pay Now',
+                  onTap: () => showBookSessionPaymentSummaryBottomsheet(
+                    context: context,
+                    therapist: therapist,
+                    amount: therapist.serviceChargePerHour - 250,
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 40.h),
         ],

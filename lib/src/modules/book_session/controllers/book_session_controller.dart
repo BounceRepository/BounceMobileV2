@@ -72,6 +72,9 @@ class BookSessionController extends BaseController {
       setIsLoading(true);
       _availableTimeList = await _service.getAvailableBookingTimeListForTherapist(
           therapistId: therapistId, date: selectedDate);
+      if (_availableTimeList.isEmpty) {
+        throw Failure('Doctor is not available');
+      }
       setIsLoading(false);
     } on Failure {
       setIsLoading(false);
