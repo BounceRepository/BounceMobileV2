@@ -29,18 +29,14 @@ class _WorkSongListViewState extends State<WorkSongListView> {
     if (controller.songs.isEmpty) {
       try {
         await controller.getAllSong();
-        updateSongList();
+        
       } on Failure catch (e) {
         controller.setFailure(e);
       }
     }
   }
 
-  void updateSongList() {
-    final controller = context.read<SongListController>();
-    final songs = controller.songs;
-    context.read<AudioPlayerController>().updateSongList(songs);
-  }
+  
 
   @override
   Widget build(BuildContext context) {

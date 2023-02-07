@@ -19,7 +19,7 @@ class PlayButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<AudioPlayerController>().updateSong(song);
+        //context.read<AudioPlayerController>().updateSong(song);
         AppNavigator.to(context, const SongPlayerScreen());
       },
       child: ClipRRect(

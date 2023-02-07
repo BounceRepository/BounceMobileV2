@@ -17,7 +17,7 @@ class FakeSongListServiceImpl implements ISongListService {
   Future<List<Song>> getAllMyPlaylist() async {
     await fakeNetworkDelay(seconds: 1);
     return List.generate(
-        Random().nextInt(10),
+        songs.length,
         (index) => Song(
               id: Utils.getGuid(),
               title: lorem(paragraphs: 1, words: Random().nextInt(3) + 1),
@@ -29,7 +29,7 @@ class FakeSongListServiceImpl implements ISongListService {
               ),
               tag: lorem(paragraphs: 1, words: 1),
               image: images[Random().nextInt(3)],
-              file: File(songs[Random().nextInt(3)]),
+              url: songs[index],
               duration: const Duration(minutes: 4),
             ));
   }
@@ -38,7 +38,7 @@ class FakeSongListServiceImpl implements ISongListService {
   Future<List<Song>> getAllSong() async {
     await fakeNetworkDelay(seconds: 5);
     return List.generate(
-        Random().nextInt(25),
+        songs.length,
         (index) => Song(
               id: Utils.getGuid(),
               title: lorem(paragraphs: 1, words: Random().nextInt(3) + 1),
@@ -50,7 +50,7 @@ class FakeSongListServiceImpl implements ISongListService {
               ),
               tag: lorem(paragraphs: 1, words: 1),
               image: images[Random().nextInt(3)],
-              file: File(songs[Random().nextInt(3)]),
+              url: songs[index],
               duration: const Duration(minutes: 4),
             ));
   }

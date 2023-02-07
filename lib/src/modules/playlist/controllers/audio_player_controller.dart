@@ -1,136 +1,128 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:developer';
+
+import 'package:bounce_patient_app/src/modules/playlist/models/audio_position_data.dart';
 import 'package:bounce_patient_app/src/modules/playlist/models/song.dart';
+import 'package:bounce_patient_app/src/shared/controllers/base_controller.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bounce_patient_app/src/shared/utils/utils.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
+import 'package:rxdart/rxdart.dart';
 
-abstract class IAudioPlayerController extends ChangeNotifier {}
+const _error = 'Something went wrong';
 
-const _errorMessage = 'Failed to play song';
+class AudioPlayerController extends BaseController {
+  final player = AudioPlayer();
+  bool isPlaying = false;
 
-class AudioPlayerController extends ChangeNotifier {
-  final _player = AudioPlayer();
-  Duration _position = Duration.zero;
-  Duration get position => _position;
-  late Song _currentPlayingSong;
-  Song get currentPlayingSong => _currentPlayingSong;
-  List<Song> _songs = [];
+  late ConcatenatingAudioSource _playlist;
 
-  bool _isPlaying = false;
-  bool get isPlaying => _isPlaying;
-  void setIsPlaying(bool value) {
-    _isPlaying = value;
-    notifyListeners();
-  }
-
-  Future<void> loadSong(Song song) async {
-    if (isPlaying) {
-      _player.stop();
-    }
-
-    _currentPlayingSong = song;
+  Future<void> init({required List<Song> songList}) async {
     try {
-      await _player.play(AssetSource(song.file.path));
-      setIsPlaying(true);
-    } on Exception {
-      throw Failure(_errorMessage);
-    } on Error {
-      throw Failure(_errorMessage);
+      if (player.playing) {
+        await player.stop();
+      }
+
+      final audioSourceList = songList
+          .map((element) => AudioSource.uri(
+                Uri.parse('asset:///${element.url}'),
+                tag: MediaItem(
+                  id: Utils.getGuid(),
+                  title: element.title,
+                  artist: element.artist.fullName,
+                  artUri: Uri.parse(element.image),
+                ),
+              ))
+          .toList();
+      _playlist = ConcatenatingAudioSource(
+        // Start loading next item just before reaching it
+        useLazyPreparation: true,
+        // Customise the shuffle algorithm
+        shuffleOrder: DefaultShuffleOrder(),
+        // Specify the playlist items
+        children: audioSourceList,
+      );
+      await player.setLoopMode(LoopMode.all);
+      await player.setAudioSource(_playlist);
+      await player.play();
+      isPlaying = true;
+      notifyListeners();
+    } on Exception catch (e) {
+      log(e.toString());
+      throw Failure(_error);
     }
   }
 
   Future<void> play() async {
     try {
-      if (_isPlaying) {
-        await _player.pause();
-        setIsPlaying(false);
-      } else {
-        await _player.resume();
-        setIsPlaying(true);
-      }
-    } on Exception {
-      throw Failure(_errorMessage);
-    } on Error {
-      throw Failure(_errorMessage);
-    }
-  }
-
-  void updateSong(Song song) {
-    _currentPlayingSong = song;
-    notifyListeners();
-  }
-
-  void updateSongList(List<Song> songs) {
-    _songs = songs;
-  }
-
-  void onStateChanged() {
-    _player.onPlayerStateChanged.listen((state) {
-      _isPlaying = state == PlayerState.playing;
+      await player.play();
+      isPlaying = true;
       notifyListeners();
-    });
+    } on Exception {
+      throw Failure(_error);
+    }
+  }
 
-    _player.onPositionChanged.listen((newPosition) {
-      _position = newPosition;
+  Future<void> pause() async {
+    try {
+      await player.pause();
+      isPlaying = false;
       notifyListeners();
-    });
+    } on Exception {
+      throw Failure(_error);
+    }
+  }
 
-    _player.onDurationChanged.listen((newPosition) {
-      _position = newPosition;
+  Future<void> stop() async {
+    try {
+      await player.stop();
+      isPlaying = false;
       notifyListeners();
-    });
-  }
-
-  Future<void> seek(int value) async {
-    final position = Duration(seconds: value);
-
-    try {
-      await _player.seek(position);
-      await _player.resume();
-      setIsPlaying(true);
     } on Exception {
-      throw Failure(_errorMessage);
-    } on Error {
-      throw Failure(_errorMessage);
+      throw Failure(_error);
     }
   }
 
-  Future<void> playPrev() async {
-    final index = _songs.indexWhere((element) => element.id == _currentPlayingSong.id);
-
-    if (index == 0) {
-      return;
-    }
-
-    final song = _songs[index - 1];
+  Future<void> seekToPrevious() async {
     try {
-      await loadSong(song);
+      await player.seekToPrevious();
+      notifyListeners();
     } on Exception {
-      throw Failure(_errorMessage);
-    } on Error {
-      throw Failure(_errorMessage);
+      throw Failure(_error);
     }
   }
 
-  Future<void> playNext() async {
-    final index = _songs.indexWhere((element) => element.id == _currentPlayingSong.id);
-
-    if (index == _songs.length - 1) {
-      return;
-    }
-
-    final song = _songs[index + 1];
+  Future<void> seekToNext() async {
     try {
-      await loadSong(song);
+      await player.seekToNext();
+      notifyListeners();
     } on Exception {
-      throw Failure(_errorMessage);
-    } on Error {
-      throw Failure(_errorMessage);
+      throw Failure(_error);
     }
   }
 
-   @override
+  Future<void> seek(Duration duration) async {
+    try {
+      await player.seek(duration);
+    } on Exception {
+      throw Failure(_error);
+    }
+  }
+
+  Stream<AudioPositionData> get positionDataStream => Rx.combineLatest3(
+        player.positionStream,
+        player.bufferedPositionStream,
+        player.durationStream,
+        (position, bufferPosition, duration) => AudioPositionData(
+          position: position,
+          bufferPosition: bufferPosition,
+          duration: duration ?? Duration.zero,
+        ),
+      );
+
+  @override
   void dispose() {
-    _player.dispose();
+    player.dispose();
     super.dispose();
   }
 }

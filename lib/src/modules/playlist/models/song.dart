@@ -1,15 +1,12 @@
 import 'dart:io';
 
-import 'package:bounce_patient_app/src/shared/models/failure.dart';
-import 'package:flutter/foundation.dart';
-
 class Song {
   final String id;
   final String title;
   final Artist artist;
   final String tag;
   final String image;
-  final File file;
+  final String url;
   final Duration duration;
 
   Song({
@@ -17,7 +14,7 @@ class Song {
     required this.title,
     required this.artist,
     required this.tag,
-    required this.file,
+    required this.url,
     required this.image,
     required this.duration,
   });

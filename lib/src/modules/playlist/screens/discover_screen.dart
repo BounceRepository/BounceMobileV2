@@ -1,7 +1,7 @@
+import 'package:bounce_patient_app/src/modules/playlist/screens/song_tabs/song_tabs.dart';
 import 'package:bounce_patient_app/src/modules/playlist/widgets/discover_list_item.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
-import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -31,10 +31,10 @@ class DiscoverScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                AppBarWithTabs(tabs: tabs),
+                //AppBarWithTabs(tabs: tabs),
               ];
             },
-            body: const _RoomChatListView(),
+            body: const HappySongListView(),
           ),
         ),
       ),

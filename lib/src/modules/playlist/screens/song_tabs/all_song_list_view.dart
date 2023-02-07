@@ -1,4 +1,3 @@
-import 'package:bounce_patient_app/src/modules/playlist/controllers/audio_player_controller.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/song_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/playlist/screens/playlist_list_screen.dart';
 import 'package:bounce_patient_app/src/modules/playlist/widgets/music_list_tile.dart';
@@ -44,22 +43,11 @@ class _AllSongsViewState extends State<AllSongsView> {
           controller.getAllPlaylist(),
         ]);
 
-        updateSongList();
         setState(() => isLoading = false);
       } on Failure catch (e) {
         setState(() => isLoading = false);
         controller.setFailure(e);
       }
-    }
-  }
-
-  void updateSongList() {
-    if (mounted) {
-      final controller = context.read<SongListController>();
-      final songs = controller.myPlaylist;
-      final allSongs = controller.songs;
-      songs.addAll(allSongs);
-      context.read<AudioPlayerController>().updateSongList(songs);
     }
   }
 
