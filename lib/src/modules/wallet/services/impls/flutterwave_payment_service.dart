@@ -122,4 +122,10 @@ class FlutterwavePaymentService implements TransactionCallBack {
     //   );
     // }
   }
+  
+  @override
+  onTransactionComplete(ChargeResponse? chargeResponse) {
+    // TODO: implement onTransactionComplete
+    throw UnimplementedError();
+  }
 }

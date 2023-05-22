@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "607604221299",
+    "project_id": "bounce-433ce",
+    "storage_bucket": "bounce-433ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607604221299:android:5f7611e71d3bc343ced106",
+        "android_client_info": {
+          "package_name": "com.example.bounce_patient_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607604221299-lk8qk02q9ilbc5kf6gum64su927ud4pp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpmVbNlVu4ZlstWWRg0JG_tZaqT64F4ho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607604221299-lk8qk02q9ilbc5kf6gum64su927ud4pp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607604221299-4d88a94rn4g19v67hvgpeecqskiupmv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.thrivexTherapistApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607604221299:android:5efe48cc04e3e191ced106",
+        "android_client_info": {
+          "package_name": "com.example.thrivex_therapist_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607604221299-lk8qk02q9ilbc5kf6gum64su927ud4pp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpmVbNlVu4ZlstWWRg0JG_tZaqT64F4ho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607604221299-lk8qk02q9ilbc5kf6gum64su927ud4pp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607604221299-4d88a94rn4g19v67hvgpeecqskiupmv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.thrivexTherapistApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

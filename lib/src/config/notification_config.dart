@@ -37,6 +37,7 @@ class _NotificationConfigState extends State<NotificationConfig> {
   void initState() {
     super.initState();
     listenForFirebaseMessagingNotifications();
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
 
   void listenForFirebaseMessagingNotifications() async {
