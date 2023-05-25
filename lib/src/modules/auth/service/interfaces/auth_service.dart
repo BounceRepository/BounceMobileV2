@@ -30,6 +30,7 @@ abstract class IAuthService {
     required String firstName,
     required String lastName,
     required String phoneNumber,
+    required String userName,
     File? image,
     required String dateOfBirth,
     required String physicalHealtRate,

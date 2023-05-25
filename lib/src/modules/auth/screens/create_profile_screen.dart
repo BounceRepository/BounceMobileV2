@@ -110,6 +110,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             gender: gender,
             firstName: _firstNameController.text,
             lastName: _lastNameController.text,
+            userName: widget.userName,
             phoneNumber: _phoneNumberController.text,
             image: image,
             dateOfBirth: _dateOfBirthController.text,
@@ -129,6 +130,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             phone: '0${_phoneNumberController.text}',
             dateOfBirth: _dateOfBirthController.text,
           );
+
+          if (!mounted) return;
+
           AppNavigator.removeAllUntil(
               context, widget.nextScreen ?? const SelectMoodsScreen());
           Messenger.success(message: 'Profile updated successfully');

@@ -88,7 +88,7 @@ class _AddFeedScreenState<T extends FeedController> extends State<AddFeedScreen<
       return const SizedBox.shrink();
     }
 
-    final userProfilePicture = user.profilePicture;
+    final userProfilePicture = user.image;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

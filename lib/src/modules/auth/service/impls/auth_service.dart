@@ -108,7 +108,7 @@ class AuthService implements IAuthService {
 
   @override
   Future<void> resetPassword({required String email}) async {
-    var url = AuthURLs.resetPassword + '?email=$email';
+    var url = '${AuthURLs.resetPassword}?email=$email';
     var body = {};
 
     try {
@@ -124,7 +124,7 @@ class AuthService implements IAuthService {
 
   @override
   Future<void> validateOTP({required String token}) async {
-    var url = AuthURLs.validateToken + '?token=$token';
+    var url = '${AuthURLs.validateToken}?token=$token';
     var body = {};
 
     try {
@@ -155,7 +155,7 @@ class AuthService implements IAuthService {
 
   @override
   Future<void> sendVerificationLink({required String email}) async {
-    var url = AuthURLs.verifyEmail + '?email=$email';
+    var url = '${AuthURLs.verifyEmail}?email=$email';
     var body = {};
     try {
       await _api.post(url, body: body);
@@ -174,6 +174,7 @@ class AuthService implements IAuthService {
     required Gender gender,
     required String firstName,
     required String lastName,
+    required String userName,
     required String phoneNumber,
     File? image,
     required String dateOfBirth,
@@ -225,7 +226,19 @@ class AuthService implements IAuthService {
     }
 
     try {
-      await _api.patch(url, body: formData, isFormData: true);
+      final response = await _api.patch(url, body: formData, isFormData: true);
+      final data = response['data'];
+      final user = User(
+        id: userId,
+        userName: userName,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phoneNumber,
+        dateOfBirth: dateOfBirth,
+        image: data['image'],
+      );
+      AppSession.user = user;
     } on Failure {
       rethrow;
     } on Error {

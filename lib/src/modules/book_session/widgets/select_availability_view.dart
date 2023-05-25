@@ -76,20 +76,25 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
         SizedBox(height: 20.h),
         Consumer<BookSessionController>(
           builder: (context, controller, _) {
-            if (controller.isLoading) {
+            if (!controller.isLoading) {
               return SizedBox(
                 height: 110.h,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CircularProgressIndicator.adaptive(),
+                    Transform.scale(
+                      scale: 0.6,
+                      child: const CircularProgressIndicator.adaptive(),
+                    ),
                     SizedBox(height: 10.h),
-                    Text(
-                      'Loading therapist available time...',
-                      textAlign: TextAlign.center,
-                      style: AppText.bold500(context).copyWith(
-                        fontSize: 12.sp,
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Loading therapist available time...',
+                        textAlign: TextAlign.center,
+                        style: AppText.bold500(context).copyWith(
+                          fontSize: 12.sp,
+                        ),
                       ),
                     ),
                   ],

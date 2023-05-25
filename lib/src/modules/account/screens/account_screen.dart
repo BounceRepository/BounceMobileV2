@@ -30,7 +30,7 @@ class AccountScreen extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final image = user.profilePicture;
+    final image = user.image;
     return Scaffold(
       body: SafeArea(
         child: CustomChildScrollView(

@@ -250,7 +250,7 @@ class _MessageBox extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final profilePicture = user.profilePicture;
+    final profilePicture = user.image;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: isMe

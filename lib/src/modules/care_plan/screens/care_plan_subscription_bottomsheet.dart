@@ -119,16 +119,15 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
           ),
         ),
         const Spacer(),
-        SafeArea(
-          child: Padding(
-            padding: AppPadding.symetricHorizontalOnly,
-            child: AppButton(
-              label: 'Subscribe',
-              isLoading: isLoading,
-              onTap: subscribeToPlan,
-            ),
+        Padding(
+          padding: AppPadding.symetricHorizontalOnly,
+          child: AppButton(
+            label: 'Subscribe',
+            isLoading: isLoading,
+            onTap: subscribeToPlan,
           ),
         ),
+        SizedBox(height: 40.h),
       ],
     );
   }

@@ -171,7 +171,7 @@ class _BodyState<T extends CommentController> extends State<_Body<T>> {
                               ]
                             : [
                                 SizedBox(
-                                  height: 422.h,
+                                  height: 600.h,
                                   child: CommentListView<T>(
                                     isReplies: true,
                                     comments: controller.comments,

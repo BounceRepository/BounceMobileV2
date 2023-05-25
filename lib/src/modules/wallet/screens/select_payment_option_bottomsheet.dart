@@ -49,6 +49,8 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
         setState(() => isLoading = true);
         final paymentDto = await initiateTopUp();
 
+        if (!mounted) return;
+
         if (paymentDto != null) {
           final paymentService = FlutterwavePaymentService(context: context);
           final response = await paymentService.processTransaction(
@@ -63,6 +65,8 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
         setState(() => isLoading = false);
       } on Failure catch (e) {
         setState(() => isLoading = false);
+        Navigator.pop(context);
+        Navigator.pop(context);
         Messenger.error(message: e.message);
       }
     }
@@ -146,16 +150,15 @@ class _SelectPaymentOptionBodyState extends State<_SelectPaymentOptionBody> {
           ),
         ),
         const Spacer(),
-        SafeArea(
-          child: Padding(
-            padding: AppPadding.symetricHorizontalOnly,
-            child: AppButton(
-              label: 'Continue',
-              isLoading: isLoading,
-              onTap: submit,
-            ),
+        Padding(
+          padding: AppPadding.symetricHorizontalOnly,
+          child: AppButton(
+            label: 'Continue',
+            isLoading: isLoading,
+            onTap: submit,
           ),
         ),
+        SizedBox(height: 40.h),
       ],
     );
   }

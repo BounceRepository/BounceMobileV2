@@ -47,7 +47,7 @@ class _FeedMessageInputViewState extends State<FeedMessageInputView> {
       return const SizedBox.shrink();
     }
 
-    final profilePicture = user.profilePicture;
+    final profilePicture = user.image;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 10.h),

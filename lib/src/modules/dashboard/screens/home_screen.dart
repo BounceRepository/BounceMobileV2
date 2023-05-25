@@ -149,7 +149,7 @@ class _ProfileHeaderSection extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final image = user.profilePicture;
+    final image = user.image;
     return Padding(
       padding: AppPadding.symetricHorizontalOnly,
       child: Row(

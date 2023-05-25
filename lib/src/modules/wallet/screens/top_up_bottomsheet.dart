@@ -1,6 +1,5 @@
 import 'package:bounce_patient_app/src/modules/wallet/screens/select_payment_option_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
-import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
@@ -89,12 +88,11 @@ class _AmountInputBodyState extends State<_AmountInputBody> {
               ),
             ),
             SizedBox(height: 185.h),
-            SafeArea(
-              child: AppButton(
-                label: 'Continue',
-                onTap: submit,
-              ),
+            AppButton(
+              label: 'Continue',
+              onTap: submit,
             ),
+            SizedBox(height: 40.h),
           ],
         ),
       ),
@@ -115,7 +113,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
     double value = double.parse(newValue.text);
 
     final formatter = NumberFormat.currency(
-      symbol: AppConstants.nairaSymbol,
+      symbol: 'N',
       decimalDigits: 0,
     );
 

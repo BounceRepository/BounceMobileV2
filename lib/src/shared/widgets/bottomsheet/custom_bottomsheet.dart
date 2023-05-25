@@ -56,7 +56,7 @@ class CustomBottomSheetBody extends StatelessWidget {
               top: 20.73.h,
               right: AppPadding.horizontal,
               left: AppPadding.horizontal,
-              bottom: MediaQuery.of(context).padding.bottom,
+              bottom: 40.h,
             ),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -66,12 +66,9 @@ class CustomBottomSheetBody extends StatelessWidget {
                 topRight: Radius.circular(16.r),
               ),
         ),
-        child: Padding(
-          padding: MediaQuery.of(context).viewInsets,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: body,
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: body,
         ),
       ),
     );

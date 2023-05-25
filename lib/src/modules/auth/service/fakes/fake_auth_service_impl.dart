@@ -97,6 +97,7 @@ class FakeAuthServiceImpl implements IAuthService {
     required String firstName,
     required String lastName,
     required String phoneNumber,
+    required String userName,
     File? image,
     required String dateOfBirth,
     required String physicalHealtRate,
@@ -106,6 +107,16 @@ class FakeAuthServiceImpl implements IAuthService {
     required String email,
   }) async {
     await fakeNetworkDelay();
+    final user = User(
+      id: userId,
+      userName: userName,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phoneNumber,
+      dateOfBirth: dateOfBirth,
+    );
+    AppSession.user = user;
     //throw InternalFailure();
   }
 }

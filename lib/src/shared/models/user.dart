@@ -21,7 +21,7 @@ class User {
   final String email;
   final String phone;
   final String dateOfBirth;
-  final String? profilePicture;
+  final String? image;
   final Gender? gender;
 
   User({
@@ -32,7 +32,7 @@ class User {
     required this.email,
     required this.phone,
     required this.dateOfBirth,
-    this.profilePicture,
+    this.image,
     this.gender,
   });
 
@@ -49,7 +49,7 @@ class User {
         phone: json["phone"] ?? '',
         dateOfBirth: json["dateOfBirth"] ?? '',
         gender: _getGender(json["gender"]),
-        profilePicture: json['image'],
+        image: json['image'],
       );
 }
 
