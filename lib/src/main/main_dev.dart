@@ -19,7 +19,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     final config = AppConfig(
       appEnvironment: AppEnvironment.dev,
-      appName: 'DartAfrica(dev)',
+      appName: 'ThriveX(dev)',
       diContainer: devDIContainer,
     );
     initGlobalDI(envDiContainer: config.diContainer);

@@ -3,14 +3,13 @@ import 'package:bounce_patient_app/src/config/app_config.dart';
 class BookAppointmentURLS {
   BookAppointmentURLS._();
 
-  static const bookAppointment = APIURLs.baseURL + '/Patient/BookAppointment';
-  static const getOneTherapist = APIURLs.baseURL + '/Therapist/GetTherpaistById';
-  static const confirmAppointment = APIURLs.baseURL + '/Patient/ComfirmAppointment';
-  static const rescheduleAppointment = APIURLs.baseURL + '/Patient/ReScheduleAppointment';
-  static const getAllTherapist = APIURLs.baseURL + '/Therapist/GetAllTherapist';
-  static const getAllSession = APIURLs.baseURL + '/Patient/UpComingSessions';
-  static const getAvailableBookingTimeListForTherapist =
-      APIURLs.baseURL + '/Patient/GetAvaialbleBookingTime';
-  static const startSession = APIURLs.baseURL + '/Communication/StartConsultaion?appointRequestId=';
-  static const endSession = APIURLs.baseURL + '/Communication/EndConsultaion?appointRequestId=';
+  static String bookAppointment = '${APIURLs.baseURL}/Patient/BookAppointment';
+  static String getOneTherapist = '${APIURLs.baseURL}/Therapist/GetTherpaistById';
+  static String confirmAppointment = '${APIURLs.baseURL}/Patient/ComfirmAppointment';
+  static String rescheduleAppointment = '${APIURLs.baseURL}/Patient/ReScheduleAppointment';
+  static String getAllTherapist = '${APIURLs.baseURL}/Therapist/GetAllTherapist';
+  static String getAllSession = '${APIURLs.baseURL}/Patient/UpComingSessions';
+  static String getAvailableBookingTimeListForTherapist = '${APIURLs.baseURL}/Patient/GetAvaialbleBookingTime';
+  static String startSession = '${APIURLs.baseURL}/Communication/StartConsultaion?appointRequestId=';
+  static String endSession = '${APIURLs.baseURL}/Communication/EndConsultaion?appointRequestId=';
 }

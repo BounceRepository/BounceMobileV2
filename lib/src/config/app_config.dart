@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:bounce_patient_app/src/config/locator/di_global.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,12 +25,11 @@ class AppConfig {
   });
 }
 
-
 class APIURLs {
   APIURLs._();
 
-  static const domain = 'https://reginald160.bsite.net';
+  static String domain = baseUrl ?? '';
 
   /// url/api
-  static const baseURL = '$domain/api';
+  static String baseURL = '$domain/api';
 }

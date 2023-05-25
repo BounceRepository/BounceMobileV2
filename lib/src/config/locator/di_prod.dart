@@ -28,6 +28,10 @@ import 'package:bounce_patient_app/src/modules/playlist/services/impls/song_list
 import 'package:bounce_patient_app/src/modules/playlist/services/interfaces/song_list_service.dart';
 import 'package:bounce_patient_app/src/modules/reviews/services/impls/review_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/reviews/services/interfaces/i_review_service.dart';
+import 'package:bounce_patient_app/src/modules/wallet/services/impls/transaction_list_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/wallet/services/impls/wallet_service_impl.dart';
+import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/transaction_list_service.dart';
+import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet_service.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:bounce_patient_app/src/shared/network/dio_api_service_impl.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -56,6 +60,8 @@ void initContainers({required AppConfig appConfig}) async {
   prodDIContainer.registerLazySingleton<IChatWebsocketService>(() => SignalRWebsocketService());
   prodDIContainer.registerLazySingleton<ICarePlanService>(() => CarePlanService(api: prodDIContainer<IApi>()));
   prodDIContainer.registerLazySingleton<IJournalService>(() => JournalService(api: prodDIContainer<IApi>()));
+  prodDIContainer.registerLazySingleton<ITransactionListService>(() => TransactionListService(api: prodDIContainer<IApi>()));
+  prodDIContainer.registerLazySingleton<IWalletService>(() => WalletService(api: prodDIContainer<IApi>()));
   prodDIContainer.registerLazySingleton<INotificationService>(() => NotificationService(
         api: prodDIContainer<IApi>(),
         firebaseMessagingService: FirebaseMessaging.instance,

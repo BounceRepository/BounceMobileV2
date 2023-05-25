@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ThriveX(dev)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/src/main/main_dev.dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "--target",
+                "lib/src/main/main_dev.dart"
+            ]
+        },
+        {
+            "name": "ThriveX(qa)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/src/main/main_qa.dart",
+            "args": [
+                "--flavor",
+                "qa",
+                "--target",
+                "lib/src/main/main_qa.dart"
+            ]
+        },
+        {
+            "name": "ThriveX",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/src/main/main_prod.dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "--target",
+                "lib/src/main/main_prod.dart"
+            ]
+        },
+    ]
+}

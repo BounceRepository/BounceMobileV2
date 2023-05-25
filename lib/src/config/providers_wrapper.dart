@@ -1,3 +1,4 @@
+import 'package:bounce_patient_app/src/config/locator/di_global.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/book_session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_list_controller.dart';
@@ -12,7 +13,6 @@ import 'package:bounce_patient_app/src/modules/dashboard/controllers/navbar_cont
 import 'package:bounce_patient_app/src/modules/journal/controllers/journal_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/notifications/controllers/notification_controller.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
-import 'package:bounce_patient_app/src/config/di_container.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/audio_player_controller.dart';
 import 'package:bounce_patient_app/src/modules/playlist/controllers/song_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/reviews/controllers/review_controller.dart';
@@ -35,40 +35,38 @@ class ProvidersWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => diContainer<AuthController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<FileController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<TherapistListController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<BookSessionController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<SessionListController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<MoodController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<NotificationController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<SongListController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<TransactionListController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<WalletController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<JournalController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<CarePlanController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<ChatController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<FeedController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<MyFeedController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<RelationShipFeedController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<SelfCareFeedController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<WorkEthnicsFeedController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<FamilyFeedController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<SexualityFeedController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<ParentingFeedController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<CommentController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<MyCommentController>()),
-        ChangeNotifierProvider(
-            create: (_) => diContainer<RelationShipCommentController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<SelfCareCommentController>()),
-        ChangeNotifierProvider(
-            create: (_) => diContainer<WorkEthnicsCommentController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<FamilyCommentController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<SexualityCommentController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<ParentingCommentController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<ReviewController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<PaymentController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<SessionController>()),
+        ChangeNotifierProvider(create: (_) => locator<AuthController>()),
+        ChangeNotifierProvider(create: (_) => locator<FileController>()),
+        ChangeNotifierProvider(create: (_) => locator<TherapistListController>()),
+        ChangeNotifierProvider(create: (_) => locator<BookSessionController>()),
+        ChangeNotifierProvider(create: (_) => locator<SessionListController>()),
+        ChangeNotifierProvider(create: (_) => locator<MoodController>()),
+        ChangeNotifierProvider(create: (_) => locator<NotificationController>()),
+        ChangeNotifierProvider(create: (_) => locator<SongListController>()),
+        ChangeNotifierProvider(create: (_) => locator<TransactionListController>()),
+        ChangeNotifierProvider(create: (_) => locator<WalletController>()),
+        ChangeNotifierProvider(create: (_) => locator<JournalController>()),
+        ChangeNotifierProvider(create: (_) => locator<CarePlanController>()),
+        ChangeNotifierProvider(create: (_) => locator<ChatController>()),
+        ChangeNotifierProvider(create: (_) => locator<FeedController>()),
+        ChangeNotifierProvider(create: (_) => locator<MyFeedController>()),
+        ChangeNotifierProvider(create: (_) => locator<RelationShipFeedController>()),
+        ChangeNotifierProvider(create: (_) => locator<SelfCareFeedController>()),
+        ChangeNotifierProvider(create: (_) => locator<WorkEthnicsFeedController>()),
+        ChangeNotifierProvider(create: (_) => locator<FamilyFeedController>()),
+        ChangeNotifierProvider(create: (_) => locator<SexualityFeedController>()),
+        ChangeNotifierProvider(create: (_) => locator<ParentingFeedController>()),
+        ChangeNotifierProvider(create: (_) => locator<CommentController>()),
+        ChangeNotifierProvider(create: (_) => locator<MyCommentController>()),
+        ChangeNotifierProvider(create: (_) => locator<RelationShipCommentController>()),
+        ChangeNotifierProvider(create: (_) => locator<SelfCareCommentController>()),
+        ChangeNotifierProvider(create: (_) => locator<WorkEthnicsCommentController>()),
+        ChangeNotifierProvider(create: (_) => locator<FamilyCommentController>()),
+        ChangeNotifierProvider(create: (_) => locator<SexualityCommentController>()),
+        ChangeNotifierProvider(create: (_) => locator<ParentingCommentController>()),
+        ChangeNotifierProvider(create: (_) => locator<ReviewController>()),
+        ChangeNotifierProvider(create: (_) => locator<PaymentController>()),
+        ChangeNotifierProvider(create: (_) => locator<SessionController>()),
         ChangeNotifierProvider(create: (_) => HealthLevelController()),
         ChangeNotifierProvider(create: (_) => PhysicalHealthLevelController()),
         ChangeNotifierProvider(create: (_) => MentalHealthLevelController()),
