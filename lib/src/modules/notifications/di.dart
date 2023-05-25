@@ -7,7 +7,7 @@ void notificationControllersInit({
 }) {
   if (useFake) {
     diContainer.registerFactory(
-        () => NotificationController(notificationService: FakeNotificationServiceImpl()));
+        () => NotificationController(notificationService: FakeNotificationService()));
   } else {
     diContainer.registerFactory(
         () => NotificationController(notificationService: diContainer()));

@@ -5,7 +5,7 @@ import 'package:bounce_patient_app/src/modules/journal/services/interfaces/journ
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeJournalServiceImpl implements IJournalService {
+class FakeJournalService implements IJournalService {
   @override
   Future<void> create({
     required String title,
@@ -27,8 +27,7 @@ class FakeJournalServiceImpl implements IJournalService {
         (index) => Journal(
               id: Random().nextInt(1000),
               title: lorem(paragraphs: 1, words: Random().nextInt(7) + 3),
-              content: lorem(
-                  paragraphs: Random().nextInt(5), words: Random().nextInt(70) + 20),
+              content: lorem(paragraphs: Random().nextInt(5), words: Random().nextInt(70) + 20),
               createdAt: DateTime.now(),
             ));
   }

@@ -6,17 +6,12 @@ import 'package:bounce_patient_app/src/modules/reviews/services/interfaces/i_rev
 
 void reviewControllersInit({required bool useFake}) {
   if (useFake) {
-    diContainer.registerFactory(() => ReviewController(
-          reviewService: FakeReviewServiceImpl(),
-        ));
+    diContainer.registerFactory(() => ReviewController(reviewService: FakeReviewService()));
   } else {
-    diContainer.registerFactory(() => ReviewController(
-          reviewService: diContainer(),
-        ));
+    diContainer.registerFactory(() => ReviewController(reviewService: diContainer()));
   }
 }
 
 void reviewServicesInit() {
-  diContainer
-      .registerLazySingleton<IReviewService>(() => ReviewServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IReviewService>(() => ReviewService(api: diContainer()));
 }

@@ -2,7 +2,7 @@ import 'package:bounce_patient_app/src/modules/feed/services/interfaces/i_feed_s
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
-class FakeFeedServiceImpl implements IFeedService {
+class FakeFeedService implements IFeedService {
   @override
   Future<void> create({
     required String message,

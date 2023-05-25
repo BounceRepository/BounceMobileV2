@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/feed/services/interfaces/i_feed_s
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class FeedListServiceImpl implements IFeedListService {
+class FeedListService implements IFeedListService {
   final IApi _api;
 
-  FeedListServiceImpl({required IApi api}) : _api = api;
+  FeedListService({required IApi api}) : _api = api;
 
   @override
   Future<List<Feed>> getAllMyFeed() async {

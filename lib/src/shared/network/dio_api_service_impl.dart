@@ -7,7 +7,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:dio/dio.dart';
 
-class DioApiServiceImpl implements IApi {
+class DioApiService implements IApi {
   final dio = Dio();
 
   @override

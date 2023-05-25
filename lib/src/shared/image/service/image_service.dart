@@ -9,11 +9,11 @@ import 'package:image_picker/image_picker.dart';
 
 const _errorMessage = 'An error occuried';
 
-class ImageService implements IImageService {
+class FileService implements IFileService {
   final ImagePicker _imagePicker = ImagePicker();
   final IApi _api;
 
-  ImageService({required IApi api}) : _api = api;
+  FileService({required IApi api}) : _api = api;
 
   @override
   Future<File?> pickImageFromCamera() async {

@@ -6,7 +6,7 @@ import 'package:bounce_patient_app/src/modules/notifications/services/interfaces
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeNotificationServiceImpl implements INotificationService {
+class FakeNotificationService implements INotificationService {
   @override
   Future<NotificationListResponse> getAllNotification() async {
     await fakeNetworkDelay();
@@ -31,7 +31,7 @@ class FakeNotificationServiceImpl implements INotificationService {
   Future<void> updateToken() async {
     await fakeNetworkDelay();
   }
-  
+
   @override
   Future<void> readNotification() async {
     await fakeNetworkDelay();

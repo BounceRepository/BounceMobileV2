@@ -8,7 +8,7 @@ import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeCarePlanServiceImpl implements ICarePlanService {
+class FakeCarePlanService implements ICarePlanService {
   final colors = [AppColors.bronze, AppColors.sliver, AppColors.gold];
 
   @override

@@ -10,7 +10,7 @@ import 'package:bounce_patient_app/src/modules/chat/services/interfaces/chat_web
 void chatControllersInit({required bool useFake}) {
   if (useFake) {
     diContainer.registerFactory(() => ChatController(
-          chatService: FakeChatServiceImpl(),
+          chatService: FakeChatService(),
           websocketService: FakeChatWebsocketService(),
         ));
   } else {
@@ -22,8 +22,6 @@ void chatControllersInit({required bool useFake}) {
 }
 
 void chatServicesInit() {
-  diContainer
-      .registerLazySingleton<IChatService>(() => ChatServiceImpl(api: diContainer()));
-  diContainer
-      .registerLazySingleton<IChatWebsocketService>(() => SignalRWebsocketService());
+  diContainer.registerLazySingleton<IChatService>(() => ChatService(api: diContainer()));
+  diContainer.registerLazySingleton<IChatWebsocketService>(() => SignalRWebsocketService());
 }

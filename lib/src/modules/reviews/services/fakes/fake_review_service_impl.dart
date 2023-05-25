@@ -6,7 +6,7 @@ import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeReviewServiceImpl implements IReviewService {
+class FakeReviewService implements IReviewService {
   @override
   Future<void> create({
     required int therapistId,

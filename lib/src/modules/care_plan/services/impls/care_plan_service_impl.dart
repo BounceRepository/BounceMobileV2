@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/care_plan/services/interfaces/car
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class CarePlanServiceImpl implements ICarePlanService {
+class CarePlanService implements ICarePlanService {
   final IApi _api;
 
-  CarePlanServiceImpl({required IApi api}) : _api = api;
+  CarePlanService({required IApi api}) : _api = api;
 
   @override
   Future<List<Plan>> getAllPlan() async {

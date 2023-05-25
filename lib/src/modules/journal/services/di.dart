@@ -8,14 +8,12 @@ void journalControllersInit({
   required bool useFake,
 }) {
   if (useFake) {
-    diContainer.registerFactory(
-        () => JournalController(journalService: FakeJournalServiceImpl()));
+    diContainer.registerFactory(() => JournalController(journalService: FakeJournalService()));
   } else {
     diContainer.registerFactory(() => JournalController(journalService: diContainer()));
   }
 }
 
 void journalServicesInit() {
-  diContainer.registerLazySingleton<IJournalService>(
-      () => JournalServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IJournalService>(() => JournalService(api: diContainer()));
 }

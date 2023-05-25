@@ -5,7 +5,7 @@ import 'package:bounce_patient_app/src/modules/playlist/services/fakes/fake_song
 void playListControllersInit({required bool useFake}) {
   if (useFake) {
     diContainer.registerFactory(
-        () => SongListController(songListService: FakeSongListServiceImpl()));
+        () => SongListController(songListService: FakeSongListService()));
   } else {
     diContainer.registerFactory(() => SongListController(songListService: diContainer()));
   }

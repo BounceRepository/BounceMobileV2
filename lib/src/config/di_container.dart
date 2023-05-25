@@ -42,7 +42,7 @@ Future<void> init() async {
   chatControllersInit(useFake: useFake);
   feedControllersInit(useFake: useFake);
   reviewControllersInit(useFake: useFake);
-  diContainer.registerLazySingleton(() => ImageController(imageService: diContainer()));
+  diContainer.registerLazySingleton(() => FileController(imageService: diContainer()));
 
   //service
   walletServicesInit();
@@ -53,18 +53,15 @@ Future<void> init() async {
   reviewServicesInit();
   appointmentServicesInit();
   diContainer.registerLazySingleton<IAuthService>(() => AuthService(api: diContainer()));
-  diContainer
-      .registerLazySingleton<IImageService>(() => ImageService(api: diContainer()));
-  diContainer.registerLazySingleton<ISongListService>(
-      () => SongListServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IFileService>(() => FileService(api: diContainer()));
+  diContainer.registerLazySingleton<ISongListService>(() => SongListService(api: diContainer()));
 
-  diContainer.registerLazySingleton<INotificationService>(() => NotificationServiceImpl(
+  diContainer.registerLazySingleton<INotificationService>(() => NotificationService(
         api: diContainer(),
         firebaseMessagingService: FirebaseMessaging.instance,
       ));
-  diContainer
-      .registerLazySingleton<IMoodService>(() => MoodServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IMoodService>(() => MoodService(api: diContainer()));
 
   //external
-  diContainer.registerLazySingleton<IApi>(() => DioApiServiceImpl());
+  diContainer.registerLazySingleton<IApi>(() => DioApiService());
 }

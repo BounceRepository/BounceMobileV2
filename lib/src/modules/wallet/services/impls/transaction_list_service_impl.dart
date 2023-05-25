@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/transa
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class TransactionListServiceImpl implements ITransactionListService {
+class TransactionListService implements ITransactionListService {
   final IApi _api;
 
-  TransactionListServiceImpl({required IApi api}) : _api = api;
+  TransactionListService({required IApi api}) : _api = api;
 
   @override
   Future<List<Transaction>> getAll() async {

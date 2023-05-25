@@ -7,7 +7,7 @@ import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeFeedListServiceImpl implements IFeedListService {
+class FakeFeedListService implements IFeedListService {
   @override
   Future<List<Feed>> getAllMyFeed() async {
     await fakeNetworkDelay();

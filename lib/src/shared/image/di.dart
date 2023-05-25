@@ -6,8 +6,8 @@ void imageControllersInit({
   required bool useFake,
 }) {
   if (useFake) {
-    diContainer.registerFactory(() => ImageController(imageService: FakeImageService()));
+    diContainer.registerFactory(() => FileController(imageService: FakeImageService()));
   } else {
-    diContainer.registerFactory(() => ImageController(imageService: diContainer()));
+    diContainer.registerFactory(() => FileController(imageService: diContainer()));
   }
 }

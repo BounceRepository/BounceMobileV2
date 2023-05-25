@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class WalletServiceImpl implements IWalletService {
+class WalletService implements IWalletService {
   final IApi _api;
 
-  WalletServiceImpl({required IApi api}) : _api = api;
+  WalletService({required IApi api}) : _api = api;
 
   @override
   Future<void> confirmTopUp(TransactionRef ref) async {

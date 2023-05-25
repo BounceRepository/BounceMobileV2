@@ -15,25 +15,18 @@ import 'services/interfaces/transaction_list_service.dart';
 
 void walletControllersInit({required bool useFake}) {
   if (useFake) {
-    diContainer.registerFactory(() => TransactionListController(
-        transactionListService: FakeTransactionListServiceImpl()));
-    diContainer
-        .registerFactory(() => WalletController(walletService: FakeWalletServiceImpl()));
-    diContainer.registerFactory(
-        () => PaymentController(paymentService: FakePaymentServiceImpl()));
+    diContainer.registerFactory(() => TransactionListController(transactionListService: FakeTransactionListService()));
+    diContainer.registerFactory(() => WalletController(walletService: FakeWalletService()));
+    diContainer.registerFactory(() => PaymentController(paymentService: FakePaymentService()));
   } else {
-    diContainer.registerFactory(
-        () => TransactionListController(transactionListService: diContainer()));
+    diContainer.registerFactory(() => TransactionListController(transactionListService: diContainer()));
     diContainer.registerFactory(() => WalletController(walletService: diContainer()));
     diContainer.registerFactory(() => PaymentController(paymentService: diContainer()));
   }
 }
 
 void walletServicesInit() {
-  diContainer.registerLazySingleton<ITransactionListService>(
-      () => TransactionListServiceImpl(api: diContainer()));
-  diContainer
-      .registerLazySingleton<IWalletService>(() => WalletServiceImpl(api: diContainer()));
-  diContainer.registerLazySingleton<IPaymentService>(
-      () => PaymentServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<ITransactionListService>(() => TransactionListService(api: diContainer()));
+  diContainer.registerLazySingleton<IWalletService>(() => WalletService(api: diContainer()));
+  diContainer.registerLazySingleton<IPaymentService>(() => PaymentService(api: diContainer()));
 }

@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/shared/controllers/base_controller.dart';
 import 'package:bounce_patient_app/src/shared/image/service/i_image_service.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 
-class ImageController extends BaseController {
-  final IImageService _imageService;
+class FileController extends BaseController {
+  final IFileService _imageService;
 
-  ImageController({required IImageService imageService}) : _imageService = imageService;
+  FileController({required IFileService imageService}) : _imageService = imageService;
 
   Future<File?> pickImageFromGallery() async {
     try {

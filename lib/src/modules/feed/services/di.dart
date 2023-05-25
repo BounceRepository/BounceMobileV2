@@ -20,32 +20,32 @@ void feedControllersInit({required bool useFake}) {
 void _feedControllers({required bool useFake}) {
   if (useFake) {
     diContainer.registerFactory(() => MyFeedController(
-          feedService: FakeFeedServiceImpl(),
-          feedListService: FakeFeedListServiceImpl(),
+          feedService: FakeFeedService(),
+          feedListService: FakeFeedListService(),
         ));
     diContainer.registerFactory(() => RelationShipFeedController(
-          feedService: FakeFeedServiceImpl(),
-          feedListService: FakeFeedListServiceImpl(),
+          feedService: FakeFeedService(),
+          feedListService: FakeFeedListService(),
         ));
     diContainer.registerFactory(() => SelfCareFeedController(
-          feedService: FakeFeedServiceImpl(),
-          feedListService: FakeFeedListServiceImpl(),
+          feedService: FakeFeedService(),
+          feedListService: FakeFeedListService(),
         ));
     diContainer.registerFactory(() => WorkEthnicsFeedController(
-          feedService: FakeFeedServiceImpl(),
-          feedListService: FakeFeedListServiceImpl(),
+          feedService: FakeFeedService(),
+          feedListService: FakeFeedListService(),
         ));
     diContainer.registerFactory(() => FamilyFeedController(
-          feedService: FakeFeedServiceImpl(),
-          feedListService: FakeFeedListServiceImpl(),
+          feedService: FakeFeedService(),
+          feedListService: FakeFeedListService(),
         ));
     diContainer.registerFactory(() => SexualityFeedController(
-          feedService: FakeFeedServiceImpl(),
-          feedListService: FakeFeedListServiceImpl(),
+          feedService: FakeFeedService(),
+          feedListService: FakeFeedListService(),
         ));
     diContainer.registerFactory(() => ParentingFeedController(
-          feedService: FakeFeedServiceImpl(),
-          feedListService: FakeFeedListServiceImpl(),
+          feedService: FakeFeedService(),
+          feedListService: FakeFeedListService(),
         ));
   } else {
     diContainer.registerFactory(() => MyFeedController(
@@ -142,13 +142,8 @@ void _commentControllers({required bool useFake}) {
 }
 
 void feedServicesInit() {
-  diContainer
-      .registerLazySingleton<IFeedService>(() => FeedServiceImpl(api: diContainer()));
-  diContainer.registerLazySingleton<IFeedListService>(
-      () => FeedListServiceImpl(api: diContainer()));
-
-  diContainer.registerLazySingleton<ICommentService>(
-      () => CommentServiceImpl(api: diContainer()));
-  diContainer.registerLazySingleton<ICommentListService>(
-      () => CommentListServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<IFeedService>(() => FeedService(api: diContainer()));
+  diContainer.registerLazySingleton<IFeedListService>(() => FeedListService(api: diContainer()));
+  diContainer.registerLazySingleton<ICommentService>(() => CommentService(api: diContainer()));
+  diContainer.registerLazySingleton<ICommentListService>(() => CommentListService(api: diContainer()));
 }

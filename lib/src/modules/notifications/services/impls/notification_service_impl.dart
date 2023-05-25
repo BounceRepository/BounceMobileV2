@@ -7,11 +7,11 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-class NotificationServiceImpl implements INotificationService {
+class NotificationService implements INotificationService {
   final IApi _api;
   final FirebaseMessaging _firebaseMessagingService;
 
-  NotificationServiceImpl({
+  NotificationService({
     required IApi api,
     required FirebaseMessaging firebaseMessagingService,
   })  : _api = api,

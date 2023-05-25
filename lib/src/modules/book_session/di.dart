@@ -17,32 +17,21 @@ void appointmentControllersInit({
   required bool useFake,
 }) {
   if (useFake) {
-    diContainer.registerFactory(() =>
-        TherapistListController(therapistListService: FakeTherapistListServiceImpl()));
-    diContainer.registerFactory(() =>
-        BookSessionController(sessionBookingService: FakeBookAppointmentServiceImpl()));
-    diContainer.registerFactory(
-        () => SessionListController(sessionListService: FakeSessionListServiceImpl()));
-    diContainer
-        .registerFactory(() => SessionController(sessionService: FakeSessionService()));
+    diContainer.registerFactory(() => TherapistListController(therapistListService: FakeTherapistListService()));
+    diContainer.registerFactory(() => BookSessionController(sessionBookingService: FakeBookAppointmentService()));
+    diContainer.registerFactory(() => SessionListController(sessionListService: FakeSessionListService()));
+    diContainer.registerFactory(() => SessionController(sessionService: FakeSessionService()));
   } else {
-    diContainer.registerFactory(
-        () => TherapistListController(therapistListService: diContainer()));
-    diContainer.registerFactory(
-        () => BookSessionController(sessionBookingService: diContainer()));
-    diContainer
-        .registerFactory(() => SessionListController(sessionListService: diContainer()));
+    diContainer.registerFactory(() => TherapistListController(therapistListService: diContainer()));
+    diContainer.registerFactory(() => BookSessionController(sessionBookingService: diContainer()));
+    diContainer.registerFactory(() => SessionListController(sessionListService: diContainer()));
     diContainer.registerFactory(() => SessionController(sessionService: diContainer()));
   }
 }
 
 void appointmentServicesInit() {
-  diContainer.registerLazySingleton<ITherapistListService>(
-      () => TherapistListServiceImpl(api: diContainer()));
-  diContainer.registerLazySingleton<IBookSessionService>(
-      () => BookSessionService(api: diContainer()));
-  diContainer.registerLazySingleton<ISessionListService>(
-      () => SessionListService(api: diContainer()));
-  diContainer
-      .registerLazySingleton<ISessionService>(() => SessionService(api: diContainer()));
+  diContainer.registerLazySingleton<ITherapistListService>(() => TherapistListService(api: diContainer()));
+  diContainer.registerLazySingleton<IBookSessionService>(() => BookSessionService(api: diContainer()));
+  diContainer.registerLazySingleton<ISessionListService>(() => SessionListService(api: diContainer()));
+  diContainer.registerLazySingleton<ISessionService>(() => SessionService(api: diContainer()));
 }

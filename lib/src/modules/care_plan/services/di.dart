@@ -6,15 +6,12 @@ import 'package:bounce_patient_app/src/modules/care_plan/services/interfaces/car
 
 void subscriptionControllersInit({required bool useFake}) {
   if (useFake) {
-    diContainer.registerFactory(
-        () => CarePlanController(subscriptionService: FakeCarePlanServiceImpl()));
+    diContainer.registerFactory(() => CarePlanController(subscriptionService: FakeCarePlanService()));
   } else {
-    diContainer
-        .registerFactory(() => CarePlanController(subscriptionService: diContainer()));
+    diContainer.registerFactory(() => CarePlanController(subscriptionService: diContainer()));
   }
 }
 
 void subscriptionServicesInit() {
-  diContainer.registerLazySingleton<ICarePlanService>(
-      () => CarePlanServiceImpl(api: diContainer()));
+  diContainer.registerLazySingleton<ICarePlanService>(() => CarePlanService(api: diContainer()));
 }

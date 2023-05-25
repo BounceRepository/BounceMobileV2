@@ -24,7 +24,7 @@ class _Body extends StatefulWidget {
 
 class _BodyState extends State<_Body> {
   void openCamera() async {
-    final controller = context.read<ImageController>();
+    final controller = context.read<FileController>();
 
     try {
       final image = await controller.pickImageFromCamera();
@@ -38,7 +38,7 @@ class _BodyState extends State<_Body> {
   }
 
   void openGallery() async {
-    final controller = context.read<ImageController>();
+    final controller = context.read<FileController>();
 
     try {
       final image = await controller.pickImageFromGallery();

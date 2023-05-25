@@ -153,7 +153,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   }
 
   void _pickImage() async {
-    final controller = context.read<ImageController>();
+    final controller = context.read<FileController>();
     try {
       setState(() => isLoadingImage = true);
       image = await controller.pickImageFromGallery();

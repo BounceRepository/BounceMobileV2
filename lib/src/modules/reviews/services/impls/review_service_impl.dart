@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/reviews/services/interfaces/i_rev
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class ReviewServiceImpl implements IReviewService {
+class ReviewService implements IReviewService {
   final IApi _api;
 
-  ReviewServiceImpl({required IApi api}) : _api = api;
+  ReviewService({required IApi api}) : _api = api;
 
   @override
   Future<void> create({

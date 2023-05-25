@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/journal/services/interfaces/journ
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class JournalServiceImpl implements IJournalService {
+class JournalService implements IJournalService {
   final IApi _api;
 
-  JournalServiceImpl({required IApi api}) : _api = api;
+  JournalService({required IApi api}) : _api = api;
 
   @override
   Future<void> create({

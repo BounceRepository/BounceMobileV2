@@ -6,7 +6,7 @@ void authControllersInit({
   required bool useFake,
 }) {
   if (useFake) {
-    diContainer.registerFactory(() => AuthController(authService: FakeAuthServiceImpl()));
+    diContainer.registerFactory(() => AuthController(authService: FakeAuthService()));
   } else {
     diContainer.registerFactory(() => AuthController(authService: diContainer()));
   }

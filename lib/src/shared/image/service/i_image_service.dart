@@ -1,6 +1,6 @@
 import 'dart:io';
 
-abstract class IImageService {
+abstract class IFileService {
   Future<File?> pickImageFromGallery();
   Future<File?> pickImageFromCamera();
   Future<String> getImageUrl(File file);

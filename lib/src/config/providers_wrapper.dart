@@ -36,7 +36,7 @@ class ProvidersWrapper extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => diContainer<AuthController>()),
-        ChangeNotifierProvider(create: (_) => diContainer<ImageController>()),
+        ChangeNotifierProvider(create: (_) => diContainer<FileController>()),
         ChangeNotifierProvider(create: (_) => diContainer<TherapistListController>()),
         ChangeNotifierProvider(create: (_) => diContainer<BookSessionController>()),
         ChangeNotifierProvider(create: (_) => diContainer<SessionListController>()),

@@ -9,7 +9,7 @@ import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeSongListServiceImpl implements ISongListService {
+class FakeSongListService implements ISongListService {
   final images = [SongImages.sample1, SongImages.sample2, SongImages.sample3];
   final songs = [AudioAssets.sample, AudioAssets.sample2, AudioAssets.sample3];
 

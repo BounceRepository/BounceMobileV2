@@ -8,7 +8,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
-class FakeAuthServiceImpl implements IAuthService {
+class FakeAuthService implements IAuthService {
   @override
   Future<void> changePassword({
     required String email,
