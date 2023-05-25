@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/feed/services/interfaces/i_commen
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class CommentListServiceImpl implements ICommentListService {
+class CommentListService implements ICommentListService {
   final IApi _api;
 
-  CommentListServiceImpl({required IApi api}) : _api = api;
+  CommentListService({required IApi api}) : _api = api;
 
   @override
   Future<List<Comment>> getAllComment(int feedId) async {

@@ -6,7 +6,7 @@ import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeSessionListServiceImpl implements ISessionListService {
+class FakeSessionListService implements ISessionListService {
   @override
   Future<List<Session>> getAllCompleted() async {
     await fakeNetworkDelay();

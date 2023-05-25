@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/dashboard/services/interfaces/moo
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class MoodServiceImpl implements IMoodService {
+class MoodService implements IMoodService {
   final IApi _api;
 
-  MoodServiceImpl({required IApi api}) : _api = api;
+  MoodService({required IApi api}) : _api = api;
 
   @override
   Future<List<Mood>> getAllUserMood() async {

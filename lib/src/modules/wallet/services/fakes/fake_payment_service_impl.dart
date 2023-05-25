@@ -4,7 +4,7 @@ import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/paymen
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 
-class FakePaymentServiceImpl implements IPaymentService {
+class FakePaymentService implements IPaymentService {
   @override
   Future<TransactionRef> initiate({
     required PaymentOption paymentOption,

@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class TherapistListServiceImpl implements ITherapistListService {
+class TherapistListService implements ITherapistListService {
   final IApi _api;
 
-  TherapistListServiceImpl({required IApi api}) : _api = api;
+  TherapistListService({required IApi api}) : _api = api;
 
   @override
   Future<List<Therapist>> getAllTherapist() async {

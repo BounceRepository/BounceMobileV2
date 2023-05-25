@@ -5,10 +5,10 @@ import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/paymen
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class PaymentServiceImpl implements IPaymentService {
+class PaymentService implements IPaymentService {
   final IApi _api;
 
-  PaymentServiceImpl({required IApi api}) : _api = api;
+  PaymentService({required IApi api}) : _api = api;
 
   @override
   Future<void> confirmPayment(TransactionRef transactionRef) async {

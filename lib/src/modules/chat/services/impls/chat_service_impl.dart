@@ -4,10 +4,10 @@ import 'package:bounce_patient_app/src/modules/chat/services/interfaces/chat_ser
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 
-class ChatServiceImpl implements IChatService {
+class ChatService implements IChatService {
   final IApi _api;
 
-  ChatServiceImpl({required IApi api}) : _api = api;
+  ChatService({required IApi api}) : _api = api;
 
   @override
   Future<List<ChatMessage>> getAllMessage({required int receiverId}) async {

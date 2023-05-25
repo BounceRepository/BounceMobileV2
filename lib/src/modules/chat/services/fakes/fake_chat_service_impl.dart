@@ -7,7 +7,7 @@ import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeChatServiceImpl implements IChatService {
+class FakeChatService implements IChatService {
   @override
   Future<List<ChatMessage>> getAllMessage({required int receiverId}) async {
     await fakeNetworkDelay();

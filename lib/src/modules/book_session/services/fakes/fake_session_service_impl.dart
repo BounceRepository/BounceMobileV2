@@ -5,7 +5,7 @@ import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
-class FakeBookAppointmentServiceImpl implements IBookSessionService {
+class FakeBookAppointmentService implements IBookSessionService {
   @override
   Future<void> bookSession({
     required int patientId,

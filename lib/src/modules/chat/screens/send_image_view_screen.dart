@@ -52,7 +52,7 @@ class _SendImageViewScreenState extends State<SendImageViewScreen> {
   }
 
   void init() async {
-    final controller = context.read<ImageController>();
+    final controller = context.read<FileController>();
 
     try {
       setState(() => isLoading = true);
@@ -116,7 +116,7 @@ class _SendImageViewScreenState extends State<SendImageViewScreen> {
         child: SizedBox(
           height: size.height,
           width: size.width,
-          child: Consumer<ImageController>(
+          child: Consumer<FileController>(
             builder: (context, controller, _) {
               if (isLoading) {
                 return Column(

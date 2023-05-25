@@ -3,7 +3,7 @@ import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet
 import 'package:bounce_patient_app/src/shared/utils/utils.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
-class FakeWalletServiceImpl implements IWalletService {
+class FakeWalletService implements IWalletService {
   @override
   Future<void> confirmTopUp(TransactionRef ref) async {
     await fakeNetworkDelay();
