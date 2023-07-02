@@ -6,8 +6,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 class CarePlanController extends BaseController {
   final ICarePlanService _carePlanService;
 
-  CarePlanController({required ICarePlanService subscriptionService})
-      : _carePlanService = subscriptionService;
+  CarePlanController({required ICarePlanService subscriptionService}) : _carePlanService = subscriptionService;
 
   List<Plan> _plans = [];
   List<Plan> get plans => _plans;
@@ -15,11 +14,11 @@ class CarePlanController extends BaseController {
   Future<void> getAllPlan() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       _plans = await _carePlanService.getAllPlan();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }

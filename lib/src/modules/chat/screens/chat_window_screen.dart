@@ -161,7 +161,7 @@ class _EndSessionView extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<ChatController>();
 
-    if (controller.isLoading) {
+    if (controller.isBusy) {
       return const SizedBox.shrink();
     }
 
@@ -226,8 +226,7 @@ class _ChatMessageListSection extends StatelessWidget {
             String msg = 'Start a new message';
 
             if (isClosed) {
-              msg =
-                  'You do not have any old mesaages with ${therapist.fullNameWithTitle}';
+              msg = 'You do not have any old mesaages with ${therapist.fullNameWithTitle}';
             }
 
             return Center(
@@ -296,8 +295,7 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
     if (result != null) {
       final imageFile = result as File;
       if (!mounted) return;
-      AppNavigator.to(
-          context, SendImageViewScreen(image: imageFile, therapist: widget.therapist));
+      AppNavigator.to(context, SendImageViewScreen(image: imageFile, therapist: widget.therapist));
     }
   }
 
@@ -337,7 +335,7 @@ class _MessageInputSectionState extends State<_MessageInputSection> {
     final controller = context.watch<ChatController>();
     final messages = controller.messages;
 
-    if (controller.isLoading) {
+    if (controller.isBusy) {
       return const SizedBox.shrink();
     }
 

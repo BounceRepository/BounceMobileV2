@@ -132,7 +132,7 @@ class _BodyState extends State<_Body> {
             builder: (context, controller, _) {
               return AppButton(
                 label: 'Submit',
-                isLoading: controller.isLoading,
+                isLoading: controller.isBusy,
                 onTap: submit,
               );
             },

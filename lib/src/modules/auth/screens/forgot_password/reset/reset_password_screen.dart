@@ -1,5 +1,5 @@
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/reset/reset_password_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/password_textfield.dart';
 import 'package:bounce_patient_app/src/shared/utils/validator.dart';
@@ -25,8 +25,15 @@ class ResetPasswordScreen extends StatefulWidget {
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _newPasswordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  late final TextEditingController _newPasswordController;
+  late final TextEditingController _confirmPasswordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _newPasswordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -35,22 +42,24 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     super.dispose();
   }
 
-  void _resetPassword() async {
+  void submit() async {
     if (_formKey.currentState!.validate()) {
-      final controller = context.read<AuthController>();
       try {
-        await controller.changePassword(
-          email: widget.email,
-          newPassword: _newPasswordController.text,
-        );
-        showResetSuccessBottomsheet(
-          context,
-          title: 'Password Recovery Successful.',
-          desc: 'Return to the login screen to enter the application',
-          onTap: () {
-            AppNavigator.removeAllUntil(context, const SignInScreen());
-          },
-        );
+        await context.read<ResetPasswordController>().execute(
+              email: widget.email,
+              newPassword: _newPasswordController.text,
+            );
+
+        if (mounted) {
+          showResetSuccessBottomsheet(
+            context,
+            title: 'Password Recovery Successful.',
+            desc: 'Return to the login screen to enter the application',
+            onTap: () {
+              AppNavigator.removeAllUntil(context, const SignInScreen());
+            },
+          );
+        }
       } on Failure catch (e) {
         Messenger.error(message: e.message);
       }
@@ -98,21 +107,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
                         }
-                        if (PasswordValidator.isNotTheSame(
-                            text1: _newPasswordController.text,
-                            text2: _confirmPasswordController.text)) {
+                        if (PasswordValidator.isNotTheSame(text1: _newPasswordController.text, text2: _confirmPasswordController.text)) {
                           return 'The passwords do not match';
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 41.h),
-                    Consumer<AuthController>(
+                    Consumer<ResetPasswordController>(
                       builder: (context, controller, _) {
                         return AuthButton(
                           label: 'Reset',
-                          isLoading: controller.isLoading,
-                          onTap: _resetPassword,
+                          isLoading: controller.isBusy,
+                          onTap: submit,
                         );
                       },
                     ),

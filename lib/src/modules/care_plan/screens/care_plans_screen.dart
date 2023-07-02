@@ -51,7 +51,7 @@ class _CarePlansScreenState extends State<CarePlansScreen> {
       appBar: const CustomAppBar(label: 'My Care Plans'),
       body: Consumer<CarePlanController>(
         builder: (context, controller, _) {
-          if (controller.isLoading) {
+          if (controller.isBusy) {
             return const CustomLoadingIndicator();
           }
 

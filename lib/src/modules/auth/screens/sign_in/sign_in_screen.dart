@@ -1,17 +1,14 @@
-import 'dart:developer';
-
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/create_profile_screen.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password_screen.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/registration_success_screens.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/social_auth_view.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/create_profile/create_profile_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/forgot_password_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/confirmation/sign_up_confirmation_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/sign_up_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/components/social_auth_view.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_body.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/password_textfield.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/select_mood_screen.dart';
-import 'package:bounce_patient_app/src/modules/notifications/controllers/notification_controller.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/utils/validator.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
@@ -23,7 +20,6 @@ import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -54,17 +50,19 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  void _signIn() async {
+  void submit() async {
     if (_formKey.currentState!.validate()) {
-      final controller = context.read<AuthController>();
       try {
-        await controller.signIn(
-          userName: _emailController.text,
-          password: _passwordController.text,
-        );
-        Messenger.success(message: 'Login successful');
-        worker();
-        AppNavigator.removeAllUntil(context, const SelectMoodsScreen());
+        await context.read<SignInController>().execute(
+              username: _emailController.text.trim(),
+              password: _passwordController.text.trim(),
+            );
+
+        if (mounted) {
+          Messenger.success(message: 'Login successful');
+
+          AppNavigator.to(context, const SelectMoodsScreen());
+        }
       } on Failure catch (e) {
         final user = AppSession.user;
 
@@ -92,41 +90,21 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void verifyEmail(User user) async {
-    final controller = context.read<AuthController>();
-
     try {
-      await controller.verifyEmail(email: user.email);
-      AppNavigator.to(
-        context,
-        IncomingEmailScreen(
-          email: user.email,
-          userName: user.userName,
-          nextScreen: const SelectMoodsScreen(),
-        ),
-      );
+      await context.read<SignInController>().verifyEmail(email: user.email);
+
+      if (mounted) {
+        AppNavigator.to(
+          context,
+          SignUpConfirmationScreen(
+            email: user.email,
+            userName: user.userName,
+            nextScreen: const SelectMoodsScreen(),
+          ),
+        );
+      }
     } on Failure catch (e) {
       Messenger.error(message: e.message);
-    }
-  }
-
-  void worker() async {
-    try {
-      await Future.wait([
-        getAllNotifications(),
-      ]);
-    } on Failure catch (e) {
-      log(e.message);
-    }
-  }
-
-  Future<void> getAllNotifications() async {
-    final controller = context.read<NotificationController>();
-
-    try {
-      await controller.getAllNotification();
-    } on Failure catch (e) {
-      controller.setFailure(e);
-      rethrow;
     }
   }
 
@@ -134,8 +112,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        SystemNavigator.pop();
-        return Future.value(true);
+        return Future.value(false);
       },
       child: Form(
         key: _formKey,
@@ -171,6 +148,12 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(height: 16.h),
             PasswordTextField(
               controller: _passwordController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 22.h),
             LinkText(
@@ -181,12 +164,12 @@ class _SignInScreenState extends State<SignInScreen> {
               },
             ),
             SizedBox(height: 19.h),
-            Consumer<AuthController>(
+            Consumer<SignInController>(
               builder: (context, controller, _) {
                 return AuthButton(
                   label: 'Sign In',
-                  isLoading: controller.isLoading,
-                  onTap: _signIn,
+                  isLoading: controller.isBusy,
+                  onTap: submit,
                 );
               },
             ),

@@ -51,6 +51,30 @@ class User {
         gender: _getGender(json["gender"]),
         image: json['image'],
       );
+
+  User copyWith({
+    int? id,
+    String? userName,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phone,
+    String? dateOfBirth,
+    String? image,
+    Gender? gender,
+  }) {
+    return User(
+      id: id ?? this.id,
+      userName: userName ?? this.userName,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      image: image ?? this.image,
+      gender: gender ?? this.gender,
+    );
+  }
 }
 
 Gender _getGender(dynamic json) {

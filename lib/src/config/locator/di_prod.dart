@@ -1,6 +1,6 @@
 import 'package:bounce_patient_app/src/config/app_config.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/impls/auth_service.dart';
-import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
+import 'package:bounce_patient_app/src/modules/auth/service/interfaces/i_auth_service.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/impls/session_list_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/impls/session_service.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/session_list_service.dart';
@@ -32,41 +32,44 @@ import 'package:bounce_patient_app/src/modules/wallet/services/impls/transaction
 import 'package:bounce_patient_app/src/modules/wallet/services/impls/wallet_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/transaction_list_service.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet_service.dart';
+import 'package:bounce_patient_app/src/shared/image/service/i_image_service.dart';
+import 'package:bounce_patient_app/src/shared/image/service/image_service.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:bounce_patient_app/src/shared/network/dio_api_service_impl.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 
-final GetIt prodDIContainer = GetIt.instance;
+final GetIt prodLocator = GetIt.instance;
 
 void initContainers({required AppConfig appConfig}) async {
   print('Prod DI init....');
-  prodDIContainer.registerLazySingleton<AppConfig>(() => appConfig);
+  prodLocator.registerLazySingleton<AppConfig>(() => appConfig);
 
   //service
-  prodDIContainer.registerLazySingleton<IAuthService>(() => AuthService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IMoodService>(() => MoodService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<ITherapistListService>(() => TherapistListService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IBookSessionService>(() => BookSessionService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<ISessionListService>(() => SessionListService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<ISessionService>(() => SessionService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<ISongListService>(() => SongListService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IReviewService>(() => ReviewService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IFeedService>(() => FeedService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IFeedListService>(() => FeedListService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<ICommentService>(() => CommentService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<ICommentListService>(() => CommentListService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IChatService>(() => ChatService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IChatWebsocketService>(() => SignalRWebsocketService());
-  prodDIContainer.registerLazySingleton<ICarePlanService>(() => CarePlanService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IJournalService>(() => JournalService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<ITransactionListService>(() => TransactionListService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<IWalletService>(() => WalletService(api: prodDIContainer<IApi>()));
-  prodDIContainer.registerLazySingleton<INotificationService>(() => NotificationService(
-        api: prodDIContainer<IApi>(),
+  prodLocator.registerLazySingleton<IAuthService>(() => AuthService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IMoodService>(() => MoodService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<ITherapistListService>(() => TherapistListService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IBookSessionService>(() => BookSessionService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<ISessionListService>(() => SessionListService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<ISessionService>(() => SessionService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<ISongListService>(() => SongListService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IReviewService>(() => ReviewService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IFeedService>(() => FeedService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IFeedListService>(() => FeedListService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<ICommentService>(() => CommentService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<ICommentListService>(() => CommentListService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IChatService>(() => ChatService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IChatWebsocketService>(() => SignalRWebsocketService());
+  prodLocator.registerLazySingleton<ICarePlanService>(() => CarePlanService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IJournalService>(() => JournalService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<ITransactionListService>(() => TransactionListService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<IWalletService>(() => WalletService(api: prodLocator<IApi>()));
+  prodLocator.registerLazySingleton<INotificationService>(() => NotificationService(
+        api: prodLocator<IApi>(),
         firebaseMessagingService: FirebaseMessaging.instance,
       ));
+  prodLocator.registerLazySingleton<IFileService>(() => FileService(api: prodLocator<IApi>()));
 
   // external
-  prodDIContainer.registerLazySingleton<IApi>(() => DioApiService());
+  prodLocator.registerLazySingleton<IApi>(() => DioApiService());
 }

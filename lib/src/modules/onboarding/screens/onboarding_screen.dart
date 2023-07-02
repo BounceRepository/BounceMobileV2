@@ -6,6 +6,7 @@ import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_pageview_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
@@ -31,36 +32,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       builder: (context, controller, _) {
         final pageController = controller.pageController;
 
-        return Scaffold(
-          body: Stack(
-            children: [
-              SizedBox(
-                height: size.height,
-                width: size.width,
-                child: PageView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  controller: pageController,
-                  itemCount: controller.onboardingList.length,
-                  itemBuilder: (context, index) {
-                    final onboarding = controller.onboardingList[index];
-                    return Image.asset(
-                      onboarding.image,
-                      fit: BoxFit.cover,
-                      height: size.height,
-                      width: size.width,
-                      alignment: Alignment.topCenter,
-                    );
-                  },
-                  onPageChanged: (value) {
-                    controller.nextPage(value);
-                  },
+        return AnnotatedRegion(
+          value: SystemUiOverlayStyle.dark,
+          child: Scaffold(
+            body: Stack(
+              children: [
+                SizedBox(
+                  height: size.height,
+                  width: size.width,
+                  child: PageView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    controller: pageController,
+                    itemCount: controller.onboardingList.length,
+                    itemBuilder: (context, index) {
+                      final onboarding = controller.onboardingList[index];
+                      return Image.asset(
+                        onboarding.image,
+                        fit: BoxFit.cover,
+                        height: size.height,
+                        width: size.width,
+                        alignment: Alignment.topCenter,
+                      );
+                    },
+                    onPageChanged: (value) => controller.nextPage(value),
+                  ),
                 ),
-              ),
-              const Positioned(
-                bottom: 0,
-                child: _ContentView(),
-              ),
-            ],
+                const Positioned(
+                  bottom: 0,
+                  child: _ContentView(),
+                ),
+              ],
+            ),
           ),
         );
       },

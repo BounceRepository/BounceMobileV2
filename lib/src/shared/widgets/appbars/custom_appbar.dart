@@ -35,7 +35,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor ?? Colors.transparent,
+      backgroundColor: backgroundColor ?? Colors.white,
       automaticallyImplyLeading: automaticallyImplyLeading,
       leading: leading,
       centerTitle: centerTitle,
@@ -53,9 +53,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         actions != null
             ? Padding(
-                padding: removeActionsPadding
-                    ? EdgeInsets.zero
-                    : EdgeInsets.only(right: AppPadding.horizontal),
+                padding: removeActionsPadding ? EdgeInsets.zero : EdgeInsets.only(right: AppPadding.horizontal),
                 child: Row(children: actions!),
               )
             : const SizedBox.shrink()

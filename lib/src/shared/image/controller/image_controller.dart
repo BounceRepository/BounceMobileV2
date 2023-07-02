@@ -7,7 +7,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 class FileController extends BaseController {
   final IFileService _imageService;
 
-  FileController({required IFileService imageService}) : _imageService = imageService;
+  FileController({required IFileService fileService}) : _imageService = fileService;
 
   Future<File?> pickImageFromGallery() async {
     try {
@@ -28,12 +28,12 @@ class FileController extends BaseController {
   Future<String> getImageUrl(File file) async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       final result = await _imageService.getImageUrl(file);
-      setIsLoading(false);
+      setBusy(false);
       return result;
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }

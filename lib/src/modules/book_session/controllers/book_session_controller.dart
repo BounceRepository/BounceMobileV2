@@ -6,8 +6,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 class BookSessionController extends BaseController {
   final IBookSessionService _service;
 
-  BookSessionController({required IBookSessionService sessionBookingService})
-      : _service = sessionBookingService;
+  BookSessionController({required IBookSessionService sessionBookingService}) : _service = sessionBookingService;
 
   DateTime selectedDate = DateTime.now();
   String? reason;
@@ -69,15 +68,14 @@ class BookSessionController extends BaseController {
   }) async {
     reset();
     try {
-      setIsLoading(true);
-      _availableTimeList = await _service.getAvailableBookingTimeListForTherapist(
-          therapistId: therapistId, date: selectedDate);
+      setBusy(true);
+      _availableTimeList = await _service.getAvailableBookingTimeListForTherapist(therapistId: therapistId, date: selectedDate);
       if (_availableTimeList.isEmpty) {
         throw Failure('Doctor is not available');
       }
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -85,12 +83,12 @@ class BookSessionController extends BaseController {
   Future<Therapist> getOneTherapist(int therapistId) async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       final result = await _service.getOneTherapist(therapistId);
-      setIsLoading(false);
+      setBusy(false);
       return result;
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }

@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/controllers/mood_controller.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/models/mood.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
@@ -124,7 +124,7 @@ class _SelectMoodsScreenState extends State<SelectMoodsScreen> {
                   builder: (context, controller, _) {
                     return AppButton(
                       label: 'Done',
-                      isLoading: controller.isLoading,
+                      isLoading: controller.isBusy,
                       onTap: submit,
                     );
                   },

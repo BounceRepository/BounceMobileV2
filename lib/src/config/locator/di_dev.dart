@@ -1,6 +1,6 @@
 import 'package:bounce_patient_app/src/config/app_config.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/fakes/fake_auth_service_impl.dart';
-import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
+import 'package:bounce_patient_app/src/modules/auth/service/interfaces/i_auth_service.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/fakes/fake_session_list_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/fakes/fake_session_service.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/fakes/fake_session_service_impl.dart';
@@ -32,31 +32,34 @@ import 'package:bounce_patient_app/src/modules/wallet/services/fakes/fake_wallet
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/payment_service.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/transaction_list_service.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet_service.dart';
+import 'package:bounce_patient_app/src/shared/image/service/fake_image_service.dart';
+import 'package:bounce_patient_app/src/shared/image/service/i_image_service.dart';
 import 'package:get_it/get_it.dart';
 
-final GetIt devDIContainer = GetIt.instance;
+final GetIt devLocator = GetIt.instance;
 
 void initContainers({required AppConfig appConfig}) async {
   print('Dev DI init....');
-  devDIContainer.registerLazySingleton<AppConfig>(() => appConfig);
+  devLocator.registerLazySingleton<AppConfig>(() => appConfig);
 
   //service
-  devDIContainer.registerLazySingleton<IAuthService>(() => FakeAuthService());
-  devDIContainer.registerLazySingleton<IMoodService>(() => FakeMoodService());
-  devDIContainer.registerLazySingleton<ISongListService>(() => FakeSongListService());
-  devDIContainer.registerLazySingleton<ITherapistListService>(() => FakeTherapistListService());
-  devDIContainer.registerLazySingleton<IBookSessionService>(() => FakeBookAppointmentService());
-  devDIContainer.registerLazySingleton<ISessionListService>(() => FakeSessionListService());
-  devDIContainer.registerLazySingleton<ISessionService>(() => FakeSessionService());
-  devDIContainer.registerLazySingleton<INotificationService>(() => FakeNotificationService());
-  devDIContainer.registerLazySingleton<ITransactionListService>(() => FakeTransactionListService());
-  devDIContainer.registerLazySingleton<IWalletService>(() => FakeWalletService());
-  devDIContainer.registerLazySingleton<IPaymentService>(() => FakePaymentService());
-  devDIContainer.registerLazySingleton<IJournalService>(() => FakeJournalService());
-  devDIContainer.registerLazySingleton<ICarePlanService>(() => FakeCarePlanService());
-  devDIContainer.registerLazySingleton<IChatService>(() => FakeChatService());
-  devDIContainer.registerLazySingleton<IChatWebsocketService>(() => FakeChatWebsocketService());
-  devDIContainer.registerLazySingleton<IFeedService>(() => FakeFeedService());
-  devDIContainer.registerLazySingleton<IFeedListService>(() => FakeFeedListService());
-  devDIContainer.registerLazySingleton<IReviewService>(() => FakeReviewService());
+  devLocator.registerLazySingleton<IAuthService>(() => FakeAuthService());
+  devLocator.registerLazySingleton<IMoodService>(() => FakeMoodService());
+  devLocator.registerLazySingleton<ISongListService>(() => FakeSongListService());
+  devLocator.registerLazySingleton<ITherapistListService>(() => FakeTherapistListService());
+  devLocator.registerLazySingleton<IBookSessionService>(() => FakeBookAppointmentService());
+  devLocator.registerLazySingleton<ISessionListService>(() => FakeSessionListService());
+  devLocator.registerLazySingleton<ISessionService>(() => FakeSessionService());
+  devLocator.registerLazySingleton<INotificationService>(() => FakeNotificationService());
+  devLocator.registerLazySingleton<ITransactionListService>(() => FakeTransactionListService());
+  devLocator.registerLazySingleton<IWalletService>(() => FakeWalletService());
+  devLocator.registerLazySingleton<IPaymentService>(() => FakePaymentService());
+  devLocator.registerLazySingleton<IJournalService>(() => FakeJournalService());
+  devLocator.registerLazySingleton<ICarePlanService>(() => FakeCarePlanService());
+  devLocator.registerLazySingleton<IChatService>(() => FakeChatService());
+  devLocator.registerLazySingleton<IChatWebsocketService>(() => FakeChatWebsocketService());
+  devLocator.registerLazySingleton<IFeedService>(() => FakeFeedService());
+  devLocator.registerLazySingleton<IFeedListService>(() => FakeFeedListService());
+  devLocator.registerLazySingleton<IReviewService>(() => FakeReviewService());
+  devLocator.registerLazySingleton<IFileService>(() => FakeFileService());
 }

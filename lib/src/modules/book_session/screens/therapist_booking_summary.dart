@@ -54,7 +54,7 @@ class _TherapistBookingSummaryState extends State<TherapistBookingSummary> {
       appBar: const CustomAppBar(label: 'Book Session'),
       body: SafeArea(
         child: Consumer<BookSessionController>(builder: (context, controller, _) {
-          if (controller.isLoading) {
+          if (controller.isBusy) {
             return const CustomLoadingIndicator();
           }
 

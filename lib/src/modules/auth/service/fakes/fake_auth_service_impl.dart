@@ -1,8 +1,8 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:bounce_patient_app/src/local/local_storage_service.dart';
-import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
+import 'package:bounce_patient_app/src/modules/auth/models/create_profile_request.dart';
+import 'package:bounce_patient_app/src/modules/auth/service/interfaces/i_auth_service.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/models/user.dart';
@@ -10,7 +10,7 @@ import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 
 class FakeAuthService implements IAuthService {
   @override
-  Future<void> changePassword({
+  Future<void> resetPassword({
     required String email,
     required String newPassword,
   }) async {
@@ -26,7 +26,7 @@ class FakeAuthService implements IAuthService {
   }
 
   @override
-  Future<void> login({
+  Future<void> signIn({
     required String email,
     required String password,
   }) async {
@@ -40,7 +40,7 @@ class FakeAuthService implements IAuthService {
       phone: '07017247035',
       dateOfBirth: '1990-02-08',
     );
-    _saveDetailsToLocalStorage(email: 'appleyard@gmail.com', userName: 'applevinctest');
+    _saveDetailsToLocalStorage(email: 'appleyard@gmail.com', userName: 'applevinc');
 
     //throw InCompleteProfileFailure();
     //throw ConfirmEmailFailure();
@@ -62,7 +62,7 @@ class FakeAuthService implements IAuthService {
   }
 
   @override
-  Future<int> register({
+  Future<int> signUp({
     required String userName,
     required String email,
     required String password,
@@ -73,7 +73,7 @@ class FakeAuthService implements IAuthService {
   }
 
   @override
-  Future<void> resetPassword({required String email}) async {
+  Future<void> forgotPassword({required String email}) async {
     await fakeNetworkDelay();
     //throw InternalFailure();
   }
@@ -91,30 +91,16 @@ class FakeAuthService implements IAuthService {
   }
 
   @override
-  Future<void> createProfile({
-    required int userId,
-    required Gender gender,
-    required String firstName,
-    required String lastName,
-    required String phoneNumber,
-    required String userName,
-    File? image,
-    required String dateOfBirth,
-    required String physicalHealtRate,
-    required String mentalHealtRate,
-    required String emotionalHealtRate,
-    required String eatingHabit,
-    required String email,
-  }) async {
+  Future<void> createProfile(CreateProfileRequest request) async {
     await fakeNetworkDelay();
     final user = User(
-      id: userId,
-      userName: userName,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: phoneNumber,
-      dateOfBirth: dateOfBirth,
+      id: request.userId,
+      userName: request.userName,
+      firstName: request.firstName,
+      lastName: request.lastName,
+      email: request.email,
+      phone: request.phoneNumber,
+      dateOfBirth: request.dateOfBirth,
     );
     AppSession.user = user;
     //throw InternalFailure();

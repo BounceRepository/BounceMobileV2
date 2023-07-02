@@ -3,9 +3,7 @@ import 'package:bounce_patient_app/src/modules/book_session/models/therapist.dar
 import 'package:bounce_patient_app/src/modules/book_session/widgets/therapist_list_item.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/screens/dashboard_view.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
-import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/spacing.dart';
-import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
 import 'package:bounce_patient_app/src/shared/widgets/others/custom_loading_indicator.dart';
@@ -52,13 +50,6 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
   }
 
   @override
-  void setState(fn) {
-    if (mounted) {
-      super.setState(fn);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
@@ -88,8 +79,7 @@ class _TherapistListScreenState extends State<TherapistListScreen> {
                 return ErrorScreen(error: error, retry: init);
               }
 
-              if (controller.topTherapists.isEmpty &&
-                  controller.therapistsNearYou.isEmpty) {
+              if (controller.topTherapists.isEmpty && controller.therapistsNearYou.isEmpty) {
                 return const EmptyListView();
               }
 

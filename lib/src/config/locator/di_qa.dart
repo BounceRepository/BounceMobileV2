@@ -1,6 +1,6 @@
 import 'package:bounce_patient_app/src/config/app_config.dart';
 import 'package:bounce_patient_app/src/modules/auth/service/impls/auth_service.dart';
-import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
+import 'package:bounce_patient_app/src/modules/auth/service/interfaces/i_auth_service.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/impls/session_list_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/impls/session_service.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/session_list_service.dart';
@@ -32,41 +32,44 @@ import 'package:bounce_patient_app/src/modules/wallet/services/impls/transaction
 import 'package:bounce_patient_app/src/modules/wallet/services/impls/wallet_service_impl.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/transaction_list_service.dart';
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet_service.dart';
+import 'package:bounce_patient_app/src/shared/image/service/i_image_service.dart';
+import 'package:bounce_patient_app/src/shared/image/service/image_service.dart';
 import 'package:bounce_patient_app/src/shared/network/api_service.dart';
 import 'package:bounce_patient_app/src/shared/network/dio_api_service_impl.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 
-final GetIt qaDIContainer = GetIt.instance;
+final GetIt qaLocator = GetIt.instance;
 
 void initContainers({required AppConfig appConfig}) async {
   print('QA DI init....');
-  qaDIContainer.registerLazySingleton<AppConfig>(() => appConfig);
+  qaLocator.registerLazySingleton<AppConfig>(() => appConfig);
 
   //service
-  qaDIContainer.registerLazySingleton<IAuthService>(() => AuthService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IMoodService>(() => MoodService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<ITherapistListService>(() => TherapistListService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IBookSessionService>(() => BookSessionService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<ISessionListService>(() => SessionListService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<ISessionService>(() => SessionService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<ISongListService>(() => SongListService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IReviewService>(() => ReviewService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IFeedService>(() => FeedService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IFeedListService>(() => FeedListService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<ICommentService>(() => CommentService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<ICommentListService>(() => CommentListService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IChatService>(() => ChatService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IChatWebsocketService>(() => SignalRWebsocketService());
-  qaDIContainer.registerLazySingleton<ICarePlanService>(() => CarePlanService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IJournalService>(() => JournalService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<ITransactionListService>(() => TransactionListService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<IWalletService>(() => WalletService(api: qaDIContainer<IApi>()));
-  qaDIContainer.registerLazySingleton<INotificationService>(() => NotificationService(
-        api: qaDIContainer<IApi>(),
+  qaLocator.registerLazySingleton<IAuthService>(() => AuthService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IMoodService>(() => MoodService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<ITherapistListService>(() => TherapistListService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IBookSessionService>(() => BookSessionService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<ISessionListService>(() => SessionListService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<ISessionService>(() => SessionService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<ISongListService>(() => SongListService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IReviewService>(() => ReviewService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IFeedService>(() => FeedService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IFeedListService>(() => FeedListService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<ICommentService>(() => CommentService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<ICommentListService>(() => CommentListService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IChatService>(() => ChatService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IChatWebsocketService>(() => SignalRWebsocketService());
+  qaLocator.registerLazySingleton<ICarePlanService>(() => CarePlanService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IJournalService>(() => JournalService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<ITransactionListService>(() => TransactionListService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<IWalletService>(() => WalletService(api: qaLocator<IApi>()));
+  qaLocator.registerLazySingleton<INotificationService>(() => NotificationService(
+        api: qaLocator<IApi>(),
         firebaseMessagingService: FirebaseMessaging.instance,
       ));
+  qaLocator.registerLazySingleton<IFileService>(() => FileService(api: qaLocator<IApi>()));
 
   // external
-  qaDIContainer.registerLazySingleton<IApi>(() => DioApiService());
+  qaLocator.registerLazySingleton<IApi>(() => DioApiService());
 }

@@ -35,8 +35,7 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
     final controller = context.read<BookSessionController>();
 
     try {
-      await controller.getAvailableBookingTimeListForTherapist(
-          therapistId: widget.therapistId);
+      await controller.getAvailableBookingTimeListForTherapist(therapistId: widget.therapistId);
       controller.selectedTime = controller.availableTimeList[selectedIndex];
     } on Failure catch (e) {
       failure = e;
@@ -49,8 +48,7 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
     final selectedTime = controller.selectedTime;
 
     if (selectedTime != null) {
-      selectedIndex = controller.availableTimeList
-          .indexWhere((element) => element.toLowerCase() == selectedTime.toLowerCase());
+      selectedIndex = controller.availableTimeList.indexWhere((element) => element.toLowerCase() == selectedTime.toLowerCase());
     }
   }
 
@@ -76,7 +74,7 @@ class _SelectAvailableTimeViewState extends State<SelectAvailableTimeView> {
         SizedBox(height: 20.h),
         Consumer<BookSessionController>(
           builder: (context, controller, _) {
-            if (!controller.isLoading) {
+            if (!controller.isBusy) {
               return SizedBox(
                 height: 110.h,
                 child: Column(

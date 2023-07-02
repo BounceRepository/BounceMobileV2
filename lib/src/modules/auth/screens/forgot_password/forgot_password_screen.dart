@@ -1,5 +1,5 @@
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/otp_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/forgot_password_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/confirmation/forgot_password_confirmation_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
 import 'package:bounce_patient_app/src/shared/utils/validator.dart';
@@ -10,7 +10,6 @@ import 'package:bounce_patient_app/src/shared/styles/text.dart';
 import 'package:bounce_patient_app/src/shared/utils/navigator.dart';
 import 'package:bounce_patient_app/src/shared/utils/messenger.dart';
 import 'package:bounce_patient_app/src/shared/widgets/appbars/custom_appbar.dart';
-import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/input/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,20 +25,33 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  late final TextEditingController _emailController;
 
-  void _sendOTP() async {
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  void submit() async {
     if (_formKey.currentState!.validate()) {
-      final controller = context.read<AuthController>();
       try {
-        await controller.forgotPassword(email: _emailController.text.trim());
-        Messenger.success(
-          
-          message: 'Verification code has been sent to ${_emailController.text}',
-        );
-        AppNavigator.to(context, OTPScreen(email: _emailController.text));
+        await context.read<ForgotPasswordController>().execute(email: _emailController.text.trim());
+
+        if (mounted) {
+          Messenger.success(
+            message: 'Verification code has been sent to ${_emailController.text}',
+          );
+          AppNavigator.to(context, ForgotPasswordConfirmationScreen(email: _emailController.text));
+        }
       } on Failure catch (e) {
-        Messenger.error( message: e.message);
+        Messenger.error(message: e.message);
       }
     }
   }
@@ -101,12 +113,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       },
                     ),
                     SizedBox(height: 30.h),
-                    Consumer<AuthController>(
+                    Consumer<ForgotPasswordController>(
                       builder: (context, controller, _) {
                         return AuthButton(
-                          label: 'send',
-                          isLoading: controller.isSendingOTP,
-                          onTap: _sendOTP,
+                          label: 'Submit',
+                          isLoading: controller.isBusy,
+                          onTap: submit,
                         );
                       },
                     ),
@@ -115,65 +127,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
-}
-
-Future<dynamic> _showBottomsheet(
-  BuildContext context, {
-  required String title,
-  required String desc,
-  required Function() onTap,
-}) {
-  return showCustomBottomSheet(
-    context,
-    body: const _Body(),
-  );
-}
-
-class _Body extends StatefulWidget {
-  const _Body({Key? key}) : super(key: key);
-
-  @override
-  State<_Body> createState() => __BodyState();
-}
-
-class __BodyState extends State<_Body> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class ArrowBackButton extends StatelessWidget {
-  const ArrowBackButton({Key? key, required this.onTap}) : super(key: key);
-
-  final Function() onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 51.h,
-        width: 51.h,
-        decoration: const BoxDecoration(
-          color: AppColors.primary,
-          shape: BoxShape.circle,
-        ),
-        alignment: Alignment.center,
-        child: SvgPicture.asset(
-          AppIcons.backBrokenArrow,
-          height: 14.h,
-          width: 14.h,
         ),
       ),
     );

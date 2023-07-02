@@ -39,11 +39,11 @@ class MoodController extends BaseController {
 
   Future<void> getAllUserMood() async {
     try {
-      setIsLoading(true);
+      setBusy(true);
       _userMoodList = await _moodService.getAllUserMood();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -52,11 +52,11 @@ class MoodController extends BaseController {
     _selectedMoodList = moodList.where((element) => element.isSelected).toList();
 
     try {
-      setIsLoading(true);
+      setBusy(true);
       await _moodService.saveUserMoodListToDB(selectedMoodList);
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }

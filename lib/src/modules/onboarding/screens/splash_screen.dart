@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bounce_patient_app/src/local/local_storage_service.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/welcome_back_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/welcome_back_screen.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:bounce_patient_app/src/modules/onboarding/screens/onboarding_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
@@ -33,11 +33,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         userName = await getUserName();
         email = await getEmail();
 
-        if (email != null && userName != null) {
-          AppNavigator.removeAllUntil(
-              context, WelcomeBackScreen(email: email, userName: userName));
-        } else {
-          AppNavigator.removeAllUntil(context, const OnboardingScreen());
+        if (mounted) {
+          if (email != null && userName != null) {
+            AppNavigator.removeAllUntil(context, WelcomeBackScreen(email: email, userName: userName));
+          } else {
+            AppNavigator.removeAllUntil(context, const OnboardingScreen());
+          }
         }
       } on Failure catch (e) {
         log(e.message);

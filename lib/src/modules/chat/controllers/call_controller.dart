@@ -25,7 +25,7 @@ class CallController extends BaseController {
 
   Future<void> setupVideoSDKEngine() async {
     try {
-      setIsLoading(true);
+      setBusy(true);
       // retrieve or request camera and microphone permissions
       await [Permission.microphone, Permission.camera].request();
 
@@ -37,7 +37,7 @@ class CallController extends BaseController {
 
       await _agoraEngine.enableVideo();
       engineStarted = true;
-      setIsLoading(false);
+      setBusy(false);
 
       // Register the event handler
       _agoraEngine.registerEventHandler(
@@ -52,8 +52,7 @@ class CallController extends BaseController {
             _remoteUid = remoteUid;
             notifyListeners();
           },
-          onUserOffline:
-              (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
+          onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
             log("Remote user uid:$remoteUid left the channel");
             notifyListeners();
           },
@@ -61,11 +60,11 @@ class CallController extends BaseController {
       );
     } on Exception catch (e) {
       log(e.toString());
-      setIsLoading(false);
+      setBusy(false);
       throw Failure(_failedToStartVideoEngine);
     } on Error catch (e) {
       log(e.toString());
-      setIsLoading(false);
+      setBusy(false);
       throw Failure(_failedToStartVideoEngine);
     }
   }
@@ -93,8 +92,7 @@ class CallController extends BaseController {
           _remoteUid = remoteUid;
           notifyListeners();
         },
-        onUserOffline:
-            (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
+        onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
           log("Remote user uid:$remoteUid left the channel");
           _remoteUid = null;
           notifyListeners();
@@ -123,11 +121,11 @@ class CallController extends BaseController {
       );
     } on Exception catch (e) {
       log(e.toString());
-      setIsLoading(false);
+      setBusy(false);
       throw Failure(_failedToJoinCall);
     } on Error catch (e) {
       log(e.toString());
-      setIsLoading(false);
+      setBusy(false);
       throw Failure(_failedToJoinCall);
     }
   }

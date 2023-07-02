@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/auth/controllers/health_level_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/create_profile/components/health_level/health_level_controller.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/custom_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/bottomsheet/select_location_bottomsheet.dart';
 import 'package:bounce_patient_app/src/shared/widgets/buttons/app_button.dart';

@@ -92,7 +92,7 @@ class _FeedListViewState<T extends FeedController> extends State<FeedListView<T>
     return Scaffold(
       body: Consumer<T>(
         builder: (context, controller, _) {
-          if (controller.isLoading) {
+          if (controller.isBusy) {
             return const CustomLoadingIndicator();
           }
 

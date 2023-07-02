@@ -7,8 +7,7 @@ abstract class FeedController extends BaseController {
   final IFeedService _feedService;
   final IFeedListService _feedListService;
 
-  FeedController(
-      {required IFeedService feedService, required IFeedListService feedListService})
+  FeedController({required IFeedService feedService, required IFeedListService feedListService})
       : _feedService = feedService,
         _feedListService = feedListService;
 
@@ -24,14 +23,14 @@ abstract class FeedController extends BaseController {
     required int feedGroupId,
   }) async {
     try {
-      setIsLoading(true);
+      setBusy(true);
       await _feedService.create(
         message: message,
         feedGroupId: feedGroupId,
       );
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -75,11 +74,11 @@ class MyFeedController extends FeedController {
   Future<void> getFeedList() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       _feeds = await _feedListService.getAllMyFeed();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -95,11 +94,11 @@ class RelationShipFeedController extends FeedController {
   Future<void> getFeedList() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       _feeds = await _feedListService.getAllRelationshipFeed();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -115,11 +114,11 @@ class SelfCareFeedController extends FeedController {
   Future<void> getFeedList() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       _feeds = await _feedListService.getAllSelfCareFeed();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -135,11 +134,11 @@ class WorkEthnicsFeedController extends FeedController {
   Future<void> getFeedList() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       _feeds = await _feedListService.getAllWorkEthnicsFeed();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -155,11 +154,11 @@ class FamilyFeedController extends FeedController {
   Future<void> getFeedList() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       _feeds = await _feedListService.getAllFamilyFeed();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -175,11 +174,11 @@ class SexualityFeedController extends FeedController {
   Future<void> getFeedList() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       _feeds = await _feedListService.getAllSexualityFeed();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -195,11 +194,11 @@ class ParentingFeedController extends FeedController {
   Future<void> getFeedList() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       _feeds = await _feedListService.getAllParentingFeed();
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }

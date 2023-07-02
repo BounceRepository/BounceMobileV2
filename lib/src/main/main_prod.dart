@@ -20,10 +20,10 @@ void main() async {
     final config = AppConfig(
       appEnvironment: AppEnvironment.prod,
       appName: 'ThriveX',
-      diContainer: prodDIContainer,
+      diContainer: prodLocator,
       baseUrl: '',
     );
-    initGlobalDI(envDiContainer: config.diContainer);
+    initGlobalDI(envLocator: config.diContainer);
     initContainers(appConfig: config);
     runApp(const ProvidersWrapper(child: ThriveXApp()));
   });

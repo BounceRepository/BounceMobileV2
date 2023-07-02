@@ -1,7 +1,7 @@
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/registration_success_screens.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/social_auth_view.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/confirmation/sign_up_confirmation_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/sign_up_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/components/social_auth_view.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_body.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
@@ -32,7 +32,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late final TextEditingController _userNameController;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-  bool hasAcceptedTerms = false;
 
   @override
   void initState() {
@@ -50,35 +49,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  void _acceptTerms() {
-    setState(() {
-      hasAcceptedTerms = !hasAcceptedTerms;
-    });
-  }
-
-  void _createAccount() async {
+  void submit() async {
     if (_formKey.currentState!.validate()) {
-      if (!hasAcceptedTerms) {
-        Messenger.error(message: 'Agree to Bounce terms and conditions');
-        return;
-      }
-
-      final controller = context.read<AuthController>();
       try {
-        final userId = await controller.createAccount(
-          userName: _userNameController.text.trim(),
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
-        controller.userId = userId;
-        controller.email = _emailController.text.trim();
-        Messenger.success(message: 'A confirmation link has been sent to your email');
-        AppNavigator.to(
-            context,
-            IncomingEmailScreen(
+        await context.read<SignUpController>().execute(
+              username: _userNameController.text.trim(),
               email: _emailController.text.trim(),
-              userName: _userNameController.text.trim(),
-            ));
+              password: _passwordController.text.trim(),
+            );
+
+        if (mounted) {
+          Messenger.success(message: 'A confirmation link has been sent to your email');
+          AppNavigator.to(
+              context,
+              SignUpConfirmationScreen(
+                email: _emailController.text.trim(),
+                userName: _userNameController.text.trim(),
+              ));
+        }
       } on Failure catch (e) {
         Messenger.error(message: e.message);
       }
@@ -87,6 +75,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<SignUpController>();
+
     return WillPopScope(
       onWillPop: () {
         AppNavigator.removeAllUntil(context, const SignInScreen());
@@ -144,26 +134,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomCheckBox(
-                  value: hasAcceptedTerms,
-                  onChanged: (value) => _acceptTerms(),
+                  value: controller.hasAcceptedTC,
+                  onChanged: (value) {
+                    if (value != null) {
+                      controller.updatedTCAgreement(value);
+                    }
+                  },
                 ),
                 SizedBox(width: 5.w),
                 LinkText(
                   text1: 'I agree to the',
                   text2: 'Terms and Conditions',
-                  onClick: _acceptTerms,
+                  onClick: () {},
                 ),
               ],
             ),
             SizedBox(height: 28.h),
-            Consumer<AuthController>(
-              builder: (context, controller, _) {
-                return AuthButton(
-                  label: 'Sign Up',
-                  isLoading: controller.isLoading,
-                  onTap: _createAccount,
-                );
-              },
+            AuthButton(
+              label: 'Sign Up',
+              isLoading: controller.isBusy,
+              onTap: submit,
             ),
             SizedBox(height: 23.h),
             const SocialAuthView(),

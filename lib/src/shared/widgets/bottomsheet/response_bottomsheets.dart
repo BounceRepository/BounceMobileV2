@@ -51,7 +51,7 @@ class _Body extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: LinearGradient(
                 colors: [
-                  const Color(0xffFF7C2B).withOpacity(.8),
+                  AppColors.primary.withOpacity(.8),
                   const Color(0xffEADACF),
                 ],
               ),
@@ -83,7 +83,6 @@ class _Body extends StatelessWidget {
             label: 'Return to Login',
             onTap: onTap,
           ),
-          SizedBox(height: 32.h),
         ],
       ),
     );

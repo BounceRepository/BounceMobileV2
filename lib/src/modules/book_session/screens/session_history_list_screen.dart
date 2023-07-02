@@ -77,7 +77,7 @@ class _UpComingSessionListViewState extends State<_UpComingSessionListView> {
   Widget build(BuildContext context) {
     return Consumer<SessionListController>(
       builder: (context, controller, _) {
-        if (controller.isLoading) {
+        if (controller.isBusy) {
           return const CustomLoadingIndicator();
         }
 
@@ -129,7 +129,7 @@ class _CompletedSessionListViewState extends State<_CompletedSessionListView> {
   Widget build(BuildContext context) {
     return Consumer<SessionListController>(
       builder: (context, controller, _) {
-        if (controller.isLoading) {
+        if (controller.isBusy) {
           return const CustomLoadingIndicator();
         }
 

@@ -1,6 +1,7 @@
 import 'package:bounce_patient_app/src/modules/auth/constants/constants.dart';
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/create_profile_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/create_profile/create_profile_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/confirmation/sign_up_confirmation_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/sign_up_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -13,8 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class IncomingEmailScreen extends StatelessWidget {
-  const IncomingEmailScreen({
+class SignUpConfirmationScreen extends StatefulWidget {
+  const SignUpConfirmationScreen({
     Key? key,
     required this.email,
     required this.userName,
@@ -25,20 +26,27 @@ class IncomingEmailScreen extends StatelessWidget {
   final String userName;
   final Widget? nextScreen;
 
-  void _checkEmailStatus(BuildContext context) async {
-    final controller = context.read<AuthController>();
+  @override
+  State<SignUpConfirmationScreen> createState() => _SignUpConfirmationScreenState();
+}
+
+class _SignUpConfirmationScreenState extends State<SignUpConfirmationScreen> {
+  void submit() async {
     try {
-      final hasConfirmedEmail = await controller.getVerificationStatus(email: email);
-      if (hasConfirmedEmail) {
-        AppNavigator.removeAllUntil(
-            context,
-            _VerifiedSuccessScreen(
-              email: email,
-              userName: userName,
-              nextScreen: nextScreen,
-            ));
-      } else {
-        AppNavigator.to(context, const _VerificationErrorScreen());
+      final hasConfirmedEmail = await context.read<SignUpConfirmationController>().getVerificationStatus(email: widget.email);
+
+      if (mounted) {
+        if (hasConfirmedEmail) {
+          AppNavigator.to(
+              context,
+              _VerifiedSuccessScreen(
+                email: widget.email,
+                userName: widget.userName,
+                nextScreen: widget.nextScreen,
+              ));
+        } else {
+          AppNavigator.to(context, _VerificationErrorScreen(email: widget.email));
+        }
       }
     } on Failure catch (e) {
       Messenger.error(message: e.message);
@@ -50,7 +58,7 @@ class IncomingEmailScreen extends StatelessWidget {
     final textStyle = AppText.bold700(context).copyWith(
       fontSize: 12.sp,
     );
-    final controller = context.watch<AuthController>();
+    final controller = context.watch<SignUpConfirmationController>();
 
     return _RegistrationStatusScreen(
       icon: AuthImages.verified,
@@ -61,22 +69,21 @@ class IncomingEmailScreen extends StatelessWidget {
           style: textStyle,
           children: <TextSpan>[
             TextSpan(
-              text: '$userName, ',
+              text: '${widget.userName}, ',
               style: textStyle.copyWith(
                 color: AppColors.primary,
               ),
             ),
             TextSpan(
-              text:
-                  'Please verify your email address by clicking on the link sent to your email, then click the button below to check status.',
+              text: 'Please verify your email address by clicking on the link sent to your email, then click the button below to check status.',
               style: textStyle,
             ),
           ],
         ),
       ),
       buttonLabel: 'Check email verification status',
-      isLoading: controller.isLoading,
-      onTap: () => _checkEmailStatus(context),
+      isLoading: controller.busy(SignUpConfirmationLoadingState.verify),
+      onTap: submit,
     );
   }
 }
@@ -100,45 +107,51 @@ class _VerifiedSuccessScreen extends StatelessWidget {
       description: 'Your email is successfully verified.',
       buttonLabel: 'Continue',
       onTap: () {
-        AppNavigator.removeAllUntil(
-            context,
-            nextScreen ??
-                CreateProfileScreen(
-                  email: email,
-                  userName: userName,
-                ));
+        AppNavigator.removeAllUntil(context, nextScreen ?? CreateProfileScreen(email: email, userName: userName));
       },
     );
   }
 }
 
-class _VerificationErrorScreen extends StatelessWidget {
-  const _VerificationErrorScreen({Key? key}) : super(key: key);
+class _VerificationErrorScreen extends StatefulWidget {
+  const _VerificationErrorScreen({Key? key, required this.email}) : super(key: key);
 
-  void _sendLink(BuildContext context) async {
-    final controller = context.read<AuthController>();
-    final email = controller.email;
-    if (email != null) {
-      try {
-        await controller.verifyEmail(email: email);
+  final String email;
+
+  @override
+  State<_VerificationErrorScreen> createState() => _VerificationErrorScreenState();
+}
+
+class _VerificationErrorScreenState extends State<_VerificationErrorScreen> {
+  void submit() async {
+    try {
+      await context.read<SignUpConfirmationController>().resendVerificationLink(email: widget.email);
+
+      if (mounted) {
         Messenger.success(message: 'A confirmation link has been sent to your email');
         Navigator.pop(context);
-      } on Failure catch (e) {
-        Messenger.error(message: e.message);
       }
+    } on Failure catch (e) {
+      Messenger.error(message: e.message);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthController>(
+    return Consumer<SignUpConfirmationController>(
       builder: (context, controller, _) {
-        return VerificationStatusScreen(
-          icon: AuthImages.expired,
-          description: AuthConstants.verificationLinkExpired,
-          buttonLabel: 'Resend Link',
-          isLoading: controller.isLoading,
-          onTap: () => _sendLink(context),
+        return WillPopScope(
+          onWillPop: () {
+            AppNavigator.to(context, const SignUpScreen());
+            return Future.value(true);
+          },
+          child: VerificationStatusScreen(
+            icon: AuthImages.expired,
+            description: AuthConstants.verificationLinkExpired,
+            buttonLabel: 'Resend Link',
+            isLoading: controller.busy(SignUpConfirmationLoadingState.resend),
+            onTap: submit,
+          ),
         );
       },
     );

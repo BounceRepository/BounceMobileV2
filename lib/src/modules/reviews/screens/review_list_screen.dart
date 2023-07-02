@@ -54,7 +54,7 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
       extendBodyBehindAppBar: true,
       body: Consumer<ReviewController>(
         builder: (context, controller, _) {
-          if (controller.isLoading) {
+          if (controller.isBusy) {
             return const CustomLoadingIndicator();
           }
 

@@ -1,11 +1,16 @@
 import 'package:bounce_patient_app/src/config/locator/di_global.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/confirmation/forgot_password_confirmation-controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/forgot_password_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/reset/reset_password_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/confirmation/sign_up_confirmation_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/create_profile/create_profile_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/sign_up_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/book_session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_list_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/therapist_list_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/controllers/gender_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/controllers/health_level_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/create_profile/components/health_level/health_level_controller.dart';
 import 'package:bounce_patient_app/src/modules/chat/controllers/call_controller.dart';
 import 'package:bounce_patient_app/src/modules/chat/controllers/chat_controller.dart';
 import 'package:bounce_patient_app/src/modules/dashboard/controllers/mood_controller.dart';
@@ -35,7 +40,13 @@ class ProvidersWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => locator<AuthController>()),
+        ChangeNotifierProvider(create: (_) => locator<SignInController>()),
+        ChangeNotifierProvider(create: (_) => locator<SignUpController>()),
+        ChangeNotifierProvider(create: (_) => locator<SignUpConfirmationController>()),
+        ChangeNotifierProvider(create: (_) => locator<CreateProfileController>()),
+        ChangeNotifierProvider(create: (_) => locator<ForgotPasswordController>()),
+        ChangeNotifierProvider(create: (_) => locator<ResetPasswordController>()),
+        ChangeNotifierProvider(create: (_) => locator<ForgotPasswordConfirmationController>()),
         ChangeNotifierProvider(create: (_) => locator<FileController>()),
         ChangeNotifierProvider(create: (_) => locator<TherapistListController>()),
         ChangeNotifierProvider(create: (_) => locator<BookSessionController>()),
@@ -73,7 +84,6 @@ class ProvidersWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => EmotionalHealthLevelController()),
         ChangeNotifierProvider(create: (_) => EatingHabitLevelController()),
         ChangeNotifierProvider(create: (_) => OnboardingController()),
-        ChangeNotifierProvider(create: (_) => GenderController()),
         ChangeNotifierProvider(create: (_) => NavbarController()),
         ChangeNotifierProvider(create: (_) => AudioPlayerController()),
         ChangeNotifierProvider(create: (_) => CallController()),

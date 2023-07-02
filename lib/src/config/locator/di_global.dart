@@ -1,6 +1,12 @@
 import 'package:bounce_patient_app/src/config/app_config.dart';
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/confirmation/forgot_password_confirmation-controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/forgot_password_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/reset/reset_password_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/confirmation/sign_up_confirmation_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/create_profile/create_profile_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/sign_up_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/service/interfaces/i_auth_service.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/controllers.dart';
 import 'package:bounce_patient_app/src/modules/book_session/controllers/session_controller.dart';
 import 'package:bounce_patient_app/src/modules/book_session/services/interfaces/session_list_service.dart';
@@ -31,23 +37,29 @@ import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/transa
 import 'package:bounce_patient_app/src/modules/wallet/services/interfaces/wallet_service.dart';
 import 'package:bounce_patient_app/src/shared/image/controller/image_controller.dart';
 import 'package:bounce_patient_app/src/shared/image/service/i_image_service.dart';
-import 'package:bounce_patient_app/src/shared/image/service/image_service.dart';
 import 'package:get_it/get_it.dart';
 
-final GetIt _diContainer = GetIt.instance;
+final GetIt _locator = GetIt.instance;
 
-final locator = _diContainer<GetIt>();
+final locator = _locator<GetIt>();
 final baseUrl = locator<AppConfig>().baseUrl;
 
-void initGlobalDI({required GetIt envDiContainer}) async {
+void initGlobalDI({required GetIt envLocator}) async {
   print('Global DI init....');
-  _diContainer.registerLazySingleton<GetIt>(() => envDiContainer);
-
-  locator.registerLazySingleton(() => FileController(imageService: locator()));
-  locator.registerLazySingleton<IFileService>(() => FileService(api: locator()));
+  _locator.registerLazySingleton<GetIt>(() => envLocator);
 
   // controllers
-  locator.registerLazySingleton(() => AuthController(authService: locator<IAuthService>()));
+  locator.registerLazySingleton(() => FileController(fileService: locator<IFileService>()));
+  locator.registerLazySingleton(() => SignInController(authService: locator<IAuthService>()));
+  locator.registerLazySingleton(() => SignUpController(authService: locator<IAuthService>()));
+  locator.registerLazySingleton(() => SignUpConfirmationController(authService: locator<IAuthService>()));
+  locator.registerLazySingleton(() => ForgotPasswordController(authService: locator<IAuthService>()));
+  locator.registerLazySingleton(() => ResetPasswordController(authService: locator<IAuthService>()));
+  locator.registerLazySingleton(() => ForgotPasswordConfirmationController(authService: locator<IAuthService>()));
+  locator.registerLazySingleton(() => CreateProfileController(
+        authService: locator<IAuthService>(),
+        fileController: locator<FileController>(),
+      ));
   locator.registerLazySingleton(() => MoodController(moodService: locator<IMoodService>()));
   locator.registerLazySingleton(() => NotificationController(notificationService: locator<INotificationService>()));
   locator.registerFactory(() => TherapistListController(therapistListService: locator<ITherapistListService>()));

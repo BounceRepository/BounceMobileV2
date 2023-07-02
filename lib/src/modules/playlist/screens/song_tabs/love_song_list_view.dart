@@ -35,13 +35,11 @@ class _LoveSongListViewState extends State<LoveSongListView> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Consumer<SongListController>(
       builder: (context, controller, _) {
-        if (controller.isLoading) {
+        if (controller.isBusy) {
           return const CustomLoadingIndicator();
         }
 

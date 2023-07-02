@@ -1,9 +1,9 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:bounce_patient_app/src/local/local_storage_service.dart';
 import 'package:bounce_patient_app/src/modules/auth/constants/auth_urls.dart';
-import 'package:bounce_patient_app/src/modules/auth/service/interfaces/auth_service.dart';
+import 'package:bounce_patient_app/src/modules/auth/models/create_profile_request.dart';
+import 'package:bounce_patient_app/src/modules/auth/service/interfaces/i_auth_service.dart';
 import 'package:bounce_patient_app/src/shared/utils/datetime_utils.dart';
 import 'package:bounce_patient_app/src/shared/models/app_session.dart';
 import 'package:bounce_patient_app/src/shared/models/failure.dart';
@@ -17,7 +17,7 @@ class AuthService implements IAuthService {
   AuthService({required IApi api}) : _api = api;
 
   @override
-  Future<void> changePassword({
+  Future<void> resetPassword({
     required String email,
     required String newPassword,
   }) async {
@@ -36,7 +36,7 @@ class AuthService implements IAuthService {
   }
 
   @override
-  Future<void> login({
+  Future<void> signIn({
     required String email,
     required String password,
   }) async {
@@ -81,7 +81,7 @@ class AuthService implements IAuthService {
   }
 
   @override
-  Future<int> register({
+  Future<int> signUp({
     required String userName,
     required String email,
     required String password,
@@ -107,7 +107,7 @@ class AuthService implements IAuthService {
   }
 
   @override
-  Future<void> resetPassword({required String email}) async {
+  Future<void> forgotPassword({required String email}) async {
     var url = '${AuthURLs.resetPassword}?email=$email';
     var body = {};
 
@@ -169,58 +169,44 @@ class AuthService implements IAuthService {
   }
 
   @override
-  Future<void> createProfile({
-    required int userId,
-    required Gender gender,
-    required String firstName,
-    required String lastName,
-    required String userName,
-    required String phoneNumber,
-    File? image,
-    required String dateOfBirth,
-    required String physicalHealtRate,
-    required String mentalHealtRate,
-    required String emotionalHealtRate,
-    required String eatingHabit,
-    required String email,
-  }) async {
+  Future<void> createProfile(CreateProfileRequest request) async {
     var url = AuthURLs.createProfile;
     Map<String, dynamic> body = {};
     FormData formData;
 
+    final image = request.image;
     if (image != null) {
       String fileName = image.path.split('/').last;
       body = {
-        'DateOfBirth': DateTimeUtils.getDate(dateOfBirth).toIso8601String(),
-        'FirstName': firstName,
-        'LastName': lastName,
-        'Phone': phoneNumber,
-        'UserId': userId,
-        'Gender': gender.type.name.toString().toUpperCase(),
-        'PhysicalHealthRate': physicalHealtRate,
-        'MentalHealthRate': mentalHealtRate,
-        'EmotionalHealthRate': emotionalHealtRate,
-        'EatingHabit': eatingHabit,
-        'Email': email,
+        'DateOfBirth': DateTimeUtils.getDate(request.dateOfBirth).toIso8601String(),
+        'FirstName': request.firstName,
+        'LastName': request.lastName,
+        'Phone': request.phoneNumber,
+        'UserId': request.userId,
+        'Gender': request.gender.type.name.toString().toUpperCase(),
+        'PhysicalHealthRate': request.physicalHealtRate,
+        'MentalHealthRate': request.mentalHealtRate,
+        'EmotionalHealthRate': request.emotionalHealtRate,
+        'EatingHabit': request.eatingHabit,
+        'Email': request.email,
         'ImageFile': await MultipartFile.fromFile(image.path, filename: fileName),
-        'MeansOfIdentification':
-            await MultipartFile.fromFile(image.path, filename: fileName)
+        'MeansOfIdentification': await MultipartFile.fromFile(image.path, filename: fileName)
       };
 
       formData = FormData.fromMap(body);
     } else {
       body = {
-        'DateOfBirth': DateTimeUtils.getDate(dateOfBirth).toIso8601String(),
-        'FirstName': firstName,
-        'LastName': lastName,
-        'Phone': phoneNumber,
-        'UserId': userId,
-        'Gender': gender.type.name.toString().toUpperCase(),
-        'PhysicalHealthRate': physicalHealtRate,
-        'MentalHealthRate': mentalHealtRate,
-        'EmotionalHealthRate': emotionalHealtRate,
-        'EatingHabit': eatingHabit,
-        'Email': email,
+        'DateOfBirth': DateTimeUtils.getDate(request.dateOfBirth).toIso8601String(),
+        'FirstName': request.firstName,
+        'LastName': request.lastName,
+        'Phone': request.phoneNumber,
+        'UserId': request.userId,
+        'Gender': request.gender.type.name.toString().toUpperCase(),
+        'PhysicalHealthRate': request.physicalHealtRate,
+        'MentalHealthRate': request.mentalHealtRate,
+        'EmotionalHealthRate': request.emotionalHealtRate,
+        'EatingHabit': request.eatingHabit,
+        'Email': request.email,
       };
       formData = FormData.fromMap(body);
     }
@@ -229,13 +215,13 @@ class AuthService implements IAuthService {
       final response = await _api.patch(url, body: formData, isFormData: true);
       final data = response['data'];
       final user = User(
-        id: userId,
-        userName: userName,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: phoneNumber,
-        dateOfBirth: dateOfBirth,
+        id: request.userId,
+        userName: request.userName,
+        firstName: request.firstName,
+        lastName: request.lastName,
+        email: request.email,
+        phone: request.phoneNumber,
+        dateOfBirth: request.dateOfBirth,
         image: data['image'],
       );
       AppSession.user = user;

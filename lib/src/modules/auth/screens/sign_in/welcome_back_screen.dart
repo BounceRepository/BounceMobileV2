@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:bounce_patient_app/src/local/local_storage_service.dart';
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/create_profile_screen.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/registration_success_screens.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_up_screen.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/social_auth_view.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/create_profile/create_profile_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/confirmation/sign_up_confirmation_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_up/sign_up_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/components/social_auth_view.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_body.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
@@ -63,17 +61,18 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
     super.dispose();
   }
 
-  void signIn() async {
+  void submit() async {
     if (_formKey.currentState!.validate()) {
-      final controller = context.read<AuthController>();
       try {
-        await controller.signIn(
-          userName: widget.email,
-          password: passwordController.text,
-        );
-        Messenger.success(message: 'Login successful');
-        worker();
-        AppNavigator.removeAllUntil(context, const SelectMoodsScreen());
+        await context.read<SignInController>().execute(
+              username: widget.email,
+              password: passwordController.text,
+            );
+
+        if (mounted) {
+          Messenger.success(message: 'Login successful');
+          AppNavigator.removeAllUntil(context, const SelectMoodsScreen());
+        }
       } on Failure catch (e) {
         final user = AppSession.user;
 
@@ -101,41 +100,21 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
   }
 
   void verifyEmail(User user) async {
-    final controller = context.read<AuthController>();
-
     try {
-      await controller.verifyEmail(email: user.email);
-      AppNavigator.to(
-        context,
-        IncomingEmailScreen(
-          email: user.email,
-          userName: user.userName,
-          nextScreen: const SelectMoodsScreen(),
-        ),
-      );
+      await context.read<SignInController>().verifyEmail(email: user.email);
+
+      if (mounted) {
+        AppNavigator.to(
+          context,
+          SignUpConfirmationScreen(
+            email: user.email,
+            userName: user.userName,
+            nextScreen: const SelectMoodsScreen(),
+          ),
+        );
+      }
     } on Failure catch (e) {
       Messenger.error(message: e.message);
-    }
-  }
-
-  void worker() async {
-    try {
-      await Future.wait([
-        getAllNotifications(),
-      ]);
-    } on Failure catch (e) {
-      log(e.message);
-    }
-  }
-
-  Future<void> getAllNotifications() async {
-    final controller = context.read<NotificationController>();
-
-    try {
-      await controller.getAllNotification();
-    } on Failure catch (e) {
-      controller.setFailure(e);
-      rethrow;
     }
   }
 
@@ -172,6 +151,12 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
             SizedBox(height: 20.h),
             PasswordTextField(
               controller: passwordController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 22.h),
             LinkText(
@@ -190,12 +175,12 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
               },
             ),
             SizedBox(height: 19.h),
-            Consumer<AuthController>(
+            Consumer<SignInController>(
               builder: (context, controller, _) {
                 return AuthButton(
                   label: 'Sign In',
-                  isLoading: controller.isLoading,
-                  onTap: signIn,
+                  isLoading: controller.isBusy,
+                  onTap: submit,
                 );
               },
             ),

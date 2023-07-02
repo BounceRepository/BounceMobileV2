@@ -121,20 +121,17 @@ class _AddFeedScreenState<T extends FeedController> extends State<AddFeedScreen<
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: AppPadding.horizontal, vertical: 14.h),
+          padding: EdgeInsets.symmetric(horizontal: AppPadding.horizontal, vertical: 14.h),
           child: Row(
             children: [
-              userProfilePicture != null
-                  ? CustomCacheNetworkImage(image: userProfilePicture, size: 48.h)
-                  : DefaultAppImage(size: 48.h),
+              userProfilePicture != null ? CustomCacheNetworkImage(image: userProfilePicture, size: 48.h) : DefaultAppImage(size: 48.h),
               SizedBox(width: 12.w),
               Expanded(
                 child: Consumer<T>(
                   builder: (context, controller, _) {
                     return AppButton(
                       label: 'Send',
-                      isLoading: controller.isLoading,
+                      isLoading: controller.isBusy,
                       onTap: send,
                     );
                   },
@@ -155,8 +152,7 @@ class _ChooseGroupSection<T extends FeedController> extends StatefulWidget {
   State<_ChooseGroupSection<T>> createState() => _ChooseGroupSectionState<T>();
 }
 
-class _ChooseGroupSectionState<T extends FeedController>
-    extends State<_ChooseGroupSection<T>> {
+class _ChooseGroupSectionState<T extends FeedController> extends State<_ChooseGroupSection<T>> {
   String label = 'Choose Group';
 
   @override
@@ -213,8 +209,7 @@ Future<dynamic> _chooseGroupBottomsheet({
   required BuildContext context,
   required FeedGroup? selectedFeedGroup,
 }) {
-  return showCustomBottomSheet(context,
-      body: _ChooseGroupView(selectedFeedGroup: selectedFeedGroup));
+  return showCustomBottomSheet(context, body: _ChooseGroupView(selectedFeedGroup: selectedFeedGroup));
 }
 
 class _ChooseGroupView extends StatefulWidget {

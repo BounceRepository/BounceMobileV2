@@ -64,9 +64,7 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
     if (_therapist != null) {
       try {
         setState(() => isStarting = true);
-        await context
-            .read<SessionController>()
-            .start(sessionId: widget.session.id, therapisId: _therapist!.id);
+        await context.read<SessionController>().start(sessionId: widget.session.id, therapisId: _therapist!.id);
         isReadyToJoin = true;
         setState(() => isStarting = false);
       } on Failure catch (e) {
@@ -86,12 +84,9 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
-        iconTheme: IconThemeData(
-            color: controller.failure != null || controller.isLoading
-                ? Colors.black
-                : Colors.white),
+        iconTheme: IconThemeData(color: controller.failure != null || controller.isBusy ? Colors.black : Colors.white),
       ),
-      body: controller.isLoading
+      body: controller.isBusy
           ? const CustomLoadingIndicator()
           : controller.failure != null
               ? ErrorScreen(error: controller.failure!, retry: getTherapist)
@@ -103,8 +98,7 @@ class _JoinSessionScreenState extends State<JoinSessionScreen> {
                       width: size.width,
                       fit: BoxFit.cover,
                       errorWidget: (context, url, error) => const Icon(Icons.error),
-                      progressIndicatorBuilder: (context, url, downloadProgress) =>
-                          Container(
+                      progressIndicatorBuilder: (context, url, downloadProgress) => Container(
                         height: size.height,
                         width: size.width,
                         decoration: BoxDecoration(
@@ -214,22 +208,19 @@ class _ActionButtonsSection extends StatelessWidget {
         button(
           icon: AppIcons.message,
           onTap: () {
-            AppNavigator.to(
-                context, ChatWindowScreen(therapist: therapist, sessionId: session.id));
+            AppNavigator.to(context, ChatWindowScreen(therapist: therapist, sessionId: session.id));
           },
         ),
         button(
           icon: AppIcons.call,
           onTap: () {
-            AppNavigator.to(
-                context, AudioCallScreen(therapist: therapist, sessionId: session.id));
+            AppNavigator.to(context, AudioCallScreen(therapist: therapist, sessionId: session.id));
           },
         ),
         button(
           icon: AppIcons.video,
           onTap: () {
-            AppNavigator.to(
-                context, VideoCallScreen(therapist: therapist, sessionId: session.id));
+            AppNavigator.to(context, VideoCallScreen(therapist: therapist, sessionId: session.id));
           },
         ),
       ],

@@ -29,20 +29,17 @@ class _WorkSongListViewState extends State<WorkSongListView> {
     if (controller.songs.isEmpty) {
       try {
         await controller.getAllSong();
-        
       } on Failure catch (e) {
         controller.setFailure(e);
       }
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Consumer<SongListController>(
       builder: (context, controller, _) {
-        if (controller.isLoading) {
+        if (controller.isBusy) {
           return const CustomLoadingIndicator();
         }
 

@@ -6,8 +6,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 class SessionListController extends BaseController {
   final ISessionListService _sessionListService;
 
-  SessionListController({required ISessionListService sessionListService})
-      : _sessionListService = sessionListService;
+  SessionListController({required ISessionListService sessionListService}) : _sessionListService = sessionListService;
 
   final List<Session> _upComingSessions = [];
   List<Session> get upComingSessions => _upComingSessions;
@@ -21,16 +20,16 @@ class SessionListController extends BaseController {
   Future<void> getUpComingSessions() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       final result = await _sessionListService.getAllUpComing();
 
       for (final element in result) {
         _upComingSessions.add(element);
       }
 
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -38,16 +37,16 @@ class SessionListController extends BaseController {
   Future<void> getAllCompleted() async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       final result = await _sessionListService.getAllCompleted();
 
       for (final element in result) {
         _completedSessions.add(element);
       }
 
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }

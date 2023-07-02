@@ -6,8 +6,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 class ReviewController extends BaseController {
   final IReviewService _reviewService;
 
-  ReviewController({required IReviewService reviewService})
-      : _reviewService = reviewService;
+  ReviewController({required IReviewService reviewService}) : _reviewService = reviewService;
 
   ReviewInfo? _reviewInfo;
   ReviewInfo? get reviewInfo => _reviewInfo;
@@ -17,13 +16,13 @@ class ReviewController extends BaseController {
   Future<void> getAllReviewForTherapist(int id) async {
     reset();
     try {
-      setIsLoading(true);
+      setBusy(true);
       final result = await _reviewService.getTherapistReviewInfo(id);
       _reviewInfo = result;
       _reviews = result.reviews;
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }
@@ -35,16 +34,16 @@ class ReviewController extends BaseController {
     required DateTime createdAt,
   }) async {
     try {
-      setIsLoading(true);
+      setBusy(true);
       await _reviewService.create(
         therapistId: therapistId,
         rating: rating,
         comment: comment,
         createdAt: createdAt,
       );
-      setIsLoading(false);
+      setBusy(false);
     } on Failure {
-      setIsLoading(false);
+      setBusy(false);
       rethrow;
     }
   }

@@ -6,7 +6,7 @@ import 'package:bounce_patient_app/src/shared/models/failure.dart';
 import 'package:bounce_patient_app/src/shared/utils/app_constants.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FakeImageService implements IFileService {
+class FakeFileService implements IFileService {
   final _imagePicker = ImagePicker();
 
   @override

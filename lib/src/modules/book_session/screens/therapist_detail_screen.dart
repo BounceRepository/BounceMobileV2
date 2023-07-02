@@ -94,8 +94,7 @@ class TherapistDetailScreen extends StatelessWidget {
                           title: '${therapist.rating}',
                           subTitle: 'Ratings',
                           onTap: () {
-                            AppNavigator.to(
-                                context, ReviewListScreen(therapist: therapist));
+                            AppNavigator.to(context, ReviewListScreen(therapist: therapist));
                           },
                         ),
                       ],
@@ -135,8 +134,7 @@ class TherapistDetailScreen extends StatelessWidget {
           child: AppButton(
             label: 'Book Session',
             onTap: () {
-              AppNavigator.to(
-                  context, TherapistBookingSummary(therapistId: therapist.id));
+              AppNavigator.to(context, TherapistBookingSummary(therapistId: therapist.id));
             },
           ),
         ),
@@ -239,13 +237,11 @@ class _CommunicationSection extends StatelessWidget {
             if (controller.inSession) {
               final specifictherapistIdInSession = controller.therapisId;
 
-              if (specifictherapistIdInSession != null &&
-                  specifictherapistIdInSession == therapist.id) {
+              if (specifictherapistIdInSession != null && specifictherapistIdInSession == therapist.id) {
                 AppNavigator.to(context, ChatWindowScreen(therapist: therapist));
               }
             } else {
-              AppNavigator.to(
-                  context, ChatWindowScreen(therapist: therapist, closed: true));
+              AppNavigator.to(context, ChatWindowScreen(therapist: therapist, closed: true));
             }
           },
         ),

@@ -1,5 +1,5 @@
-import 'package:bounce_patient_app/src/modules/auth/controllers/auth_controller.dart';
-import 'package:bounce_patient_app/src/modules/auth/screens/reset_password_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/confirmation/forgot_password_confirmation-controller.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/forgot_password/reset/reset_password_screen.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/auth_button.dart';
 import 'package:bounce_patient_app/src/modules/auth/widgets/link_text.dart';
 import 'package:bounce_patient_app/src/shared/assets/icons.dart';
@@ -14,41 +14,42 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class OTPScreen extends StatefulWidget {
-  const OTPScreen({Key? key, required this.email}) : super(key: key);
+class ForgotPasswordConfirmationScreen extends StatefulWidget {
+  const ForgotPasswordConfirmationScreen({Key? key, required this.email}) : super(key: key);
 
   final String email;
 
   @override
-  State<OTPScreen> createState() => _OTPScreenState();
+  State<ForgotPasswordConfirmationScreen> createState() => _ForgotPasswordConfirmationScreenState();
 }
 
-class _OTPScreenState extends State<OTPScreen> {
-  late String token;
+class _ForgotPasswordConfirmationScreenState extends State<ForgotPasswordConfirmationScreen> {
+  String token = '';
 
-  void _validateOTP() async {
+  void submit() async {
     if (token.length == 4) {
-      final controller = context.read<AuthController>();
       try {
-        await controller.validateOTP(token: token);
-        Messenger.success( message: '${widget.email} verification successful');
-        AppNavigator.to(context, ResetPasswordScreen(email: widget.email));
+        await context.read<ForgotPasswordConfirmationController>().execute(token: token);
+
+        if (mounted) {
+          Messenger.success(message: '${widget.email} verification successful');
+          AppNavigator.to(context, ResetPasswordScreen(email: widget.email));
+        }
       } on Failure catch (e) {
-        Messenger.error( message: e.message);
+        Messenger.error(message: e.message);
       }
     }
   }
 
-  void _sendOTP() async {
-    final controller = context.read<AuthController>();
+  void resendOTP() async {
     try {
-      await controller.forgotPassword(email: widget.email);
+      await context.read<ForgotPasswordConfirmationController>().resendOtp(email: widget.email);
+
       Messenger.success(
-        
         message: 'Verification code has been sent to ${widget.email}',
       );
     } on Failure catch (e) {
-      Messenger.error( message: e.message);
+      Messenger.error(message: e.message);
     }
   }
 
@@ -101,9 +102,9 @@ class _OTPScreenState extends State<OTPScreen> {
                   },
                 ),
                 SizedBox(height: 26.h),
-                Consumer<AuthController>(
+                Consumer<ForgotPasswordConfirmationController>(
                   builder: (context, controller, _) {
-                    if (controller.isSendingOTP) {
+                    if (controller.busy(ForgotPasswordConfirmationLoadingState.resend)) {
                       return const CircularProgressIndicator();
                     }
 
@@ -111,17 +112,17 @@ class _OTPScreenState extends State<OTPScreen> {
                       text1: 'Didn’t receive code?',
                       text2: 'Re-send',
                       fontSize: 14.sp,
-                      onClick: _sendOTP,
+                      onClick: resendOTP,
                     );
                   },
                 ),
                 SizedBox(height: 38.h),
-                Consumer<AuthController>(
+                Consumer<ForgotPasswordConfirmationController>(
                   builder: (context, controller, _) {
                     return AuthButton(
                       label: 'Submit',
-                      isLoading: controller.isLoading,
-                      onTap: _validateOTP,
+                      isLoading: controller.busy(ForgotPasswordConfirmationLoadingState.submit),
+                      onTap: submit,
                     );
                   },
                 ),

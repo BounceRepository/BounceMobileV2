@@ -1,4 +1,4 @@
-import 'package:bounce_patient_app/src/modules/auth/screens/sign_in_screen.dart';
+import 'package:bounce_patient_app/src/modules/auth/screens/sign_in/sign_in_screen.dart';
 import 'package:bounce_patient_app/src/shared/assets/images.dart';
 import 'package:bounce_patient_app/src/shared/styles/colors.dart';
 import 'package:bounce_patient_app/src/shared/styles/text.dart';
